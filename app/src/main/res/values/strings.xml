@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">FootballNewsManager</string>
+    <string name="app_name">Football Manager</string>
+    <string name="app_logo_name">Football News\nManager</string>
 </resources>
