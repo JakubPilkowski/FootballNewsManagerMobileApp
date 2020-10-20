@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Football Manager</string>
     <string name="app_logo_name">Football News\nManager</string>
+    <string name="dzienne_setki_nowych_news_w">Dzienne setki\nnowych newsów!!!</string>
 </resources>

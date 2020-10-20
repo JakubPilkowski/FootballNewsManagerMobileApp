@@ -18,6 +18,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MainActivityV
     @Override
     protected void initActivity(ActivityMainBinding binding) {
         binding.setViewModel(viewModel);
+        viewModel.setProviders(this);
         viewModel.init();
     }
 
