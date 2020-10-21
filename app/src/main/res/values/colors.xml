@@ -5,4 +5,19 @@
     <color name="colorForestGreen">#228B22</color>
     <color name="colorDarkGreen">#006400</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="backgroundColor">#f5fff5</color>
+    <color name="colorTextPrimary">#001a00</color>
+    <color name="colorTextSecondary">#fff</color>
+    <color name="colorTextGray">#e0e0e0</color>
+
+    <!--button-colors-->
+    <color name="buttonColor">#fff</color>
+
+    <!--auth-background-->
+    <color name="colorbackgroundPrimary">#F8F8FF</color>
+    <color name="colorbackgroundSecondary">#d6ffd9</color>
+<!--auth-player-colors-->
+    <color name="playerColor">#000</color>
+    <color name="starColor">#ffa371</color>
 </resources>
