@@ -11,4 +11,18 @@
     <color name="colorTextPrimary">#fff</color>
     <color name="colorTextSecondary">#001a00</color>
     <color name="colorTextGray">#e0e0e0</color>
+
+
+    <!--button-colors-->
+    <color name="buttonColor">#fff</color>
+
+    <!--auth-background-->
+    <color name="colorbackgroundPrimary">#121212</color>
+    <color name="colorbackgroundSecondary">#222922</color>
+
+    <!--auth-player-colors-->
+    <color name="playerColor">#4a4a4a</color>
+    <color name="starColor">#fffa86</color>
+
+
 </resources>
