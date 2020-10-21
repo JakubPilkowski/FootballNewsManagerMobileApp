@@ -16,6 +16,8 @@ import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityAuthBinding;
+import com.example.footballnewsmanager.fragments.auth.welcome.WelcomeFragment;
+import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
 
 public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityViewModel> implements Providers {
@@ -26,12 +28,12 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityV
         binding.setViewModel(viewModel);
         viewModel.setProviders(this);
         viewModel.init();
-//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR ^ View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-        }
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR ^ View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+//        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -41,6 +43,7 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityV
             window.setStatusBarColor(Color.TRANSPARENT);
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
+        navigator.attach(WelcomeFragment.newInstance(), WelcomeFragment.TAG);
     }
 
     @Override
@@ -50,7 +53,7 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityV
 
     @Override
     public int getIdFragmentContainer() {
-        return 0;
+        return R.id.auth_fragment_container;
     }
 
     @Override
@@ -70,6 +73,11 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityV
 
     @Override
     public BaseFragment getFragment() {
-        return null;
+        return getCurrentFragment();
+    }
+
+    @Override
+    public Navigator getNavigator() {
+        return navigator;
     }
 }

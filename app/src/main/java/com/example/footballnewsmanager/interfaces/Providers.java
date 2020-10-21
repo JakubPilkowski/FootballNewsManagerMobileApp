@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.databinding.ViewDataBinding;
 
 import com.example.footballnewsmanager.base.BaseFragment;
+import com.example.footballnewsmanager.helpers.Navigator;
 
 public interface Providers {
 
@@ -13,4 +14,6 @@ public interface Providers {
     ViewDataBinding getBinding();
 
     BaseFragment getFragment();
+
+    Navigator getNavigator();
 }
