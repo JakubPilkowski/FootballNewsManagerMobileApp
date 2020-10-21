@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.footballnewsmanager.fragments.auth.welcome.WelcomeViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:background="@color/backgroundColor"
+        android:orientation="vertical"
+        tools:context=".activites.auth.AuthActivity">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_auth_background"
+                />
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/auth_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:background="@drawable/auth_background"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/app_logo_name"
+                android:textStyle="bold|italic"
+                android:textColor="@color/colorTextPrimary"
+                android:textAlignment="center"
+                android:textSize="36sp"
+              />
+
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/lets_begin"
+                android:onClick="@{()->viewModel.onRegister()}"
+                android:textColor="@color/buttonColor"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:drawableEnd="@drawable/ic_arrow_forward_button"
+                android:drawablePadding="36dp"
+                android:background="@drawable/button_with_back_and_radius"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@android:color/transparent"
+                android:textAllCaps="false"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:text="@string/logging"
+                android:onClick="@{()->viewModel.onLogin()}"
+                android:foreground="?selectableItemBackground"
+                android:textSize="20sp"
+                android:textColor="@color/colorTextPrimary"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@null"
+                android:textAllCaps="false"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:onClick="@{()->viewModel.onForgetPassword()}"
+                android:text="@string/forget_password"
+                android:foreground="?selectableItemBackground"
+                android:textSize="18sp"
+                android:textColor="@color/colorTextPrimary"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

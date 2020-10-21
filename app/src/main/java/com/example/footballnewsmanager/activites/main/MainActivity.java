@@ -10,6 +10,7 @@ import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityMainBinding;
+import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding,MainActivityViewModel> implements Providers {
@@ -51,5 +52,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MainActivityV
     @Override
     public BaseFragment getFragment() {
         return null;
+    }
+
+    @Override
+    public Navigator getNavigator() {
+        return navigator;
     }
 }

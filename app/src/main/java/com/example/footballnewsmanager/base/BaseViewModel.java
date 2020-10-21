@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModel;
 
+import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
 
 public abstract class BaseViewModel extends ViewModel {
@@ -26,4 +27,6 @@ public abstract class BaseViewModel extends ViewModel {
     public ViewDataBinding getBinding(){
         return providers.getBinding();
     }
+
+    public Navigator getNavigator() {return providers.getNavigator();}
 }

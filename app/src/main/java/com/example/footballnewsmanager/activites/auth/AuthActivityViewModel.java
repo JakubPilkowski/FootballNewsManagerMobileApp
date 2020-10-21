@@ -2,13 +2,11 @@ package com.example.footballnewsmanager.activites.auth;
 
 import android.os.Handler;
 
-import androidx.databinding.ObservableField;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.adapters.SlideAdapter;
 import com.example.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.ActivityAuthBinding;
 import com.example.footballnewsmanager.models.SliderItem;
 
 import java.util.ArrayList;
@@ -22,7 +20,7 @@ public class AuthActivityViewModel extends BaseViewModel {
 
     public void init(){
 
-        viewPager2 = ((ActivityAuthBinding)getBinding()).authViewpager;
+//        viewPager2 = ((ActivityAuthBinding)getBinding()).authViewpager;
 
         ArrayList<SliderItem> sliderItems = new ArrayList<>();
 
@@ -37,9 +35,9 @@ public class AuthActivityViewModel extends BaseViewModel {
         SlideAdapter slideAdapter = new SlideAdapter(sliderItems ,viewPager2);
 
 //        viewPager2.setAdapter(slideAdapter);
-        viewPager2.setClipToPadding(false);
-        viewPager2.setClipChildren(false);
-        viewPager2.setOffscreenPageLimit(3);
+//        viewPager2.setClipToPadding(false);
+//        viewPager2.setClipChildren(false);
+//        viewPager2.setOffscreenPageLimit(3);
 
 //        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
 //            @Override
