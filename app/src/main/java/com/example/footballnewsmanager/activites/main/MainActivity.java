@@ -1,10 +1,6 @@
 package com.example.footballnewsmanager.activites.main;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.ViewDataBinding;
-
-import android.app.Activity;
-import android.os.Bundle;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseActivity;
@@ -13,7 +9,7 @@ import com.example.footballnewsmanager.databinding.ActivityMainBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding,MainActivityViewModel> implements Providers {
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivityViewModel> implements Providers {
 
 
     @Override
@@ -40,7 +36,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MainActivityV
 
 
     @Override
-    public Activity getActivity() {
+    public BaseActivity getActivity() {
         return this;
     }
 

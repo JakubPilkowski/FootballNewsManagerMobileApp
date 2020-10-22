@@ -1,6 +1,9 @@
 package com.example.footballnewsmanager.base;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
@@ -41,9 +44,9 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
 
     @Override
     public void onBackPressed() {
-        if(getSupportFragmentManager().getBackStackEntryCount()<=1){
+
+        if(getSupportFragmentManager().getBackStackEntryCount()<=1)
             finish();
-        }
         else {
             BaseFragment fragment = getCurrentFragment();
             switch (fragment.getBackPressType()) {
@@ -58,8 +61,18 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
                     break;
             }
         }
-        super.onBackPressed();
     }
+
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = getCurrentFocus();
+        if (view == null) {
+            view = new View(this);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        view.clearFocus();
+    }
+
 
     public BaseFragment getCurrentFragment() {
         return (BaseFragment) getSupportFragmentManager().findFragmentById(getIdFragmentContainer());

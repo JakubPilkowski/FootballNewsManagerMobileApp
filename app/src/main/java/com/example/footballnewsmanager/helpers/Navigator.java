@@ -89,16 +89,15 @@ public class Navigator {
         }
 
 
-//        public void profileSharedTransition(BaseFragment fragment, String tag, View sharedView, String sharedViewName){
-//            activity.getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .addSharedElement(sharedView, sharedViewName)
-//                    .replace(fragmentContainer, fragment, tag)
-//                    .setReorderingAllowed(true)
-//                    .addToBackStack(tag)
-//                    .commit();
-//        }
-//
+        public void sharedTransitionAttach(BaseFragment fragment, String tag, View sharedView, String sharedViewName){
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .addSharedElement(sharedView, sharedViewName)
+                    .replace(fragmentContainer, fragment, tag)
+                    .setReorderingAllowed(true)
+                    .addToBackStack(tag)
+                    .commit();
+        }
 
 
         public void setFragmentContainer(int fragmentContainer) {

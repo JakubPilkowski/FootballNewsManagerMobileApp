@@ -1,9 +1,7 @@
 package com.example.footballnewsmanager.activites.auth;
 
 import android.os.Handler;
-
 import androidx.viewpager2.widget.ViewPager2;
-
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.adapters.SlideAdapter;
 import com.example.footballnewsmanager.base.BaseViewModel;
@@ -14,11 +12,10 @@ import java.util.ArrayList;
 public class AuthActivityViewModel extends BaseViewModel {
 
 
-
     private Handler handler = new Handler();
     private ViewPager2 viewPager2;
 
-    public void init(){
+    public void init() {
 
 //        viewPager2 = ((ActivityAuthBinding)getBinding()).authViewpager;
 
@@ -32,7 +29,7 @@ public class AuthActivityViewModel extends BaseViewModel {
         sliderItems.add(new SliderItem(getActivity().getResources().getDrawable(R.drawable.ic_logo_sites),
                 getActivity().getResources().getString(R.string.logo_sites_title)));
 
-        SlideAdapter slideAdapter = new SlideAdapter(sliderItems ,viewPager2);
+        SlideAdapter slideAdapter = new SlideAdapter(sliderItems, viewPager2);
 
 //        viewPager2.setAdapter(slideAdapter);
 //        viewPager2.setClipToPadding(false);
@@ -51,24 +48,23 @@ public class AuthActivityViewModel extends BaseViewModel {
 
     }
 
-    public void onRegister(){
+    public void onRegister() {
 
     }
 
-    public void onLogin(){
+    public void onLogin() {
 
     }
 
-    public void onForgetPassword(){
+    public void onForgetPassword() {
 
     }
-
 
 
     private Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
-            viewPager2.setCurrentItem(viewPager2.getCurrentItem()+1);
+            viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
         }
     };
 
