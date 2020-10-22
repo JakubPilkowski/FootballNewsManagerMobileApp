@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activites.auth.AuthActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/AuthTheme" />
 
         <activity

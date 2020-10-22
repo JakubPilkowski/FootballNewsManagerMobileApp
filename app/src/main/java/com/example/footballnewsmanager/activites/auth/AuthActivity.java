@@ -1,16 +1,11 @@
 package com.example.footballnewsmanager.activites.auth;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.ViewDataBinding;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseActivity;
@@ -37,11 +32,11 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityV
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setNavigationBarColor(Color.TRANSPARENT);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//            window.setStatusBarColor(Color.TRANSPARENT);
+            //            window.setNavigationBarColor(Color.TRANSPARENT);
         }
         navigator.attach(WelcomeFragment.newInstance(), WelcomeFragment.TAG);
     }
@@ -62,7 +57,7 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityV
     }
 
     @Override
-    public Activity getActivity() {
+    public BaseActivity getActivity() {
         return this;
     }
 

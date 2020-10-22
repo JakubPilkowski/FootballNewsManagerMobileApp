@@ -38,4 +38,5 @@ public abstract class BaseFragment<B extends ViewDataBinding, VM extends BaseVie
     public abstract void bindData(B binding);
 
     public abstract int getBackPressType();
+
 }

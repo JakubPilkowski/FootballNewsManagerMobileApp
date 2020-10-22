@@ -7,4 +7,14 @@
     <string name="lets_begin">Zaczynamy</string>
     <string name="logging">Logowanie</string>
     <string name="forget_password">Zapomniałem hasła</string>
+    <string name="password">Hasło</string>
+    <string name="email">Email</string>
+    <string name="log_in">Zaloguj się</string>
+
+<!--    validation-->
+    <string name="field_not_blank">Pole nie może być puste</string>
+    <string name="email_invalid">Niepoprawny adres mailowy</string>
+    <string name="email_too_long">Adres mailowy może zawierać maksymalnie 40 znaków</string>
+    <string name="password_invalid">Hasło musi zawierać od 8 do 30 znaków</string>
+
 </resources>

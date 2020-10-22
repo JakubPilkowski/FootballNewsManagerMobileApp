@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="colorPrimary">#000</color>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="colorPrimary">#006400</color>
     <color name="colorPrimaryDark">#fff</color>
     <color name="colorForestGreen">#228B22</color>
     <color name="colorDarkGreen">#006400</color>
@@ -11,6 +11,9 @@
     <color name="colorTextPrimary">#fff</color>
     <color name="colorTextSecondary">#001a00</color>
     <color name="colorTextGray">#e0e0e0</color>
+
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#fff</color>
+    <color name="errorColor">#ff3333</color>
 
 
     <!--button-colors-->
