@@ -1,8 +1,9 @@
 package com.example.footballnewsmanager.api.responses;
 
 public class BaseResponse {
-    private boolean success;
-    private String message;
+    public boolean success;
+    public String message;
+
 
     public boolean isSuccess() {
         return success;

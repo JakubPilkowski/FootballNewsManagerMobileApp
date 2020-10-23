@@ -9,8 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Client {
 
-    static final String LOCALHOST_URL = "";
-    static final String FOOTBALL_NEWS_MANAGER_URL = "";
+    static final String LOCALHOST_URL = "http://localhost:8080/api/";
+    static final String FOOTBALL_NEWS_MANAGER_URL = "http://footballnewsmanager.ddns.net:25080/api/";
 
     protected Gson gson;
     private Service service;

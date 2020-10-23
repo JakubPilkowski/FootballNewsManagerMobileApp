@@ -67,7 +67,7 @@
                     android:maxLines="1"
                     android:padding="12dp"
                     android:textColor="@color/colorTextPrimary"
-                    android:textSize="18sp" />
+                    android:textSize="17sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -96,7 +96,7 @@
                     android:nextFocusForward="@id/login_validate_button"
                     android:padding="6dp"
                     android:textColor="@color/colorTextPrimary"
-                    android:textSize="18sp" />
+                    android:textSize="17sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
 

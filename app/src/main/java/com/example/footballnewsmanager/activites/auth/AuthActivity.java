@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityAuthBinding;
@@ -23,6 +24,7 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityV
         binding.setViewModel(viewModel);
         viewModel.setProviders(this);
         viewModel.init();
+        Connection.init();
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
