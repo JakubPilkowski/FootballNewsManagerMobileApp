@@ -7,7 +7,9 @@ import android.os.Build;
 import android.view.View;
 import android.view.Window;
 
+import com.example.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityAuthBinding;
@@ -23,12 +25,15 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityV
         binding.setViewModel(viewModel);
         viewModel.setProviders(this);
         viewModel.init();
+        Connection.init();
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR ^ View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
 //        }
+
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();

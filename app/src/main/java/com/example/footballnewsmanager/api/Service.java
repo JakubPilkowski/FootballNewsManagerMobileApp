@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 public interface Service {
 
 
-    @POST("api/auth/login")
+    @POST("auth/login")
     Observable<LoginResponse> login(
             @Body LoginRequest loginRequest
             );

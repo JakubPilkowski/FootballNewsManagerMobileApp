@@ -10,16 +10,28 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.SplashActivity;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
 import com.example.footballnewsmanager.activites.main.MainActivity;
+import com.example.footballnewsmanager.api.Callback;
+import com.example.footballnewsmanager.api.Connection;
+import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
+import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.LoginFragmentBinding;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.io.IOException;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+import retrofit2.HttpException;
 
 
 public class LoginViewModel extends BaseViewModel {
@@ -71,7 +83,6 @@ public class LoginViewModel extends BaseViewModel {
             boolean isValid = android.util.Patterns.EMAIL_ADDRESS.matcher(emailValue).matches();
             if (!isValid) {
                 emailLayout.setError(resources.getString(R.string.email_invalid));
-//                requestFocus(email);
                 return false;
             } else {
                 emailLayout.setErrorEnabled(false);
@@ -80,21 +91,13 @@ public class LoginViewModel extends BaseViewModel {
         return true;
     }
 
-    private void requestFocus(TextInputEditText view) {
-        if (view.requestFocus()) {
-            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        }
-    }
-
     public boolean validatePassword() {
         String passwordValue = password.getText().toString();
         if (passwordValue.trim().isEmpty()) {
             passwordLayout.setError(resources.getString(R.string.field_not_blank));
-//            requestFocus(password);
             return false;
         } else if (passwordValue.length() < 8 || passwordValue.length() > 30) {
             passwordLayout.setError(resources.getString(R.string.password_invalid));
-//            requestFocus(password);
             return false;
         } else {
             passwordLayout.setErrorEnabled(false);
@@ -110,15 +113,45 @@ public class LoginViewModel extends BaseViewModel {
 
     public void validate() {
         if (validateBoth())
-//            validateEmail();
-//            validatePassword();
-        //validacja w backendzie
         {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            getActivity().startActivity(intent);
-            getActivity().finish();
+            ProgressDialog.get().show();
+            LoginRequest loginRequest = new LoginRequest(email.getText().toString(), password.getText().toString());
+            Connection.get().login(callback, loginRequest);
         }
     }
+
+
+    private Callback<LoginResponse> callback = new Callback<LoginResponse>() {
+        @Override
+        protected void subscribeActual(@NonNull Observer<? super LoginResponse> observer) {
+
+        }
+
+        @Override
+        public void onSuccess(LoginResponse loginResponse) {
+            Log.d(LoginFragment.TAG, "loginToken" + loginResponse.getAccessToken());
+
+                       ProgressDialog.get().dismiss();
+//            Intent intent = new Intent(getActivity(), MainActivity.class);
+//            getActivity().startActivity(intent);
+//            getActivity().finish();
+        }
+
+
+        @Override
+        public void onSmthWrong(Throwable message) {
+            ProgressDialog.get().dismiss();
+            Log.d(LoginFragment.TAG, "login failed1" +message.getMessage());
+            try {
+                Log.d(LoginFragment.TAG, "login failed"+((HttpException) message).response().errorBody().string());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            Toast.makeText(getActivity().getApplicationContext(), , Toast.LENGTH_SHORT).show();
+        }
+    };
+
+
 
 
     class ValidationWatcher implements TextWatcher {

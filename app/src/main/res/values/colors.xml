@@ -21,7 +21,10 @@
     <!--auth-background-->
     <color name="colorbackgroundPrimary">#F8F8FF</color>
     <color name="colorbackgroundSecondary">#d6ffd9</color>
+    <color name="colorbackgroundPrimaryOpacity">#CC121212</color>
+
 <!--auth-player-colors-->
     <color name="playerColor">#000</color>
     <color name="starColor">#ffa371</color>
+
 </resources>

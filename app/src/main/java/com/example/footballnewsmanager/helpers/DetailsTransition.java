@@ -9,7 +9,7 @@ public class DetailsTransition extends TransitionSet {
     public DetailsTransition() {
         setOrdering(ORDERING_TOGETHER);
                 addTransition(new ChangeBounds()).
-                setDuration(400);
+                setDuration(300);
 
     }
 }
