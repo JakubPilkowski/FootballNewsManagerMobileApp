@@ -13,6 +13,7 @@ import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.Navigator;
 
 
@@ -28,6 +29,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ProgressDialog.init(this);
         navigator.setActivity(this);
         navigator.setFragmentContainer(getIdFragmentContainer());
         binding = DataBindingUtil.setContentView(this, getLayoutRes());

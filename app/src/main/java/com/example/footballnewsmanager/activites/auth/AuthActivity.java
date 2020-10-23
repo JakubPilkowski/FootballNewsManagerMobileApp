@@ -7,6 +7,7 @@ import android.os.Build;
 import android.view.View;
 import android.view.Window;
 
+import com.example.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.base.BaseActivity;
@@ -31,6 +32,8 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityV
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR ^ View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
 //        }
+
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();

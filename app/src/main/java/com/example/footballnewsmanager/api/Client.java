@@ -20,7 +20,7 @@ public class Client {
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(LOCALHOST_URL)
+                .baseUrl(FOOTBALL_NEWS_MANAGER_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();

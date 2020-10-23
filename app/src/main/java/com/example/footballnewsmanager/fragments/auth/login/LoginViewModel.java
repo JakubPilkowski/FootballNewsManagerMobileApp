@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.SplashActivity;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
@@ -25,6 +26,8 @@ import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.LoginFragmentBinding;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.io.IOException;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -111,6 +114,7 @@ public class LoginViewModel extends BaseViewModel {
     public void validate() {
         if (validateBoth())
         {
+            ProgressDialog.get().show();
             LoginRequest loginRequest = new LoginRequest(email.getText().toString(), password.getText().toString());
             Connection.get().login(callback, loginRequest);
         }
@@ -127,15 +131,22 @@ public class LoginViewModel extends BaseViewModel {
         public void onSuccess(LoginResponse loginResponse) {
             Log.d(LoginFragment.TAG, "loginToken" + loginResponse.getAccessToken());
 
+                       ProgressDialog.get().dismiss();
 //            Intent intent = new Intent(getActivity(), MainActivity.class);
 //            getActivity().startActivity(intent);
 //            getActivity().finish();
         }
 
+
         @Override
         public void onSmthWrong(Throwable message) {
+            ProgressDialog.get().dismiss();
             Log.d(LoginFragment.TAG, "login failed1" +message.getMessage());
-//            Log.d(LoginFragment.TAG, "login failed"+((HttpException) message).code());
+            try {
+                Log.d(LoginFragment.TAG, "login failed"+((HttpException) message).response().errorBody().string());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 //            Toast.makeText(getActivity().getApplicationContext(), , Toast.LENGTH_SHORT).show();
         }
     };
