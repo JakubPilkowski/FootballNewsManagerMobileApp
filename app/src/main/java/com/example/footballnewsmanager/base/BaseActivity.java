@@ -1,6 +1,7 @@
 package com.example.footballnewsmanager.base;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -14,7 +15,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.helpers.Navigator;
+import com.example.footballnewsmanager.helpers.UserPreferences;
 
 
 public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseViewModel> extends AppCompatActivity {
@@ -29,7 +32,9 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UserPreferences.init(this);
         ProgressDialog.init(this);
+        Connection.init();
         navigator.setActivity(this);
         navigator.setFragmentContainer(getIdFragmentContainer());
         binding = DataBindingUtil.setContentView(this, getLayoutRes());

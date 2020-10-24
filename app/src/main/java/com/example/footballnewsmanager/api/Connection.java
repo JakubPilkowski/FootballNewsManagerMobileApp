@@ -1,6 +1,9 @@
 package com.example.footballnewsmanager.api;
 
+import androidx.databinding.ObservableField;
+
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
+import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -30,5 +33,11 @@ public class Connection {
         Observable<LoginResponse> loginResponseObservable = client.getService().login(loginRequest)
                 .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
         loginResponseObservable.subscribe(callback);
+    }
+
+    public void isLoggedIn(Callback<BaseResponse> callback, String token){
+        Observable<BaseResponse> baseResponseObservable = client.getService().isLoggedIn(token)
+                .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
+        baseResponseObservable.subscribe(callback);
     }
 }
