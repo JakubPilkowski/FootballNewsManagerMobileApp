@@ -12,6 +12,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface Service {
 
@@ -27,7 +28,13 @@ public interface Service {
     );
 
     @PUT("auth/logout")
-    ObservableField<BaseResponse> logout(
+    Observable<BaseResponse> logout(
             @Header("Authorization") String token
     );
+
+    @POST("sendResetPassToken/{email}")
+    Observable<BaseResponse> sendResetPassTokenMail(
+            @Path("email") String email
+    );
+
 }

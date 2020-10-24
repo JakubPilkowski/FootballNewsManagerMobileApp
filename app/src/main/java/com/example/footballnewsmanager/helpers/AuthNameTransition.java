@@ -5,8 +5,8 @@ import android.transition.ChangeBounds;
 import android.transition.ChangeTransform;
 import android.transition.TransitionSet;
 
-public class DetailsTransition extends TransitionSet {
-    public DetailsTransition() {
+public class AuthNameTransition extends TransitionSet {
+    public AuthNameTransition() {
         setOrdering(ORDERING_TOGETHER);
                 addTransition(new ChangeBounds()).
                 setDuration(300);

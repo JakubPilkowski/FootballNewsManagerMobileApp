@@ -85,7 +85,8 @@
             android:text="@string/forget_password"
             android:textAllCaps="false"
             android:textColor="@color/colorTextPrimary"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:transitionName="auth fragment forget password" />
 
     </LinearLayout>
 </layout>

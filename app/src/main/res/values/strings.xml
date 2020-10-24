@@ -18,5 +18,8 @@
     <string name="password_invalid">Hasło musi zawierać od 8 do 30 znaków</string>
     <string name="loading">Ładowanie...</string>
     <string name="login_successful">Poprawnie Zalogowano</string>
+    <string name="player_logo">player logo</string>
+    <string name="send">Wyślij</string>
+    <string name="forget_password_desc">Podaj adres mailowy na który\nwyślemy token aktywacyjny</string>
 
 </resources>

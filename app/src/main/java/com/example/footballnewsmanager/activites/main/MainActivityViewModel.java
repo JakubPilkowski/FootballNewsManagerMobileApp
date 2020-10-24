@@ -28,7 +28,7 @@ public class MainActivityViewModel extends BaseViewModel {
 
         ProgressDialog.get().show();
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().isLoggedIn(logoutCallback, token);
+        Connection.get().logout(logoutCallback, token);
     }
 
 
