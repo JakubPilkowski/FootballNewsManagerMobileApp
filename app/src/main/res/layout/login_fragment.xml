@@ -64,10 +64,13 @@
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
                     android:maxLength="40"
+                    android:text="pilkowskijakub@gmail.com"
                     android:maxLines="1"
                     android:padding="12dp"
                     android:textColor="@color/colorTextPrimary"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    app:add_text_watcher="@{viewModel.emailValidationTextWatcher}"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -92,13 +95,16 @@
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLength="30"
+                    android:text="suEsKACHpVSt6dmO"
                     android:maxLines="1"
                     android:nextFocusForward="@id/login_validate_button"
                     android:padding="6dp"
                     android:textColor="@color/colorTextPrimary"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    app:add_text_watcher="@{viewModel.passwordValidationTextWatcher}"
+                    app:set_editor_action_listener="@{viewModel.passwordEditorActionListener}"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <Button
                 android:id="@+id/login_validate_button"
@@ -113,6 +119,16 @@
                 android:textAllCaps="false"
                 android:textColor="@color/buttonColor"
                 android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/errorColor"
+                android:text="@{viewModel.errorText}"
+                android:textAlignment="center"
+                />
         </LinearLayout>
     </ScrollView>
 </layout>

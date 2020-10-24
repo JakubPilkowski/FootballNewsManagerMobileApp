@@ -17,5 +17,6 @@
     <string name="email_too_long">Adres mailowy może zawierać maksymalnie 40 znaków</string>
     <string name="password_invalid">Hasło musi zawierać od 8 do 30 znaków</string>
     <string name="loading">Ładowanie...</string>
+    <string name="login_successful">Poprawnie Zalogowano</string>
 
 </resources>
