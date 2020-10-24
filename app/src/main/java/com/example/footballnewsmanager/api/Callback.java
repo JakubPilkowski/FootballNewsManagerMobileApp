@@ -2,6 +2,12 @@ package com.example.footballnewsmanager.api;
 
 import android.util.Log;
 
+import com.example.footballnewsmanager.api.errors.BaseError;
+import com.example.footballnewsmanager.api.errors.MultipleMessageError;
+import com.example.footballnewsmanager.api.errors.SingleMessageError;
+import com.example.footballnewsmanager.fragments.auth.login.LoginFragment;
+import com.google.gson.Gson;
+
 import java.io.IOException;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -10,35 +16,38 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.subjects.Subject;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
+import retrofit2.Response;
 
 public abstract class Callback<T> extends Subject<T> {
     public abstract void onSuccess(T t);
 
-    public abstract void onSmthWrong(Throwable message);
+    public abstract void onSmthWrong(BaseError error);
 
     @Override
     public void onNext(@NonNull T t) {
         onSuccess(t);
     }
     @Override
-    public void onError(@NonNull Throwable e) {
-//        Log.d("error", String.valueOf(((HttpException) e).code()));
-//        if (NetworkUtil.isHttpStatusCode(e, 400) || NetworkUtil.isHttpStatusCode(e, 400)) {
-//            ResponseBody body = ((HttpException) e).response().errorBody();
-//            try {
-//                Log.d("error body", "onError: " + body.string());
-////                getMvpView().onError(body.string());
-//            } catch (IOException e1) {
-//                e1.printStackTrace();
-////                Timber.e(e1.getMessage());
-//            } finally {
-//                if (body != null) {
-//                    body.close();
-//                }
-//            }
-//        }
+    public void onError(@NonNull Throwable throwable) {
+        try {
+            Response<?> responseBody = ((HttpException) throwable).response();
+            if((responseBody != null ? responseBody.errorBody() : null) !=null){
+                String error = responseBody.errorBody().string();
+                Gson gson = new Gson();
+                if(error.contains("messages")){
+                    MultipleMessageError baseError = gson.fromJson(error, MultipleMessageError.class);
+                    onSmthWrong(baseError);
+                }
+                else {
+                    SingleMessageError baseError = gson.fromJson(error, SingleMessageError.class);
+                    onSmthWrong(baseError);
+                }
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
 
-        onSmthWrong(e);
+//        onSmthWrong(throwable);
     }
     @Override
     public boolean hasObservers() {
