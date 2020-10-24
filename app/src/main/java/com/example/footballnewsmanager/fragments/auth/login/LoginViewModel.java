@@ -22,6 +22,7 @@ import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.LoginFragmentBinding;
+import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.helpers.Validator;
 import com.example.footballnewsmanager.helpers.ValidatorTextWatcher;
 import com.example.footballnewsmanager.models.FieldType;
@@ -96,6 +97,7 @@ public class LoginViewModel extends BaseViewModel {
         @Override
         public void onSuccess(LoginResponse loginResponse) {
             ProgressDialog.get().dismiss();
+            UserPreferences.get().save(loginResponse);
             Intent intent = new Intent(getActivity(), MainActivity.class);
             getActivity().startActivity(intent);
             getActivity().finish();

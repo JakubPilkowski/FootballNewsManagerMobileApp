@@ -25,7 +25,6 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityV
         binding.setViewModel(viewModel);
         viewModel.setProviders(this);
         viewModel.init();
-        Connection.init();
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
