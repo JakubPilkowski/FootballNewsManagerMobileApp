@@ -32,7 +32,7 @@ public interface Service {
             @Header("Authorization") String token
     );
 
-    @POST("sendResetPassToken/{email}")
+    @POST("auth/sendResetPassToken/{email}")
     Observable<BaseResponse> sendResetPassTokenMail(
             @Path("email") String email
     );

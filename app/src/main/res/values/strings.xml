@@ -11,7 +11,7 @@
     <string name="email">Email</string>
     <string name="log_in">Zaloguj się</string>
 
-<!--    validation-->
+    <!--    validation-->
     <string name="field_not_blank">Pole nie może być puste</string>
     <string name="email_invalid">Niepoprawny adres mailowy</string>
     <string name="email_too_long">Adres mailowy może zawierać maksymalnie 40 znaków</string>
@@ -21,5 +21,9 @@
     <string name="player_logo">player logo</string>
     <string name="send">Wyślij</string>
     <string name="forget_password_desc">Podaj adres mailowy na który\nwyślemy token aktywacyjny</string>
+    <string name="token">Token wysłany na adres mailowy</string>
+    <string name="new_password">Nowe hasło</string>
+    <string name="repeat_password">Powtórz hasło</string>
+    <string name="change_password">Zmień hasło</string>
 
 </resources>

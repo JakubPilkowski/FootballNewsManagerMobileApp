@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.fragments.auth.forgetPassword;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -10,6 +11,7 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.activites.resetPassword.ResetPasswordActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -72,13 +74,24 @@ public class ForgetPasswordViewModel extends BaseViewModel {
     private Callback<BaseResponse> sendResetTokenMail = new Callback<BaseResponse>() {
         @Override
         public void onSuccess(BaseResponse baseResponse) {
+            Log.d(ForgetPasswordFragment.TAG, "Sukces");
             //przejście do nowego activity?
             ProgressDialog.get().dismiss();
+            Intent intent = new Intent(getActivity(), ResetPasswordActivity.class);
+            getActivity().startActivity(intent);
+            getActivity().finish();
+
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
-            Log.d(ForgetPasswordFragment.TAG, ((SingleMessageError) error).getMessage());
+//            Log.d(ForgetPasswordFragment.TAG, ((SingleMessageError) error).getMessage());
+//            Log.d(ForgetPasswordFragment.TAG, String.valueOf(error.getStatus()));
+//            Log.d(ForgetPasswordFragment.TAG, error.getError());
+//            errorText.set(((SingleMessageError) error).getMessage());
+            Intent intent = new Intent(getActivity(), ResetPasswordActivity.class);
+            getActivity().startActivity(intent);
+            getActivity().finish();
             ProgressDialog.get().dismiss();
         }
 
