@@ -71,8 +71,6 @@ public class ForgetPasswordViewModel extends BaseViewModel {
     private Callback<BaseResponse> sendResetTokenMail = new Callback<BaseResponse>() {
         @Override
         public void onSuccess(BaseResponse baseResponse) {
-            Log.d(ForgetPasswordFragment.TAG, "Sukces");
-            //przejście do nowego activity?
             ProgressDialog.get().dismiss();
             Intent intent = new Intent(getActivity(), ResetPasswordActivity.class);
             getActivity().startActivity(intent);
@@ -82,9 +80,6 @@ public class ForgetPasswordViewModel extends BaseViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
-//            Log.d(ForgetPasswordFragment.TAG, ((SingleMessageError) error).getMessage());
-//            Log.d(ForgetPasswordFragment.TAG, String.valueOf(error.getStatus()));
-//            Log.d(ForgetPasswordFragment.TAG, error.getError());
             errorText.set(((SingleMessageError) error).getMessage());
             ProgressDialog.get().dismiss();
         }

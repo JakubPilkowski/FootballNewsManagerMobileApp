@@ -28,5 +28,6 @@
     <string name="password_must_match">Hasła muszą się zgadzać</string>
     <string name="token_not_empty">Token nie może być pusty</string>
     <string name="reset_password">Reset hasła</string>
+    <string name="next">Dalej</string>
 
 </resources>

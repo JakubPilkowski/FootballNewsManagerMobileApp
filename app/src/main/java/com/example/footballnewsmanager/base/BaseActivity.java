@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.helpers.Navigator;
+import com.example.footballnewsmanager.helpers.SoundPoolManager;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 
 
@@ -33,6 +34,8 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
         UserPreferences.init(this);
         ProgressDialog.init(this);
         Connection.init();
+        SoundPoolManager.init(this);
+
         navigator.setActivity(this);
         navigator.setFragmentContainer(getIdFragmentContainer());
         binding = DataBindingUtil.setContentView(this, getLayoutRes());
@@ -86,4 +89,10 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
     @LayoutRes
     public abstract int getLayoutRes();
 
+
+    @Override
+    protected void onDestroy() {
+        SoundPoolManager.get().dismiss();
+        super.onDestroy();
+    }
 }

@@ -3,13 +3,11 @@ package com.example.footballnewsmanager.fragments.auth.resetPassword;
 import android.content.res.Resources;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import androidx.databinding.ObservableField;
-import androidx.lifecycle.ViewModel;
 
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -19,9 +17,9 @@ import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.ForgetPasswordFragmentBinding;
 import com.example.footballnewsmanager.databinding.ResetPasswordFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.fragments.auth.success_fragment.SuccessFragment;
 import com.example.footballnewsmanager.helpers.Validator;
 import com.example.footballnewsmanager.helpers.ValidatorTextWatcher;
 import com.example.footballnewsmanager.models.FieldType;
@@ -49,7 +47,7 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
     private TextInputLayout repeatPassLayout;
     private ResetPasswordFragmentBinding binding;
     private Resources resources;
-
+    private String type;
 
     private TextView.OnEditorActionListener resetPasswordActionListener = new TextView.OnEditorActionListener() {
         @Override
@@ -64,8 +62,9 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
         }
     };
 
-    public void init(String token){
+    public void init(String token, String type){
         this.token.set(token);
+        this.type = type;
         binding = ((ResetPasswordFragmentBinding) getBinding());
         resources = getActivity().getResources();
         tokenInput = binding.resetPasswordTokenInput;
@@ -115,9 +114,8 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
     private Callback<BaseResponse> callback = new Callback<BaseResponse>() {
         @Override
         public void onSuccess(BaseResponse baseResponse) {
-            //przejście do nowego fragmentu
             ProgressDialog.get().dismiss();
-            Log.d(ResetPasswordFragment.TAG, "sukces");
+            getNavigator().attach(SuccessFragment.newInstance(type), SuccessFragment.TAG);
         }
 
         @Override

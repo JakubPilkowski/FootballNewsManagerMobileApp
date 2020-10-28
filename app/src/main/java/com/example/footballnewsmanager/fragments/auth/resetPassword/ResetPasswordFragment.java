@@ -25,15 +25,21 @@ public class ResetPasswordFragment extends BaseFragment<ResetPasswordFragmentBin
 
     public static final String TAG = "ResetPasswordFragment";
     private String token;
+    private String type;
 
     public void setToken(String token) {
         this.token = token;
     }
 
-    public static ResetPasswordFragment newInstance(String token) {
+    public static ResetPasswordFragment newInstance(String token, String type) {
         ResetPasswordFragment resetPasswordFragment = new ResetPasswordFragment();
         resetPasswordFragment.setToken(token);
+        resetPasswordFragment.setType(type);
         return resetPasswordFragment;
+    }
+
+    private void setType(String type) {
+        this.type = type;
     }
 
 
@@ -51,7 +57,7 @@ public class ResetPasswordFragment extends BaseFragment<ResetPasswordFragmentBin
     public void bindData(ResetPasswordFragmentBinding binding) {
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
-        viewModel.init(token);
+        viewModel.init(token, type);
     }
 
     @Override
