@@ -50,4 +50,32 @@ public class Validator {
     }
 
 
+    public static boolean validateRepeatPassword(TextInputEditText repeatPassInput, TextInputLayout repeatPassLayout, String password, Resources resources) {
+        String passwordValue = repeatPassInput.getText().toString();
+
+        if(validatePassword(repeatPassInput, repeatPassLayout, resources)){
+            if(!passwordValue.equals(password)){
+                repeatPassLayout.setError(resources.getString(R.string.password_must_match));
+                return false;
+            }
+            else{
+                repeatPassLayout.setErrorEnabled(false);
+                return true;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    public static boolean validateToken(TextInputEditText tokenInput, TextInputLayout tokenInputLayout, Resources resources) {
+        String tokenValue = tokenInput.getText().toString();
+        if(tokenValue.trim().isEmpty()){
+            tokenInputLayout.setError(resources.getString(R.string.token_not_empty));
+            return false;
+        }
+        else {
+            tokenInputLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
 }

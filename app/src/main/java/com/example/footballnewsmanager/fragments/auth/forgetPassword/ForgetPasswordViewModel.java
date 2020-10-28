@@ -8,20 +8,17 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import androidx.databinding.ObservableField;
-import androidx.lifecycle.ViewModel;
 
-import com.example.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.api.errors.SingleMessageError;
+import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.activites.resetPassword.ResetPasswordActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.errors.SingleMessageError;
-import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ForgetPasswordFragmentBinding;
-import com.example.footballnewsmanager.databinding.LoginFragmentBinding;
 import com.example.footballnewsmanager.helpers.Validator;
 import com.example.footballnewsmanager.helpers.ValidatorTextWatcher;
 import com.example.footballnewsmanager.models.FieldType;
@@ -79,7 +76,7 @@ public class ForgetPasswordViewModel extends BaseViewModel {
             ProgressDialog.get().dismiss();
             Intent intent = new Intent(getActivity(), ResetPasswordActivity.class);
             getActivity().startActivity(intent);
-            getActivity().finish();
+//            getActivity().finish();
 
         }
 
@@ -88,10 +85,7 @@ public class ForgetPasswordViewModel extends BaseViewModel {
 //            Log.d(ForgetPasswordFragment.TAG, ((SingleMessageError) error).getMessage());
 //            Log.d(ForgetPasswordFragment.TAG, String.valueOf(error.getStatus()));
 //            Log.d(ForgetPasswordFragment.TAG, error.getError());
-//            errorText.set(((SingleMessageError) error).getMessage());
-            Intent intent = new Intent(getActivity(), ResetPasswordActivity.class);
-            getActivity().startActivity(intent);
-            getActivity().finish();
+            errorText.set(((SingleMessageError) error).getMessage());
             ProgressDialog.get().dismiss();
         }
 

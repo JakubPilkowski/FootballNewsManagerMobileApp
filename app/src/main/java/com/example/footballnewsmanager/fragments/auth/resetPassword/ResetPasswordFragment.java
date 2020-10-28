@@ -23,7 +23,7 @@ import com.example.footballnewsmanager.interfaces.Providers;
 public class ResetPasswordFragment extends BaseFragment<ResetPasswordFragmentBinding, ResetPasswordFragmentViewModel> implements Providers {
 
 
-    public static final String TAG = "ResetPasswordFragmentTag";
+    public static final String TAG = "ResetPasswordFragment";
     private String token;
 
     public void setToken(String token) {

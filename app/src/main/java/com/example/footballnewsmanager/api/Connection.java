@@ -5,6 +5,7 @@ import android.telecom.Call;
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
+import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 
@@ -53,6 +54,12 @@ public class Connection {
     public void sendResetPasswordMail(Callback<BaseResponse> callback, String email)
     {
         Observable<BaseResponse> baseResponseObservable = client.getService().sendResetPassTokenMail(email)
+                .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
+        baseResponseObservable.subscribe(callback);
+    }
+
+    public void resetPassword(Callback<BaseResponse> callback, ResetPasswordRequest resetPasswordRequest){
+        Observable<BaseResponse> baseResponseObservable = client.getService().resetToken(resetPasswordRequest)
                 .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
         baseResponseObservable.subscribe(callback);
     }

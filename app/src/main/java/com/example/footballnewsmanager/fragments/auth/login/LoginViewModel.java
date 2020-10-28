@@ -2,16 +2,13 @@ package com.example.footballnewsmanager.fragments.auth.login;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import androidx.databinding.ObservableField;
 
-import com.example.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;

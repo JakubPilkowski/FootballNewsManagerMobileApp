@@ -18,6 +18,8 @@ public class ValidatorTextWatcher implements TextWatcher {
         this.type = type;
     }
 
+
+
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -39,6 +41,9 @@ public class ValidatorTextWatcher implements TextWatcher {
                 break;
             case PASSWORD:
                 Validator.validatePassword(editText, editTextLayout, editText.getResources());
+                break;
+            case TOKEN:
+                Validator.validateToken(editText, editTextLayout, editText.getResources());
                 break;
         }
     }

@@ -1,7 +1,8 @@
-package com.example.dialogs;
+package com.example.footballnewsmanager.dialogs;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -44,9 +45,11 @@ public class ProgressDialog {
                 .setView(linearLayout).create();
 
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_NO){
-//            dialog.getWindow().setNavigationBarColor();
-//            dialog.getWindow().setStatusBarColor();
-            dialog.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR ^ View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    dialog.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR ^ View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+                }
+            }
         }
         dialog.show();
     }

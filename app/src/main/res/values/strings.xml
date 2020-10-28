@@ -25,5 +25,8 @@
     <string name="new_password">Nowe hasło</string>
     <string name="repeat_password">Powtórz hasło</string>
     <string name="change_password">Zmień hasło</string>
+    <string name="password_must_match">Hasła muszą się zgadzać</string>
+    <string name="token_not_empty">Token nie może być pusty</string>
+    <string name="reset_password">Reset hasła</string>
 
 </resources>

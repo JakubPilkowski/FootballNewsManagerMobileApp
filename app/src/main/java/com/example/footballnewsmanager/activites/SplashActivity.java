@@ -2,18 +2,16 @@ package com.example.footballnewsmanager.activites;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.example.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.api.Callback;
-import com.example.footballnewsmanager.api.Client;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;

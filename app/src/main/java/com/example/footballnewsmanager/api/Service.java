@@ -3,6 +3,7 @@ package com.example.footballnewsmanager.api;
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
+import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 
@@ -35,6 +36,11 @@ public interface Service {
     @POST("auth/sendResetPassToken/{email}")
     Observable<BaseResponse> sendResetPassTokenMail(
             @Path("email") String email
+    );
+
+    @POST("auth/resetPassword")
+    Observable<BaseResponse> resetToken(
+            @Body ResetPasswordRequest resetPasswordRequest
     );
 
 }
