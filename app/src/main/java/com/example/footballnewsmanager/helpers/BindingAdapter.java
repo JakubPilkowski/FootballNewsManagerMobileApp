@@ -25,4 +25,11 @@ public class BindingAdapter {
     {
         editText.setOnEditorActionListener(listener);
     }
+
+    @androidx.databinding.BindingAdapter("clear_focus")
+    public static void setClearFocus(EditText editText, boolean focus){
+        if(focus){
+            editText.clearFocus();
+        }
+    }
 }

@@ -1,24 +1,25 @@
 package com.example.footballnewsmanager.activites.auth;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.ViewDataBinding;
 
+import android.content.Intent;
 import android.os.Build;
-import android.view.View;
 import android.view.Window;
 
-import com.example.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityAuthBinding;
+import com.example.footballnewsmanager.fragments.auth.login.LoginFragment;
 import com.example.footballnewsmanager.fragments.auth.welcome.WelcomeFragment;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
 
 public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityViewModel> implements Providers {
 
+    public static final int RESULT_RESET_PASSWORD = 1001;
 
     @Override
     protected void initActivity(ActivityAuthBinding binding) {
@@ -78,5 +79,13 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityV
     @Override
     public Navigator getNavigator() {
         return navigator;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_RESET_PASSWORD && resultCode == RESULT_OK){
+            getNavigator().attach(LoginFragment.newInstance(), LoginFragment.TAG);
+        }
     }
 }

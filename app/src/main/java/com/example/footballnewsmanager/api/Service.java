@@ -3,6 +3,7 @@ package com.example.footballnewsmanager.api;
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
+import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 
@@ -12,6 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface Service {
 
@@ -27,7 +29,18 @@ public interface Service {
     );
 
     @PUT("auth/logout")
-    ObservableField<BaseResponse> logout(
+    Observable<BaseResponse> logout(
             @Header("Authorization") String token
     );
+
+    @POST("auth/sendResetPassToken/{email}")
+    Observable<BaseResponse> sendResetPassTokenMail(
+            @Path("email") String email
+    );
+
+    @POST("auth/resetPassword")
+    Observable<BaseResponse> resetToken(
+            @Body ResetPasswordRequest resetPasswordRequest
+    );
+
 }

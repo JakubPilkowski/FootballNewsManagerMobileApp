@@ -2,22 +2,21 @@ package com.example.footballnewsmanager.fragments.auth.login;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
-import com.example.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.api.Connection;
+import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
+import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.api.Callback;
-import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
-import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
@@ -26,7 +25,6 @@ import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.helpers.Validator;
 import com.example.footballnewsmanager.helpers.ValidatorTextWatcher;
 import com.example.footballnewsmanager.models.FieldType;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -36,8 +34,8 @@ import io.reactivex.rxjava3.core.Observer;
 public class LoginViewModel extends BaseViewModel {
 
 
-    private TextInputEditText email;
-    private TextInputEditText password;
+//    private TextInputEditText email;
+//    private TextInputEditText password;
     private TextInputLayout emailLayout;
     private TextInputLayout passwordLayout;
     private LoginFragmentBinding binding;
@@ -46,13 +44,17 @@ public class LoginViewModel extends BaseViewModel {
     public ObservableField<ValidatorTextWatcher> emailValidationTextWatcher = new ObservableField<>();
     public ObservableField<ValidatorTextWatcher> passwordValidationTextWatcher = new ObservableField<>();
     public ObservableField<TextView.OnEditorActionListener> passwordEditorActionListener = new ObservableField<>();
+    public ObservableField<String> email = new ObservableField<>("pilkowskijakub@gmail.com");
+    public ObservableField<String> password = new ObservableField<>("suEsKACHpVSt6dmO");
+    public ObservableBoolean clearFocus = new ObservableBoolean(false);
 
     private TextView.OnEditorActionListener passwordListener = new TextView.OnEditorActionListener() {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 ((BaseActivity) getActivity()).hideKeyboard();
-                password.clearFocus();
+                clearFocus.set(true);
+//                password.clearFocus();
                 validate();
                 return true;
             }
@@ -63,8 +65,8 @@ public class LoginViewModel extends BaseViewModel {
     public void init() {
         binding = ((LoginFragmentBinding) getBinding());
         resources = getActivity().getResources();
-        email = binding.loginEmailInput;
-        password = binding.loginPasswordInput;
+//        email = binding.loginEmailInput;
+//        password = binding.loginPasswordInput;
         emailLayout = binding.loginEmailLayout;
         passwordLayout = binding.loginPasswordLayout;
         emailValidationTextWatcher.set(new ValidatorTextWatcher(email, emailLayout, FieldType.EMAIL));
@@ -73,9 +75,9 @@ public class LoginViewModel extends BaseViewModel {
     }
 
 
-    public boolean validateBoth() {
-        boolean emailValidation = Validator.validateEmail(email, emailLayout, resources);
-        boolean passwordValidation = Validator.validatePassword(password, passwordLayout, resources);
+    private boolean validateBoth() {
+        boolean emailValidation = Validator.validateEmail(email.get(), emailLayout, resources);
+        boolean passwordValidation = Validator.validatePassword(password.get(), passwordLayout, resources);
         return emailValidation && passwordValidation;
     }
 
@@ -83,7 +85,7 @@ public class LoginViewModel extends BaseViewModel {
         if (validateBoth()) {
             errorText.set("");
             ProgressDialog.get().show();
-            LoginRequest loginRequest = new LoginRequest(email.getText().toString(), password.getText().toString());
+            LoginRequest loginRequest = new LoginRequest(email.get(), password.get());
             Connection.get().login(callback, loginRequest);
         }
     }

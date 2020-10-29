@@ -1,11 +1,9 @@
 package com.example.footballnewsmanager.activites.main;
 
 import android.content.Intent;
-import android.telecom.Call;
 import android.util.Log;
 
-import com.example.dialogs.ProgressDialog;
-import com.example.footballnewsmanager.activites.SplashActivity;
+import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -28,7 +26,7 @@ public class MainActivityViewModel extends BaseViewModel {
 
         ProgressDialog.get().show();
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().isLoggedIn(logoutCallback, token);
+        Connection.get().logout(logoutCallback, token);
     }
 
 
