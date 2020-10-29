@@ -7,8 +7,10 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
+import com.bumptech.glide.util.ContentLengthInputStream;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -34,48 +36,42 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
 
     public ObservableField<String> errorText = new ObservableField<>("");
     public ObservableField<String> token = new ObservableField<>("");
+    public ObservableField<String> newPassword = new ObservableField<>("suEsKACHpVSt6dmO");
+    public ObservableField<String> repeatPassword = new ObservableField<>("suEsKACHpVSt6dmO");
     public ObservableField<TextWatcher> tokenTextWatcherAdapter = new ObservableField<>();
     public ObservableField<TextWatcher> newPassTextWatcherAdapter = new ObservableField<>();
     public ObservableField<TextWatcher> repeatPasswordTextWatcherAdapter = new ObservableField<>();
     public ObservableField<TextView.OnEditorActionListener> repeatPasswordActionAdapter = new ObservableField<>();
+    public ObservableBoolean clearFocus = new ObservableBoolean(false);
 
-    private TextInputEditText tokenInput;
     private TextInputLayout tokenInputLayout;
-    private TextInputEditText newPassInput;
     private TextInputLayout newPassLayout;
-    private TextInputEditText repeatPassInput;
     private TextInputLayout repeatPassLayout;
     private ResetPasswordFragmentBinding binding;
     private Resources resources;
     private String type;
 
-    private TextView.OnEditorActionListener resetPasswordActionListener = new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                ((BaseActivity) getActivity()).hideKeyboard();
-                newPassInput.clearFocus();
-                validate();
-                return true;
-            }
-            return false;
+    private TextView.OnEditorActionListener resetPasswordActionListener = (v, actionId, event) -> {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            ((BaseActivity) getActivity()).hideKeyboard();
+            clearFocus.set(true);
+            validate();
+            return true;
         }
+        return false;
     };
 
-    public void init(String token, String type){
+    public void init(String token, String type) {
         this.token.set(token);
         this.type = type;
         binding = ((ResetPasswordFragmentBinding) getBinding());
         resources = getActivity().getResources();
-        tokenInput = binding.resetPasswordTokenInput;
         tokenInputLayout = binding.resetPasswordTokenLayout;
-        newPassInput = binding.resetPasswordNewPassInput;
         newPassLayout = binding.resetPasswordNewPassLayout;
-        repeatPassInput = binding.resetPasswordRepeatPasswordInput;
         repeatPassLayout = binding.resetPasswordRepeatPasswordLayout;
 
-        tokenTextWatcherAdapter.set(new ValidatorTextWatcher(tokenInput, tokenInputLayout, FieldType.TOKEN));
-        newPassTextWatcherAdapter.set(new ValidatorTextWatcher(newPassInput, newPassLayout, FieldType.PASSWORD));
+        tokenTextWatcherAdapter.set(new ValidatorTextWatcher(this.token, tokenInputLayout, FieldType.TOKEN));
+        newPassTextWatcherAdapter.set(new ValidatorTextWatcher(newPassword, newPassLayout, FieldType.PASSWORD));
         repeatPasswordTextWatcherAdapter.set(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -89,24 +85,24 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Validator.validateRepeatPassword(repeatPassInput, repeatPassLayout, newPassInput.getText().toString(), resources);
+                Validator.validateRepeatPassword(repeatPassword.get(), repeatPassLayout, newPassword.get(), resources);
             }
         });
         repeatPasswordActionAdapter.set(resetPasswordActionListener);
     }
 
     private boolean validateAll() {
-        boolean tokenValidation = Validator.validateToken(tokenInput, tokenInputLayout, resources);
-        boolean newPassValidation = Validator.validatePassword(newPassInput, newPassLayout, resources);
-        boolean repeatPassValidation = Validator.validateRepeatPassword(repeatPassInput, repeatPassLayout,newPassInput.getText().toString(), resources);
+        boolean tokenValidation = Validator.validateToken(token.get(), tokenInputLayout, resources);
+        boolean newPassValidation = Validator.validatePassword(newPassword.get(), newPassLayout, resources);
+        boolean repeatPassValidation = Validator.validateRepeatPassword(repeatPassword.get(), repeatPassLayout, newPassword.get(), resources);
         return tokenValidation && newPassValidation && repeatPassValidation;
     }
 
-    public void validate(){
-        if(validateAll()){
+    public void validate() {
+        if (validateAll()) {
             errorText.set("");
             ProgressDialog.get().show();
-            ResetPasswordRequest resetPasswordRequest = new ResetPasswordRequest(tokenInput.getText().toString(), newPassInput.getText().toString());
+            ResetPasswordRequest resetPasswordRequest = new ResetPasswordRequest(token.get(), newPassword.get());
             Connection.get().resetPassword(callback, resetPasswordRequest);
         }
     }
@@ -120,7 +116,7 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
-            errorText.set(((SingleMessageError)error).getMessage());
+            errorText.set(((SingleMessageError) error).getMessage());
             ProgressDialog.get().dismiss();
         }
 

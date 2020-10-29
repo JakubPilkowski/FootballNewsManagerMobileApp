@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
@@ -28,43 +29,42 @@ import com.google.android.material.textfield.TextInputLayout;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
+import static com.example.footballnewsmanager.activites.auth.AuthActivity.RESULT_RESET_PASSWORD;
+
 public class ForgetPasswordViewModel extends BaseViewModel {
     // TODO: Implement the ViewModel
-    private TextInputEditText email;
     private TextInputLayout emailLayout;
     private ForgetPasswordFragmentBinding binding;
     private Resources resources;
     public ObservableField<String> errorText = new ObservableField<>("");
     public ObservableField<ValidatorTextWatcher> emailValidationTextWatcher = new ObservableField<>();
     public ObservableField<TextView.OnEditorActionListener> emailEditorListenerObservable = new ObservableField<>();
+    public ObservableField<String> email = new ObservableField<>("pilkowskijakub@gmail.com");
+    public ObservableBoolean clearFocus = new ObservableBoolean(false);
 
-    private TextView.OnEditorActionListener emailListener = new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                ((BaseActivity) getActivity()).hideKeyboard();
-                email.clearFocus();
-                validate();
-                return true;
-            }
-            return false;
+    private TextView.OnEditorActionListener emailListener = (v, actionId, event) -> {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            ((BaseActivity) getActivity()).hideKeyboard();
+            clearFocus.set(true);
+            validate();
+            return true;
         }
+        return false;
     };
 
     public void init() {
         binding = (ForgetPasswordFragmentBinding) getBinding();
         resources = getActivity().getResources();
-        email = binding.forgetPasswordInput;
         emailLayout = binding.forgetPasswordInputLayout;
         emailValidationTextWatcher.set(new ValidatorTextWatcher(email, emailLayout, FieldType.EMAIL));
         emailEditorListenerObservable.set(emailListener);
     }
 
     public void validate() {
-        if (Validator.validateEmail(email, emailLayout, resources)) {
+        if (Validator.validateEmail(email.get(), emailLayout, resources)) {
             errorText.set("");
             ProgressDialog.get().show();
-            Connection.get().sendResetPasswordMail(sendResetTokenMail, email.getText().toString());
+            Connection.get().sendResetPasswordMail(sendResetTokenMail, email.get());
         }
     }
 
@@ -73,9 +73,7 @@ public class ForgetPasswordViewModel extends BaseViewModel {
         public void onSuccess(BaseResponse baseResponse) {
             ProgressDialog.get().dismiss();
             Intent intent = new Intent(getActivity(), ResetPasswordActivity.class);
-            getActivity().startActivity(intent);
-//            getActivity().finish();
-
+            getActivity().startActivityForResult(intent, RESULT_RESET_PASSWORD);
         }
 
         @Override

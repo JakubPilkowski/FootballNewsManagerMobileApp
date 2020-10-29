@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.fragments.auth.success_fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
@@ -33,7 +34,8 @@ public class SuccessViewModel extends BaseViewModel {
             getActivity().finish();
         }
         else{
-            //activityForResult
+            getActivity().setResult(Activity.RESULT_OK);
+            getActivity().finish();
         }
     }
 }

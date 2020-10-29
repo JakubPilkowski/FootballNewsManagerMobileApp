@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.activites.resetPassword;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.ViewDataBinding;
 
@@ -13,6 +14,7 @@ import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityResetPasswordBinding;
+import com.example.footballnewsmanager.fragments.auth.login.LoginFragment;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
 
@@ -61,4 +63,5 @@ public class ResetPasswordActivity extends BaseActivity<ActivityResetPasswordBin
     public Navigator getNavigator() {
         return navigator;
     }
+
 }
