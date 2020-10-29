@@ -54,7 +54,6 @@ public class LoginViewModel extends BaseViewModel {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 ((BaseActivity) getActivity()).hideKeyboard();
                 clearFocus.set(true);
-//                password.clearFocus();
                 validate();
                 return true;
             }
@@ -65,8 +64,6 @@ public class LoginViewModel extends BaseViewModel {
     public void init() {
         binding = ((LoginFragmentBinding) getBinding());
         resources = getActivity().getResources();
-//        email = binding.loginEmailInput;
-//        password = binding.loginPasswordInput;
         emailLayout = binding.loginEmailLayout;
         passwordLayout = binding.loginPasswordLayout;
         emailValidationTextWatcher.set(new ValidatorTextWatcher(email, emailLayout, FieldType.EMAIL));

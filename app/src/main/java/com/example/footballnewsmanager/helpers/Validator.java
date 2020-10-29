@@ -11,7 +11,18 @@ public class Validator {
 
 
 
-    public static boolean validateLogin(TextInputEditText loginInput, TextInputLayout loginLayout) {
+    public static boolean validateLogin(String login, TextInputLayout loginLayout, Resources resources) {
+        if (login.trim().isEmpty()) {
+            loginLayout.setError(resources.getString(R.string.field_not_blank));
+            return false;
+        }
+        else if(login.length() > 20 || login.length() < 4){
+            loginLayout.setError(resources.getString(R.string.login_size_error));
+            return false;
+        }
+        else{
+            loginLayout.setErrorEnabled(false);
+        }
         return true;
     }
 

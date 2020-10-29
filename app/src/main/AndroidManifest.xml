@@ -15,14 +15,18 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
         <activity
+            android:name=".activites.register.RegisterActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
             android:name=".activites.resetPassword.ResetPasswordActivity"
             android:theme="@style/ResetPasswordTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            >
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="www.footballnewsmanager.com"
                     android:path="/reset"
@@ -30,11 +34,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:windowSoftInputMode="adjustPan|stateHidden"
             android:name=".activites.auth.AuthActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AuthTheme"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activites.SplashActivity"
             android:screenOrientation="portrait"

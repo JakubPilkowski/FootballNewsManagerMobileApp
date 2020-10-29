@@ -29,5 +29,9 @@
     <string name="token_not_empty">Token nie może być pusty</string>
     <string name="reset_password">Reset hasła</string>
     <string name="next">Dalej</string>
+    <string name="registration">Rejestracja</string>
+    <string name="register">Zarejestruj</string>
+    <string name="login_size_error">Login musi zawierać od 4 do 20 znaków</string>
+    <string name="username">Nazwa</string>
 
 </resources>

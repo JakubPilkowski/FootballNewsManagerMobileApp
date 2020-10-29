@@ -4,6 +4,7 @@ import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.WelcomeFragmentBinding;
 import com.example.footballnewsmanager.fragments.auth.forgetPassword.ForgetPasswordFragment;
 import com.example.footballnewsmanager.fragments.auth.login.LoginFragment;
+import com.example.footballnewsmanager.fragments.auth.registerFragment.RegisterFragment;
 import com.example.footballnewsmanager.helpers.AuthNameTransition;
 
 public class WelcomeViewModel extends BaseViewModel {
@@ -11,7 +12,7 @@ public class WelcomeViewModel extends BaseViewModel {
 
     }
     public void onRegister(){
-
+        getNavigator().attach(RegisterFragment.newInstance(), RegisterFragment.TAG);
     }
 
     public void onLogin(){
@@ -20,7 +21,7 @@ public class WelcomeViewModel extends BaseViewModel {
         loginFragment.setExitTransition(new AuthNameTransition());
 
         getNavigator().sharedTransitionAttach(loginFragment, LoginFragment.TAG,
-                ((WelcomeFragmentBinding)getBinding()).authLoginButton, "login fragment title");
+                ((WelcomeFragmentBinding)getBinding()).authLoginButton, "username fragment title");
     }
 
     public void onForgetPassword(){

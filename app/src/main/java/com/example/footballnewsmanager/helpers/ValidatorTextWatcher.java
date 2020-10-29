@@ -20,7 +20,6 @@ public class ValidatorTextWatcher implements TextWatcher {
     }
 
 
-
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -35,7 +34,7 @@ public class ValidatorTextWatcher implements TextWatcher {
     public void afterTextChanged(Editable s) {
         switch (type) {
             case LOGIN:
-//                    Validator.validateLogin(text, editTextLayout);
+                Validator.validateLogin(text.get(), editTextLayout, editTextLayout.getResources());
                 break;
             case EMAIL:
                 Validator.validateEmail(text.get(), editTextLayout, editTextLayout.getResources());
