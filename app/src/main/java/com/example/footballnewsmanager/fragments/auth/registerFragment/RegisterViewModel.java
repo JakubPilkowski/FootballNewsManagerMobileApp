@@ -90,8 +90,8 @@ public class RegisterViewModel extends BaseViewModel {
         if(validateAll()){
             errorText.set("");
             ProgressDialog.get().show();
-            RegisterRequest registerRequest = new RegisterRequest(username.get(), email.get(), password.get());
-            Connection.get().register(callback,registerRequest);
+//            RegisterRequest registerRequest = new RegisterRequest(username.get(), email.get(), password.get());
+//            Connection.get().register(callback,registerRequest);
         }
     }
 
@@ -101,7 +101,7 @@ public class RegisterViewModel extends BaseViewModel {
             Log.d(RegisterFragment.TAG, "success");
 //            LoginRequest loginRequest = new LoginRequest(email.get(), password.get());
 //            Connection.get().login(loginCallback, loginRequest);
-            ProgressDialog.get().dismiss();
+//            ProgressDialog.get().dismiss();
         }
 
         @Override
