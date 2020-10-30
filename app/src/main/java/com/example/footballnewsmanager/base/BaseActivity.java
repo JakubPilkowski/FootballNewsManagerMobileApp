@@ -91,6 +91,21 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
 
 
     @Override
+    protected void onPause() {
+        hideKeyboard();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        UserPreferences.init(this);
+        ProgressDialog.init(this);
+        Connection.init();
+        SoundPoolManager.init(this);
+        super.onResume();
+    }
+
+    @Override
     protected void onDestroy() {
         SoundPoolManager.get().dismiss();
         super.onDestroy();

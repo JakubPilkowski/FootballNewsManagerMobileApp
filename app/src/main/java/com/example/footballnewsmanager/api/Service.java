@@ -3,6 +3,7 @@ package com.example.footballnewsmanager.api;
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
+import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
@@ -18,10 +19,10 @@ import retrofit2.http.Path;
 public interface Service {
 
 
-    @POST("auth/login")
+    @POST("auth/username")
     Observable<LoginResponse> login(
             @Body LoginRequest loginRequest
-            );
+    );
 
     @GET("auth/isLoggedIn")
     Observable<BaseResponse> isLoggedIn(
@@ -43,4 +44,8 @@ public interface Service {
             @Body ResetPasswordRequest resetPasswordRequest
     );
 
+    @POST("auth/register")
+    Observable<BaseResponse> register(
+            @Body RegisterRequest registerRequest
+    );
 }

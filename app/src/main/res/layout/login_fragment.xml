@@ -62,8 +62,6 @@
                 app:add_text_watcher="@{viewModel.emailValidationTextWatcher}" />
         </com.google.android.material.textfield.TextInputLayout>
 
-<!--        android:text="pilkowskijakub@gmail.com"-->
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/login_password_layout"
@@ -97,9 +95,6 @@
                 app:add_text_watcher="@{viewModel.passwordValidationTextWatcher}"
                 app:set_editor_action_listener="@{viewModel.passwordEditorActionListener}" />
         </com.google.android.material.textfield.TextInputLayout>
-
-
-<!--        android:text="suEsKACHpVSt6dmO"-->
 
 
         <Button
