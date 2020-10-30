@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.fragments.auth.registerFragment;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.telecom.Call;
 import android.text.TextWatcher;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
+import com.example.footballnewsmanager.activites.register.ProposedSettingsActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -37,9 +39,9 @@ public class RegisterViewModel extends BaseViewModel {
     // TODO: Implement the ViewModel
 
 
-    public ObservableField<String> username = new ObservableField<>("");
-    public ObservableField<String> email = new ObservableField<>("");
-    public ObservableField<String> password = new ObservableField<>("");
+    public ObservableField<String> username = new ObservableField<>("qweqweqweqwew");
+    public ObservableField<String> email = new ObservableField<>("weqww@wqewq.com");
+    public ObservableField<String> password = new ObservableField<>("asdasdasds");
     public ObservableBoolean clearFocus = new ObservableBoolean(false);
     public ObservableField<String> errorText = new ObservableField<>("");
     public ObservableField<TextWatcher> usernameTextWatcherAdapter = new ObservableField<>();
@@ -89,7 +91,10 @@ public class RegisterViewModel extends BaseViewModel {
     public void validate(){
         if(validateAll()){
             errorText.set("");
-            ProgressDialog.get().show();
+//            ProgressDialog.get().show();
+            Intent intent = new Intent(getActivity(), ProposedSettingsActivity.class);
+            getActivity().startActivity(intent);
+            getActivity().finish();
 //            RegisterRequest registerRequest = new RegisterRequest(username.get(), email.get(), password.get());
 //            Connection.get().register(callback,registerRequest);
         }

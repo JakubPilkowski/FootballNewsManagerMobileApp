@@ -15,8 +15,10 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
         <activity
-            android:name=".activites.register.RegisterActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:name=".activites.register.ProposedSettingsActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:theme="@style/ProposedSettings"
+            />
         <activity
             android:name=".activites.resetPassword.ResetPasswordActivity"
             android:theme="@style/ResetPasswordTheme"

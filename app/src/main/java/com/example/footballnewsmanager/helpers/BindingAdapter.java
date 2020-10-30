@@ -1,6 +1,9 @@
 package com.example.footballnewsmanager.helpers;
 
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -31,5 +34,22 @@ public class BindingAdapter {
         if(focus){
             editText.clearFocus();
         }
+    }
+
+    @androidx.databinding.BindingAdapter("setEnabled")
+    public static void setEnabled(Button button, boolean enabled){
+        button.setEnabled(enabled);
+    }
+
+    @androidx.databinding.BindingAdapter("marginBottom")
+    public static void setLayoutMarginBottom(View view, int value) {
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        layoutParams.bottomMargin = value;
+    }
+
+    @androidx.databinding.BindingAdapter("marginStart")
+    public static void setLayoutMarginStart(View view, int value) {
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        layoutParams.leftMargin = value;
     }
 }

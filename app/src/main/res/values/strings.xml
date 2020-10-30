@@ -33,5 +33,6 @@
     <string name="register">Zarejestruj</string>
     <string name="login_size_error">Login musi zawierać od 4 do 20 znaków</string>
     <string name="username">Nazwa</string>
+    <string name="back">Cofnij</string>
 
 </resources>
