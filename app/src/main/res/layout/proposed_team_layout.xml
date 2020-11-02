@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.footballnewsmanager.adapters.proposed_teams.ProposedTeamsAdapterViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/proposed_items_selector"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_margin="12dp"
+        android:padding="6dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:imageUrl="@{viewModel.imageUrl}"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.name}"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="20sp" />
+    </LinearLayout>
+</layout>

@@ -7,6 +7,7 @@ import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
+import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
@@ -15,11 +16,12 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Service {
 
 
-    @POST("auth/username")
+    @POST("auth/login")
     Observable<LoginResponse> login(
             @Body LoginRequest loginRequest
     );
@@ -47,5 +49,12 @@ public interface Service {
     @POST("auth/register")
     Observable<BaseResponse> register(
             @Body RegisterRequest registerRequest
+    );
+
+
+    @GET("teams/hot")
+    Observable<ProposedTeamsResponse> proposedTeams(
+            @Header("Authorization") String token,
+            @Query("count") int count
     );
 }

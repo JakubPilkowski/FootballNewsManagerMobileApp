@@ -1,5 +1,7 @@
 package com.example.footballnewsmanager.adapters;
 
+import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -10,11 +12,18 @@ import com.example.footballnewsmanager.fragments.proposed_settings.others.Propos
 import com.example.footballnewsmanager.fragments.proposed_settings.sites.ProposedSitesFragment;
 import com.example.footballnewsmanager.fragments.proposed_settings.teams.ProposedTeamsFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProposedSettingsViewPagerAdapter extends FragmentStateAdapter {
 
+    private List<BaseFragment> fragments = new ArrayList<>();
 
-    public ProposedSettingsViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+
+    public ProposedSettingsViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, List<BaseFragment> fragmentList) {
         super(fragmentActivity);
+        fragments.clear();
+        fragments.addAll(fragmentList);
     }
 
     @NonNull
@@ -23,13 +32,13 @@ public class ProposedSettingsViewPagerAdapter extends FragmentStateAdapter {
         Fragment fragment = null;
         switch (position){
             case 0:
-                fragment = ProposedTeamsFragment.newInstance();
+                fragment = fragments.get(0);
                 break;
             case 1:
-                fragment = ProposedSitesFragment.newInstance();
+                fragment = fragments.get(1);
                 break;
             case 2:
-                fragment = ProposedOthersFragment.newInstance();
+                fragment = fragments.get(2);
                 break;
         }
         return fragment;

@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
             type="com.example.footballnewsmanager.fragments.proposed_settings.teams.ProposedTeamsViewModel" />
     </data>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     tools:context=".fragments.proposed_settings.teams.ProposedTeamsFragment">
 
+
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Drużyny"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        android:transitionName="login fragment title" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Wybierz jedne z polecanych drużyn"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="20sp"
+        android:transitionName="login fragment title" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="50sp"
-        android:text="Teams" />
-
-</FrameLayout>
+        app:layoutManager="@{viewModel.layoutManager}"
+        app:recyclerViewAdapter="@{viewModel.recyclerViewAdapter}"
+        />
+</LinearLayout>
 </layout>

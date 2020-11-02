@@ -11,6 +11,7 @@ import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.api.Connection;
+import com.example.footballnewsmanager.api.errors.MultipleMessageError;
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.activites.main.MainActivity;
@@ -106,8 +107,20 @@ public class LoginViewModel extends BaseViewModel {
         @Override
         public void onSmthWrong(BaseError error) {
             ProgressDialog.get().dismiss();
+            Log.d(LoginFragment.TAG, error.getError());
+            Log.d(LoginFragment.TAG, String.valueOf(error.getStatus()));
+            //            errorText.set(error.getError());
             if (error instanceof SingleMessageError) {
                 errorText.set(((SingleMessageError) error).getMessage());
+            }
+            else if(error instanceof MultipleMessageError){
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String key:
+                        ((MultipleMessageError) error).getMessages().keySet()) {
+                    String value = ((MultipleMessageError) error).getMessages().get(key);
+                    stringBuilder.append(value);
+                }
+                errorText.set(stringBuilder.toString());
             }
         }
     };

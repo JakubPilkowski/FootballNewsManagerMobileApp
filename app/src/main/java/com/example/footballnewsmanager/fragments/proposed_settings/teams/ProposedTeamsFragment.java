@@ -19,14 +19,25 @@ import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ProposedTeamsFragmentBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
+import com.example.footballnewsmanager.models.Team;
+
+import java.util.List;
 
 public class ProposedTeamsFragment extends BaseFragment<ProposedTeamsFragmentBinding, ProposedTeamsViewModel> implements Providers {
 
 
-    public static ProposedTeamsFragment newInstance() {
-        return new ProposedTeamsFragment();
+    private List<Team> teams;
+
+
+    public static ProposedTeamsFragment newInstance(List<Team> teams) {
+        ProposedTeamsFragment proposedTeamsFragment = new ProposedTeamsFragment();
+        proposedTeamsFragment.setTeams(teams);
+        return proposedTeamsFragment;
     }
 
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
 
     @Override
     public int getLayoutRes() {
@@ -42,7 +53,7 @@ public class ProposedTeamsFragment extends BaseFragment<ProposedTeamsFragmentBin
     public void bindData(ProposedTeamsFragmentBinding binding) {
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
-        viewModel.init();
+        viewModel.init(teams);
     }
 
     @Override

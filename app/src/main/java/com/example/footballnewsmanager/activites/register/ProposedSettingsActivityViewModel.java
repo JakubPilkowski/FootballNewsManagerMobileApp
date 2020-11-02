@@ -14,11 +14,27 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.adapters.ProposedSettingsViewPagerAdapter;
+import com.example.footballnewsmanager.api.Callback;
+import com.example.footballnewsmanager.api.Connection;
+import com.example.footballnewsmanager.api.errors.BaseError;
+import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
+import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ActivityProposedSettingsBinding;
+import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.fragments.proposed_settings.others.ProposedOthersFragment;
+import com.example.footballnewsmanager.fragments.proposed_settings.sites.ProposedSitesFragment;
+import com.example.footballnewsmanager.fragments.proposed_settings.teams.ProposedTeamsFragment;
 import com.example.footballnewsmanager.helpers.ScreenHelper;
+import com.example.footballnewsmanager.helpers.UserPreferences;
+import com.example.footballnewsmanager.models.Team;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
 
 public class ProposedSettingsActivityViewModel extends BaseViewModel {
 
@@ -38,8 +54,11 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
         ballLeftMargin.set(screenWidth*4/25);
         navigationMargin.set(ScreenHelper.getNavBarHeight(getActivity().getApplicationContext()));
         viewPager2 = ((ActivityProposedSettingsBinding)getBinding()).proposedSettingsViewpager;
-        ProposedSettingsViewPagerAdapter proposedSettingsViewPagerAdapter = new ProposedSettingsViewPagerAdapter((FragmentActivity) getActivity());
-        viewPager2.setAdapter(proposedSettingsViewPagerAdapter);
+
+//        ProgressDialog.get().show();
+//        String token = UserPreferences.get().getAuthToken();
+        Connection.get().proposedTeams(callback, "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjA0MzE1MjU0LCJleHAiOjE2MDQ5MjAwNTR9.GZWZ7LqFjbdJWtRFfzU2w16dEdP7dfP-igdggQMyFShj-oGiClM7ODC9OSbgOi-o4Ap0hiAIjvzFSP3fqmhtFw", 5);
+
         viewPager2.setUserInputEnabled(false);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -60,7 +79,48 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
 
             }
         });
+
     }
+
+    private Callback<ProposedTeamsResponse> callback = new Callback<ProposedTeamsResponse>() {
+        @Override
+        public void onSuccess(ProposedTeamsResponse proposedTeamsResponse) {
+            ProgressDialog.get().dismiss();
+            initView(proposedTeamsResponse.getTeams());
+        }
+
+        @Override
+        public void onSmthWrong(BaseError error) {
+            ProgressDialog.get().dismiss();
+            Log.d("BLAD", error.getError());
+        }
+
+        @Override
+        protected void subscribeActual(@NonNull Observer<? super ProposedTeamsResponse> observer) {
+
+        }
+    };
+
+
+
+    private void initView(List<Team> teams) {
+        List<BaseFragment> fragmentList = new ArrayList<>();
+        ProposedTeamsFragment proposedTeamsFragment = ProposedTeamsFragment.newInstance(teams);
+        ProposedSitesFragment proposedSitesFragment = ProposedSitesFragment.newInstance();
+        ProposedOthersFragment proposedOthersFragment = ProposedOthersFragment.newInstance();
+        fragmentList.add(proposedTeamsFragment);
+        fragmentList.add(proposedSitesFragment);
+        fragmentList.add(proposedOthersFragment);
+        ProposedSettingsViewPagerAdapter proposedSettingsViewPagerAdapter = new ProposedSettingsViewPagerAdapter((FragmentActivity) getActivity(), fragmentList);
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                viewPager2.setAdapter(proposedSettingsViewPagerAdapter);
+            }
+        });
+    }
+
 
     public void checkBackButtonEnabled(){
         enabled.set(item>0);
