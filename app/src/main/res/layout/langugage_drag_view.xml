@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.footballnewsmanager.fragments.proposed_settings.ProposedLanguageViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+       >
+
+        <com.example.footballnewsmanager.helpers.DragView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:dragViewListener="@{viewModel.dragViewListenerAdapter}">
+
+            <LinearLayout
+                android:id="@+id/language_drag_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/language_background"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <View
+                    android:id="@+id/bell"
+                    android:layout_width="120dp"
+                    android:layout_height="10dp"
+                    android:layout_marginBottom="18dp"
+                    android:background="@drawable/bell_background" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    app:recyclerViewAdapter="@{viewModel.recyclerViewAdapterObservable}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    />
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="12dp"-->
+<!--                    android:background="@drawable/proposed_item"-->
+<!--                    android:clickable="true"-->
+<!--                    android:drawableStart="@drawable/ic_poland"-->
+<!--                    android:drawablePadding="6dp"-->
+<!--                    android:focusable="true"-->
+<!--                    android:onClick="@{()->viewModel.onPolishLanguageClick()}"-->
+<!--                    android:padding="6dp"-->
+<!--                    android:text="@string/polish"-->
+<!--                    android:textColor="@color/colorTextPrimary"-->
+<!--                    android:textSize="24sp" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="12dp"-->
+<!--                    android:background="@drawable/proposed_item"-->
+<!--                    android:clickable="true"-->
+<!--                    android:drawableStart="@drawable/ic_united_kingdom"-->
+<!--                    android:drawablePadding="6dp"-->
+<!--                    android:focusable="true"-->
+<!--                    android:onClick="@{()->viewModel.onEnglishLanguageClick()}"-->
+<!--                    android:padding="6dp"-->
+<!--                    android:text="@string/english"-->
+<!--                    android:textColor="@color/colorTextPrimary"-->
+<!--                    android:textSize="24sp" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="12dp"-->
+<!--                    android:background="@drawable/proposed_item"-->
+<!--                    android:clickable="true"-->
+<!--                    android:drawableStart="@drawable/ic_germany"-->
+<!--                    android:drawablePadding="6dp"-->
+<!--                    android:focusable="true"-->
+<!--                    android:onClick="@{()-> viewModel.onGermanLanguageClick()}"-->
+<!--                    android:padding="6dp"-->
+<!--                    android:text="@string/german"-->
+<!--                    android:textColor="@color/colorTextPrimary"-->
+<!--                    android:textSize="24sp" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="12dp"-->
+<!--                    android:background="@drawable/proposed_item"-->
+<!--                    android:clickable="true"-->
+<!--                    android:drawableStart="@drawable/ic_italy"-->
+<!--                    android:drawablePadding="6dp"-->
+<!--                    android:focusable="true"-->
+<!--                    android:onClick="@{()->viewModel.onItalishLanguageClick()}"-->
+<!--                    android:padding="6dp"-->
+<!--                    android:text="@string/italish"-->
+<!--                    android:textColor="@color/colorTextPrimary"-->
+<!--                    android:textSize="24sp" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="12dp"-->
+<!--                    android:background="@drawable/proposed_item"-->
+<!--                    android:clickable="true"-->
+<!--                    android:drawableStart="@drawable/ic_spain"-->
+<!--                    android:drawablePadding="6dp"-->
+<!--                    android:focusable="true"-->
+<!--                    android:onClick="@{()->viewModel.onSpainLanguageClick()}"-->
+<!--                    android:padding="6dp"-->
+<!--                    android:text="@string/spanish"-->
+<!--                    android:textColor="@color/colorTextPrimary"-->
+<!--                    android:textSize="24sp" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/proposed_item"-->
+<!--                    android:clickable="true"-->
+<!--                    android:drawableStart="@drawable/ic_france"-->
+<!--                    android:drawablePadding="6dp"-->
+<!--                    android:focusable="true"-->
+<!--                    android:onClick="@{()->viewModel.onFrenchLanguageClick()}"-->
+<!--                    android:padding="6dp"-->
+<!--                    android:text="@string/french"-->
+<!--                    android:textColor="@color/colorTextPrimary"-->
+<!--                    android:textSize="24sp" />-->
+
+            </LinearLayout>
+        </com.example.footballnewsmanager.helpers.DragView>
+    </RelativeLayout>
+</layout>

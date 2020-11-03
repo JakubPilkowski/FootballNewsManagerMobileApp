@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.footballnewsmanager.adapters.propsed_sites.ProposedSitesAdapterViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/proposed_items_selector"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:padding="6dp"
+        android:gravity="center_vertical"
+        >
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:imageUrl="@{viewModel.imageUrl}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.name}"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="20sp" />
+<!--       <com.example.footballnewsmanager.helpers.CheckButton-->
+<!--           android:layout_width="match_parent"-->
+<!--           android:layout_height="wrap_content" -->
+<!--           android:checked="@{viewModel.checked}"-->
+<!--           android:background="@drawable/proposed_items_selector"-->
+<!--           />-->
+    </LinearLayout>
+
+</layout>

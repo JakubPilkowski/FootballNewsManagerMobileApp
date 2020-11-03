@@ -9,6 +9,8 @@ import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
+import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
+import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsAndSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -77,4 +79,19 @@ public class Connection {
         proposedTeamsObservable.subscribe(callback);
     }
 
+    public void proposedSites(Callback<ProposedSitesResponse> callback, String token, int page){
+        Observable<ProposedSitesResponse> proposedSitesObservable = client.getService().proposedSites(token, page)
+                .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
+        proposedSitesObservable.subscribe(callback);
+    }
+
+    public void proposedTeamsAndSites(Callback<ProposedTeamsAndSitesResponse> callback, String token, int teamsCount, int sitesPage){
+
+        Observable<ProposedTeamsResponse> proposedTeamsObservable = client.getService().proposedTeams(token, teamsCount)
+                .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
+        Observable<ProposedSitesResponse> proposedSitesObservable = client.getService().proposedSites(token, sitesPage)
+                .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
+        Observable<ProposedTeamsAndSitesResponse> combined = Observable.zip(proposedTeamsObservable, proposedSitesObservable, ProposedTeamsAndSitesResponse::new);
+        combined.subscribe(callback);
+    }
 }

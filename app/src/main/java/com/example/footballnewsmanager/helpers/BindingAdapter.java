@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.footballnewsmanager.interfaces.DragViewListener;
 import com.example.footballnewsmanager.models.LayoutManager;
 
 public class BindingAdapter {
@@ -87,5 +89,15 @@ public class BindingAdapter {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .thumbnail(0.1f)
                 .into(imageView);
+    }
+
+    @androidx.databinding.BindingAdapter("switchChangeListener")
+    public static void setSwitchChangeListener(Switch switchView, Switch.OnCheckedChangeListener listener){
+        switchView.setOnCheckedChangeListener(listener);
+    }
+
+    @androidx.databinding.BindingAdapter("dragViewListener")
+    public static void setDragViewListener(DragView dragView, DragViewListener listener){
+        dragView.setDragViewListener(listener);
     }
 }

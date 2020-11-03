@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
             type="com.example.footballnewsmanager.fragments.proposed_settings.sites.ProposedSitesFragmentViewModel" />
     </data>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     tools:context=".fragments.proposed_settings.sites.ProposedSitesFragment">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Strony"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Wybierz ulubione strony piłkarskie"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="20sp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="50sp"
-        android:text="Sites" />
+        app:layoutManager="@{viewModel.layoutManager}"
+        app:recyclerViewAdapter="@{viewModel.recyclerViewAdapter}"
+        />
 
-</FrameLayout>
+</LinearLayout>
 </layout>

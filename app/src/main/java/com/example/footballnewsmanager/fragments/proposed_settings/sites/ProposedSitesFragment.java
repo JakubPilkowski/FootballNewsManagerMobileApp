@@ -19,14 +19,25 @@ import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ProposedSitesFragmentBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
+import com.example.footballnewsmanager.models.Site;
+
+import java.util.List;
 
 public class ProposedSitesFragment extends BaseFragment<ProposedSitesFragmentBinding, ProposedSitesFragmentViewModel> implements Providers {
 
 
-    public static ProposedSitesFragment newInstance() {
-        return new ProposedSitesFragment();
+    private List<Site> sites;
+
+    public static ProposedSitesFragment newInstance(List<Site> sites) {
+        ProposedSitesFragment proposedSitesFragment = new ProposedSitesFragment();
+        proposedSitesFragment.setSites(sites);
+        return proposedSitesFragment;
     }
 
+
+    public void setSites(List<Site> sites) {
+        this.sites = sites;
+    }
 
     @Override
     public int getLayoutRes() {
@@ -42,7 +53,7 @@ public class ProposedSitesFragment extends BaseFragment<ProposedSitesFragmentBin
     public void bindData(ProposedSitesFragmentBinding binding) {
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
-        viewModel.init();
+        viewModel.init(sites);
     }
 
     @Override

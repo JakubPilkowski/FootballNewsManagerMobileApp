@@ -14,16 +14,18 @@
         android:background="@drawable/proposed_items_selector"
         android:clickable="true"
         android:focusable="true"
-        android:layout_margin="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:padding="6dp"
         android:gravity="center_vertical">
 
         <ImageView
-
             android:layout_width="48dp"
             android:layout_height="48dp"
             app:imageUrl="@{viewModel.imageUrl}"
-            android:scaleType="fitXY" />
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -33,4 +35,5 @@
             android:textColor="@color/colorTextPrimary"
             android:textSize="20sp" />
     </LinearLayout>
+
 </layout>

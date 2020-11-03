@@ -13,6 +13,7 @@ import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityProposedSettingsBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
+import com.example.footballnewsmanager.helpers.ProposedLanguageDialogManager;
 import com.example.footballnewsmanager.interfaces.Providers;
 
 public class ProposedSettingsActivity extends BaseActivity<ActivityProposedSettingsBinding, ProposedSettingsActivityViewModel> implements Providers {
@@ -20,6 +21,7 @@ public class ProposedSettingsActivity extends BaseActivity<ActivityProposedSetti
 
     @Override
     protected void initActivity(ActivityProposedSettingsBinding binding) {
+        ProposedLanguageDialogManager.init(this);
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
 
@@ -32,13 +34,24 @@ public class ProposedSettingsActivity extends BaseActivity<ActivityProposedSetti
                         window.setNavigationBarColor(getResources().getColor(R.color.colorbackgroundPrimary));
         }
 
-
         viewModel.init();
     }
 
     @Override
     protected Class<ProposedSettingsActivityViewModel> getViewModel() {
         return ProposedSettingsActivityViewModel.class;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ProposedLanguageDialogManager.init(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ProposedLanguageDialogManager.get().dismiss();
     }
 
     @Override

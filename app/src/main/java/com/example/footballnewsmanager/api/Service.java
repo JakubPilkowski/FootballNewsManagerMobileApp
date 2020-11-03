@@ -7,6 +7,7 @@ import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
+import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -56,5 +57,11 @@ public interface Service {
     Observable<ProposedTeamsResponse> proposedTeams(
             @Header("Authorization") String token,
             @Query("count") int count
+    );
+
+    @GET("sites")
+    Observable<ProposedSitesResponse> proposedSites(
+            @Header("Authorization") String token,
+            @Query("page") int page
     );
 }
