@@ -11,15 +11,18 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/proposed_items_selector"
         android:clickable="true"
         android:focusable="true"
+        android:weightSum="1"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
+        android:onClick="@{()->viewModel.onClick()}"
         android:padding="6dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        app:drawableAsResource="@{viewModel.background}"
+        >
 
         <ImageView
             android:layout_width="48dp"
@@ -28,12 +31,19 @@
             />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@{viewModel.name}"
             android:textAlignment="center"
             android:textColor="@color/colorTextPrimary"
             android:textSize="20sp" />
+        <View
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/ic_checked"
+            android:visibility="@{viewModel.visibility}"
+            />
     </LinearLayout>
 
 </layout>

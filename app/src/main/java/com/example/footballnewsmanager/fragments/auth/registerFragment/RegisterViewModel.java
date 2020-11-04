@@ -91,7 +91,6 @@ public class RegisterViewModel extends BaseViewModel {
     public void validate(){
         if(validateAll()){
             errorText.set("");
-//            ProgressDialog.get().show();
             Intent intent = new Intent(getActivity(), ProposedSettingsActivity.class);
             getActivity().startActivity(intent);
             getActivity().finish();

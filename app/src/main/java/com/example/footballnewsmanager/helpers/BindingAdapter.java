@@ -100,4 +100,9 @@ public class BindingAdapter {
     public static void setDragViewListener(DragView dragView, DragViewListener listener){
         dragView.setDragViewListener(listener);
     }
+
+    @androidx.databinding.BindingAdapter("drawableAsResource")
+    public static void setViewDrawable(View view, int resource){
+        view.setBackground(view.getResources().getDrawable(resource));
+    }
 }

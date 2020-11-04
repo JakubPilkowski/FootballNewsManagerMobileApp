@@ -1,27 +1,20 @@
 package com.example.footballnewsmanager.activites.register;
 
-import android.animation.ValueAnimator;
-import android.content.Intent;
-import android.util.DisplayMetrics;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewPropertyAnimator;
 
 import androidx.databinding.ObservableBoolean;
-import androidx.databinding.ObservableField;
-import androidx.databinding.ObservableFloat;
 import androidx.databinding.ObservableInt;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.adapters.ProposedSettingsViewPagerAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsAndSitesResponse;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ActivityProposedSettingsBinding;
@@ -31,12 +24,9 @@ import com.example.footballnewsmanager.fragments.proposed_settings.sites.Propose
 import com.example.footballnewsmanager.fragments.proposed_settings.teams.ProposedTeamsFragment;
 import com.example.footballnewsmanager.helpers.ScreenHelper;
 import com.example.footballnewsmanager.helpers.SoundPoolManager;
-import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.models.Team;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -45,29 +35,17 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
 
 
     public ObservableInt navigationMargin = new ObservableInt();
-    public ObservableBoolean enabled = new ObservableBoolean(false);
+    public ObservableBoolean enabledBackButton = new ObservableBoolean(false);
     public ObservableInt ballLeftMargin = new ObservableInt();
+    public ObservableBoolean enabledNextButton = new ObservableBoolean(true);
+
+
     public ViewPager2 viewPager2;
     public View ball;
     public int item;
     public int screenWidth;
+    public View stars;
 
-    public void init() {
-        item = 0;
-        ball = ((ActivityProposedSettingsBinding) getBinding()).proposedSettingsBall;
-        checkBackButtonEnabled();
-        screenWidth = ScreenHelper.getScreenWidth(getActivity());
-        ballLeftMargin.set(screenWidth * 4 / 25);
-        navigationMargin.set(ScreenHelper.getNavBarHeight(getActivity().getApplicationContext()));
-        viewPager2 = ((ActivityProposedSettingsBinding) getBinding()).proposedSettingsViewpager;
-
-//        ProgressDialog.get().show();
-//        String token = UserPreferences.get().getAuthToken();
-        Connection.get().proposedTeamsAndSites(callback,
-                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjA0MzE1MjU0LCJleHAiOjE2MDQ5MjAwNTR9.GZWZ7LqFjbdJWtRFfzU2w16dEdP7dfP-igdggQMyFShj-oGiClM7ODC9OSbgOi-o4Ap0hiAIjvzFSP3fqmhtFw"
-                , 5, 0);
-
-    }
 
     private Callback<ProposedTeamsAndSitesResponse> callback = new Callback<ProposedTeamsAndSitesResponse>() {
         @Override
@@ -79,7 +57,6 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
         @Override
         public void onSmthWrong(BaseError error) {
             ProgressDialog.get().dismiss();
-            Log.d("BLAD", error.getError());
         }
 
         @Override
@@ -88,6 +65,21 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
         }
     };
 
+    public void init() {
+        item = 0;
+        ball = ((ActivityProposedSettingsBinding) getBinding()).proposedSettingsBall;
+        stars = ((ActivityProposedSettingsBinding) getBinding()).proposedSettingsStars;
+        checkBackButtonEnabled();
+        screenWidth = ScreenHelper.getScreenWidth(getActivity());
+        ballLeftMargin.set(screenWidth * 4 / 25);
+        navigationMargin.set(ScreenHelper.getNavBarHeight(getActivity().getApplicationContext()));
+        viewPager2 = ((ActivityProposedSettingsBinding) getBinding()).proposedSettingsViewpager;
+//        String token = UserPreferences.get().getAuthToken();
+        Connection.get().proposedTeamsAndSites(callback,
+                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjA0MzE1MjU0LCJleHAiOjE2MDQ5MjAwNTR9.GZWZ7LqFjbdJWtRFfzU2w16dEdP7dfP-igdggQMyFShj-oGiClM7ODC9OSbgOi-o4Ap0hiAIjvzFSP3fqmhtFw"
+                , 5, 0);
+
+    }
 
     private void initView(ProposedTeamsAndSitesResponse response) {
         List<BaseFragment> fragmentList = new ArrayList<>();
@@ -113,7 +105,6 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
                         ball.animate()
                                 .rotation(180 * item)
                                 .translationX(translateValue * item).setDuration(400).start();
-
                     }
 
                     @Override
@@ -127,36 +118,47 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
     }
 
 
-
     public void checkBackButtonEnabled() {
-        enabled.set(item > 0);
+        enabledBackButton.set(item > 0);
     }
 
     public void next() {
         SoundPoolManager.get().playSong(R.raw.pass_a_ball, 0.2f);
         if (item == 2) {
             float translateValue = screenWidth * 17 / 75;
-//            ball.animate()
-//                    .rotation(180 * 3)
-//                    .translationX(translateValue * 3).setDuration(400).start();
-            ViewPropertyAnimator animator = ball.animate();
-            animator.rotation(180 * 3);
-            animator.translationX(translateValue * 3);
-            animator.setDuration(400);
-            animator.withEndAction(() -> {
-                //wyświetlenie gwiazdek i innych pierdółek
+            ball.animate()
+                    .rotation(180 * 3)
+                    .translationX(translateValue * 3)
+                    .setDuration(400)
+                    .start();
+            stars.animate()
+                    .alpha(1)
+                    .scaleX(1)
+                    .scaleY(1)
+                    .setDuration(400)
+                    .withEndAction(() -> {
+                        SoundPoolManager.get().playSong(R.raw.hura, 0.1f);
+                        blockButtons();
 
-
-//                Intent intent = new Intent(getActivity(), MainActivity.class);
+                        //                Intent intent = new Intent(getActivity(), MainActivity.class);
 //                getActivity().startActivity(intent);
 //                getActivity().finish();
-            });
-            animator.start();
-            //zapisanie do bazy danych przejście ustawień początkowych
+                    })
+                    .start();
         } else {
             item++;
             viewPager2.setCurrentItem(item);
         }
+    }
+
+    public void blockButtons() {
+        enabledBackButton.set(false);
+        enabledNextButton.set(false);
+    }
+
+    public void enableButtons() {
+        enabledBackButton.set(true);
+        enabledNextButton.set(true);
     }
 
     public void back() {

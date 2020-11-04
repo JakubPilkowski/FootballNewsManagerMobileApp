@@ -34,6 +34,15 @@
                 android:src="@drawable/ic_pitch" />
 
             <View
+                android:id="@+id/proposed_settings_stars"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/ic_stars"
+                android:alpha="0"
+                android:scaleX="0"
+                android:scaleY="0"
+                />
+            <View
                 android:id="@+id/proposed_settings_ball"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -71,7 +80,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="18sp"
-                app:setEnabled="@{viewModel.enabled}"
+                android:enabled="@{viewModel.enabledBackButton}"
                  />
             <Button
                 android:layout_width="0dp"
@@ -88,6 +97,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="18sp"
+                app:setEnabled="@{viewModel.enabledNextButton}"
                />
         </LinearLayout>
 
