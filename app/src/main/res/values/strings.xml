@@ -33,5 +33,16 @@
     <string name="register">Zarejestruj</string>
     <string name="login_size_error">Login musi zawierać od 4 do 20 znaków</string>
     <string name="username">Nazwa</string>
+    <string name="back">Cofnij</string>
+    <string name="dark_mode">Ciemny motyw</string>
+    <string name="language">Język</string>
+    <string name="notifications">Powiadomienia</string>
+    <string name="proposed_news">Polecane wiadomości</string>
+    <string name="polish">Polski</string>
+    <string name="german">Niemiecki</string>
+    <string name="italish">Włoski</string>
+    <string name="spanish">Hiszpański</string>
+    <string name="french">Francuski</string>
+    <string name="english">Angielski</string>
 
 </resources>

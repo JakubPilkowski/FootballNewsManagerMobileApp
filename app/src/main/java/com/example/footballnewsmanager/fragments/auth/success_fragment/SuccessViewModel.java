@@ -3,6 +3,7 @@ package com.example.footballnewsmanager.fragments.auth.success_fragment;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.SuccessFragmentBinding;
@@ -17,7 +18,7 @@ public class SuccessViewModel extends BaseViewModel {
         ((SuccessFragmentBinding) getBinding()).successAnimatedView.setResultListener(new AnimatedSuccessView.ResultListener() {
             @Override
             public void onResultAnimEnd() {
-                SoundPoolManager.get().playAcceptSong();
+                SoundPoolManager.get().playSong(R.raw.accept_sound, 0.8f);
             }
 
             @Override

@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.fragments.auth.registerFragment;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.telecom.Call;
 import android.text.TextWatcher;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
+import com.example.footballnewsmanager.activites.register.ProposedSettingsActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -25,6 +27,7 @@ import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.RegisterFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.helpers.Validator;
 import com.example.footballnewsmanager.helpers.ValidatorTextWatcher;
 import com.example.footballnewsmanager.models.FieldType;
@@ -37,9 +40,9 @@ public class RegisterViewModel extends BaseViewModel {
     // TODO: Implement the ViewModel
 
 
-    public ObservableField<String> username = new ObservableField<>("");
-    public ObservableField<String> email = new ObservableField<>("");
-    public ObservableField<String> password = new ObservableField<>("");
+    public ObservableField<String> username = new ObservableField<>("qweqweqweqwew");
+    public ObservableField<String> email = new ObservableField<>("weqww@wqewq.com");
+    public ObservableField<String> password = new ObservableField<>("asdasdasds");
     public ObservableBoolean clearFocus = new ObservableBoolean(false);
     public ObservableField<String> errorText = new ObservableField<>("");
     public ObservableField<TextWatcher> usernameTextWatcherAdapter = new ObservableField<>();
@@ -89,24 +92,24 @@ public class RegisterViewModel extends BaseViewModel {
     public void validate(){
         if(validateAll()){
             errorText.set("");
+//            Intent intent = new Intent(getActivity(), ProposedSettingsActivity.class);
+//            getActivity().startActivity(intent);
+//            getActivity().finish();
             ProgressDialog.get().show();
-//            RegisterRequest registerRequest = new RegisterRequest(username.get(), email.get(), password.get());
-//            Connection.get().register(callback,registerRequest);
+            RegisterRequest registerRequest = new RegisterRequest(username.get(), email.get(), password.get());
+            Connection.get().register(callback,registerRequest);
         }
     }
 
     private Callback<BaseResponse> callback = new Callback<BaseResponse>() {
         @Override
         public void onSuccess(BaseResponse baseResponse) {
-            Log.d(RegisterFragment.TAG, "success");
-//            LoginRequest loginRequest = new LoginRequest(email.get(), password.get());
-//            Connection.get().login(loginCallback, loginRequest);
-//            ProgressDialog.get().dismiss();
+            LoginRequest loginRequest = new LoginRequest(email.get(), password.get());
+            Connection.get().login(loginCallback, loginRequest);
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
-            Log.d(RegisterFragment.TAG, "fail");
             errorText.set(error.getError());
             if(error instanceof SingleMessageError){
                 errorText.set(((SingleMessageError) error).getMessage());
@@ -118,6 +121,7 @@ public class RegisterViewModel extends BaseViewModel {
                      ((MultipleMessageError) error).getMessages().keySet()) {
                     String value = ((MultipleMessageError) error).getMessages().get(key);
                     stringBuilder.append(value);
+                    stringBuilder.append("\n");
                 }
                 errorText.set(stringBuilder.toString());
             }
@@ -135,8 +139,10 @@ public class RegisterViewModel extends BaseViewModel {
         @Override
         public void onSuccess(LoginResponse loginResponse) {
             ProgressDialog.get().dismiss();
-            Log.d(RegisterFragment.TAG, "sukces login");
-            //przejscie do activity
+            UserPreferences.get().save(loginResponse);
+            Intent intent = new Intent(getActivity(), ProposedSettingsActivity.class);
+            getActivity().startActivity(intent);
+            getActivity().finish();
         }
 
         @Override

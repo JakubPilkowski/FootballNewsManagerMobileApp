@@ -54,6 +54,10 @@ public class ProgressDialog {
         dialog.show();
     }
 
+    public boolean isShowing(){
+        return dialog!=null && dialog.isShowing();
+    }
+
     public void dismiss(){
         if(dialog != null && dialog.isShowing())
             dialog.dismiss();

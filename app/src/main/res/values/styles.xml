@@ -59,4 +59,20 @@
         <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>
         <!--        <item name="android:windowTranslucentStatus">true</item>-->
     </style>
+
+
+    <style name="ProposedSettings" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>
+        <item name="colorControlHighlight">#fff</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="LanguageDialogTheme" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/colorbackgroundPrimaryOpacity</item>
+    </style>
+
+
 </resources>

@@ -6,6 +6,7 @@ import androidx.databinding.ViewDataBinding;
 
 import android.content.Intent;
 import android.os.Build;
+import android.view.View;
 import android.view.Window;
 
 import com.example.footballnewsmanager.R;
