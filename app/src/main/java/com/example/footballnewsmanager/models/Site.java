@@ -1,6 +1,8 @@
 package com.example.footballnewsmanager.models;
 
 public class Site {
+
+    private Long id;
     private String name;
     private String logoUrl;
     private String description;

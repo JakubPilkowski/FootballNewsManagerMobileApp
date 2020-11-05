@@ -27,4 +27,6 @@
     <color name="playerColor">#000</color>
     <color name="starColor">#ffa371</color>
 
+<!--    proposed-item-background-->
+    <color name="proposedItemBackgroundColor">#F8F8F8</color>
 </resources>

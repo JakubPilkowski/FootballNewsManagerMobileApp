@@ -66,7 +66,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>
         <item name="colorControlHighlight">#fff</item>
-<!--        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>-->
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 

@@ -24,6 +24,10 @@ public class ProposedTeamsAdapter extends BaseRecyclerViewAdapter<Team, BaseView
         return R.layout.proposed_team_layout;
     }
 
+    public List<ProposedTeamsAdapterViewModel> getViewModels() {
+        return viewModels;
+    }
+
     @Override
     public BaseViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType, View itemView) {
         ProposedTeamLayoutBinding proposedTeamLayoutBinding = ProposedTeamLayoutBinding.bind(itemView);

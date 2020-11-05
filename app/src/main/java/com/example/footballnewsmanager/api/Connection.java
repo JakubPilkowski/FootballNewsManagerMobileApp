@@ -1,21 +1,23 @@
 package com.example.footballnewsmanager.api;
 
-import android.telecom.Call;
-
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
+import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsAndSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
+import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
+import com.example.footballnewsmanager.dialogs.ProgressDialog;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import retrofit2.Call;
 
 public class Connection {
 
@@ -86,12 +88,18 @@ public class Connection {
     }
 
     public void proposedTeamsAndSites(Callback<ProposedTeamsAndSitesResponse> callback, String token, int teamsCount, int sitesPage){
-
         Observable<ProposedTeamsResponse> proposedTeamsObservable = client.getService().proposedTeams(token, teamsCount)
                 .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
         Observable<ProposedSitesResponse> proposedSitesObservable = client.getService().proposedSites(token, sitesPage)
                 .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
         Observable<ProposedTeamsAndSitesResponse> combined = Observable.zip(proposedTeamsObservable, proposedSitesObservable, ProposedTeamsAndSitesResponse::new);
         combined.subscribe(callback);
+    }
+
+    public void userSettingsResponse(Callback<ProposedUserResponse> callback, String token, UserSettingsRequest userSettingsRequest){
+        Observable<ProposedUserResponse> proposedUserObservable = client.getService()
+                .proposedUserResponse(token, userSettingsRequest).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        proposedUserObservable.subscribe(callback);
     }
 }

@@ -2,6 +2,7 @@ package com.example.footballnewsmanager.models;
 
 public class Team {
 
+    private Long id;
     private String name;
     private String logoUrl;
     private Long clicks;

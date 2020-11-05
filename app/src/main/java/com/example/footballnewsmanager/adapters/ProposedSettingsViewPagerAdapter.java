@@ -26,6 +26,10 @@ public class ProposedSettingsViewPagerAdapter extends FragmentStateAdapter {
         fragments.addAll(fragmentList);
     }
 
+    public List<BaseFragment> getFragments() {
+        return fragments;
+    }
+
     @NonNull
     @Override
     public Fragment createFragment(int position) {

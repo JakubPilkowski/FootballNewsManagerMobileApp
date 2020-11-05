@@ -5,10 +5,12 @@ import androidx.databinding.ObservableField;
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
+import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
+import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
@@ -63,5 +65,11 @@ public interface Service {
     Observable<ProposedSitesResponse> proposedSites(
             @Header("Authorization") String token,
             @Query("page") int page
+    );
+
+    @PUT("users/me")
+    Observable<ProposedUserResponse> proposedUserResponse(
+            @Header("Authorization") String token,
+            @Body UserSettingsRequest request
     );
 }

@@ -64,7 +64,7 @@
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="@={viewModel.darkMode}"
+                android:checked="@{viewModel.darkMode}"
                 android:switchMinWidth="56dp"
                 android:layout_marginStart="12dp"
                 android:thumb="@drawable/switch_thumb_on"

@@ -44,4 +44,8 @@ public class ProposedTeamsAdapterViewModel extends BaseAdapterViewModel {
     public boolean isChosen() {
         return chosen;
     }
+
+    public Team getTeam() {
+        return team;
+    }
 }

@@ -27,6 +27,10 @@ public class ProposedSitesAdapter extends BaseRecyclerViewAdapter<Site, BaseView
         return new BaseViewHolder(itemView, proposedSitesLayoutBinding);
     }
 
+    public List<ProposedSitesAdapterViewModel> getViewModels() {
+        return viewModels;
+    }
+
     @Override
     public void onBindView(BaseViewHolder holder, int position) {
         ProposedSitesAdapterViewModel viewModel;

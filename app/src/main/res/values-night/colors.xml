@@ -30,4 +30,7 @@
     <!--auth-player-colors-->
     <color name="playerColor">#4a4a4a</color>
     <color name="starColor">#fffa86</color>
+
+    <!--    proposed-item-background-->
+    <color name="proposedItemBackgroundColor">#222222</color>
 </resources>
