@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.databinding.ObservableBoolean;
+import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.footballnewsmanager.R;
@@ -53,6 +55,9 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
     public ObservableBoolean enabledBackButton = new ObservableBoolean(false);
     public ObservableInt ballLeftMargin = new ObservableInt();
     public ObservableBoolean enabledNextButton = new ObservableBoolean(true);
+    public ObservableField<RecyclerView.Adapter> viewPagerAdapterObservable = new ObservableField<>();
+    public ObservableField<ViewPager2.OnPageChangeCallback> onPageChangeCallbackObservable = new ObservableField<>();
+    public ObservableBoolean userInputEnabled = new ObservableBoolean(false);
 
 
     public ViewPager2 viewPager2;
@@ -113,35 +118,28 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
         fragmentList.add(proposedOthersFragment);
         proposedSettingsViewPagerAdapter = new ProposedSettingsViewPagerAdapter((FragmentActivity) getActivity(), fragmentList);
 
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+//        getActivity().runOnUiThread(() -> {
 //                ProgressDialog.get().dismiss();
-                viewPager2.setAdapter(proposedSettingsViewPagerAdapter);
-                viewPager2.setUserInputEnabled(false);
-                viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                    @Override
-                    public void onPageSelected(int position) {
-                        super.onPageSelected(position);
-                        if(item!=position){
-                            item = position;
-                        }
-                        checkBackButtonEnabled();
-                        float translateValue = screenWidth * 17 / 75;
-                        ball.animate()
-                                .rotation(180 * item)
-                                .translationX(translateValue * item).setDuration(400).start();
-                    }
-
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                        super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                    }
-                });
-            }
-        });
+            viewPagerAdapterObservable.set(proposedSettingsViewPagerAdapter);
+            onPageChangeCallbackObservable.set(onPageChangeCallback);
+//        });
     }
 
+
+    private ViewPager2.OnPageChangeCallback onPageChangeCallback = new ViewPager2.OnPageChangeCallback() {
+        @Override
+        public void onPageSelected(int position) {
+            super.onPageSelected(position);
+            if(item!=position){
+                item = position;
+            }
+            checkBackButtonEnabled();
+            float translateValue = screenWidth * 17 / 75;
+            ball.animate()
+                    .rotation(180 * item)
+                    .translationX(translateValue * item).setDuration(400).start();
+        }
+    };
 
     public void checkBackButtonEnabled() {
         enabledBackButton.set(item > 0);

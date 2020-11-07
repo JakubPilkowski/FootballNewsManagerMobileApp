@@ -15,11 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.footballnewsmanager.interfaces.DragViewListener;
 import com.example.footballnewsmanager.models.LayoutManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BindingAdapter {
 
@@ -104,5 +107,26 @@ public class BindingAdapter {
     @androidx.databinding.BindingAdapter("drawableAsResource")
     public static void setViewDrawable(View view, int resource){
         view.setBackground(view.getResources().getDrawable(resource));
+    }
+
+
+    @androidx.databinding.BindingAdapter("viewpager2Adapter")
+    public static void setViewPager2Adapter(ViewPager2 viewPager2, RecyclerView.Adapter adapter){
+        viewPager2.setAdapter(adapter);
+    }
+
+    @androidx.databinding.BindingAdapter("pageChangeCallback")
+    public static void setPageChangeCallback(ViewPager2 viewPager2, ViewPager2.OnPageChangeCallback callback){
+        viewPager2.registerOnPageChangeCallback(callback);
+    }
+
+    @androidx.databinding.BindingAdapter("itemSelectedListener")
+    public static void setItemSelectedListener(BottomNavigationView bottomNavigationView, BottomNavigationView.OnNavigationItemSelectedListener listener){
+        bottomNavigationView.setOnNavigationItemSelectedListener(listener);
+    }
+
+    @androidx.databinding.BindingAdapter("userInputEnabled")
+    public static void setUserInputEnabled(ViewPager2 viewPager2, boolean enabled){
+        viewPager2.setUserInputEnabled(enabled);
     }
 }

@@ -56,7 +56,11 @@
             android:id="@+id/proposed_settings_viewpager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:viewpager2Adapter="@{viewModel.viewPagerAdapterObservable}"
+            app:pageChangeCallback="@{viewModel.onPageChangeCallbackObservable}"
+            app:userInputEnabled="@{viewModel.userInputEnabled}"
+            />
 
         <LinearLayout
             android:id="@+id/linearLayout"

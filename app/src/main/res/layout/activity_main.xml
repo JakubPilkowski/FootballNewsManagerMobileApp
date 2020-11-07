@@ -10,20 +10,34 @@
             type="com.example.footballnewsmanager.activites.main.MainActivityViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        tools:context=".activites.main.MainActivity">
+        android:background="@drawable/auth_background"
+        >
 
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wyloguj"
-            android:onClick="@{()->viewModel.onClick()}"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/main_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toTopOf="@+id/main_bottom_nav_view"
+            app:viewpager2Adapter="@{viewModel.viewPagerAdapterObservable}"
+            app:pageChangeCallback="@{viewModel.onPageChangeCallbackObservable}"
             />
 
-    </LinearLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/main_bottom_nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorbackgroundPrimary"
+            app:itemIconTint="@color/nav_item_selector"
+            app:itemTextColor="@color/nav_item_selector"
+            app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:itemSelectedListener="@{viewModel.navigationItemSelectedListenerObservable}"
+            app:menu="@menu/bottom_nav_menu" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

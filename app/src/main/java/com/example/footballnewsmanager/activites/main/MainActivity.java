@@ -1,5 +1,9 @@
 package com.example.footballnewsmanager.activites.main;
 
+import android.os.Build;
+import android.view.View;
+
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.ViewDataBinding;
 
 import com.example.footballnewsmanager.R;
@@ -17,6 +21,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
         binding.setViewModel(viewModel);
         viewModel.setProviders(this);
         viewModel.init();
+
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR ^ View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+//        }
     }
 
     @Override

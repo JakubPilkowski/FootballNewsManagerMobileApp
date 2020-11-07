@@ -44,5 +44,9 @@
     <string name="spanish">Hiszpański</string>
     <string name="french">Francuski</string>
     <string name="english">Angielski</string>
+    <string name="menu_news_name"><i>Newsy</i></string>
+    <string name="menu_profile_name"><i>Profil</i></string>
+    <string name="menu_sites_name"><i>Strony</i></string>
+    <string name="menu_news_all"><i>Wszystko</i></string>
 
 </resources>
