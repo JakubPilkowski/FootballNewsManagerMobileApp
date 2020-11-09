@@ -73,15 +73,8 @@ public class BindingAdapter {
     }
 
     @androidx.databinding.BindingAdapter("layoutManager")
-    public static void setLayoutManager(RecyclerView recyclerView, LayoutManager layoutManager) {
-        switch (layoutManager) {
-            case LINEAR:
-                recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-                break;
-            case GRID:
-                recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 2));
-                break;
-        }
+    public static void setLayoutManager(RecyclerView recyclerView, RecyclerView.LayoutManager layoutManager) {
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     @androidx.databinding.BindingAdapter("imageUrl")

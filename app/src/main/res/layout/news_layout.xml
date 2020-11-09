@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.footballnewsmanager.adapters.news.NewsAdapterViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/news_item_background"
+        android:orientation="vertical"
+        android:padding="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="3dp">
+
+            <ImageView
+                android:layout_width="88dp"
+                android:layout_height="44dp"
+                android:padding="6dp"
+                android:background="@drawable/site_logo_background"
+                android:onClick="@{()->viewModel.onSiteClick()}"
+                app:imageUrl="@{viewModel.siteLogo}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:text="@{viewModel.siteName}"
+                android:onClick="@{()->viewModel.onSiteClick()}"
+                android:textColor="#000"
+                android:textSize="21sp" />
+
+            <Button
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:text="i"
+                android:textSize="18sp"
+                android:textAllCaps="false"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:onClick="@{()->viewModel.onNewsClick()}"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:scaleType="fitXY"
+                app:imageUrl="@{viewModel.imageUrl}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="17sp"
+                android:padding="6dp"
+                android:background="@drawable/news_title_background"
+                android:text="@{viewModel.title}"
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="3dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/green_ripple"
+                android:drawableStart="@drawable/ic_heart"
+                android:drawablePadding="6dp"
+                android:text="@{viewModel.likes}"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{()->viewModel.onLikeToggle()}"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:background="@drawable/green_ripple"
+                android:drawableStart="@drawable/ic_heartbreak"
+                android:drawablePadding="6dp"
+                android:text="@{viewModel.dislikes}"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{()->viewModel.onDislikeToggle()}"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="@{viewModel.date}"
+                android:textColor="#000"
+                android:textAlignment="textEnd" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

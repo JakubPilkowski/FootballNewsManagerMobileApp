@@ -5,12 +5,9 @@ public class Site {
     private Long id;
     private String name;
     private String logoUrl;
+    private String siteUrl;
     private String description;
     private boolean highlighted;
-    private Long popularity;
-    private Long clicks;
-    private Long newsCount;
-    private Long chosenAmount;
 
 
     public String getName() {
@@ -29,19 +26,7 @@ public class Site {
         return highlighted;
     }
 
-    public Long getPopularity() {
-        return popularity;
-    }
-
-    public Long getClicks() {
-        return clicks;
-    }
-
-    public Long getNewsCount() {
-        return newsCount;
-    }
-
-    public Long getChosenAmount() {
-        return chosenAmount;
+    public String getSiteUrl() {
+        return siteUrl;
     }
 }
