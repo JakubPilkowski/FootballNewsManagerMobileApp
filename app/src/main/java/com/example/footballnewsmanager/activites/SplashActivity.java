@@ -31,6 +31,7 @@ public class SplashActivity extends AppCompatActivity {
         Connection.init();
         UserPreferences.init(this);
 
+
         new Handler().postDelayed(() -> {
             ProgressDialog.get().show();
             if(UserPreferences.get().hasUser()){

@@ -1,6 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</LinearLayout>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.footballnewsmanager.adapters.news.NewsAdapterViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/news_item_highlighted_background_top"
+            android:orientation="vertical"
+            android:padding="6dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingBottom="3dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/site_logo_background"
+                    android:onClick="@{()->viewModel.onSiteClick()}"
+                    android:padding="6dp"
+                    app:imageUrl="@{viewModel.siteLogo}" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:onClick="@{()->viewModel.onSiteClick()}"
+                    android:text="@{viewModel.siteName}"
+                    android:textColor="#000"
+                    android:textSize="21sp" />
+
+                <Button
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/ic_info" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:onClick="@{()->viewModel.onNewsClick()}">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:scaleType="fitXY"
+                    app:imageUrl="@{viewModel.imageUrl}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/news_title_background"
+                    android:padding="6dp"
+                    android:text="@{viewModel.title}"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                android:paddingTop="6dp">
+
+                <View
+                    android:id="@+id/news_heart"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginBottom="3dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{()->viewModel.onLikeToggle()}"
+                    app:drawableAsResource="@{viewModel.heartDrawable}"
+                    app:setEnabled="@{viewModel.likeEnabled}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/green_ripple"
+                    android:onClick="@{()->viewModel.onLikeToggle()}"
+                    android:text="@{viewModel.likes}"
+                    android:textColor="#000"
+                    android:textSize="20sp" />
+
+                <View
+                    android:id="@+id/news_heart_break"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="18dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{()->viewModel.onDislikeToggle()}"
+                    app:drawableAsResource="@{viewModel.heartbreakDrawable}"
+                    app:setEnabled="@{viewModel.dislikeEnabled}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:onClick="@{()->viewModel.onDislikeToggle()}"
+                    android:text="@{viewModel.dislikes}"
+                    android:textColor="#000"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.date}"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingBottom="3dp"
+            android:background="@drawable/news_item_highlighted_background_bottom"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Wyróżniono"
+                android:textAlignment="center"
+                android:textColor="#304ac4"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

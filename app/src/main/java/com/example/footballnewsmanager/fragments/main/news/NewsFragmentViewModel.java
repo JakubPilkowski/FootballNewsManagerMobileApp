@@ -1,10 +1,8 @@
 package com.example.footballnewsmanager.fragments.main.news;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.databinding.ObservableField;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.adapters.news.NewsAdapter;
@@ -14,10 +12,8 @@ import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.models.User;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -35,12 +31,15 @@ public class NewsFragmentViewModel extends BaseViewModel {
     public void init(NewsResponse newsResponse) {
         newsAdapter = new NewsAdapter(getActivity());
 
-        newsAdapter.setItems(newsResponse.getNews());
+        newsAdapter.setItems(newsResponse.getAllNews());
+        newsAdapter.setCountAll(newsResponse.getNewsCount());
+        newsAdapter.setCountToday(newsResponse.getNewsToday());
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
             @Override
             protected void loadMoreItems() {
                 currentPage++;
                 newsAdapter.isLoading = true;
+                newsAdapter.notifyItemChanged(newsAdapter.getItemCount());
                 String token = UserPreferences.get().getAuthToken();
                 Connection.get().news(callback, token, currentPage);
             }
@@ -67,7 +66,7 @@ public class NewsFragmentViewModel extends BaseViewModel {
         @Override
         public void onSuccess(NewsResponse newsResponse) {
             getActivity().runOnUiThread(() -> {
-                newsAdapter.setItems(newsResponse.getNews());
+                newsAdapter.setItems(newsResponse.getAllNews());
                 newsAdapter.isLoading = false;
             });
         }

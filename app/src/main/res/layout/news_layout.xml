@@ -16,17 +16,19 @@
         android:layout_marginBottom="36dp"
         android:background="@drawable/news_item_background"
         android:orientation="vertical"
-        android:padding="6dp">
+        android:padding="6dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:padding="3dp">
+            android:paddingBottom="3dp"
+            >
 
             <ImageView
-                android:layout_width="88dp"
-                android:layout_height="44dp"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
                 android:padding="6dp"
                 android:background="@drawable/site_logo_background"
                 android:onClick="@{()->viewModel.onSiteClick()}"
@@ -45,9 +47,7 @@
             <Button
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:text="i"
-                android:textSize="18sp"
-                android:textAllCaps="false"
+                android:background="@drawable/ic_info"
                 />
         </LinearLayout>
 
@@ -59,7 +59,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="225dp"
+                android:layout_height="210dp"
                 android:scaleType="fitXY"
                 app:imageUrl="@{viewModel.imageUrl}" />
 
@@ -77,33 +77,52 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:padding="3dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="6dp"
+            android:elevation="2dp"
+            >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/green_ripple"
-                android:drawableStart="@drawable/ic_heart"
-                android:drawablePadding="6dp"
-                android:text="@{viewModel.likes}"
+            <View
+                android:id="@+id/news_heart"
+                android:layout_marginStart="6dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="3dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="@{()->viewModel.onLikeToggle()}"
-                android:textSize="18sp" />
+                app:setEnabled="@{viewModel.likeEnabled}"
+                app:drawableAsResource="@{viewModel.heartDrawable}"
+                />
+            <TextView
+                android:layout_marginStart="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/green_ripple"
+                android:onClick="@{()->viewModel.onLikeToggle()}"
+                android:text="@{viewModel.likes}"
+                android:textColor="#000"
+                android:textSize="20sp" />
 
+            <View
+                android:id="@+id/news_heart_break"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginStart="18dp"
+                android:onClick="@{()->viewModel.onDislikeToggle()}"
+                app:setEnabled="@{viewModel.dislikeEnabled}"
+                app:drawableAsResource="@{viewModel.heartbreakDrawable}"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="9dp"
-                android:background="@drawable/green_ripple"
-                android:drawableStart="@drawable/ic_heartbreak"
-                android:drawablePadding="6dp"
-                android:text="@{viewModel.dislikes}"
-                android:clickable="true"
-                android:focusable="true"
+                android:layout_marginStart="6dp"
                 android:onClick="@{()->viewModel.onDislikeToggle()}"
-                android:textSize="18sp" />
+                android:text="@{viewModel.dislikes}"
+                android:textColor="#000"
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
+import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsAndSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
@@ -106,15 +107,15 @@ public class Connection {
         newsObservable.subscribe(callback);
     }
 
-    public void toggleLikes(Callback<BaseResponse> callback, String token, Long siteId, Long newsId){
-        Observable<BaseResponse> toggleLikeObservable = client.getService()
+    public void toggleLikes(Callback<SingleNewsResponse> callback, String token, Long siteId, Long newsId){
+        Observable<SingleNewsResponse> toggleLikeObservable = client.getService()
                 .toggleLikes(token, siteId, newsId).subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation());
         toggleLikeObservable.subscribe(callback);
     }
 
-    public void toggleDisLikes(Callback<BaseResponse> callback, String token, Long siteId, Long newsId){
-        Observable<BaseResponse> toggleDislikeObservable = client.getService()
+    public void toggleDisLikes(Callback<SingleNewsResponse> callback, String token, Long siteId, Long newsId){
+        Observable<SingleNewsResponse> toggleDislikeObservable = client.getService()
                 .toggleDislikes(token, siteId, newsId).subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation());
         toggleDislikeObservable.subscribe(callback);

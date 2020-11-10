@@ -9,6 +9,7 @@ import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
+import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
@@ -81,14 +82,14 @@ public interface Service {
     );
 
     @PUT("news/like/site={sid}/id={id}")
-    Observable<BaseResponse> toggleLikes(
+    Observable<SingleNewsResponse> toggleLikes(
             @Header("Authorization") String token,
             @Path("sid") Long siteId,
             @Path("id") Long newsId
     );
 
     @PUT("news/dislike/site={sid}/id={id}")
-    Observable<BaseResponse> toggleDislikes(
+    Observable<SingleNewsResponse> toggleDislikes(
             @Header("Authorization") String token,
             @Path("sid") Long siteId,
             @Path("id") Long newsId

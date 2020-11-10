@@ -10,14 +10,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
     tools:context=".fragments.main.news.NewsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/news_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
-        android:id="@+id/news_recycler_view"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:recyclerViewAdapter="@{viewModel.adapterObservable}"
         />
