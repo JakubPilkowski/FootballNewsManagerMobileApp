@@ -5,12 +5,15 @@
             name="viewModel"
             type="com.example.footballnewsmanager.fragments.main.news.NewsFragmentViewModel" />
     </data>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".fragments.main.news.NewsFragment">
+    tools:context=".fragments.main.news.NewsFragment"
+    android:id="@+id/news_swipe_refresh"
+    app:onSwipeRefreshListener="@{viewModel.swipeRefreshListenerObservable}"
+    app:setColorScheme="@{viewModel.swipeRefreshColor}"
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/news_recycler_view"
@@ -19,6 +22,7 @@
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:recyclerViewAdapter="@{viewModel.adapterObservable}"
+        app:postRunnable="@{viewModel.postRunnable}"
         />
-</LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

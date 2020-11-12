@@ -16,7 +16,4 @@ public class TeamExtras extends BaseNewsAdjustment {
         return teams;
     }
 
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
-    }
 }

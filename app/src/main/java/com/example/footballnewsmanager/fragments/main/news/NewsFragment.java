@@ -19,13 +19,17 @@ import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
+import com.example.footballnewsmanager.api.responses.main.BaseNewsAdjustment;
+import com.example.footballnewsmanager.api.responses.main.NewsExtras;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
+import com.example.footballnewsmanager.api.responses.main.TeamExtras;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.Providers;
+import com.google.gson.Gson;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -53,7 +57,7 @@ public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragment
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
 
-//        ProgressDialog.get().show();
+        ProgressDialog.get().show();
         String token = UserPreferences.get().getAuthToken();
         Connection.get().news(callback, token, 0);
     }
@@ -61,15 +65,13 @@ public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragment
     private Callback<NewsResponse> callback = new Callback<NewsResponse>() {
         @Override
         public void onSuccess(NewsResponse newsResponse) {
-//            ProgressDialog.get().dismiss();
-            Log.d("News", "Fragment success");
+            ProgressDialog.get().dismiss();
             viewModel.init(newsResponse);
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
-//            ProgressDialog.get().dismiss();
-            Log.d("News", "Fragment error");
+            ProgressDialog.get().dismiss();
             getActivity().runOnUiThread(() -> {
                         Toast.makeText(getContext(), error.getError(), Toast.LENGTH_LONG).show();
                     }

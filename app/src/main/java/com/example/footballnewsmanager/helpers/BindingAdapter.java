@@ -12,9 +12,12 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -124,11 +127,20 @@ public class BindingAdapter {
         viewPager2.setUserInputEnabled(enabled);
     }
 
-    @androidx.databinding.BindingAdapter("setAnimation")
-    public static void setAnimation(View view, int anim){
-        Animation animation = AnimationUtils.loadAnimation(view.getContext(), anim);
-        if(animation != null){
-            view.startAnimation(animation);
-        }
+    @androidx.databinding.BindingAdapter("postRunnable")
+    public static void setRecyclerViewPostRunnable(RecyclerView recyclerView, Runnable runnable){
+        recyclerView.post(runnable);
     }
+
+    @androidx.databinding.BindingAdapter("onSwipeRefreshListener")
+    public static void setOnRefreshListener(SwipeRefreshLayout swipeRefreshLayout, SwipeRefreshLayout.OnRefreshListener onRefreshListener) {
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+    }
+
+    @androidx.databinding.BindingAdapter("setColorScheme")
+    public static void setColorScheme(SwipeRefreshLayout swipeRefreshLayout, @ColorRes int color) {
+        swipeRefreshLayout.setColorSchemeColors(swipeRefreshLayout.getResources().getColor(color));
+    }
+
+
 }

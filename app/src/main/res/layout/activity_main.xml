@@ -17,15 +17,22 @@
         android:orientation="vertical">
 
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/main_viewpager"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:background="@drawable/auth_background"
-            android:overScrollMode="never"
-            app:pageChangeCallback="@{viewModel.onPageChangeCallbackObservable}"
-            app:viewpager2Adapter="@{viewModel.viewPagerAdapterObservable}" />
+            android:layout_weight="1" >
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/main_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                app:pageChangeCallback="@{viewModel.onPageChangeCallbackObservable}"
+                app:viewpager2Adapter="@{viewModel.viewPagerAdapterObservable}" />
+
+
+        </RelativeLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/main_bottom_nav_view"

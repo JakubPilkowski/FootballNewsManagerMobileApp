@@ -22,7 +22,7 @@ import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.databinding.NewsHighlightedLayoutBinding;
 import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.NewsPropertiesListener;
+import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
 import com.example.footballnewsmanager.models.News;
 import com.example.footballnewsmanager.models.UserNews;
 
@@ -48,9 +48,9 @@ public class NewsAdapterViewModel {
     private UserNews news;
     private News newsDetails;
     private Activity activity;
-    private NewsPropertiesListener listener;
+    private NewsRecyclerViewListener listener;
 
-    public void init(UserNews news, Activity activity, NewsPropertiesListener listener) {
+    public void init(UserNews news, Activity activity, NewsRecyclerViewListener listener) {
         this.activity = activity;
         this.listener = listener;
         update(news);

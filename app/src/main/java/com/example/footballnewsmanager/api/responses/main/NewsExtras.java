@@ -14,7 +14,4 @@ public class NewsExtras extends BaseNewsAdjustment {
         return news;
     }
 
-    public void setNews(News news) {
-        this.news = news;
-    }
 }
