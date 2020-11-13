@@ -1,23 +1,20 @@
 package com.example.footballnewsmanager.api;
 
-import androidx.databinding.ObservableField;
-
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
 import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
+import com.example.footballnewsmanager.api.responses.main.NewsResponse;
+import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsAndSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
 
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import retrofit2.Call;
 
 public class Connection {
 
@@ -102,4 +99,26 @@ public class Connection {
                 .observeOn(Schedulers.computation());
         proposedUserObservable.subscribe(callback);
     }
+
+    public void news(Callback<NewsResponse> callback, String token, int page) {
+        Observable<NewsResponse> newsObservable  = client.getService()
+                .getNewsByPage(token, page).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        newsObservable.subscribe(callback);
+    }
+
+    public void toggleLikes(Callback<SingleNewsResponse> callback, String token, Long siteId, Long newsId){
+        Observable<SingleNewsResponse> toggleLikeObservable = client.getService()
+                .toggleLikes(token, siteId, newsId).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        toggleLikeObservable.subscribe(callback);
+    }
+
+    public void toggleDisLikes(Callback<SingleNewsResponse> callback, String token, Long siteId, Long newsId){
+        Observable<SingleNewsResponse> toggleDislikeObservable = client.getService()
+                .toggleDislikes(token, siteId, newsId).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        toggleDislikeObservable.subscribe(callback);
+    }
+
 }

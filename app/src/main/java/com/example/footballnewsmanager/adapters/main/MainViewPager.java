@@ -23,9 +23,6 @@ public class MainViewPager extends FragmentStateAdapter {
 
         Fragment fragment;
         switch (position){
-            case 0:
-                fragment = NewsFragment.newInstance();
-                break;
             case 1:
                 fragment = AllNewsFragment.newInstance();
                 break;
@@ -35,6 +32,7 @@ public class MainViewPager extends FragmentStateAdapter {
             case 3:
                 fragment = ProfileFragment.newInstance();
                 break;
+            case 0:
             default:
                 fragment = NewsFragment.newInstance();
         }

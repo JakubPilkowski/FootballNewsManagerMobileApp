@@ -1,25 +1,38 @@
 package com.example.footballnewsmanager.helpers;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.PictureDrawable;
+import android.net.Uri;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.StreamEncoder;
+import com.caverock.androidsvg.SVG;
+import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.interfaces.DragViewListener;
 import com.example.footballnewsmanager.models.LayoutManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -51,8 +64,8 @@ public class BindingAdapter {
     }
 
     @androidx.databinding.BindingAdapter("setEnabled")
-    public static void setEnabled(Button button, boolean enabled){
-        button.setEnabled(enabled);
+    public static void setEnabled(View view, boolean enabled){
+        view.setEnabled(enabled);
     }
 
     @androidx.databinding.BindingAdapter("marginBottom")
@@ -73,25 +86,34 @@ public class BindingAdapter {
     }
 
     @androidx.databinding.BindingAdapter("layoutManager")
-    public static void setLayoutManager(RecyclerView recyclerView, LayoutManager layoutManager) {
-        switch (layoutManager) {
-            case LINEAR:
-                recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-                break;
-            case GRID:
-                recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 2));
-                break;
-        }
+    public static void setLayoutManager(RecyclerView recyclerView, RecyclerView.LayoutManager layoutManager) {
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     @androidx.databinding.BindingAdapter("imageUrl")
     public static void setImageUrl(ImageView imageView, String url) {
         Context context = imageView.getContext();
-        Glide.with(context)
-                .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .thumbnail(0.1f)
-                .into(imageView);
+        if(url.contains(".svg")){
+            RequestBuilder<PictureDrawable> requestBuilder;
+            Uri uri = Uri.parse(url);
+            Log.d("Glide", "svg");
+            requestBuilder = Glide.with(context)
+                    .as(PictureDrawable.class)
+                    .listener(new SvgSoftwareLayerSetter());
+
+//            Glide.with(context)
+            requestBuilder
+                    .load(uri)
+                    .into(imageView);
+        }
+        else{
+            Log.d("Glide", "other");
+            Glide.with(context)
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .thumbnail(0.1f)
+                    .into(imageView);
+        }
     }
 
     @androidx.databinding.BindingAdapter("switchChangeListener")
@@ -108,7 +130,6 @@ public class BindingAdapter {
     public static void setViewDrawable(View view, int resource){
         view.setBackground(view.getResources().getDrawable(resource));
     }
-
 
     @androidx.databinding.BindingAdapter("viewpager2Adapter")
     public static void setViewPager2Adapter(ViewPager2 viewPager2, RecyclerView.Adapter adapter){
@@ -129,4 +150,21 @@ public class BindingAdapter {
     public static void setUserInputEnabled(ViewPager2 viewPager2, boolean enabled){
         viewPager2.setUserInputEnabled(enabled);
     }
+
+    @androidx.databinding.BindingAdapter("postRunnable")
+    public static void setRecyclerViewPostRunnable(RecyclerView recyclerView, Runnable runnable){
+        recyclerView.post(runnable);
+    }
+
+    @androidx.databinding.BindingAdapter("onSwipeRefreshListener")
+    public static void setOnRefreshListener(SwipeRefreshLayout swipeRefreshLayout, SwipeRefreshLayout.OnRefreshListener onRefreshListener) {
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+    }
+
+    @androidx.databinding.BindingAdapter("setColorScheme")
+    public static void setColorScheme(SwipeRefreshLayout swipeRefreshLayout, @ColorRes int color) {
+        swipeRefreshLayout.setColorSchemeColors(swipeRefreshLayout.getResources().getColor(color));
+    }
+
+
 }

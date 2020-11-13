@@ -44,7 +44,8 @@ public abstract class Callback<T> extends Subject<T> {
                 }
             }
         } catch (Exception exception) {
-            exception.printStackTrace();
+            Log.d("Error", throwable.getMessage());
+//            exception.printStackTrace();
         }
 
 //        onSmthWrong(throwable);

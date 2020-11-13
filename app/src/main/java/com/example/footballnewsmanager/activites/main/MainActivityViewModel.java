@@ -45,6 +45,7 @@ public class MainActivityViewModel extends BaseViewModel {
         viewPagerAdapterObservable.set(viewPagerAdapter);
         onPageChangeCallbackObservable.set(onPageChangeCallback);
         navigationItemSelectedListenerObservable.set(navigationItemSelectedListener);
+        
     }
 
 

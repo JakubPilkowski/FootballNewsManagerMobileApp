@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.footballnewsmanager.adapters.news.NewsAdditionalInfoViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:text="@{viewModel.viewTitle}"
+            android:textAlignment="center"
+            android:background="@drawable/additional_info_background_top"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/additional_info_background_bottom"
+            android:layout_height="match_parent"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            >
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="12dp"
+                android:background="#fff"
+                app:cardElevation="0dp"
+                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/additional_info_teams_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:recyclerViewAdapter="@{viewModel.adapterObservable}"
+                    app:layoutManager="@{viewModel.layoutManager}"
+                    />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
