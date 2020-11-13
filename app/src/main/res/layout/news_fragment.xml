@@ -15,14 +15,16 @@
     app:setColorScheme="@{viewModel.swipeRefreshColor}"
     >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/news_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:recyclerViewAdapter="@{viewModel.adapterObservable}"
-        app:postRunnable="@{viewModel.postRunnable}"
-        />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/news_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:recyclerViewAdapter="@{viewModel.adapterObservable}"
+            app:postRunnable="@{viewModel.postRunnable}"
+            />
+<!--    </com.google.android.material.card.MaterialCardView>-->
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

@@ -54,7 +54,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="225dp"
+                android:layout_height="210dp"
                 android:onClick="@{()->viewModel.onNewsClick()}">
 
                 <ImageView

@@ -20,18 +20,26 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/auth_background"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+            android:background="@drawable/auth_background">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/main_viewpager"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:overScrollMode="never"
-                app:pageChangeCallback="@{viewModel.onPageChangeCallbackObservable}"
-                app:viewpager2Adapter="@{viewModel.viewPagerAdapterObservable}" />
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/main_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:tag="mainViewPager"
+                    app:pageChangeCallback="@{viewModel.onPageChangeCallbackObservable}"
+                    app:viewpager2Adapter="@{viewModel.viewPagerAdapterObservable}" />
 
+            </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

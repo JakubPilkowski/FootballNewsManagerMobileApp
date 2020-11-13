@@ -1,7 +1,11 @@
 package com.example.footballnewsmanager.helpers;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.PictureDrawable;
+import android.net.Uri;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -24,7 +28,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.StreamEncoder;
+import com.caverock.androidsvg.SVG;
+import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.interfaces.DragViewListener;
 import com.example.footballnewsmanager.models.LayoutManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -85,11 +93,27 @@ public class BindingAdapter {
     @androidx.databinding.BindingAdapter("imageUrl")
     public static void setImageUrl(ImageView imageView, String url) {
         Context context = imageView.getContext();
-        Glide.with(context)
-                .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .thumbnail(0.1f)
-                .into(imageView);
+        if(url.contains(".svg")){
+            RequestBuilder<PictureDrawable> requestBuilder;
+            Uri uri = Uri.parse(url);
+            Log.d("Glide", "svg");
+            requestBuilder = Glide.with(context)
+                    .as(PictureDrawable.class)
+                    .listener(new SvgSoftwareLayerSetter());
+
+//            Glide.with(context)
+            requestBuilder
+                    .load(uri)
+                    .into(imageView);
+        }
+        else{
+            Log.d("Glide", "other");
+            Glide.with(context)
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .thumbnail(0.1f)
+                    .into(imageView);
+        }
     }
 
     @androidx.databinding.BindingAdapter("switchChangeListener")

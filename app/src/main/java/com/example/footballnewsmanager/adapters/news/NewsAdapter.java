@@ -172,7 +172,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewModel.initForNews(baseNewsAdjustment, activity);
                 ((AdditionalNewsViewHolder) holder).binding.setViewModel(viewModel);
             } else if (baseNewsAdjustment.getType().equals(NewsInfoType.PROPOSED_TEAMS)) {
-                viewModel.initForTeams(baseNewsAdjustment);
+                viewModel.initForTeams(baseNewsAdjustment,activity, ((AdditionalTeamsViewHolder)holder).binding);
                 ((AdditionalTeamsViewHolder) holder).binding.setViewModel(viewModel);
             }
             return;

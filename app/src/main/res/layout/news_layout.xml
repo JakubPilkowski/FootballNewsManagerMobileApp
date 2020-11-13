@@ -10,127 +10,129 @@
             type="com.example.footballnewsmanager.adapters.news.NewsAdapterViewModel" />
     </data>
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
-        android:background="@drawable/news_item_background"
-        android:orientation="vertical"
-        android:padding="6dp"
-        >
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#fff"
+        app:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingBottom="3dp"
+            android:orientation="vertical"
+            android:padding="6dp"
             >
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:padding="6dp"
-                android:background="@drawable/site_logo_background"
-                android:onClick="@{()->viewModel.onSiteClick()}"
-                app:imageUrl="@{viewModel.siteLogo}" />
-
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_weight="1"
-                android:text="@{viewModel.siteName}"
-                android:onClick="@{()->viewModel.onSiteClick()}"
-                android:textColor="#000"
-                android:textSize="21sp" />
+                android:gravity="center_vertical"
+                android:paddingBottom="3dp">
 
-            <Button
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="@drawable/ic_info"
-                />
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/site_logo_background"
+                    android:onClick="@{()->viewModel.onSiteClick()}"
+                    android:padding="6dp"
+                    app:imageUrl="@{viewModel.siteLogo}" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="225dp"
-            android:onClick="@{()->viewModel.onNewsClick()}"
-            >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:onClick="@{()->viewModel.onSiteClick()}"
+                    android:text="@{viewModel.siteName}"
+                    android:textColor="#000"
+                    android:textSize="21sp" />
 
-            <ImageView
+                <Button
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/ic_info" />
+            </LinearLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
-                android:scaleType="fitXY"
-                app:imageUrl="@{viewModel.imageUrl}" />
+                android:onClick="@{()->viewModel.onNewsClick()}">
 
-            <TextView
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:scaleType="fitXY"
+                    app:imageUrl="@{viewModel.imageUrl}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/news_title_background"
+                    android:padding="6dp"
+                    android:text="@{viewModel.title}"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="17sp"
-                android:padding="6dp"
-                android:background="@drawable/news_title_background"
-                android:text="@{viewModel.title}"
-                />
-        </RelativeLayout>
+                android:elevation="2dp"
+                android:paddingTop="6dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="6dp"
-            android:elevation="2dp"
-            >
+                <View
+                    android:id="@+id/news_heart"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginBottom="3dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{()->viewModel.onLikeToggle()}"
+                    app:drawableAsResource="@{viewModel.heartDrawable}"
+                    app:setEnabled="@{viewModel.likeEnabled}" />
 
-            <View
-                android:id="@+id/news_heart"
-                android:layout_marginStart="6dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginBottom="3dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="@{()->viewModel.onLikeToggle()}"
-                app:setEnabled="@{viewModel.likeEnabled}"
-                app:drawableAsResource="@{viewModel.heartDrawable}"
-                />
-            <TextView
-                android:layout_marginStart="6dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/green_ripple"
-                android:onClick="@{()->viewModel.onLikeToggle()}"
-                android:text="@{viewModel.likes}"
-                android:textColor="#000"
-                android:textSize="20sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/green_ripple"
+                    android:onClick="@{()->viewModel.onLikeToggle()}"
+                    android:text="@{viewModel.likes}"
+                    android:textColor="#000"
+                    android:textSize="20sp" />
 
-            <View
-                android:id="@+id/news_heart_break"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginStart="18dp"
-                android:onClick="@{()->viewModel.onDislikeToggle()}"
-                app:setEnabled="@{viewModel.dislikeEnabled}"
-                app:drawableAsResource="@{viewModel.heartbreakDrawable}"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:onClick="@{()->viewModel.onDislikeToggle()}"
-                android:text="@{viewModel.dislikes}"
-                android:textColor="#000"
-                android:textSize="20sp" />
+                <View
+                    android:id="@+id/news_heart_break"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="18dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{()->viewModel.onDislikeToggle()}"
+                    app:drawableAsResource="@{viewModel.heartbreakDrawable}"
+                    app:setEnabled="@{viewModel.dislikeEnabled}" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:text="@{viewModel.date}"
-                android:textColor="#000"
-                android:textAlignment="textEnd" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:onClick="@{()->viewModel.onDislikeToggle()}"
+                    android:text="@{viewModel.dislikes}"
+                    android:textColor="#000"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.date}"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>
