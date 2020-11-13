@@ -52,7 +52,8 @@
                 <Button
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:background="@drawable/ic_info" />
+                    android:onClick="@{()->viewModel.onMoreInfoClick()}"
+                    android:background="@drawable/info_with_ripple" />
             </LinearLayout>
 
             <RelativeLayout

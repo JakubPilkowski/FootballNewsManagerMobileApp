@@ -10,6 +10,7 @@ import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityMainBinding;
+import com.example.footballnewsmanager.fragments.main.MainFragment;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
 
@@ -21,7 +22,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
         binding.setViewModel(viewModel);
         viewModel.setProviders(this);
         viewModel.init();
-
+        navigator.attach(MainFragment.newInstance(), MainFragment.TAG);
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR ^ View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
@@ -35,7 +36,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
 
     @Override
     public int getIdFragmentContainer() {
-        return 0;
+        return R.id.main_container;
     }
 
     @Override

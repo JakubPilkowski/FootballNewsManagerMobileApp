@@ -13,6 +13,7 @@ import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -21,6 +22,7 @@ import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.databinding.NewsHighlightedLayoutBinding;
 import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
+import com.example.footballnewsmanager.fragments.main.news_info.NewsInfoFragment;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
 import com.example.footballnewsmanager.models.News;
@@ -113,7 +115,7 @@ public class NewsAdapterViewModel {
     }
 
     public void onMoreInfoClick() {
-        //navigator.attach(detailsFragment)
+        ((MainActivity) activity).navigator.attachAdd(NewsInfoFragment.newInstance(news), NewsInfoFragment.TAG);
     }
 
     public void onLikeToggle() {

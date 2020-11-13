@@ -5,6 +5,7 @@ import androidx.databinding.ObservableField;
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
+import com.example.footballnewsmanager.api.requests.news.TeamsFromTagsRequest;
 import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
@@ -93,5 +94,11 @@ public interface Service {
             @Header("Authorization") String token,
             @Path("sid") Long siteId,
             @Path("id") Long newsId
+    );
+
+    @POST("teams/findByTags")
+    Observable<ProposedTeamsResponse> findByTags(
+            @Header("Authorization") String token,
+            @Body TeamsFromTagsRequest teamsFromTagsRequest
     );
 }
