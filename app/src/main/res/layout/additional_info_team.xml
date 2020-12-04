@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.adapters.news.additionalInfo.AdditionalTeamsAdapterViewModel" />
+            type="com.example.footballnewsmanager.adapters.news.additionalInfo.teams.AdditionalTeamsAdapterViewModel" />
     </data>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"

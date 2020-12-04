@@ -100,9 +100,9 @@ public class BindingAdapter {
             requestBuilder = Glide.with(context)
                     .as(PictureDrawable.class)
                     .listener(new SvgSoftwareLayerSetter());
-
-//            Glide.with(context)
             requestBuilder
+                    .placeholder(R.drawable.image_placeholer)
+                    .error(R.drawable.image_error)
                     .load(uri)
                     .into(imageView);
         }
@@ -110,6 +110,8 @@ public class BindingAdapter {
             Log.d("Glide", "other");
             Glide.with(context)
                     .load(url)
+                    .placeholder(R.drawable.image_placeholer)
+                    .error(R.drawable.image_error)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .thumbnail(0.1f)
                     .into(imageView);

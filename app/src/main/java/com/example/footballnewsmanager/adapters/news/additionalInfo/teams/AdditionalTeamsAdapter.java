@@ -1,14 +1,12 @@
-package com.example.footballnewsmanager.adapters.news.additionalInfo;
+package com.example.footballnewsmanager.adapters.news.additionalInfo.teams;
 
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.adapters.propsed_sites.ProposedSitesAdapterViewModel;
 import com.example.footballnewsmanager.base.BaseRecyclerViewAdapter;
 import com.example.footballnewsmanager.base.BaseViewHolder;
 import com.example.footballnewsmanager.databinding.AdditionalInfoTeamBinding;
-import com.example.footballnewsmanager.databinding.ProposedSitesLayoutBinding;
 import com.example.footballnewsmanager.models.Team;
 
 import java.util.ArrayList;

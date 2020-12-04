@@ -1,4 +1,4 @@
-package com.example.footballnewsmanager.adapters.news.additionalInfo;
+package com.example.footballnewsmanager.adapters.news.additionalInfo.teams;
 
 import android.app.Activity;
 import android.view.View;
