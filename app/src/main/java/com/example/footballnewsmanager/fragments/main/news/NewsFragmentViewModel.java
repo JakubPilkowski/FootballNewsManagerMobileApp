@@ -83,6 +83,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         public void onSuccess(NewsResponse newsResponse) {
             getActivity().runOnUiThread(() -> {
                 currentPage = 0;
+
                 isLastPage = newsResponse.getPages() <= currentPage;
                 newsAdapter.isLoading = false;
                 newsAdapter.setCountAll(newsResponse.getNewsCount());

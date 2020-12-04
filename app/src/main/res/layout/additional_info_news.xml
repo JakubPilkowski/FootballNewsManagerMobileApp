@@ -67,13 +67,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 >
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textColor="#000"
                     android:text="@{viewModel.concernTeams}"
+                    />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/additional_info_news_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:recyclerViewAdapter="@{viewModel.adapterObservable}"
+                    app:layoutManager="@{viewModel.layoutManager}"
                     />
             </LinearLayout>
         </LinearLayout>

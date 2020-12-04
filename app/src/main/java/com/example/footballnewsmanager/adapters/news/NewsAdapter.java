@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.adapters.news.additionalInfo.news.AdditionalNewsAdapterViewModel;
 import com.example.footballnewsmanager.api.responses.main.BaseNewsAdjustment;
 import com.example.footballnewsmanager.api.responses.main.NewsExtras;
 import com.example.footballnewsmanager.api.responses.main.NewsInfoType;
@@ -169,7 +170,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
             BaseNewsAdjustment baseNewsAdjustment = additionalItems.get(addContentPosition);
             if (baseNewsAdjustment.getType().equals(NewsInfoType.HOT_NEWS) || baseNewsAdjustment.getType().equals(NewsInfoType.PROPOSED_NEWS)) {
-                viewModel.initForNews(baseNewsAdjustment, activity);
+                viewModel.initForNews(baseNewsAdjustment, activity, ((AdditionalNewsViewHolder)holder).binding);
                 ((AdditionalNewsViewHolder) holder).binding.setViewModel(viewModel);
             } else if (baseNewsAdjustment.getType().equals(NewsInfoType.PROPOSED_TEAMS)) {
                 viewModel.initForTeams(baseNewsAdjustment,activity, ((AdditionalTeamsViewHolder)holder).binding);
@@ -268,6 +269,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         additionalItems.clear();
         viewModels.clear();
         additionalInfoViewModels.clear();
+        notifyItemRangeRemoved(0, items.size()+additionalItems.size()+2);
         setItems(userNews.getAllNews(), userNews.getAdditionalContent());
     }
 
