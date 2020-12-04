@@ -3,6 +3,7 @@ package com.example.footballnewsmanager.api;
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
+import com.example.footballnewsmanager.api.requests.news.TeamsFromTagsRequest;
 import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
@@ -12,6 +13,9 @@ import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesRespo
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsAndSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
+import com.example.footballnewsmanager.models.Tag;
+
+import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -119,6 +123,13 @@ public class Connection {
                 .toggleDislikes(token, siteId, newsId).subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation());
         toggleDislikeObservable.subscribe(callback);
+    }
+
+    public void findByTags(Callback<ProposedTeamsResponse> callback, String token, TeamsFromTagsRequest request){
+        Observable<ProposedTeamsResponse> teamsObservable = client.getService()
+                .findByTags(token, request).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        teamsObservable.subscribe(callback);
     }
 
 }
