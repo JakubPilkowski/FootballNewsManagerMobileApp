@@ -1,9 +1,10 @@
 package com.example.footballnewsmanager.activites.main;
 
-import android.os.Build;
-import android.view.View;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.ViewDataBinding;
 
 import com.example.footballnewsmanager.R;
@@ -13,6 +14,7 @@ import com.example.footballnewsmanager.databinding.ActivityMainBinding;
 import com.example.footballnewsmanager.fragments.main.MainFragment;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
+import com.example.footballnewsmanager.notifications.NewsNotificationsReceiver;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivityViewModel> implements Providers {
 
@@ -23,6 +25,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
         viewModel.setProviders(this);
         viewModel.init();
         navigator.attach(MainFragment.newInstance(), MainFragment.TAG);
+
+
+//        Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
+//        broadcastIntent.putExtra("toastMessage", "elo elo elo");
+//        PendingIntent actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+//        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.notification_icon);
+
+
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR ^ View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
@@ -64,4 +75,5 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
     public Navigator getNavigator() {
         return navigator;
     }
+
 }
