@@ -1,10 +1,5 @@
 package com.example.footballnewsmanager.activites.main;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-
 import androidx.databinding.ViewDataBinding;
 
 import com.example.footballnewsmanager.R;
@@ -14,7 +9,6 @@ import com.example.footballnewsmanager.databinding.ActivityMainBinding;
 import com.example.footballnewsmanager.fragments.main.MainFragment;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
-import com.example.footballnewsmanager.notifications.NewsNotificationsReceiver;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivityViewModel> implements Providers {
 
@@ -25,6 +19,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
         viewModel.setProviders(this);
         viewModel.init();
         navigator.attach(MainFragment.newInstance(), MainFragment.TAG);
+
 
 
 //        Intent broadcastIntent = new Intent(this, NotificationReceiver.class);

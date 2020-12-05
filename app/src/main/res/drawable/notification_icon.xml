@@ -5,6 +5,6 @@
            <solid android:color="@android:color/transparent"/>
         </shape>
     </item>
-    <item android:drawable="@drawable/ic_ball_v2">
+    <item android:drawable="@drawable/ic_logo_transparent">
     </item>
 </layer-list>

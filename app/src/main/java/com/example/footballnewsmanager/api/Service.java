@@ -11,9 +11,11 @@ import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
+import com.example.footballnewsmanager.api.responses.news.NotificationResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
+import com.example.footballnewsmanager.models.UserNews;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
@@ -100,5 +102,17 @@ public interface Service {
     Observable<ProposedTeamsResponse> findByTags(
             @Header("Authorization") String token,
             @Body TeamsFromTagsRequest teamsFromTagsRequest
+    );
+
+    @GET("news/notifications")
+    Observable<NotificationResponse> getNotifications(
+            @Header("Authorization") String token
+    );
+
+    @PUT("news/visit/site={sid}/id={id}")
+    Observable<UserNews> setNewsVisited(
+            @Header("Authorization") String token,
+            @Path("sid") Long siteId,
+            @Path("id") Long newsId
     );
 }

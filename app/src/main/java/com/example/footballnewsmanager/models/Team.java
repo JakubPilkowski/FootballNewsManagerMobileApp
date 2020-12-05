@@ -9,6 +9,11 @@ public class Team {
     private Long newsCount;
     private Long chosenAmount;
 
+
+    public Long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
