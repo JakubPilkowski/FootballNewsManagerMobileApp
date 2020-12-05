@@ -1,5 +1,7 @@
 package com.example.footballnewsmanager.api;
 
+import androidx.databinding.ObservableField;
+
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
@@ -9,11 +11,14 @@ import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
+import com.example.footballnewsmanager.api.responses.news.NotificationResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsAndSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.models.Tag;
+import com.example.footballnewsmanager.models.User;
+import com.example.footballnewsmanager.models.UserNews;
 
 import java.util.List;
 
@@ -131,5 +136,20 @@ public class Connection {
                 .observeOn(Schedulers.computation());
         teamsObservable.subscribe(callback);
     }
+
+    public void getNotifications(Callback<NotificationResponse> callback, String token){
+        Observable<NotificationResponse> notificationResponseObservable = client.getService()
+                .getNotifications(token).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        notificationResponseObservable.subscribe(callback);
+    }
+
+    public void setNewsVisited(Callback<UserNews> callback, String token, Long siteId, Long newsId){
+        Observable<UserNews> notificationResponseObservable = client.getService()
+                .setNewsVisited(token, siteId, newsId).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        notificationResponseObservable.subscribe(callback);
+    }
+
 
 }

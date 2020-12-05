@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.footballnewsmanager">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".activites.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,9 +18,8 @@
         tools:targetApi="n">
         <activity
             android:name=".activites.register.ProposedSettingsActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/ProposedSettings"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activites.resetPassword.ResetPasswordActivity"
             android:theme="@style/ResetPasswordTheme"
@@ -50,10 +51,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activites.main.MainActivity"
+        <activity
+            android:name=".activites.main.MainActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/MainActivityTheme"
-            />
+            android:theme="@style/MainActivityTheme" />
+
+
+        <receiver android:name=".notifications.NewsNotificationsReceiver" android:process=":remote"/>
+
+        <receiver android:name=".notifications.BootReceiver" android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
