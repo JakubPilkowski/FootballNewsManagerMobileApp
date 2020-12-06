@@ -25,6 +25,7 @@ import com.example.footballnewsmanager.databinding.NewsHeaderLayoutBinding;
 import com.example.footballnewsmanager.databinding.NewsHighlightedLayoutBinding;
 import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
 import com.example.footballnewsmanager.databinding.NewsPlaceholderBinding;
+import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
 import com.example.footballnewsmanager.models.UserNews;
 
@@ -50,6 +51,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public boolean isLoading = false;
     public boolean isPlaceholder = false;
     private NewsRecyclerViewListener newsRecyclerViewListener;
+    private BadgeListener badgeListener;
 
     public void setItems(List<UserNews> items, BaseNewsAdjustment additionalContent) {
         int start = this.items.size() + this.additionalItems.size();
@@ -147,7 +149,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return;
         } else if (position == 0) {
             NewsHeaderAdapterViewModel viewModel = new NewsHeaderAdapterViewModel();
-            viewModel.init(countAll, countToday);
+            viewModel.init(countAll, countToday, newsRecyclerViewListener);
             NewsHeaderLayoutBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
             return;
@@ -187,11 +189,11 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewModel = viewModels.get(itemsPosition);
             }
             if (items.get(itemsPosition).getNews().isHighlighted()) {
-                viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener);
+                viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener, badgeListener);
                 NewsHighlightedLayoutBinding binding = ((NewsHighlightedViewHolder) holder).getBinding();
                 binding.setViewModel(viewModel);
             } else {
-                viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener);
+                viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener, badgeListener);
                 NewsLayoutBinding binding = ((NewsViewHolder) holder).getBinding();
                 binding.setViewModel(viewModel);
             }
@@ -271,6 +273,10 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         additionalInfoViewModels.clear();
         notifyItemRangeRemoved(0, items.size()+additionalItems.size()+2);
         setItems(userNews.getAllNews(), userNews.getAdditionalContent());
+    }
+
+    public void setBadgeListener(BadgeListener badgeListener) {
+        this.badgeListener = badgeListener;
     }
 
 

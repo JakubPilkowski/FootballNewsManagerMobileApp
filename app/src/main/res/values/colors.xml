@@ -10,6 +10,8 @@
     <color name="colorTextPrimary">#001a00</color>
     <color name="colorTextSecondary">#fff</color>
     <color name="colorTextGray">#e0e0e0</color>
+    <color name="colorVisited">#A9A9A9</color>
+
 
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#001a00</color>
     <color name="errorColor">#ff3333</color>

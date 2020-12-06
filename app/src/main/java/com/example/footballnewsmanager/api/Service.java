@@ -11,6 +11,7 @@ import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
+import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
 import com.example.footballnewsmanager.api.responses.news.NotificationResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
@@ -110,9 +111,19 @@ public interface Service {
     );
 
     @PUT("news/visit/site={sid}/id={id}")
-    Observable<UserNews> setNewsVisited(
+    Observable<SingleNewsResponse> setNewsVisited(
             @Header("Authorization") String token,
             @Path("sid") Long siteId,
             @Path("id") Long newsId
+    );
+
+    @GET("news/notVisitedNewsAmount")
+    Observable<BadgesResponse> getNotVisitedNewsAmount(
+            @Header("Authorization") String token
+    );
+
+    @GET("news/markAllAsVisited")
+    Observable<BaseResponse> markAllAsVisited(
+        @Header("Authorization") String token
     );
 }

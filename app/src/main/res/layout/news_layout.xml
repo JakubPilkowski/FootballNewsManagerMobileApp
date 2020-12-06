@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
         app:cardCornerRadius="12dp"
-        app:cardBackgroundColor="#fff"
+        app:cardBackgroundColor="@{viewModel.isVisited}"
         app:cardElevation="0dp">
 
         <LinearLayout
@@ -49,6 +49,13 @@
                     android:textColor="#000"
                     android:textSize="21sp" />
 
+
+<!--                <View-->
+<!--                    android:layout_width="24dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:layout_margin="6dp"-->
+<!--                    app:drawableAsResource="@{viewModel.isVisited}"-->
+<!--                    />-->
                 <Button
                     android:layout_width="36dp"
                     android:layout_height="36dp"

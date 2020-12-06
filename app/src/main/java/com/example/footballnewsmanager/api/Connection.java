@@ -11,6 +11,7 @@ import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
+import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
 import com.example.footballnewsmanager.api.responses.news.NotificationResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsAndSitesResponse;
@@ -23,6 +24,7 @@ import com.example.footballnewsmanager.models.UserNews;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Connection {
@@ -144,12 +146,25 @@ public class Connection {
         notificationResponseObservable.subscribe(callback);
     }
 
-    public void setNewsVisited(Callback<UserNews> callback, String token, Long siteId, Long newsId){
-        Observable<UserNews> notificationResponseObservable = client.getService()
+    public void setNewsVisited(Callback<SingleNewsResponse> callback, String token, Long siteId, Long newsId){
+        Observable<SingleNewsResponse> notificationResponseObservable = client.getService()
                 .setNewsVisited(token, siteId, newsId).subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation());
         notificationResponseObservable.subscribe(callback);
     }
 
+    public void getNotVisitedNewsAmount(Callback<BadgesResponse> callback, String token){
+        Observable<BadgesResponse> badgesResponseObservable = client.getService()
+                .getNotVisitedNewsAmount(token).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        badgesResponseObservable.subscribe(callback);
+    }
+
+    public void markAllAsVisited(Callback<BaseResponse> callback, String token){
+        Observable<BaseResponse> markAllObservable = client.getService()
+                .markAllAsVisited(token).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        markAllObservable.subscribe(callback);
+    }
 
 }

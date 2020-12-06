@@ -5,6 +5,6 @@ import com.example.footballnewsmanager.models.UserNews;
 public interface NewsRecyclerViewListener {
     void onDetached();
     void backToFront();
-    void onChange(UserNews oldNews, UserNews newNews);
-
+    void onChangeItem(UserNews oldNews, UserNews newNews);
+    void onChangeItems();
 }

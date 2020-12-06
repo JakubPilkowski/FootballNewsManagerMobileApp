@@ -50,5 +50,19 @@
 
         </LinearLayout>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zaznacz wszystkie jako przeczytane"
+            android:textAllCaps="false"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{()->viewModel.onClick()}"
+            android:background="@android:color/transparent"
+            android:drawablePadding="12dp"
+            android:drawableEnd="@drawable/ic_mark_all"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="15sp"
+            />
+
     </LinearLayout>
 </layout>
