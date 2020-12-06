@@ -9,12 +9,15 @@ import com.example.footballnewsmanager.fragments.main.all_news.AllNewsFragment;
 import com.example.footballnewsmanager.fragments.main.news.NewsFragment;
 import com.example.footballnewsmanager.fragments.main.profile.ProfileFragment;
 import com.example.footballnewsmanager.fragments.main.sites.SitesFragment;
+import com.example.footballnewsmanager.interfaces.BadgeListener;
 
 public class MainViewPager extends FragmentStateAdapter {
 
+    private BadgeListener badgeListener;
 
-    public MainViewPager(@NonNull FragmentActivity fragmentActivity) {
+    public MainViewPager(@NonNull FragmentActivity fragmentActivity, BadgeListener badgeListener) {
         super(fragmentActivity);
+        this.badgeListener = badgeListener;
     }
 
     @NonNull
@@ -34,7 +37,7 @@ public class MainViewPager extends FragmentStateAdapter {
                 break;
             case 0:
             default:
-                fragment = NewsFragment.newInstance();
+                fragment = NewsFragment.newInstance(badgeListener);
         }
 
         return fragment;

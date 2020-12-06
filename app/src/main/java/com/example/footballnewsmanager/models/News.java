@@ -13,6 +13,7 @@ public class News {
     private Site site;
     private ArrayList<NewsTag> tags;
     private double popularity;
+    private Long clicks;
     private Long likes;
     private Long dislikes;
     private boolean highlighted;
@@ -64,5 +65,9 @@ public class News {
 
     public ArrayList<NewsTag> getTags() {
         return tags;
+    }
+
+    public Long getClicks() {
+        return clicks;
     }
 }

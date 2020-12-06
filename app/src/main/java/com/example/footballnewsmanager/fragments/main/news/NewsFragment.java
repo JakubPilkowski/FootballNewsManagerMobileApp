@@ -28,6 +28,7 @@ import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.helpers.UserPreferences;
+import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.Providers;
 import com.google.gson.Gson;
 
@@ -37,10 +38,19 @@ import io.reactivex.rxjava3.core.Observer;
 public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragmentViewModel> implements Providers {
 
 
-    public static NewsFragment newInstance() {
-        return new NewsFragment();
+    private BadgeListener badgeListener;
+
+
+
+    public static NewsFragment newInstance(BadgeListener badgeListener) {
+        NewsFragment fragment = new NewsFragment();
+        fragment.setBadgeListener(badgeListener);
+        return fragment;
     }
 
+    public void setBadgeListener(BadgeListener badgeListener) {
+        this.badgeListener = badgeListener;
+    }
 
     @Override
     public int getLayoutRes() {
@@ -56,7 +66,6 @@ public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragment
     public void bindData(NewsFragmentBinding binding) {
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
-
         ProgressDialog.get().show();
         String token = UserPreferences.get().getAuthToken();
         Connection.get().news(callback, token, 0);
@@ -66,7 +75,7 @@ public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragment
         @Override
         public void onSuccess(NewsResponse newsResponse) {
             ProgressDialog.get().dismiss();
-            viewModel.init(newsResponse);
+            viewModel.init(newsResponse, badgeListener);
         }
 
         @Override

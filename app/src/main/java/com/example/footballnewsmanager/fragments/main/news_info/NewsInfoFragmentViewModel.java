@@ -50,7 +50,7 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
         date.set(news.getNews().getDate());
         likes.set(String.valueOf(news.getNews().getLikes()));
         dislikes.set(String.valueOf(news.getNews().getDislikes()));
-        clicks.set(String.valueOf(234));
+        clicks.set(String.valueOf(news.getNews().getClicks()));
 
         String token = UserPreferences.get().getAuthToken();
         List<Tag> tags = new ArrayList<>();

@@ -2,11 +2,9 @@ package com.example.footballnewsmanager.adapters.news;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.view.animation.AnimationUtils;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -18,12 +16,10 @@ import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
-import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
-import com.example.footballnewsmanager.databinding.NewsHighlightedLayoutBinding;
-import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
 import com.example.footballnewsmanager.fragments.main.news_info.NewsInfoFragment;
 import com.example.footballnewsmanager.helpers.UserPreferences;
+import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
 import com.example.footballnewsmanager.models.News;
 import com.example.footballnewsmanager.models.UserNews;
@@ -46,13 +42,16 @@ public class NewsAdapterViewModel {
     public ObservableInt heartbreakDrawable = new ObservableInt();
     public ObservableInt heartAnimation = new ObservableInt();
     public ObservableInt heartbreakAnimation = new ObservableInt();
-
+    public ObservableInt isVisited = new ObservableInt();
+    public ObservableField<Drawable> highlightedVisited = new ObservableField<>();
     private UserNews news;
     private News newsDetails;
     private Activity activity;
     private NewsRecyclerViewListener listener;
+    private BadgeListener badgeListener;
 
-    public void init(UserNews news, Activity activity, NewsRecyclerViewListener listener) {
+    public void init(UserNews news, Activity activity, NewsRecyclerViewListener listener, BadgeListener badgeListener) {
+        this.badgeListener = badgeListener;
         this.activity = activity;
         this.listener = listener;
         update(news);
@@ -61,7 +60,12 @@ public class NewsAdapterViewModel {
     void update(UserNews news){
         this.news = news;
         this.newsDetails = news.getNews();
-
+        if(news.getNews().isHighlighted()){
+            highlightedVisited.set(news.isVisited() ? activity.getResources().getDrawable(R.drawable.news_item_highlighted_visited_background_top): activity.getResources().getDrawable(R.drawable.news_item_highlighted_background_top));
+        }
+        else{
+            isVisited.set(news.isVisited() ? activity.getResources().getColor(R.color.colorVisited): activity.getResources().getColor(R.color.colorTextPrimary));
+        }
         if(news.isLiked()){
             heartDrawable.set(R.drawable.heart_with_ripple);
         }
@@ -109,6 +113,9 @@ public class NewsAdapterViewModel {
     }
 
     public void onNewsClick() {
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().setNewsVisited(callback, token, newsDetails.getSiteId(), newsDetails.getId());
+        badgeListener.onBadgeChange();
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(newsDetails.getNewsUrl()));
         activity.startActivity(intent);
@@ -141,11 +148,13 @@ public class NewsAdapterViewModel {
         dislikeEnabled.set(!dislikeEnabled.get());
     }
 
+
+
     private Callback<SingleNewsResponse> callback = new Callback<SingleNewsResponse>() {
         @Override
         public void onSuccess(SingleNewsResponse newsResponse) {
             activity.runOnUiThread(()->{
-                listener.onChange(news, newsResponse.getNews());
+                listener.onChangeItem(news, newsResponse.getNews());
             });
             likesToggle();
         }
