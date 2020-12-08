@@ -3,6 +3,7 @@ package com.example.footballnewsmanager.fragments.main.news;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -40,7 +41,7 @@ public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragment
 
     private BadgeListener badgeListener;
 
-
+    public static final String TAG = "NewsFragment";
 
     public static NewsFragment newInstance(BadgeListener badgeListener) {
         NewsFragment fragment = new NewsFragment();
@@ -50,6 +51,18 @@ public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragment
 
     public void setBadgeListener(BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
+    }
+
+    @Override
+    public void onResume() {
+        if(getActivity().getIntent()!= null){
+            Intent intent = getActivity().getIntent();
+            if(intent.getStringExtra("restart") != null && intent.getStringExtra("restart").equals("restart")){
+                ProgressDialog.get().show();
+                viewModel.updateNews();
+            }
+        }
+        super.onResume();
     }
 
     @Override
