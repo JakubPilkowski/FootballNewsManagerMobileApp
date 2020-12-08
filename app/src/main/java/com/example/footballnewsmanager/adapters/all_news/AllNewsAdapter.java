@@ -1,0 +1,294 @@
+package com.example.footballnewsmanager.adapters.all_news;
+
+import android.app.Activity;
+import android.os.Handler;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.adapters.news.NewsAdapter;
+import com.example.footballnewsmanager.adapters.news.NewsAdapterPlaceholderViewModel;
+import com.example.footballnewsmanager.adapters.news.NewsAdapterViewModel;
+import com.example.footballnewsmanager.adapters.news.NewsAdditionalInfoViewModel;
+import com.example.footballnewsmanager.adapters.news.NewsHeaderAdapterViewModel;
+import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
+import com.example.footballnewsmanager.api.responses.main.BaseNewsAdjustment;
+import com.example.footballnewsmanager.api.responses.main.NewsInfoType;
+import com.example.footballnewsmanager.api.responses.main.NewsResponse;
+import com.example.footballnewsmanager.databinding.AdditionalInfoNewsBinding;
+import com.example.footballnewsmanager.databinding.AdditionalInfoTeamsBinding;
+import com.example.footballnewsmanager.databinding.AllNewsHighlightedLayoutBinding;
+import com.example.footballnewsmanager.databinding.AllNewsLayoutBinding;
+import com.example.footballnewsmanager.databinding.NewsHeaderLayoutBinding;
+import com.example.footballnewsmanager.databinding.NewsHighlightedLayoutBinding;
+import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
+import com.example.footballnewsmanager.databinding.NewsPlaceholderBinding;
+import com.example.footballnewsmanager.interfaces.BadgeListener;
+import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
+import com.example.footballnewsmanager.models.UserNews;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private Activity activity;
+    private List<UserNews> items = new ArrayList<>();
+    private List<AllNewsAdapterViewModel> viewModels = new ArrayList<>();
+
+    private final static int HEADER = 0;
+    private final static int ITEM = 1;
+    private final static int ITEM_HIGHLIGHTED = 2;
+    private final static int ITEM_LOADING = 3;
+    private final static int PLACEHOLDER = 4;
+    public boolean isLoading = false;
+    public boolean isPlaceholder = false;
+    private NewsRecyclerViewListener newsRecyclerViewListener;
+    private BadgeListener badgeListener;
+    private Long countAll;
+    private Long countToday;
+
+
+    public void setItems(List<UserNews> items) {
+        int start = this.items.size();
+        this.items.addAll(items);
+        notifyItemRangeChanged(start + 1, items.size());
+    }
+
+    public void setPlaceholder(boolean placeholder) {
+        isPlaceholder = placeholder;
+        notifyDataSetChanged();
+    }
+
+    public void setCountAll(Long countAll) {
+        this.countAll = countAll;
+    }
+
+    public void setCountToday(Long countToday) {
+        this.countToday = countToday;
+    }
+
+    public void refresh(NewsResponse userNews) {
+        items.clear();
+        viewModels.clear();
+        notifyItemRangeRemoved(0, items.size()+2);
+        setItems(userNews.getNews());
+    }
+
+    public void setBadgeListener(BadgeListener badgeListener) {
+        this.badgeListener = badgeListener;
+    }
+
+
+    public AllNewsAdapter(Activity activity) {
+        this.activity = activity;
+    }
+
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        switch (viewType) {
+            case HEADER: {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_header_layout, parent, false);
+                NewsHeaderLayoutBinding newsHeaderLayoutBinding = NewsHeaderLayoutBinding.bind(view);
+                return new NewsHeaderViewHolder(view, newsHeaderLayoutBinding);
+            }
+            case ITEM: {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_news_layout, parent, false);
+                AllNewsLayoutBinding allNewsLayoutBinding = AllNewsLayoutBinding.bind(view);
+                return new NewsViewHolder(view, allNewsLayoutBinding);
+            }
+            case ITEM_HIGHLIGHTED: {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_news_highlighted_layout, parent, false);
+                AllNewsHighlightedLayoutBinding allNewsHighlightedLayoutBinding = AllNewsHighlightedLayoutBinding.bind(view);
+                return new NewsHighlightedViewHolder(view, allNewsHighlightedLayoutBinding);
+            }
+            case ITEM_LOADING: {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_progress_view, parent, false);
+                return new ProgressViewHolder(view);
+            }
+            case PLACEHOLDER: {
+                Log.d("News", "onCreateViewHolder Placeholder");
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_placeholder, parent, false);
+                NewsPlaceholderBinding newsPlaceholderBinding = NewsPlaceholderBinding.bind(view);
+                return new PlaceholderViewHolder(view, newsPlaceholderBinding);
+            }
+            default:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_news_layout, parent, false);
+                AllNewsLayoutBinding allNewsLayoutBinding = AllNewsLayoutBinding.bind(view);
+                return new NewsViewHolder(view, allNewsLayoutBinding);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (position == items.size() + 1 && !isPlaceholder)
+            return;
+        else if (position == items.size() + 1 && isPlaceholder) {
+            View bottleView = ((PlaceholderViewHolder) holder).itemView.findViewById(R.id.news_placeholder_bottle);
+            Animation animation = AnimationUtils.loadAnimation(bottleView.getContext(), R.anim.shake);
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    bottleView.startAnimation(animation);
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    onAnimationRepeat(animation);
+
+                }
+
+                @Override
+                public void onAnimationRepeat(final Animation animation) {
+                    new Handler().postDelayed(() -> onAnimationStart(animation), 750);
+                }
+            });
+            bottleView.startAnimation(animation);
+            NewsAdapterPlaceholderViewModel viewModel = new NewsAdapterPlaceholderViewModel();
+            viewModel.init(activity, newsRecyclerViewListener);
+            NewsPlaceholderBinding binding = ((PlaceholderViewHolder) holder).binding;
+            binding.setViewModel(viewModel);
+            return;
+        } else if (position == 0) {
+            NewsHeaderAdapterViewModel viewModel = new NewsHeaderAdapterViewModel();
+            viewModel.init(countAll, countToday, newsRecyclerViewListener);
+            NewsHeaderLayoutBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
+            binding.setViewModel(viewModel);
+            return;
+        }
+        else{
+            AllNewsAdapterViewModel viewModel;
+            int itemsPosition = position - (position/16+1);
+            if (viewModels.size() <= itemsPosition) {
+                viewModel = new AllNewsAdapterViewModel();
+                viewModels.add(viewModel);
+            } else {
+                viewModel = viewModels.get(itemsPosition);
+            }
+            if (items.get(itemsPosition).getNews().isHighlighted()) {
+                viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener, badgeListener);
+                AllNewsHighlightedLayoutBinding binding = ((NewsHighlightedViewHolder) holder).getBinding();
+                binding.setViewModel(viewModel);
+            } else {
+                viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener, badgeListener);
+                AllNewsLayoutBinding binding = ((NewsViewHolder) holder).getBinding();
+                binding.setViewModel(viewModel);
+            }
+        }
+
+    }
+
+    public void setNewsRecyclerViewListener(NewsRecyclerViewListener newsRecyclerViewListener) {
+        this.newsRecyclerViewListener = newsRecyclerViewListener;
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0)
+            return HEADER;
+        else if (position == items.size() + 1) {
+            return isPlaceholder ? PLACEHOLDER : ITEM_LOADING;
+        } else {
+            UserNews news = items.get(position - 1);
+            return news.getNews().isHighlighted() ? ITEM_HIGHLIGHTED : ITEM;
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return items.size() + 2;
+    }
+
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        if (holder instanceof NewsAdapter.PlaceholderViewHolder) {
+            newsRecyclerViewListener.onDetached();
+        }
+    }
+
+    public void onChange(UserNews oldNews, UserNews newNews) {
+        int index = items.indexOf(oldNews);
+        items.set(index, newNews);
+        viewModels.get(index).update(newNews);
+    }
+
+    public void refresh(AllNewsResponse userNews) {
+        items.clear();
+        viewModels.clear();
+        notifyItemRangeRemoved(0, items.size()+2);
+        setItems(userNews.getNews());
+    }
+
+    public class NewsHeaderViewHolder extends RecyclerView.ViewHolder {
+
+        NewsHeaderLayoutBinding binding;
+
+        public NewsHeaderViewHolder(@NonNull View itemView, NewsHeaderLayoutBinding binding) {
+            super(itemView);
+            this.binding = binding;
+        }
+
+        public NewsHeaderLayoutBinding getBinding() {
+            return binding;
+        }
+    }
+
+    public class NewsViewHolder extends RecyclerView.ViewHolder {
+
+        AllNewsLayoutBinding binding;
+
+        public NewsViewHolder(@NonNull View itemView, AllNewsLayoutBinding binding) {
+            super(itemView);
+            this.binding = binding;
+        }
+
+        public AllNewsLayoutBinding getBinding() {
+            return binding;
+        }
+    }
+
+    public class NewsHighlightedViewHolder extends RecyclerView.ViewHolder {
+
+        AllNewsHighlightedLayoutBinding binding;
+
+        public NewsHighlightedViewHolder(@NonNull View itemView, AllNewsHighlightedLayoutBinding binding) {
+            super(itemView);
+            this.binding = binding;
+        }
+
+        public AllNewsHighlightedLayoutBinding getBinding() {
+            return binding;
+        }
+    }
+
+    public class ProgressViewHolder extends RecyclerView.ViewHolder {
+
+        public ProgressViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
+
+    public class PlaceholderViewHolder extends RecyclerView.ViewHolder {
+
+        NewsPlaceholderBinding binding;
+
+        public PlaceholderViewHolder(@NonNull View itemView, NewsPlaceholderBinding binding) {
+            super(itemView);
+            this.binding = binding;
+        }
+
+    }
+}

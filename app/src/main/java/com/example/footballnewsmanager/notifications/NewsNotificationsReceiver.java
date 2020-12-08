@@ -48,7 +48,7 @@ public class NewsNotificationsReceiver extends BroadcastReceiver {
         Connection.init();
         String name = UserPreferences.get().getAuthToken();
         this.context = context;
-        Connection.get().getNotifications(newsCallback, name);
+//        Connection.get().getNotifications(newsCallback, name);
     }
     public static Bitmap getBitmapFromVectorDrawable(Context context, int drawableId) {
         Drawable drawable = ContextCompat.getDrawable(context, drawableId);

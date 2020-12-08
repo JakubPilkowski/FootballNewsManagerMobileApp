@@ -13,12 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.adapters.news.additionalInfo.news.AdditionalNewsAdapterViewModel;
+import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.BaseNewsAdjustment;
-import com.example.footballnewsmanager.api.responses.main.NewsExtras;
 import com.example.footballnewsmanager.api.responses.main.NewsInfoType;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
-import com.example.footballnewsmanager.api.responses.main.TeamExtras;
 import com.example.footballnewsmanager.databinding.AdditionalInfoNewsBinding;
 import com.example.footballnewsmanager.databinding.AdditionalInfoTeamsBinding;
 import com.example.footballnewsmanager.databinding.NewsHeaderLayoutBinding;
@@ -32,7 +30,7 @@ import com.example.footballnewsmanager.models.UserNews;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AlllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<UserNews> items = new ArrayList<>();
     private List<NewsAdapterViewModel> viewModels = new ArrayList<>();
@@ -65,7 +63,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public NewsAdapter(Activity activity) {
+    public AlllNewsAdapter(Activity activity) {
         this.activity = activity;
     }
 
@@ -235,7 +233,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-//        Log.d("News", "getItemCount");
         return items.size()+additionalItems.size() + 2;
     }
 
@@ -266,13 +263,13 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.newsRecyclerViewListener = newsRecyclerViewListener;
     }
 
-    public void refresh(NewsResponse userNews) {
+    public void refresh(AllNewsResponse userNews) {
         items.clear();
         additionalItems.clear();
         viewModels.clear();
         additionalInfoViewModels.clear();
         notifyItemRangeRemoved(0, items.size()+additionalItems.size()+2);
-//        setItems(userNews.getNews(), userNews.getAdditionalContent());
+        setItems(userNews.getNews(), userNews.getAdditionalContent());
     }
 
     public void setBadgeListener(BadgeListener badgeListener) {

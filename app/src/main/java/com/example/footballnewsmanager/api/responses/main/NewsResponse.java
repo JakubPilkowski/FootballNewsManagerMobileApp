@@ -5,16 +5,15 @@ import com.example.footballnewsmanager.models.UserNews;
 
 import java.util.List;
 
-public class NewsResponse extends BaseResponse {
+public class NewsResponse{
 
-    private int pages;
+    private List<UserNews> news;
     private Long newsCount;
     private Long newsToday;
-    private List<UserNews> allNews;
-    private BaseNewsAdjustment additionalContent;
+    private int pages;
 
-    public List<UserNews> getAllNews() {
-        return allNews;
+    public List<UserNews> getNews() {
+        return news;
     }
 
     public int getPages() {
@@ -29,7 +28,4 @@ public class NewsResponse extends BaseResponse {
         return newsToday;
     }
 
-    public BaseNewsAdjustment getAdditionalContent() {
-        return additionalContent;
-    }
 }

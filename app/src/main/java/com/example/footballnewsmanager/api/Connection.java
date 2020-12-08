@@ -9,6 +9,7 @@ import com.example.footballnewsmanager.api.requests.news.TeamsFromTagsRequest;
 import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
+import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
@@ -167,4 +168,10 @@ public class Connection {
         markAllObservable.subscribe(callback);
     }
 
+    public void allNews(Callback<AllNewsResponse> callback, String token, int page) {
+        Observable<AllNewsResponse> newsObservable  = client.getService()
+                .getAllNews(token, page).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        newsObservable.subscribe(callback);
+    }
 }
