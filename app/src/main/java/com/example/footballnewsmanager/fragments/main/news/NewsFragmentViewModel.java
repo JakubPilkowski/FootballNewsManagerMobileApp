@@ -45,10 +45,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
 
     public void init(NewsResponse newsResponse, BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
-        swipeRefreshListenerObservable.set(() -> {
-            String token = UserPreferences.get().getAuthToken();
-            Connection.get().news(refreshCallback, token, 0);
-        });
+        swipeRefreshListenerObservable.set(this::updateNews);
         recyclerView = ((NewsFragmentBinding) getBinding()).newsRecyclerView;
         newsAdapter = new NewsAdapter(getActivity());
         allPages = newsResponse.getPages();
@@ -160,10 +157,14 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         newsAdapter.onChange(oldNews, newNews);
     }
 
-    @Override
-    public void onChangeItems() {
+    public void updateNews(){
         String token = UserPreferences.get().getAuthToken();
         Connection.get().news(refreshCallback, token, 0);
+    }
+
+    @Override
+    public void onChangeItems() {
+        updateNews();
     }
 
     private Runnable placeHolderAttachRunnable = () ->{

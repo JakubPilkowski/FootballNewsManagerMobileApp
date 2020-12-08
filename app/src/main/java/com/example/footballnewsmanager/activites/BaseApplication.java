@@ -24,7 +24,6 @@ public class BaseApplication extends Application {
     }
 
     private void initAlarmManager() {
-        Log.d("Receiver", "init Alarm Manager");
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent newsNotificationsIntent = new Intent(this, NewsNotificationsReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 1, newsNotificationsIntent, 0);
@@ -35,10 +34,10 @@ public class BaseApplication extends Application {
     private void createNotificationChannels() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel1 = new NotificationChannel(
-                    NEWS_NOTIFICATIONS_CHANNEL,  "News",
+                    NEWS_NOTIFICATIONS_CHANNEL,  "Newsy",
                     NotificationManager.IMPORTANCE_HIGH
             );
-            channel1.setDescription("News notifications depends on chosen teams");
+            channel1.setDescription("Powiadomienia na podstawie wybranych drużyn");
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel1);
