@@ -18,31 +18,21 @@
         >
 
         
-<!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--            android:id="@+id/news_swipe_refresh"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:onSwipeRefreshListener="@{viewModel.swipeRefreshListenerObservable}"-->
-<!--            app:setColorScheme="@{viewModel.swipeRefreshColor}"-->
-<!--            >-->
-
-<!--            <com.google.android.material.card.MaterialCardView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                app:cardBackgroundColor="@android:color/transparent"-->
-<!--                app:cardCornerRadius="12dp"-->
-<!--                app:cardElevation="0dp">-->
-
-
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/news_recycler_view"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:overScrollMode="never"-->
-<!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--                    app:postRunnable="@{viewModel.postRunnable}"-->
-<!--                    app:recyclerViewAdapter="@{viewModel.adapterObservable}" />-->
-<!--            </com.google.android.material.card.MaterialCardView>-->
-<!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/all_news_swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:onSwipeRefreshListener="@{viewModel.swipeRefreshListenerObservable}"
+            app:setColorScheme="@{viewModel.swipeRefreshColor}"
+            >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/all_news_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:postRunnable="@{viewModel.postRunnable}"
+                    app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 </layout>

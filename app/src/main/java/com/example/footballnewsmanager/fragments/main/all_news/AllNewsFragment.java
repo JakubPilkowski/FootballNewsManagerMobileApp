@@ -26,6 +26,7 @@ import com.example.footballnewsmanager.databinding.AllNewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.helpers.UserPreferences;
+import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.Providers;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -34,8 +35,16 @@ import io.reactivex.rxjava3.core.Observer;
 public class AllNewsFragment extends BaseFragment<AllNewsFragmentBinding,AllNewsFragmentViewModel> implements Providers {
 
 
-    public static AllNewsFragment newInstance() {
-        return new AllNewsFragment();
+    private BadgeListener badgeListener;
+
+    public static AllNewsFragment newInstance(BadgeListener badgeListener) {
+        AllNewsFragment fragment = new AllNewsFragment();
+        fragment.setBadgeListener(badgeListener);
+        return fragment;
+    }
+
+    public void setBadgeListener(BadgeListener badgeListener) {
+        this.badgeListener = badgeListener;
     }
 
     @Override
@@ -52,16 +61,16 @@ public class AllNewsFragment extends BaseFragment<AllNewsFragmentBinding,AllNews
     public void bindData(AllNewsFragmentBinding binding) {
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
-//        ProgressDialog.get().show();
-//        String token = UserPreferences.get().getAuthToken();
-//        Connection.get().allNews(callback, token, 0);
+        ProgressDialog.get().show();
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().allNews(callback, token, 0);
     }
 
     private Callback<AllNewsResponse> callback = new Callback<AllNewsResponse>() {
         @Override
         public void onSuccess(AllNewsResponse newsResponse) {
             ProgressDialog.get().dismiss();
-            viewModel.init(newsResponse);
+            viewModel.init(newsResponse, badgeListener);
         }
 
         @Override
@@ -75,7 +84,7 @@ public class AllNewsFragment extends BaseFragment<AllNewsFragmentBinding,AllNews
 
         @Override
         protected void subscribeActual(@NonNull Observer<? super AllNewsResponse> observer) {
-            Log.d("News", "Fragment subscribeActual");
+            Log.d("AllNews", "Fragment subscribeActual");
         }
     };
 

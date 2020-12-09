@@ -2,22 +2,17 @@ package com.example.footballnewsmanager.fragments.main.news;
 
 import android.util.Log;
 
-import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.adapters.all_news.AllNewsAdapter;
-import com.example.footballnewsmanager.adapters.news.AlllNewsAdapter;
 import com.example.footballnewsmanager.adapters.news.NewsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.responses.main.NewsExtras;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
-import com.example.footballnewsmanager.api.responses.main.TeamExtras;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
@@ -33,14 +28,14 @@ import io.reactivex.rxjava3.core.Observer;
 public class NewsFragmentViewModel extends BaseViewModel implements NewsRecyclerViewListener {
     // TODO: Implement the ViewModel
 
-    public ObservableField<AllNewsAdapter> adapterObservable = new ObservableField<>();
+    public ObservableField<NewsAdapter> adapterObservable = new ObservableField<>();
     public ObservableField<Runnable> postRunnable = new ObservableField<>();
     public ObservableField<SwipeRefreshLayout.OnRefreshListener> swipeRefreshListenerObservable = new ObservableField<>();
     public ObservableInt swipeRefreshColor = new ObservableInt(R.color.colorPrimary);
 
     private boolean isLastPage = false;
     private int currentPage = 0;
-    private AllNewsAdapter newsAdapter;
+    private NewsAdapter newsAdapter;
     private RecyclerView recyclerView;
     private BadgeListener badgeListener;
 
@@ -48,7 +43,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         this.badgeListener = badgeListener;
         swipeRefreshListenerObservable.set(this::updateNews);
         recyclerView = ((NewsFragmentBinding) getBinding()).newsRecyclerView;
-        newsAdapter = new AllNewsAdapter(getActivity());
+        newsAdapter = new NewsAdapter(getActivity());
         newsAdapter.setNewsRecyclerViewListener(this);
         newsAdapter.setBadgeListener(badgeListener);
         newsAdapter.setItems(newsResponse.getNews());

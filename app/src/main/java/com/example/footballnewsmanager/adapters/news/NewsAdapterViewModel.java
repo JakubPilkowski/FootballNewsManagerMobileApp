@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
+import android.view.View;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -41,10 +42,11 @@ public class NewsAdapterViewModel {
     public ObservableInt heartDrawable = new ObservableInt();
     public ObservableInt heartbreakDrawable = new ObservableInt();
     public ObservableInt heartAnimation = new ObservableInt();
+    public ObservableInt isBadgeVisited = new ObservableInt(View.INVISIBLE);
     public ObservableInt heartbreakAnimation = new ObservableInt();
     public ObservableInt isVisited = new ObservableInt();
     public ObservableField<Drawable> highlightedVisited = new ObservableField<>();
-    private UserNews news;
+    public UserNews news;
     private News newsDetails;
     private Activity activity;
     private NewsRecyclerViewListener listener;
@@ -57,7 +59,7 @@ public class NewsAdapterViewModel {
         update(news);
     }
 
-    void update(UserNews news){
+    public void update(UserNews news){
         this.news = news;
         this.newsDetails = news.getNews();
         if(news.getNews().isHighlighted()){
@@ -66,18 +68,10 @@ public class NewsAdapterViewModel {
         else{
             isVisited.set(news.isVisited() ? activity.getResources().getColor(R.color.colorVisited): activity.getResources().getColor(R.color.colorTextPrimary));
         }
-        if(news.isLiked()){
-            heartDrawable.set(R.drawable.heart_with_ripple);
-        }
-        else{
-            heartDrawable.set(R.drawable.heart_empty_with_ripple);
-        }
-        if(news.isDisliked()){
-            heartbreakDrawable.set(R.drawable.heartbreak_with_ripple);
-        }
-        else{
-            heartbreakDrawable.set(R.drawable.heartbreak_empty_with_ripple);
-        }
+
+        isBadgeVisited.set(news.isBadgeVisited() ? View.INVISIBLE : View.VISIBLE);
+        heartDrawable.set(news.isLiked() ? R.drawable.heart_with_ripple : R.drawable.heart_empty_with_ripple);
+        heartbreakDrawable.set(news.isDisliked() ? R.drawable.heartbreak_with_ripple : R.drawable.heartbreak_empty_with_ripple);
 
         title.set(newsDetails.getTitle());
         imageUrl.set(newsDetails.getImageUrl());
