@@ -39,8 +39,6 @@ import static com.example.footballnewsmanager.activites.BaseApplication.NEWS_NOT
 public class NewsNotificationsReceiver extends BroadcastReceiver {
 
     private Context context;
-    private MediaSessionCompat mediaSession;
-
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -50,17 +48,6 @@ public class NewsNotificationsReceiver extends BroadcastReceiver {
         this.context = context;
         Connection.get().getNotifications(newsCallback, name);
     }
-    public static Bitmap getBitmapFromVectorDrawable(Context context, int drawableId) {
-        Drawable drawable = ContextCompat.getDrawable(context, drawableId);
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
-    }
-
     private Callback<NotificationResponse> newsCallback = new Callback<NotificationResponse>() {
 
         @Override
@@ -77,42 +64,18 @@ public class NewsNotificationsReceiver extends BroadcastReceiver {
             PendingIntent contentIntent = PendingIntent.getActivity(context, 2, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             for (NotificationData notificationData: data.getNotifications()) {
-                Notification notification = new NotificationCompat.Builder(context, NEWS_NOTIFICATIONS_CHANNEL)
-                                .setSmallIcon(R.drawable.notification_icon)
-                                .setContentTitle("Nowe newsy (" + notificationData.getAmountAfter() + ")")
-                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                                .setColor(context.getResources().getColor(R.color.colorPrimary))
-                                .setContentIntent(contentIntent)
-                                .setAutoCancel(true)
-                                .build();
-
-                notificationManagerCompat.notify(notificationData.getTeam().getId().intValue(), notification);
-//                if(!notificationData.getAmountBefore().equals(notificationData.getAmountAfter())) {
-//                    try {
-//                        URL url = new URL(notificationData.getTeam().getLogoUrl());
-//                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//                        connection.setDoInput(true);
-//                        connection.connect();
-//                        InputStream in = connection.getInputStream();
-//                        Notification notification = new NotificationCompat.Builder(context, NEWS_NOTIFICATIONS_CHANNEL)
-//                                .setSmallIcon(R.drawable.notification_icon)
-//                                .setLargeIcon(BitmapFactory.decodeStream(in))
-//                                .setContentTitle("Nowe newsy (" + notificationData.getAmountAfter() + ") dla " + notificationData.getTeam().getName())
-//                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-//                                .setColor(context.getResources().getColor(R.color.colorPrimary))
-//                                .setContentIntent(contentIntent)
-//                                .setAutoCancel(true)
-//                                .setOnlyAlertOnce(true)
-//                                .build();
-//                        notificationManagerCompat.notify(notificationData.getTeam().getId().intValue(), notification);
-//                    } catch (MalformedURLException e) {
-//                        e.printStackTrace();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
+                if(!notificationData.getAmountBefore().equals(notificationData.getAmountAfter())) {
+                    Notification notification = new NotificationCompat.Builder(context, NEWS_NOTIFICATIONS_CHANNEL)
+                            .setSmallIcon(R.drawable.notification_icon)
+                            .setContentTitle("Dodano " + notificationData.getAmountAfter() + " nowych newsów!")
+                            .setPriority(NotificationCompat.PRIORITY_HIGH)
+                            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                            .setColor(context.getResources().getColor(R.color.colorPrimary))
+                            .setContentIntent(contentIntent)
+                            .setAutoCancel(true)
+                            .build();
+                    notificationManagerCompat.notify(1001, notification);
+                }
             }
         }
 

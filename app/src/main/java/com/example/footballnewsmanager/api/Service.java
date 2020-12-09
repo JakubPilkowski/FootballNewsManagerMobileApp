@@ -9,6 +9,7 @@ import com.example.footballnewsmanager.api.requests.news.TeamsFromTagsRequest;
 import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
+import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
@@ -84,6 +85,13 @@ public interface Service {
             @Header("Authorization") String token,
             @Query("page") int page
     );
+
+    @GET("news/all")
+    Observable<AllNewsResponse> getAllNews(
+            @Header("Authorization") String token,
+            @Query("page") int page
+    );
+
 
     @PUT("news/like/site={sid}/id={id}")
     Observable<SingleNewsResponse> toggleLikes(

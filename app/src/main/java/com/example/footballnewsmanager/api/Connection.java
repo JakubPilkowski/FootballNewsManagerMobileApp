@@ -1,6 +1,6 @@
 package com.example.footballnewsmanager.api;
 
-import androidx.databinding.ObservableField;
+import android.util.Log;
 
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
@@ -9,6 +9,7 @@ import com.example.footballnewsmanager.api.requests.news.TeamsFromTagsRequest;
 import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
+import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
@@ -17,14 +18,8 @@ import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesRespo
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsAndSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
-import com.example.footballnewsmanager.models.Tag;
-import com.example.footballnewsmanager.models.User;
-import com.example.footballnewsmanager.models.UserNews;
-
-import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Connection {
@@ -167,4 +162,12 @@ public class Connection {
         markAllObservable.subscribe(callback);
     }
 
+    public void allNews(Callback<AllNewsResponse> callback, String token, int page) {
+        Observable<AllNewsResponse> newsObservable  = client.getService()
+                .getAllNews(token, page).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        Log.d("AllNews", "allNews: ");
+        newsObservable.subscribe(callback);
+        Log.d("AllNews", "allNews: ");
+    }
 }

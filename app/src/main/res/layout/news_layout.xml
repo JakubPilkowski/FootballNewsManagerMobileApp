@@ -14,6 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
         app:cardCornerRadius="12dp"
         app:cardBackgroundColor="@{viewModel.isVisited}"
         app:cardElevation="0dp">
@@ -50,12 +52,13 @@
                     android:textSize="21sp" />
 
 
-<!--                <View-->
-<!--                    android:layout_width="24dp"-->
-<!--                    android:layout_height="24dp"-->
-<!--                    android:layout_margin="6dp"-->
-<!--                    app:drawableAsResource="@{viewModel.isVisited}"-->
-<!--                    />-->
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/not_visited"
+                    android:visibility="@{viewModel.isBadgeVisited}" />
+
                 <Button
                     android:layout_width="36dp"
                     android:layout_height="36dp"

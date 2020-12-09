@@ -27,7 +27,7 @@ public class MainViewPager extends FragmentStateAdapter {
         Fragment fragment;
         switch (position){
             case 1:
-                fragment = AllNewsFragment.newInstance();
+                fragment = AllNewsFragment.newInstance(badgeListener);
                 break;
             case 2:
                 fragment = SitesFragment.newInstance();

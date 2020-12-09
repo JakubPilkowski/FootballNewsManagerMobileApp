@@ -105,6 +105,7 @@ public class MainFragmentViewModel extends BaseViewModel implements BadgeListene
     private Callback<BadgesResponse> notificationResponseCallback = new Callback<BadgesResponse>() {
         @Override
         public void onSuccess(BadgesResponse badgesResponse) {
+            Log.d(MainFragment.TAG, "onSuccess: ");
             Long amount = badgesResponse.getAmount();
             if(amount > 0){
                 BadgeDrawable badgeDrawable = ((MainFragmentBinding)getBinding()).mainBottomNavView.getOrCreateBadge(R.id.nav_news);

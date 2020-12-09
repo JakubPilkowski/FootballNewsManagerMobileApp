@@ -5,6 +5,7 @@ public class UserNews {
     private boolean liked;
     private boolean disliked;
     private boolean visited;
+    private boolean badgeVisited;
 
     public News getNews() {
         return news;
@@ -20,5 +21,9 @@ public class UserNews {
 
     public boolean isVisited() {
         return visited;
+    }
+
+    public boolean isBadgeVisited() {
+        return badgeVisited;
     }
 }

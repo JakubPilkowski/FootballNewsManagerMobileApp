@@ -2,7 +2,6 @@ package com.example.footballnewsmanager.fragments.main.news;
 
 import android.util.Log;
 
-import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,9 +12,7 @@ import com.example.footballnewsmanager.adapters.news.NewsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.responses.main.NewsExtras;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
-import com.example.footballnewsmanager.api.responses.main.TeamExtras;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
@@ -38,7 +35,6 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
 
     private boolean isLastPage = false;
     private int currentPage = 0;
-    private int allPages;
     private NewsAdapter newsAdapter;
     private RecyclerView recyclerView;
     private BadgeListener badgeListener;
@@ -48,10 +44,9 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         swipeRefreshListenerObservable.set(this::updateNews);
         recyclerView = ((NewsFragmentBinding) getBinding()).newsRecyclerView;
         newsAdapter = new NewsAdapter(getActivity());
-        allPages = newsResponse.getPages();
         newsAdapter.setNewsRecyclerViewListener(this);
         newsAdapter.setBadgeListener(badgeListener);
-        newsAdapter.setItems(newsResponse.getAllNews(), newsResponse.getAdditionalContent());
+        newsAdapter.setItems(newsResponse.getNews());
         newsAdapter.setCountAll(newsResponse.getNewsCount());
         newsAdapter.setCountToday(newsResponse.getNewsToday());
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
@@ -111,21 +106,15 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         protected void subscribeActual(@NonNull Observer<? super NewsResponse> observer) {
 
         }
-
-
     };
-
 
     private Callback<NewsResponse> callback = new Callback<NewsResponse>() {
         @Override
         public void onSuccess(NewsResponse newsResponse) {
             getActivity().runOnUiThread(() -> {
-                Log.d("News", String.valueOf(newsResponse.getAdditionalContent() instanceof NewsExtras));
-                Log.d("News", String.valueOf(newsResponse.getAdditionalContent() instanceof TeamExtras));
-                newsAdapter.setItems(newsResponse.getAllNews(), newsResponse.getAdditionalContent());
+                newsAdapter.setItems(newsResponse.getNews());
                 isLastPage = newsResponse.getPages() <= currentPage;
                 newsAdapter.isLoading = false;
-
             });
         }
 
