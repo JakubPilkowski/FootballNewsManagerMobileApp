@@ -19,14 +19,17 @@
 
 
         <androidx.appcompat.widget.SearchView
+            android:id="@+id/all_news_search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:background="@drawable/search_background"
-            app:queryHint="Szukaj drużyn lub newsów"
             app:iconifiedByDefault="false"
+            app:queryHint="Szukaj drużyn lub newsów"
             app:searchIcon="@drawable/ic_search_black_24dp"
             />
+
+
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/all_news_swipe_refresh"

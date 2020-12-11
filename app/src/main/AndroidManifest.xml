@@ -16,6 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
+        <activity android:name=".activites.search.SearchActivity"
+            android:theme="@style/SearchActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            >
+
+        </activity>
         <activity
             android:name=".activites.register.ProposedSettingsActivity"
             android:theme="@style/ProposedSettings"
@@ -57,15 +63,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/MainActivityTheme" />
 
-
-        <receiver android:name=".notifications.NewsNotificationsReceiver" android:process=":remote"/>
-
-        <receiver android:name=".notifications.BootReceiver" android:enabled="false">
+        <receiver
+            android:name=".notifications.NewsNotificationsReceiver"
+            android:process=":remote" />
+        <receiver
+            android:name=".notifications.BootReceiver"
+            android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@ import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ForgetPasswordFragmentBinding;
+import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.Validator;
 import com.example.footballnewsmanager.helpers.ValidatorTextWatcher;
 import com.example.footballnewsmanager.models.FieldType;
@@ -44,7 +45,7 @@ public class ForgetPasswordViewModel extends BaseViewModel {
 
     private TextView.OnEditorActionListener emailListener = (v, actionId, event) -> {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-            ((BaseActivity) getActivity()).hideKeyboard();
+            KeyboardHelper.hideKeyboard(getActivity());
             clearFocus.set(true);
             validate();
             return true;

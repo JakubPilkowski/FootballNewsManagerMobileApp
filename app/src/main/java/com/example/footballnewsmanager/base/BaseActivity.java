@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.api.Connection;
+import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.helpers.SoundPoolManager;
 import com.example.footballnewsmanager.helpers.UserPreferences;
@@ -71,16 +72,6 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
         }
     }
 
-    public void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view = getCurrentFocus();
-        if (view == null) {
-            view = new View(this);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        view.clearFocus();
-    }
-
 
     public BaseFragment getCurrentFragment() {
         return (BaseFragment) getSupportFragmentManager().findFragmentById(getIdFragmentContainer());
@@ -92,7 +83,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
 
     @Override
     protected void onPause() {
-        hideKeyboard();
+        KeyboardHelper.hideKeyboard(this);
         super.onPause();
     }
 

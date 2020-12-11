@@ -35,6 +35,7 @@ import io.reactivex.rxjava3.core.Observer;
 public class AllNewsFragment extends BaseFragment<AllNewsFragmentBinding,AllNewsFragmentViewModel> implements Providers {
 
 
+    public static final String TAG = "AllNews";
     private BadgeListener badgeListener;
 
     public static AllNewsFragment newInstance(BadgeListener badgeListener) {

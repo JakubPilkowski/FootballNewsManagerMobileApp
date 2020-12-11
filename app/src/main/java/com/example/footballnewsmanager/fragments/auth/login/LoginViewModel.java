@@ -22,6 +22,7 @@ import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.LoginFragmentBinding;
+import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.helpers.Validator;
 import com.example.footballnewsmanager.helpers.ValidatorTextWatcher;
@@ -53,7 +54,7 @@ public class LoginViewModel extends BaseViewModel {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                ((BaseActivity) getActivity()).hideKeyboard();
+                KeyboardHelper.hideKeyboard(getActivity());
                 clearFocus.set(true);
                 validate();
                 return true;

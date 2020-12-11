@@ -87,5 +87,15 @@
         <item name="android:colorControlActivated">@android:color/white</item>
     </style>
 
+    <style name="SearchActivity" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>
+        <item name="colorControlHighlight">#fff</item>
+        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>
+        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="android:colorControlActivated">@android:color/white</item>
+    </style>
 
 </resources>
