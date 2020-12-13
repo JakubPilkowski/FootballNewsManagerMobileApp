@@ -22,6 +22,7 @@ import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ResetPasswordFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.fragments.auth.success_fragment.SuccessFragment;
+import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.Validator;
 import com.example.footballnewsmanager.helpers.ValidatorTextWatcher;
 import com.example.footballnewsmanager.models.FieldType;
@@ -53,7 +54,7 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
 
     private TextView.OnEditorActionListener resetPasswordActionListener = (v, actionId, event) -> {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-            ((BaseActivity) getActivity()).hideKeyboard();
+            KeyboardHelper.hideKeyboard(getActivity());
             clearFocus.set(true);
             validate();
             return true;

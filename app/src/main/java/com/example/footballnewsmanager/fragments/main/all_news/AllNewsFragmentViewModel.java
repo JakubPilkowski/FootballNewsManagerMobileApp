@@ -1,13 +1,17 @@
 package com.example.footballnewsmanager.fragments.main.all_news;
 
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.activites.search.SearchActivity;
 import com.example.footballnewsmanager.adapters.all_news.AllNewsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -40,6 +44,58 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements NewsRecyc
 
     // TODO: Implement the ViewModel
     public void init(AllNewsResponse newsResponse, BadgeListener badgeListener) {
+
+        SearchView searchView = ((AllNewsFragmentBinding)getBinding()).allNewsSearchView;
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                getActivity().startActivity(intent);
+                Log.d(AllNewsFragment.TAG, "onClick: ");
+            }
+        });
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(AllNewsFragment.TAG, "onSearchClick: ");
+            }
+        });
+
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                Log.d(AllNewsFragment.TAG, "onFocusChange: " + hasFocus);
+                if(hasFocus) {
+                    Intent intent = new Intent(getActivity(), SearchActivity.class);
+                    getActivity().startActivity(intent);
+                }
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d(AllNewsFragment.TAG, "onQueryTextSubmit: ");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d(AllNewsFragment.TAG, "onQueryTextChange: ");
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                Log.d(AllNewsFragment.TAG, "onClose: ");
+                return false;
+            }
+        });
+
         swipeRefreshListenerObservable.set(this::updateNews);
         recyclerView = ((AllNewsFragmentBinding) getBinding()).allNewsRecyclerView;
         newsAdapter = new AllNewsAdapter(getActivity());

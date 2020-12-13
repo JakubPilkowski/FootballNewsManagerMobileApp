@@ -18,7 +18,6 @@
 <!--        <TextView-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="18dp"-->
 <!--            android:text="Wszystkie"-->
 <!--            android:textAlignment="center"-->
 <!--            android:textColor="@color/colorTextPrimary"-->
@@ -33,7 +32,6 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:layout_weight="1"
                 android:text="@{viewModel.countAll}"
                 android:textAlignment="center"
@@ -43,7 +41,6 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:layout_weight="1"
                 android:text="@{viewModel.countToday}"
                 android:textAlignment="center"

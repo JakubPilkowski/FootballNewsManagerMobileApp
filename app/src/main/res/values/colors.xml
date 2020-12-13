@@ -31,4 +31,6 @@
 
 <!--    proposed-item-background-->
     <color name="proposedItemBackgroundColor">#F8F8F8</color>
+    <color name="searchViewBackground">#333333</color>
+
 </resources>
