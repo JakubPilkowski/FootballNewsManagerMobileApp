@@ -38,7 +38,6 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
     public ObservableField<String> siteTitle = new ObservableField<>();
     public ObservableField<String> date = new ObservableField<>();
     public ObservableField<String> likes = new ObservableField<>();
-    public ObservableField<String> dislikes = new ObservableField<>();
     public ObservableField<String> clicks = new ObservableField<>();
 
     private UserNews news;
@@ -47,11 +46,10 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
         this.news = news;
         newsTitle.set(news.getNews().getTitle());
         siteTitle.set(news.getNews().getSite().getName());
-        date.set(news.getNews().getDate());
+        String dateFormatted = news.getNews().getDate().replace("T"," ");
+        date.set(dateFormatted);
         likes.set(String.valueOf(news.getNews().getLikes()));
-        dislikes.set(String.valueOf(news.getNews().getDislikes()));
         clicks.set(String.valueOf(news.getNews().getClicks()));
-
         String token = UserPreferences.get().getAuthToken();
         List<Tag> tags = new ArrayList<>();
         for (NewsTag newsTag : news.getNews().getTags()) {
@@ -67,7 +65,7 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
             getActivity().runOnUiThread(() -> {
                 LinearLayout layout = ((NewsInfoFragmentBinding) getBinding()).newsInfoLinearLayout;
                 for (Team team : proposedTeamsResponse.getTeams()) {
-                    MaterialCardView cardView = (MaterialCardView) LayoutInflater.from(getFragment().getContext()).inflate(R.layout.news_info_team_layout, layout, false);
+                    LinearLayout cardView = (LinearLayout) LayoutInflater.from(getFragment().getContext()).inflate(R.layout.news_info_team_layout, layout, false);
                     NewsInfoTeamLayoutBinding binding = NewsInfoTeamLayoutBinding.bind(cardView);
                     NewsInfoTeamViewModel viewModel = new NewsInfoTeamViewModel();
                     binding.setViewModel(viewModel);

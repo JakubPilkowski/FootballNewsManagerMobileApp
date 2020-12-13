@@ -5,26 +5,19 @@ import android.view.MenuItem;
 
 import androidx.databinding.ObservableField;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.adapters.main.MainViewPager;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
-import com.example.footballnewsmanager.api.responses.news.NotificationResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.ActivityMainBinding;
 import com.example.footballnewsmanager.databinding.MainFragmentBinding;
-import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
-import com.example.footballnewsmanager.models.NotificationData;
-import com.example.footballnewsmanager.models.Team;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -107,6 +100,7 @@ public class MainFragmentViewModel extends BaseViewModel implements BadgeListene
         public void onSuccess(BadgesResponse badgesResponse) {
             Log.d(MainFragment.TAG, "onSuccess: ");
             Long amount = badgesResponse.getAmount();
+            UserPreferences.get().changeNotification(amount);
             if(amount > 0){
                 BadgeDrawable badgeDrawable = ((MainFragmentBinding)getBinding()).mainBottomNavView.getOrCreateBadge(R.id.nav_news);
                 badgeDrawable.setMaxCharacterCount(99);

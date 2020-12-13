@@ -1,19 +1,18 @@
 package com.example.footballnewsmanager.api.responses.main;
 
-import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.models.UserNews;
 
 import java.util.List;
 
 public class NewsResponse{
 
-    private List<UserNews> news;
+    private List<UserNews> userNews;
     private Long newsCount;
     private Long newsToday;
     private int pages;
 
-    public List<UserNews> getNews() {
-        return news;
+    public List<UserNews> getUserNews() {
+        return userNews;
     }
 
     public int getPages() {

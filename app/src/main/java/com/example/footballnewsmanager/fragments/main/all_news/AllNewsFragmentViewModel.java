@@ -100,7 +100,7 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements NewsRecyc
         recyclerView = ((AllNewsFragmentBinding) getBinding()).allNewsRecyclerView;
         newsAdapter = new AllNewsAdapter(getActivity());
         newsAdapter.setNewsRecyclerViewListener(this);
-        newsAdapter.setItems(newsResponse.getNews(), newsResponse.getAdditionalContent());
+        newsAdapter.setItems(newsResponse.getUserNews(), newsResponse.getAdditionalContent());
         newsAdapter.setCountAll(newsResponse.getNewsCount());
         newsAdapter.setBadgeListener(badgeListener);
         newsAdapter.setCountToday(newsResponse.getNewsToday());
@@ -169,7 +169,7 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements NewsRecyc
         @Override
         public void onSuccess(AllNewsResponse newsResponse) {
             getActivity().runOnUiThread(() -> {
-                newsAdapter.setItems(newsResponse.getNews(), newsResponse.getAdditionalContent());
+                newsAdapter.setItems(newsResponse.getUserNews(), newsResponse.getAdditionalContent());
                 isLastPage = newsResponse.getPages() <= currentPage;
                 newsAdapter.isLoading = false;
 

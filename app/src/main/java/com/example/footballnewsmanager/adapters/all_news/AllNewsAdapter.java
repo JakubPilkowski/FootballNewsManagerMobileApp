@@ -270,7 +270,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         viewModels.clear();
         additionalInfoViewModels.clear();
         notifyItemRangeRemoved(0, items.size()+additionalItems.size()+2);
-        setItems(userNews.getNews(), userNews.getAdditionalContent());
+        setItems(userNews.getUserNews(), userNews.getAdditionalContent());
     }
 
     public void setBadgeListener(BadgeListener badgeListener) {

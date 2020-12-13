@@ -185,35 +185,6 @@
                 android:layout_marginBottom="9dp"
                 android:background="@color/colorPrimary" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dislike'i: "
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="9dp"
-                    android:text="@{viewModel.dislikes}"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginBottom="9dp"
-                android:background="@color/colorPrimary" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

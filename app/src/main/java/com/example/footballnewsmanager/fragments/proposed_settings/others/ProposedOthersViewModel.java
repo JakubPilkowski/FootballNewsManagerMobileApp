@@ -49,8 +49,8 @@ public class ProposedOthersViewModel extends BaseViewModel implements ProposedLa
 
     public void init() {
         languageDrawable.set(getActivity().getDrawable(R.drawable.ic_poland_small));
-        darkModeChangeListenerAdapter.set(darkModeChangeListener);
-        notificationsChangeListenerAdapter.set(notificationsChangeListener);
+//        darkModeChangeListenerAdapter.set(darkModeChangeListener);
+//        notificationsChangeListenerAdapter.set(notificationsChangeListener);
         proposedNewsChangeListenerAdapter.set(proposedNewsChangeListener);
     }
 

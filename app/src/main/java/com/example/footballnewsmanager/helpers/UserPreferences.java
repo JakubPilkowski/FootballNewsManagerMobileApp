@@ -11,6 +11,8 @@ public class UserPreferences {
     private static final String TAG = "UserPreferences";
     private static final String FILENAME = TAG + "_FootballNewsManager";
     private static final String AUTH_TOKEN = FILENAME + "_AuthToken";
+    private static final String NOTIFICATION_AMOUNT = FILENAME+"_NotificationsAmount";
+
 
     private static UserPreferences INSTANCE;
     private SharedPreferences sharedPreferences;
@@ -27,7 +29,7 @@ public class UserPreferences {
         return INSTANCE;
     }
 
-    public void save(LoginResponse loginResponse) {
+    public void addToken(LoginResponse loginResponse) {
         sharedPreferences.edit().putString(AUTH_TOKEN, loginResponse.getTokenType() + " " + loginResponse.getAccessToken()).apply();
     }
 
@@ -37,6 +39,18 @@ public class UserPreferences {
 
     public void clearAuthToken() {
         sharedPreferences.edit().putString(AUTH_TOKEN, null).apply();
+    }
+
+
+    public void changeNotification(Long amount){
+        sharedPreferences.edit().putLong(NOTIFICATION_AMOUNT, amount).apply();
+    }
+    public void resetNotifications(){
+        sharedPreferences.edit().putLong(NOTIFICATION_AMOUNT, 0).apply();
+    }
+
+    public Long getNotificationAmount() {
+        return sharedPreferences.getLong(NOTIFICATION_AMOUNT, 0);
     }
 
     public boolean hasUser() {

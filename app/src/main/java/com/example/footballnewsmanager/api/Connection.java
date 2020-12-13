@@ -1,7 +1,5 @@
 package com.example.footballnewsmanager.api;
 
-import android.util.Log;
-
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
@@ -13,20 +11,13 @@ import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
-import com.example.footballnewsmanager.api.responses.news.NotificationResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsAndSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
-import com.example.footballnewsmanager.models.SearchResult;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableSource;
-import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Connection {
@@ -141,8 +132,8 @@ public class Connection {
         teamsObservable.subscribe(callback);
     }
 
-    public void getNotifications(Callback<NotificationResponse> callback, String token) {
-        Observable<NotificationResponse> notificationResponseObservable = client.getService()
+    public void getNotifications(Callback<Long> callback, String token) {
+        Observable<Long> notificationResponseObservable = client.getService()
                 .getNotifications(token).subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation());
         notificationResponseObservable.subscribe(callback);

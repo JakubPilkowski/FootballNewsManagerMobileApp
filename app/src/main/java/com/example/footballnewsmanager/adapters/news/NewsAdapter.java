@@ -13,9 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.adapters.news.NewsAdapterPlaceholderViewModel;
-import com.example.footballnewsmanager.adapters.news.NewsAdapterViewModel;
-import com.example.footballnewsmanager.adapters.news.NewsHeaderAdapterViewModel;
 import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.databinding.NewsHeaderLayoutBinding;
@@ -71,7 +68,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         items.clear();
         viewModels.clear();
         notifyItemRangeRemoved(0, items.size()+2);
-        setItems(userNews.getNews());
+        setItems(userNews.getUserNews());
     }
 
     public void setBadgeListener(BadgeListener badgeListener) {
@@ -160,7 +157,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         else{
             NewsAdapterViewModel viewModel;
-            int itemsPosition = position - (position/16+1);
+            int itemsPosition = position - 1;
             if (viewModels.size() <= itemsPosition) {
                 viewModel = new NewsAdapterViewModel();
                 viewModels.add(viewModel);
@@ -221,7 +218,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         items.clear();
         viewModels.clear();
         notifyItemRangeRemoved(0, items.size()+2);
-        setItems(userNews.getNews());
+        setItems(userNews.getUserNews());
     }
 
     public class NewsHeaderViewHolder extends RecyclerView.ViewHolder {

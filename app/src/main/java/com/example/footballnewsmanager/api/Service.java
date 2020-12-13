@@ -1,7 +1,5 @@
 package com.example.footballnewsmanager.api;
 
-import androidx.databinding.ObservableField;
-
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
@@ -13,12 +11,10 @@ import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
-import com.example.footballnewsmanager.api.responses.news.NotificationResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
-import com.example.footballnewsmanager.models.UserNews;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
@@ -115,7 +111,7 @@ public interface Service {
     );
 
     @GET("news/notifications")
-    Observable<NotificationResponse> getNotifications(
+    Observable<Long> getNotifications(
             @Header("Authorization") String token
     );
 

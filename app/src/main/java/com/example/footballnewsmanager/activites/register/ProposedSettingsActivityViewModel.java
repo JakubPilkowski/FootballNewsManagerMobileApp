@@ -169,13 +169,14 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
                         List<Site> chosenSites = getSelectedSites(fragments);
                         ProposedOthersFragment proposedOthersFragment = (ProposedOthersFragment) fragments.get(2);
                         ProposedOthersViewModel proposedOthersViewModel = proposedOthersFragment.viewModel;
-                        boolean notifications = proposedOthersViewModel.notifications.get();
-                        boolean darkMode = proposedOthersViewModel.darkMode.get();
+//                        boolean notifications = proposedOthersViewModel.notifications.get();
+//                        boolean darkMode = proposedOthersViewModel.darkMode.get();
                         boolean proposedNews = proposedOthersViewModel.proposedNews.get();
                         String languageSelected = proposedOthersViewModel.currentLanguage.get();
                         Language language = LanguageHelper.getLanguage(languageSelected, getActivity().getResources());
+
                         UserSettingsRequest userSettingsRequest = new UserSettingsRequest(
-                                chosenTeams, chosenSites, darkMode, notifications, proposedNews,
+                                chosenTeams, chosenSites, proposedNews,
                                 language);
 
                         Connection.get().userSettingsResponse(savedSettingsResponse,
