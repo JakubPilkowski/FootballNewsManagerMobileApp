@@ -9,13 +9,9 @@ public class User {
 
     private List<UserSite> userSites;
 
-//    private List<UserNewsLike> userLikes;
-
-    private boolean darkMode;
+    private String addedDate;
 
     private Language language;
-
-    private boolean notification;
 
     private boolean proposedNews;
 
@@ -31,17 +27,11 @@ public class User {
         return userSites;
     }
 
-    public boolean isDarkMode() {
-        return darkMode;
-    }
 
     public Language getLanguage() {
         return language;
     }
 
-    public boolean isNotification() {
-        return notification;
-    }
 
     public boolean isProposedNews() {
         return proposedNews;

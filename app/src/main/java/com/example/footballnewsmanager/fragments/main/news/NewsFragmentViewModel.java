@@ -46,7 +46,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         newsAdapter = new NewsAdapter(getActivity());
         newsAdapter.setNewsRecyclerViewListener(this);
         newsAdapter.setBadgeListener(badgeListener);
-        newsAdapter.setItems(newsResponse.getNews());
+        newsAdapter.setItems(newsResponse.getUserNews());
         newsAdapter.setCountAll(newsResponse.getNewsCount());
         newsAdapter.setCountToday(newsResponse.getNewsToday());
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
@@ -112,7 +112,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         @Override
         public void onSuccess(NewsResponse newsResponse) {
             getActivity().runOnUiThread(() -> {
-                newsAdapter.setItems(newsResponse.getNews());
+                newsAdapter.setItems(newsResponse.getUserNews());
                 isLastPage = newsResponse.getPages() <= currentPage;
                 newsAdapter.isLoading = false;
             });

@@ -19,7 +19,6 @@ import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
-import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.LoginFragmentBinding;
 import com.example.footballnewsmanager.helpers.KeyboardHelper;
@@ -98,7 +97,7 @@ public class LoginViewModel extends BaseViewModel {
         @Override
         public void onSuccess(LoginResponse loginResponse) {
             ProgressDialog.get().dismiss();
-            UserPreferences.get().save(loginResponse);
+            UserPreferences.get().addToken(loginResponse);
             Intent intent = new Intent(getActivity(), MainActivity.class);
             getActivity().startActivity(intent);
             getActivity().finish();

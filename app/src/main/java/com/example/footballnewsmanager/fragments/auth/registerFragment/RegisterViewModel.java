@@ -2,9 +2,7 @@ package com.example.footballnewsmanager.fragments.auth.registerFragment;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.telecom.Call;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ScrollView;
@@ -23,7 +21,6 @@ import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
-import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.RegisterFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
@@ -140,7 +137,7 @@ public class RegisterViewModel extends BaseViewModel {
         @Override
         public void onSuccess(LoginResponse loginResponse) {
             ProgressDialog.get().dismiss();
-            UserPreferences.get().save(loginResponse);
+            UserPreferences.get().addToken(loginResponse);
             Intent intent = new Intent(getActivity(), ProposedSettingsActivity.class);
             getActivity().startActivity(intent);
             getActivity().finish();

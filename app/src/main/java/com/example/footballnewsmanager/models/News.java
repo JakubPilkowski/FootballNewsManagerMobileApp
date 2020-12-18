@@ -15,7 +15,6 @@ public class News {
     private double popularity;
     private Long clicks;
     private Long likes;
-    private Long dislikes;
     private boolean highlighted;
 
 
@@ -49,10 +48,6 @@ public class News {
 
     public Long getLikes() {
         return likes;
-    }
-
-    public Long getDislikes() {
-        return dislikes;
     }
 
     public boolean isHighlighted() {

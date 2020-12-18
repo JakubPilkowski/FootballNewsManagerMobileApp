@@ -21,7 +21,7 @@ public class WelcomeViewModel extends BaseViewModel {
         loginFragment.setExitTransition(new AuthNameTransition());
 
         getNavigator().sharedTransitionAttach(loginFragment, LoginFragment.TAG,
-                ((WelcomeFragmentBinding)getBinding()).authLoginButton, "username fragment title");
+                ((WelcomeFragmentBinding)getBinding()).authLoginButton, "login fragment title");
     }
 
     public void onForgetPassword(){
