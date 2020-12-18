@@ -33,21 +33,9 @@ import io.reactivex.rxjava3.core.Observer;
 public class ProposedTeamsFragment extends BaseFragment<ProposedTeamsFragmentBinding, ProposedTeamsViewModel> implements Providers {
 
 
-    private List<Team> teams;
-
-
-//    public static ProposedTeamsFragment newInstance(List<Team> teams) {
-//        ProposedTeamsFragment proposedTeamsFragment = new ProposedTeamsFragment();
-//        proposedTeamsFragment.setTeams(teams);
-//        return proposedTeamsFragment;
-//    }
 
     public static ProposedTeamsFragment newInstance() {
         return new ProposedTeamsFragment();
-    }
-
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
     }
 
     @Override

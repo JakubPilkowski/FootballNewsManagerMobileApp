@@ -72,9 +72,8 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
     private Callback<ProposedTeamsAndSitesResponse> callback = new Callback<ProposedTeamsAndSitesResponse>() {
         @Override
         public void onSuccess(ProposedTeamsAndSitesResponse proposedTeamsAndSitesResponse) {
-            Log.d("ProposedSettActivity", "success"+(ProgressDialog.get().isShowing()));
+            Log.d("ProposedSettActivity", "success" + (ProgressDialog.get().isShowing()));
             ProgressDialog.get().dismiss();
-//            initView(proposedTeamsAndSitesResponse);
         }
 
         @Override
@@ -96,33 +95,22 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
         stars = ((ActivityProposedSettingsBinding) getBinding()).proposedSettingsStars;
         checkBackButtonEnabled();
         screenWidth = ScreenHelper.getScreenWidth(getActivity());
-        ballLeftMargin.set(screenWidth * 4 / 25);
+        ballLeftMargin.set(screenWidth * 2 / 25);
         navigationMargin.set(ScreenHelper.getNavBarHeight(getActivity().getApplicationContext()));
         viewPager2 = ((ActivityProposedSettingsBinding) getBinding()).proposedSettingsViewpager;
         token = UserPreferences.get().getAuthToken();
         initView();
-//        ProgressDialog.get().show();
-//        Connection.get().proposedTeamsAndSites(callback,
-//                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjA0MzE1MjU0LCJleHAiOjE2MDQ5MjAwNTR9.GZWZ7LqFjbdJWtRFfzU2w16dEdP7dfP-igdggQMyFShj-oGiClM7ODC9OSbgOi-o4Ap0hiAIjvzFSP3fqmhtFw"
-//                token
-//                , 5, 0);
     }
 
     private void initView() {
         List<BaseFragment> fragmentList = new ArrayList<>();
         ProposedTeamsFragment proposedTeamsFragment = ProposedTeamsFragment.newInstance();
         ProposedSitesFragment proposedSitesFragment = ProposedSitesFragment.newInstance();
-        ProposedOthersFragment proposedOthersFragment = ProposedOthersFragment.newInstance();
         fragmentList.add(proposedTeamsFragment);
         fragmentList.add(proposedSitesFragment);
-        fragmentList.add(proposedOthersFragment);
         proposedSettingsViewPagerAdapter = new ProposedSettingsViewPagerAdapter((FragmentActivity) getActivity(), fragmentList);
-
-//        getActivity().runOnUiThread(() -> {
-//                ProgressDialog.get().dismiss();
-            viewPagerAdapterObservable.set(proposedSettingsViewPagerAdapter);
-            onPageChangeCallbackObservable.set(onPageChangeCallback);
-//        });
+        viewPagerAdapterObservable.set(proposedSettingsViewPagerAdapter);
+        onPageChangeCallbackObservable.set(onPageChangeCallback);
     }
 
 
@@ -130,11 +118,11 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
         @Override
         public void onPageSelected(int position) {
             super.onPageSelected(position);
-            if(item!=position){
+            if (item != position) {
                 item = position;
             }
             checkBackButtonEnabled();
-            float translateValue = screenWidth * 17 / 75;
+            float translateValue = screenWidth * 19 / 50;
             ball.animate()
                     .rotation(180 * item)
                     .translationX(translateValue * item).setDuration(400).start();
@@ -147,11 +135,11 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
 
     public void next() {
         SoundPoolManager.get().playSong(R.raw.pass_a_ball, 0.2f);
-        if (item == 2) {
-            float translateValue = screenWidth * 17 / 75;
+        if (item == 1) {
+            float translateValue = screenWidth * 19 / 50;
             ball.animate()
-                    .rotation(180 * 3)
-                    .translationX(translateValue * 3)
+                    .rotation(180 * 2)
+                    .translationX(translateValue * 2)
                     .setDuration(400)
                     .start();
             stars.animate()
@@ -167,17 +155,8 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
 
                         List<Team> chosenTeams = getSelectedTeams(fragments);
                         List<Site> chosenSites = getSelectedSites(fragments);
-                        ProposedOthersFragment proposedOthersFragment = (ProposedOthersFragment) fragments.get(2);
-                        ProposedOthersViewModel proposedOthersViewModel = proposedOthersFragment.viewModel;
-//                        boolean notifications = proposedOthersViewModel.notifications.get();
-//                        boolean darkMode = proposedOthersViewModel.darkMode.get();
-                        boolean proposedNews = proposedOthersViewModel.proposedNews.get();
-                        String languageSelected = proposedOthersViewModel.currentLanguage.get();
-                        Language language = LanguageHelper.getLanguage(languageSelected, getActivity().getResources());
-
                         UserSettingsRequest userSettingsRequest = new UserSettingsRequest(
-                                chosenTeams, chosenSites, proposedNews,
-                                language);
+                                chosenTeams, chosenSites, true, Language.POLSKI);
 
                         Connection.get().userSettingsResponse(savedSettingsResponse,
                                 token, userSettingsRequest);
@@ -190,7 +169,7 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
         }
     }
 
-    private List<Team> getSelectedTeams(List<BaseFragment> fragments){
+    private List<Team> getSelectedTeams(List<BaseFragment> fragments) {
         List<Team> chosenTeams = new ArrayList<>();
         ProposedTeamsFragment proposedTeamsFragment = (ProposedTeamsFragment) fragments.get(0);
         ProposedTeamsAdapter proposedTeamsAdapter = (ProposedTeamsAdapter) proposedTeamsFragment.viewModel.recyclerViewAdapter.get();
@@ -204,7 +183,7 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
         return chosenTeams;
     }
 
-    private List<Site> getSelectedSites(List<BaseFragment> fragments){
+    private List<Site> getSelectedSites(List<BaseFragment> fragments) {
         List<Site> chosenSites = new ArrayList<>();
         ProposedSitesFragment proposedSitesFragment = (ProposedSitesFragment) fragments.get(1);
         ProposedSitesAdapter proposedSitesAdapter = proposedSitesFragment.viewModel.recyclerViewAdapter.get();
@@ -230,7 +209,7 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
-            if(error instanceof SingleMessageError){
+            if (error instanceof SingleMessageError) {
                 Log.d("ProposedSettActivity", ((SingleMessageError) error).getMessage());
             }
             enableButtons();

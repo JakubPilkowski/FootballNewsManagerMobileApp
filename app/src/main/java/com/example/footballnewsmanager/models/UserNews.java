@@ -3,7 +3,6 @@ package com.example.footballnewsmanager.models;
 public class UserNews {
     private News news;
     private boolean liked;
-    private boolean disliked;
     private boolean inFavourites;
     private boolean visited;
     private boolean badged;
@@ -14,10 +13,6 @@ public class UserNews {
 
     public boolean isLiked() {
         return liked;
-    }
-
-    public boolean isDisliked() {
-        return disliked;
     }
 
     public boolean isVisited() {

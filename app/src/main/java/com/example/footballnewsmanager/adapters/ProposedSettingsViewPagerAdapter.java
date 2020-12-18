@@ -41,15 +41,12 @@ public class ProposedSettingsViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 fragment = fragments.get(1);
                 break;
-            case 2:
-                fragment = fragments.get(2);
-                break;
         }
         return fragment;
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }

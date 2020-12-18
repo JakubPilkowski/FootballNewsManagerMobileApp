@@ -66,7 +66,6 @@ public class NewsAdapterViewModel {
         isBadgeVisited.set(!news.isBadged() ? R.drawable.not_visited : R.drawable.visited);
         heartDrawable.set(news.isLiked() ? R.drawable.heart_with_ripple : R.drawable.heart_empty_with_ripple);
 
-
         title.set(newsDetails.getTitle().length() > 40 ? newsDetails.getTitle().substring(0,37)+"..." : newsDetails.getTitle());
         imageUrl.set(newsDetails.getImageUrl());
         date.set("Dodano: " + newsDetails.getDate());
@@ -84,7 +83,6 @@ public class NewsAdapterViewModel {
     public void onNewsClick() {
         String token = UserPreferences.get().getAuthToken();
         Connection.get().setNewsVisited(callback, token, newsDetails.getSiteId(), newsDetails.getId());
-        badgeListener.onBadgeChange();
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(newsDetails.getNewsUrl()));
         activity.startActivity(intent);
@@ -113,6 +111,9 @@ public class NewsAdapterViewModel {
             });
             if (!newsResponse.message.equals("Odwiedzono wiadomość"))
                 likesToggle();
+            else{
+                badgeListener.onBadgeChange();
+            }
         }
 
         @Override
