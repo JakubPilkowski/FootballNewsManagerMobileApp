@@ -27,6 +27,7 @@
             app:iconifiedByDefault="false"
             app:queryHint="Szukaj drużyn lub newsów"
             app:searchIcon="@drawable/ic_search_black_24dp"
+            app:closeIcon="@drawable/ic_close"
             />
 
 

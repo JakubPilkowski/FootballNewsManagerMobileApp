@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.adapters.search;
 
+import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,11 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final int LABEL = 1;
     private int newsCounter = 0;
     private int teamsCounter = 0;
+    private Activity activity;
 
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
 
     public void setItems(List<SearchResult> items) {
         notifyItemRangeRemoved(0, this.items.size());
@@ -100,7 +105,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     viewModel = viewModels.get(updatePosition);
                 }
                 ((SearchResultViewHolder) holder).getBinding().setViewModel(viewModel);
-                viewModel.init(items.get(updatePosition));
+                viewModel.init(items.get(updatePosition), activity);
             }
         } else {
             SearchAdapterViewModel viewModel;
@@ -111,7 +116,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 viewModel = viewModels.get(position-1);
             }
             ((SearchResultViewHolder) holder).getBinding().setViewModel(viewModel);
-            viewModel.init(items.get(position-1));
+            viewModel.init(items.get(position-1), activity);
         }
     }
 

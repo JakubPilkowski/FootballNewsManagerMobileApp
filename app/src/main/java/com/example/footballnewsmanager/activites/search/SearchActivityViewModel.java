@@ -60,38 +60,23 @@ public class SearchActivityViewModel extends BaseViewModel {
             }
         });
         searchView.setIconified(false);
-        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Log.d("Search", "onFocusChange: ");
-            }
-        });
+        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> Log.d("Search", "onFocusChange: "));
 
         Observable<String> observableQueryText = Observable
-                .create(new ObservableOnSubscribe<String>() {
+                .create(emitter -> searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
-                    public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Throwable {
-                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                            @Override
-                            public boolean onQueryTextSubmit(String query) {
-//                        String token = UserPreferences.get().getAuthToken();
-//                        Connection.get().getQueryResults(callback, token, query);
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onQueryTextChange(String newText) {
-                                if (!emitter.isDisposed()) {
-                                        emitter.onNext(newText);
-                                }
-//                                String token = UserPreferences.get().getAuthToken();
-//                                Connection.get().getQueryResults(callback, token, newText);
-//                querySubject.onNext(newText);
-                                return false;
-                            }
-                        });
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
                     }
-                });
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        if (!emitter.isDisposed()) {
+                                emitter.onNext(newText);
+                        }
+                        return false;
+                    }
+                }));
 
 
         observableQueryText
@@ -120,6 +105,7 @@ public class SearchActivityViewModel extends BaseViewModel {
                 });
 
         searchAdapter = new SearchAdapter();
+        searchAdapter.setActivity(getActivity());
         searchAdapterObservable.set(searchAdapter);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().getQueryResults(callback, token, "");
