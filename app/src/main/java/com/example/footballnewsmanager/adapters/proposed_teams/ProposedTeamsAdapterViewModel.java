@@ -11,7 +11,7 @@ import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseAdapterViewModel;
 import com.example.footballnewsmanager.models.Team;
 
-public class ProposedTeamsAdapterViewModel extends BaseAdapterViewModel {
+public class ProposedTeamsAdapterViewModel {
 
     public ObservableField<String> name = new ObservableField<>();
     public ObservableField<String> imageUrl = new ObservableField<>();
@@ -23,10 +23,9 @@ public class ProposedTeamsAdapterViewModel extends BaseAdapterViewModel {
 
     private Team team;
 
-    @Override
-    public void init(Object[] values) {
+    public void init(Team team) {
         updateBackground();
-        team = (Team) values[0];
+        this.team = team;
         name.set(team.getName());
         imageUrl.set(team.getLogoUrl());
     }

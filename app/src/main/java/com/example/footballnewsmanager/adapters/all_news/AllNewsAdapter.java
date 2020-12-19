@@ -90,7 +90,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 return new NewsHighlightedViewHolder(view, newsLayoutBinding);
             }
             case ITEM_LOADING: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_progress_view, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_progress_view, parent, false);
                 return new ProgressViewHolder(view);
             }
             case ADDITIONAL_INFO_NEWS: {
