@@ -2,16 +2,17 @@ package com.example.footballnewsmanager.models;
 
 public class SearchResult {
     private String name;
-    private Long id;
+    private String id;
     private SearchType type;
     private String imgUrl;
+    private String newsUrl;
 
     public String getName() {
         return name;
     }
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -23,5 +24,10 @@ public class SearchResult {
 
     public String getImgUrl() {
         return imgUrl;
+    }
+
+
+    public String getNewsUrl() {
+        return newsUrl;
     }
 }
