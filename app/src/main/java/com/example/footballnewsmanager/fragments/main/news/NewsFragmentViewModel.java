@@ -19,10 +19,12 @@ import com.example.footballnewsmanager.adapters.news.NewsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
+import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.helpers.NewsPlaceholder;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
@@ -41,8 +43,8 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
     public ObservableInt swipeRefreshColor = new ObservableInt(R.color.colorPrimary);
     public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
+    public ObservableBoolean placeholderVisibility = new ObservableBoolean(false);
 
-    private boolean isError = false;
 
     private boolean isLastPage;
     private int currentPage = 0;
@@ -53,10 +55,18 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
     public void init(BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
         swipeRefreshListenerObservable.set(this::updateNews);
+        initPlaceholder();
         recyclerView = ((NewsFragmentBinding) getBinding()).newsRecyclerView;
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().news(callback, token, currentPage);
+    }
+
+    private void initPlaceholder(){
+        NewsPlaceholder newsPlaceholder = ((NewsFragmentBinding)getBinding()).newsPlaceholderView;
+        newsPlaceholder.setOnAddTeamsInterface(() -> {
+            //przejście do dodawania drużyn
+        });
     }
 
 
@@ -95,6 +105,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
     private Callback<NewsResponse> refreshCallback = new Callback<NewsResponse>() {
         @Override
         public void onSuccess(NewsResponse newsResponse) {
+            placeholderVisibility.set(false);
             getActivity().runOnUiThread(() -> {
                 currentPage = 0;
                 isLastPage = newsResponse.getPages() <= currentPage;
@@ -130,7 +141,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         public void onSuccess(NewsResponse newsResponse) {
             if (loadingVisibility.get()) {
                 loadingVisibility.set(false);
-//                loadingView.clearAnimation();
+                placeholderVisibility.set(false);
                 itemsVisibility.set(true);
                 getActivity().runOnUiThread(() -> {
                     Log.d("News", "onSuccessFirst");
@@ -147,10 +158,21 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
 
         @Override
         public void onSmthWrong(BaseError error) {
-            Log.d("News", "onError");
-            isLastPage = true;
-            newsAdapter.isLoading = false;
-            postRunnable.set(placeHolderAttachRunnable);
+
+            if(error instanceof SingleMessageError){
+                String message = ((SingleMessageError) error).getMessage();
+                if(message.equals("Nie ma już więcej wyników")){
+                    isLastPage = true;
+                    newsAdapter.isLoading = false;
+                    postRunnable.set(placeHolderAttachRunnable);
+                }
+                if(message.equals("Dla podanej frazy nie ma żadnej drużyny"))
+                {
+                    loadingVisibility.set(false);
+                    placeholderVisibility.set(true);
+                }
+            }
+
         }
 
         @Override

@@ -13,10 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.databinding.NewsHeaderLayoutBinding;
 import com.example.footballnewsmanager.databinding.NewsHighlightedLayoutBinding;
+import com.example.footballnewsmanager.databinding.NewsItemsPlaceholderBinding;
 import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
 import com.example.footballnewsmanager.databinding.NewsPlaceholderBinding;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
@@ -109,8 +109,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
             case PLACEHOLDER: {
                 Log.d("News", "onCreateViewHolder Placeholder");
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_placeholder, parent, false);
-                NewsPlaceholderBinding newsPlaceholderBinding = NewsPlaceholderBinding.bind(view);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_items_placeholder, parent, false);
+                NewsItemsPlaceholderBinding newsPlaceholderBinding = NewsItemsPlaceholderBinding.bind(view);
                 return new PlaceholderViewHolder(view, newsPlaceholderBinding);
             }
             default:
@@ -125,7 +125,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (position == items.size() + 1 && !isPlaceholder)
             return;
         else if (position == items.size() + 1 && isPlaceholder) {
-            View bottleView = ((PlaceholderViewHolder) holder).itemView.findViewById(R.id.news_placeholder_bottle);
+            View bottleView = ((PlaceholderViewHolder) holder).itemView.findViewById(R.id.news_items_placeholder_bottle);
             Animation animation = AnimationUtils.loadAnimation(bottleView.getContext(), R.anim.shake);
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -147,7 +147,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             bottleView.startAnimation(animation);
             NewsAdapterPlaceholderViewModel viewModel = new NewsAdapterPlaceholderViewModel();
             viewModel.init(activity, newsRecyclerViewListener);
-            NewsPlaceholderBinding binding = ((PlaceholderViewHolder) holder).binding;
+            NewsItemsPlaceholderBinding binding = ((PlaceholderViewHolder) holder).binding;
             binding.setViewModel(viewModel);
             return;
         } else if (position == 0) {
@@ -267,9 +267,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class PlaceholderViewHolder extends RecyclerView.ViewHolder {
 
-        NewsPlaceholderBinding binding;
+        NewsItemsPlaceholderBinding binding;
 
-        public PlaceholderViewHolder(@NonNull View itemView, NewsPlaceholderBinding binding) {
+        public PlaceholderViewHolder(@NonNull View itemView, NewsItemsPlaceholderBinding binding) {
             super(itemView);
             this.binding = binding;
         }

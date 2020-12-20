@@ -45,8 +45,9 @@ public class SearchActivityViewModel extends BaseViewModel {
     public ObservableField<SearchAdapter> searchAdapterObservable = new ObservableField<>();
     private SearchAdapter searchAdapter;
     public CompositeDisposable disposable = new CompositeDisposable();
-    public ObservableBoolean loadingVisibility = new ObservableBoolean(true);
+    public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
+    public ObservableBoolean placeholderVisibility = new ObservableBoolean(false);
 
     public void init() {
         SearchView searchView = ((ActivitySearchBinding) getBinding()).searchActivitySearchView;
@@ -115,11 +116,10 @@ public class SearchActivityViewModel extends BaseViewModel {
         searchAdapter = new SearchAdapter();
         searchAdapter.setActivity(getActivity());
         searchAdapterObservable.set(searchAdapter);
+        loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().getQueryResults(callback, token, "");
     }
-
-
 
 
 
@@ -128,6 +128,7 @@ public class SearchActivityViewModel extends BaseViewModel {
         public void onSuccess(SearchResponse searchResponse) {
             Log.d("Search", "success");
             loadingVisibility.set(false);
+            placeholderVisibility.set(false);
             itemsVisibility.set(true);
             getActivity().runOnUiThread(() -> searchAdapter.setItems(searchResponse.getResults()));
         }
@@ -135,6 +136,9 @@ public class SearchActivityViewModel extends BaseViewModel {
         @Override
         public void onSmthWrong(BaseError error) {
             Log.d("Search", "onSmthWrong: ");
+            loadingVisibility.set(false);
+            itemsVisibility.set(false);
+            placeholderVisibility.set(true);
             getActivity().runOnUiThread(() -> searchAdapter.removeItems());
         }
 
