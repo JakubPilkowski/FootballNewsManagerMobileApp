@@ -103,6 +103,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return new NewsHighlightedViewHolder(view, allNewsHighlightedLayoutBinding);
             }
             case ITEM_LOADING: {
+                Log.d("News", "onCreateViewHolder IsLoading");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_progress_view, parent, false);
                 return new ProgressViewHolder(view);
             }

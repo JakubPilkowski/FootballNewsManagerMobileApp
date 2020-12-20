@@ -5,6 +5,7 @@ import androidx.databinding.ViewDataBinding;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseActivity;
@@ -58,8 +59,8 @@ public class SearchActivity extends BaseActivity<ActivitySearchBinding, SearchAc
     }
 
     @Override
-    protected void onStop() {
+    protected void onDestroy() {
         viewModel.disposable.clear();
-        super.onStop();
+        super.onDestroy();
     }
 }
