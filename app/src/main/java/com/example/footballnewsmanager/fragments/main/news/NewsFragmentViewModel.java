@@ -49,32 +49,20 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
     private NewsAdapter newsAdapter;
     private RecyclerView recyclerView;
     private BadgeListener badgeListener;
-    private NewsRecyclerViewListener newsRecyclerViewListener;
-    private View loadingView;
-    private Animation loadingAnimation;
 
     public void init(BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
         swipeRefreshListenerObservable.set(this::updateNews);
         recyclerView = ((NewsFragmentBinding) getBinding()).newsRecyclerView;
-        newsRecyclerViewListener = this;
-        initLoadingAnimation();
-        loadingView.startAnimation(loadingAnimation);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().news(callback, token, currentPage);
     }
 
 
-    private void initLoadingAnimation() {
-        LinearLayout linearLayout = ((NewsFragmentBinding) getBinding()).newsFragmentLoading;
-        loadingView = linearLayout.getChildAt(0);
-        loadingAnimation = AnimationUtils.loadAnimation(getFragment().getContext(), R.anim.rotate_translate);
-    }
-
     private void initItemsView(NewsResponse newsResponse) {
         newsAdapter = new NewsAdapter(getActivity());
-        newsAdapter.setNewsRecyclerViewListener(newsRecyclerViewListener);
+        newsAdapter.setNewsRecyclerViewListener(this);
         newsAdapter.setBadgeListener(badgeListener);
         newsAdapter.setItems(newsResponse.getUserNews());
         newsAdapter.setCountAll(newsResponse.getNewsCount());
@@ -142,7 +130,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         public void onSuccess(NewsResponse newsResponse) {
             if (loadingVisibility.get()) {
                 loadingVisibility.set(false);
-                loadingView.clearAnimation();
+//                loadingView.clearAnimation();
                 itemsVisibility.set(true);
                 getActivity().runOnUiThread(() -> {
                     Log.d("News", "onSuccessFirst");

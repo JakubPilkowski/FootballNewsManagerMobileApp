@@ -1,34 +1,22 @@
 package com.example.footballnewsmanager.fragments.proposed_settings.teams;
 
 import android.util.Log;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.adapters.news.NewsAdapter;
 import com.example.footballnewsmanager.adapters.proposed_teams.ProposedTeamsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.databinding.ProposedTeamsFragmentBinding;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
-import com.example.footballnewsmanager.models.Team;
 import com.example.footballnewsmanager.models.UserNews;
-
-import java.util.List;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -46,24 +34,14 @@ public class ProposedTeamsViewModel extends BaseViewModel implements NewsRecycle
     private ProposedTeamsAdapter proposedTeamsAdapter;
     private boolean isLastPage = false;
     private int currentPage = 0;
-    private View loadingView;
-    private Animation loadingAnimation;
     public void init(){
         recyclerView = ((ProposedTeamsFragmentBinding)getBinding()).proposedTeamsRecyclerView;
-        initLoadingAnimation();
-        loadingView.startAnimation(loadingAnimation);
         loadingVisibility.set(true);
-
         String token = UserPreferences.get().getAuthToken();
         Connection.get().proposedTeams(callback, token, currentPage);
     }
 
 
-    private void initLoadingAnimation() {
-        LinearLayout linearLayout = ((ProposedTeamsFragmentBinding) getBinding()).proposedTeamsLoading;
-        loadingView = linearLayout.getChildAt(0);
-        loadingAnimation = AnimationUtils.loadAnimation(getFragment().getContext(), R.anim.rotate_translate);
-    }
 
     private void initItemsView(ProposedTeamsResponse proposedTeamsResponse) {
         proposedTeamsAdapter = new ProposedTeamsAdapter();
@@ -100,7 +78,6 @@ public class ProposedTeamsViewModel extends BaseViewModel implements NewsRecycle
         public void onSuccess(ProposedTeamsResponse proposedTeamsResponse) {
             if (loadingVisibility.get()) {
                 loadingVisibility.set(false);
-                loadingView.clearAnimation();
                 itemsVisibility.set(true);
                 getActivity().runOnUiThread(() -> {
                     Log.d("News", "onSuccessFirst");

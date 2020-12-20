@@ -50,9 +50,6 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements NewsRecyc
     private int currentPage = 0;
     private AllNewsAdapter newsAdapter;
     private RecyclerView recyclerView;
-    private NewsRecyclerViewListener newsRecyclerViewListener;
-    private View loadingView;
-    private Animation loadingAnimation;
     private BadgeListener badgeListener;
 
     // TODO: Implement the ViewModel
@@ -72,54 +69,15 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements NewsRecyc
         });
         swipeRefreshListenerObservable.set(this::updateNews);
         recyclerView = ((AllNewsFragmentBinding) getBinding()).allNewsRecyclerView;
-        newsRecyclerViewListener = this;
-        initLoadingAnimation();
-        loadingView.startAnimation(loadingAnimation);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().allNews(callback, token, currentPage);
-
-//        newsAdapter = new AllNewsAdapter(getActivity());
-//        newsAdapter.setNewsRecyclerViewListener(this);
-//        newsAdapter.setItems(newsResponse.getUserNews(), newsResponse.getAdditionalContent());
-//        newsAdapter.setCountAll(newsResponse.getNewsCount());
-//        newsAdapter.setBadgeListener(badgeListener);
-//        newsAdapter.setCountToday(newsResponse.getNewsToday());
-//        PaginationScrollListener scrollListener = new PaginationScrollListener() {
-//            @Override
-//            protected void loadMoreItems() {
-//                Log.d("News", "loadMoreItems");
-//                currentPage++;
-//                newsAdapter.isLoading = true;
-//                String token = UserPreferences.get().getAuthToken();
-//                Connection.get().allNews(callback, token, currentPage);
-//            }
-//
-//            @Override
-//            public boolean isLastPage() {
-//                return isLastPage;
-//            }
-//
-//            @Override
-//            public boolean isLoading() {
-//                return newsAdapter.isLoading;
-//            }
-//        };
-//
-//        recyclerView.addOnScrollListener(scrollListener);
-//        adapterObservable.set(newsAdapter);
     }
 
-
-    private void initLoadingAnimation() {
-        LinearLayout linearLayout = ((AllNewsFragmentBinding) getBinding()).allNewsFragmentLoading;
-        loadingView = linearLayout.getChildAt(0);
-        loadingAnimation = AnimationUtils.loadAnimation(getFragment().getContext(), R.anim.rotate_translate);
-    }
 
     private void initItemsView(AllNewsResponse allNewsResponse) {
         newsAdapter = new AllNewsAdapter(getActivity());
-        newsAdapter.setNewsRecyclerViewListener(newsRecyclerViewListener);
+        newsAdapter.setNewsRecyclerViewListener(this);
         newsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getAdditionalContent());
         newsAdapter.setBadgeListener(badgeListener);
         newsAdapter.setCountAll(allNewsResponse.getNewsCount());
@@ -191,7 +149,6 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements NewsRecyc
 
             if (loadingVisibility.get()) {
                 loadingVisibility.set(false);
-                loadingView.clearAnimation();
                 itemsVisibility.set(true);
                 getActivity().runOnUiThread(() -> {
                     initItemsView(newsResponse);
