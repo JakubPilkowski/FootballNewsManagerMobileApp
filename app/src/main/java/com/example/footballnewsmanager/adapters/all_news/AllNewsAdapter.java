@@ -105,7 +105,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
             case PLACEHOLDER: {
                 Log.d("News", "onCreateViewHolder Placeholder");
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_placeholder, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_items_placeholder, parent, false);
                 NewsPlaceholderBinding newsPlaceholderBinding = NewsPlaceholderBinding.bind(view);
                 return new PlaceholderViewHolder(view, newsPlaceholderBinding);
             }
@@ -121,7 +121,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (position == items.size() + additionalItems.size() + 1 && !isPlaceholder)
             return;
         else if (position == items.size() + additionalItems.size() + 1 && isPlaceholder) {
-            View bottleView = ((PlaceholderViewHolder) holder).itemView.findViewById(R.id.news_placeholder_bottle);
+            View bottleView = ((PlaceholderViewHolder) holder).itemView.findViewById(R.id.news_items_placeholder_bottle);
             Animation animation = AnimationUtils.loadAnimation(bottleView.getContext(), R.anim.shake);
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override

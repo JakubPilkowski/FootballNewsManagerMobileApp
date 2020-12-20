@@ -41,8 +41,6 @@ public class ProposedTeamsViewModel extends BaseViewModel implements NewsRecycle
         Connection.get().proposedTeams(callback, token, currentPage);
     }
 
-
-
     private void initItemsView(ProposedTeamsResponse proposedTeamsResponse) {
         proposedTeamsAdapter = new ProposedTeamsAdapter();
         proposedTeamsAdapter.setItems(proposedTeamsResponse.getTeams());

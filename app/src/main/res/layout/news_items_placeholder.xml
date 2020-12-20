@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.footballnewsmanager.adapters.news.NewsAdapterPlaceholderViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="48dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Coś tu pusto"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="30sp"
+            android:textStyle="bold|italic" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="156dp"
+                android:layout_height="156dp"
+                android:background="@drawable/success_screen_background" />
+
+            <ImageView
+                android:id="@+id/news_items_placeholder_bottle"
+                android:layout_width="80dp"
+                android:layout_height="116dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_bottle" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nie ma już więcej newsów"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="20sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:onClick="@{()->viewModel.showTeamsFragment()}"
+            android:text="Dodaj drużyny" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Wróć na początek"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/news_arrow_background"
+            android:onClick="@{()->viewModel.backToFront()}"
+            android:padding="12dp"
+            android:src="@drawable/ic_arrow_up" />
+
+    </LinearLayout>
+</layout>
