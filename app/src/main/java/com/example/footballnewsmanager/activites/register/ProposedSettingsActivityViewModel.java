@@ -98,7 +98,7 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
             checkBackButtonEnabled();
             float translateValue = screenWidth * 19 / 50;
             ball.animate()
-                    .rotation(180 * item)
+                    .rotation(360 * item)
                     .translationX(translateValue * item).setDuration(400).start();
         }
     };
@@ -112,7 +112,7 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
         if (item == 1) {
             float translateValue = screenWidth * 19 / 50;
             ball.animate()
-                    .rotation(180 * 2)
+                    .rotation(360 * 2)
                     .translationX(translateValue * 2)
                     .setDuration(400)
                     .start();

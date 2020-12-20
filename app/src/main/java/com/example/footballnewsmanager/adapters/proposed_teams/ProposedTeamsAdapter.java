@@ -104,7 +104,7 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemViewType(int position) {
-        if(position == items.size() + 1) {
+        if(position == items.size()) {
             return isPlaceholder ? PLACEHOLDER : ITEM_LOADING;
         } else {
             return ITEM;
