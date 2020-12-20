@@ -32,20 +32,8 @@ import io.reactivex.rxjava3.core.Observer;
 
 public class ProposedSitesFragment extends BaseFragment<ProposedSitesFragmentBinding, ProposedSitesFragmentViewModel> implements Providers {
 
-
-    private List<Site> sites;
-
-//    public static ProposedSitesFragment newInstance(List<Site> sites) {
-//        ProposedSitesFragment proposedSitesFragment = new ProposedSitesFragment();
-//        proposedSitesFragment.setSites(sites);
-//        return proposedSitesFragment;
-//    }
     public static ProposedSitesFragment newInstance() {
         return new ProposedSitesFragment();
-    }
-
-    public void setSites(List<Site> sites) {
-        this.sites = sites;
     }
 
     @Override
@@ -62,30 +50,9 @@ public class ProposedSitesFragment extends BaseFragment<ProposedSitesFragmentBin
     public void bindData(ProposedSitesFragmentBinding binding) {
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
-//        viewModel.init(sites);
-        String token = UserPreferences.get().getAuthToken();
-        Connection.get().proposedSites(callback,
-                token
-                ,0);
+        viewModel.init();
     }
 
-
-    private Callback<ProposedSitesResponse> callback = new Callback<ProposedSitesResponse>() {
-        @Override
-        public void onSuccess(ProposedSitesResponse proposedSitesResponse) {
-            viewModel.init(proposedSitesResponse.getSites());
-        }
-
-        @Override
-        public void onSmthWrong(BaseError error) {
-
-        }
-
-        @Override
-        protected void subscribeActual(@NonNull Observer<? super ProposedSitesResponse> observer) {
-
-        }
-    };
 
 
     @Override

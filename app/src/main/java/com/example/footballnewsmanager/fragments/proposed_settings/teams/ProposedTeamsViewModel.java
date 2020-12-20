@@ -2,8 +2,8 @@ package com.example.footballnewsmanager.fragments.proposed_settings.teams;
 
 import android.util.Log;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.adapters.proposed_teams.ProposedTeamsAdapter;
@@ -16,10 +16,7 @@ import com.example.footballnewsmanager.databinding.ProposedTeamsFragmentBinding;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
-import com.example.footballnewsmanager.models.Team;
 import com.example.footballnewsmanager.models.UserNews;
-
-import java.util.List;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -27,24 +24,29 @@ import io.reactivex.rxjava3.core.Observer;
 public class ProposedTeamsViewModel extends BaseViewModel implements NewsRecyclerViewListener {
     // TODO: Implement the ViewModel
 
-    public ObservableField<RecyclerView.LayoutManager> layoutManager = new ObservableField<>();
     public ObservableField<RecyclerView.Adapter> recyclerViewAdapter = new ObservableField<>();
     public ObservableField<Runnable> postRunnable = new ObservableField<>();
+    public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
+    public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
+
 
     private RecyclerView recyclerView;
     private ProposedTeamsAdapter proposedTeamsAdapter;
     private boolean isLastPage = false;
     private int currentPage = 0;
-
-    public void init(List<Team> teams){
-
+    public void init(){
         recyclerView = ((ProposedTeamsFragmentBinding)getBinding()).proposedTeamsRecyclerView;
-        layoutManager.set(new LinearLayoutManager(getFragment().getContext()));
-        proposedTeamsAdapter = new ProposedTeamsAdapter();
-        proposedTeamsAdapter.setItems(teams);
-        proposedTeamsAdapter.setNewsRecyclerViewListener(this);
-        recyclerViewAdapter.set(proposedTeamsAdapter);
+        loadingVisibility.set(true);
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().proposedTeams(callback, token, currentPage);
+    }
 
+
+
+    private void initItemsView(ProposedTeamsResponse proposedTeamsResponse) {
+        proposedTeamsAdapter = new ProposedTeamsAdapter();
+        proposedTeamsAdapter.setItems(proposedTeamsResponse.getTeams());
+        proposedTeamsAdapter.setNewsRecyclerViewListener(this);
 
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
             @Override
@@ -66,19 +68,28 @@ public class ProposedTeamsViewModel extends BaseViewModel implements NewsRecycle
                 return proposedTeamsAdapter.isLoading;
             }
         };
-
         recyclerView.addOnScrollListener(scrollListener);
+        recyclerViewAdapter.set(proposedTeamsAdapter);
     }
 
 
     private Callback<ProposedTeamsResponse> callback = new Callback<ProposedTeamsResponse>() {
         @Override
         public void onSuccess(ProposedTeamsResponse proposedTeamsResponse) {
-            getActivity().runOnUiThread(() -> {
-                proposedTeamsAdapter.setItems(proposedTeamsResponse.getTeams());
-                isLastPage = proposedTeamsResponse.getPages() <= currentPage;
-                proposedTeamsAdapter.isLoading = false;
-            });
+            if (loadingVisibility.get()) {
+                loadingVisibility.set(false);
+                itemsVisibility.set(true);
+                getActivity().runOnUiThread(() -> {
+                    Log.d("News", "onSuccessFirst");
+                    initItemsView(proposedTeamsResponse);
+                });
+            } else {
+                getActivity().runOnUiThread(() -> {
+                    proposedTeamsAdapter.setItems(proposedTeamsResponse.getTeams());
+                    isLastPage = proposedTeamsResponse.getPages() <= currentPage;
+                    proposedTeamsAdapter.isLoading = false;
+                });
+            }
         }
 
         @Override

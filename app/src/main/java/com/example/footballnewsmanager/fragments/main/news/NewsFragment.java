@@ -79,32 +79,8 @@ public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragment
     public void bindData(NewsFragmentBinding binding) {
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
-        ProgressDialog.get().show();
-        String token = UserPreferences.get().getAuthToken();
-        Connection.get().news(callback, token, 0);
+        viewModel.init(badgeListener);
     }
-
-    private Callback<NewsResponse> callback = new Callback<NewsResponse>() {
-        @Override
-        public void onSuccess(NewsResponse newsResponse) {
-            ProgressDialog.get().dismiss();
-            viewModel.init(newsResponse, badgeListener);
-        }
-
-        @Override
-        public void onSmthWrong(BaseError error) {
-            ProgressDialog.get().dismiss();
-            getActivity().runOnUiThread(() -> {
-                        Toast.makeText(getContext(), error.getError(), Toast.LENGTH_LONG).show();
-                    }
-            );
-        }
-
-        @Override
-        protected void subscribeActual(@NonNull Observer<? super NewsResponse> observer) {
-            Log.d("News", "Fragment subscribeActual");
-        }
-    };
 
     @Override
     public int getBackPressType() {

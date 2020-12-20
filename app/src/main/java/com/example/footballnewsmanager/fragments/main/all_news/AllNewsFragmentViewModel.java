@@ -3,8 +3,12 @@ package com.example.footballnewsmanager.fragments.main.all_news;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,12 +17,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.search.SearchActivity;
 import com.example.footballnewsmanager.adapters.all_news.AllNewsAdapter;
+import com.example.footballnewsmanager.adapters.news.NewsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
+import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.AllNewsFragmentBinding;
+import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.UserPreferences;
@@ -35,80 +42,51 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements NewsRecyc
     public ObservableField<Runnable> postRunnable = new ObservableField<>();
     public ObservableField<SwipeRefreshLayout.OnRefreshListener> swipeRefreshListenerObservable = new ObservableField<>();
     public ObservableInt swipeRefreshColor = new ObservableInt(R.color.colorPrimary);
+    public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
+    public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
 
 
-    private boolean isLastPage = false;
+    private boolean isLastPage;
     private int currentPage = 0;
     private AllNewsAdapter newsAdapter;
     private RecyclerView recyclerView;
+    private BadgeListener badgeListener;
 
     // TODO: Implement the ViewModel
-    public void init(AllNewsResponse newsResponse, BadgeListener badgeListener) {
-
+    public void init(BadgeListener badgeListener) {
+        this.badgeListener = badgeListener;
         SearchView searchView = ((AllNewsFragmentBinding)getBinding()).allNewsSearchView;
-        searchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        searchView.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SearchActivity.class);
+            getActivity().startActivity(intent);
+        });
+
+        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
                 getActivity().startActivity(intent);
-                Log.d(AllNewsFragment.TAG, "onClick: ");
             }
         });
-
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(AllNewsFragment.TAG, "onSearchClick: ");
-            }
-        });
-
-        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-
-                Log.d(AllNewsFragment.TAG, "onFocusChange: " + hasFocus);
-                if(hasFocus) {
-                    Intent intent = new Intent(getActivity(), SearchActivity.class);
-                    getActivity().startActivity(intent);
-                }
-            }
-        });
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.d(AllNewsFragment.TAG, "onQueryTextSubmit: ");
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.d(AllNewsFragment.TAG, "onQueryTextChange: ");
-                return false;
-            }
-        });
-
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                Log.d(AllNewsFragment.TAG, "onClose: ");
-                return false;
-            }
-        });
-
         swipeRefreshListenerObservable.set(this::updateNews);
         recyclerView = ((AllNewsFragmentBinding) getBinding()).allNewsRecyclerView;
+        loadingVisibility.set(true);
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().allNews(callback, token, currentPage);
+    }
+
+
+    private void initItemsView(AllNewsResponse allNewsResponse) {
         newsAdapter = new AllNewsAdapter(getActivity());
         newsAdapter.setNewsRecyclerViewListener(this);
-        newsAdapter.setItems(newsResponse.getUserNews(), newsResponse.getAdditionalContent());
-        newsAdapter.setCountAll(newsResponse.getNewsCount());
+        newsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getAdditionalContent());
         newsAdapter.setBadgeListener(badgeListener);
-        newsAdapter.setCountToday(newsResponse.getNewsToday());
+        newsAdapter.setCountAll(allNewsResponse.getNewsCount());
+        newsAdapter.setCountToday(allNewsResponse.getNewsToday());
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
             @Override
             protected void loadMoreItems() {
-                Log.d("News", "loadMoreItems");
                 currentPage++;
+                Log.d("News", "loadMoreItems");
                 newsAdapter.isLoading = true;
                 String token = UserPreferences.get().getAuthToken();
                 Connection.get().allNews(callback, token, currentPage);
@@ -124,10 +102,10 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements NewsRecyc
                 return newsAdapter.isLoading;
             }
         };
-
         recyclerView.addOnScrollListener(scrollListener);
         adapterObservable.set(newsAdapter);
     }
+
 
 
     private Callback<AllNewsResponse> refreshCallback = new Callback<AllNewsResponse>() {
@@ -168,12 +146,20 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements NewsRecyc
     private Callback<AllNewsResponse> callback = new Callback<AllNewsResponse>() {
         @Override
         public void onSuccess(AllNewsResponse newsResponse) {
-            getActivity().runOnUiThread(() -> {
-                newsAdapter.setItems(newsResponse.getUserNews(), newsResponse.getAdditionalContent());
-                isLastPage = newsResponse.getPages() <= currentPage;
-                newsAdapter.isLoading = false;
 
-            });
+            if (loadingVisibility.get()) {
+                loadingVisibility.set(false);
+                itemsVisibility.set(true);
+                getActivity().runOnUiThread(() -> {
+                    initItemsView(newsResponse);
+                });
+            } else {
+                getActivity().runOnUiThread(() -> {
+                    newsAdapter.setItems(newsResponse.getUserNews(), newsResponse.getAdditionalContent());
+                    isLastPage = newsResponse.getPages() <= currentPage;
+                    newsAdapter.isLoading = false;
+                });
+            }
         }
 
         @Override

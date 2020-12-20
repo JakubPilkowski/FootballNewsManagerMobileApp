@@ -4,11 +4,16 @@ import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.adapters.search.SearchAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -16,6 +21,7 @@ import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ActivitySearchBinding;
+import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 
@@ -38,9 +44,9 @@ public class SearchActivityViewModel extends BaseViewModel {
 
     public ObservableField<SearchAdapter> searchAdapterObservable = new ObservableField<>();
     private SearchAdapter searchAdapter;
-
     public CompositeDisposable disposable = new CompositeDisposable();
-
+    public ObservableBoolean loadingVisibility = new ObservableBoolean(true);
+    public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
 
     public void init() {
         SearchView searchView = ((ActivitySearchBinding) getBinding()).searchActivitySearchView;
@@ -89,6 +95,8 @@ public class SearchActivityViewModel extends BaseViewModel {
 
                     @Override
                     public void onNext(@NonNull String newText) {
+                        itemsVisibility.set(false);
+                        loadingVisibility.set(true);
                         String token = UserPreferences.get().getAuthToken();
                         Connection.get().getQueryResults(callback, token, newText);
                     }
@@ -112,10 +120,15 @@ public class SearchActivityViewModel extends BaseViewModel {
     }
 
 
+
+
+
     private Callback<SearchResponse> callback = new Callback<SearchResponse>() {
         @Override
         public void onSuccess(SearchResponse searchResponse) {
             Log.d("Search", "success");
+            loadingVisibility.set(false);
+            itemsVisibility.set(true);
             getActivity().runOnUiThread(() -> searchAdapter.setItems(searchResponse.getResults()));
         }
 

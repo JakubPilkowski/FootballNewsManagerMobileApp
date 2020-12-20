@@ -1,7 +1,14 @@
 package com.example.footballnewsmanager.fragments.main.news;
 
+import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +39,10 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
     public ObservableField<Runnable> postRunnable = new ObservableField<>();
     public ObservableField<SwipeRefreshLayout.OnRefreshListener> swipeRefreshListenerObservable = new ObservableField<>();
     public ObservableInt swipeRefreshColor = new ObservableInt(R.color.colorPrimary);
+    public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
+    public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
+
+    private boolean isError = false;
 
     private boolean isLastPage;
     private int currentPage = 0;
@@ -39,13 +50,17 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
     private RecyclerView recyclerView;
     private BadgeListener badgeListener;
 
-    public void init(NewsResponse newsResponse, BadgeListener badgeListener) {
+    public void init(BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
-        Log.d("News", "getPages" + newsResponse.getPages());
-//        isLastPage = newsResponse.getPages()-1 == currentPage;
-        Log.d("News", "isLastPage" + isLastPage);
         swipeRefreshListenerObservable.set(this::updateNews);
         recyclerView = ((NewsFragmentBinding) getBinding()).newsRecyclerView;
+        loadingVisibility.set(true);
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().news(callback, token, currentPage);
+    }
+
+
+    private void initItemsView(NewsResponse newsResponse) {
         newsAdapter = new NewsAdapter(getActivity());
         newsAdapter.setNewsRecyclerViewListener(this);
         newsAdapter.setBadgeListener(badgeListener);
@@ -55,8 +70,8 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
             @Override
             protected void loadMoreItems() {
-                Log.d("News", "loadMoreItems");
                 currentPage++;
+                Log.d("News", "loadMoreItems");
                 newsAdapter.isLoading = true;
                 String token = UserPreferences.get().getAuthToken();
                 Connection.get().news(callback, token, currentPage);
@@ -72,7 +87,6 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
                 return newsAdapter.isLoading;
             }
         };
-
         recyclerView.addOnScrollListener(scrollListener);
         adapterObservable.set(newsAdapter);
     }
@@ -83,7 +97,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         public void onSuccess(NewsResponse newsResponse) {
             getActivity().runOnUiThread(() -> {
                 currentPage = 0;
-                isLastPage = newsResponse.getPages() - 1 == currentPage;
+                isLastPage = newsResponse.getPages() <= currentPage;
                 newsAdapter.isLoading = false;
                 newsAdapter.setCountAll(newsResponse.getNewsCount());
                 newsAdapter.setCountToday(newsResponse.getNewsToday());
@@ -114,15 +128,26 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
     private Callback<NewsResponse> callback = new Callback<NewsResponse>() {
         @Override
         public void onSuccess(NewsResponse newsResponse) {
-            getActivity().runOnUiThread(() -> {
-                newsAdapter.setItems(newsResponse.getUserNews());
-                isLastPage = newsResponse.getPages() <= currentPage;
-                newsAdapter.isLoading = false;
-            });
+            if (loadingVisibility.get()) {
+                loadingVisibility.set(false);
+//                loadingView.clearAnimation();
+                itemsVisibility.set(true);
+                getActivity().runOnUiThread(() -> {
+                    Log.d("News", "onSuccessFirst");
+                    initItemsView(newsResponse);
+                });
+            } else {
+                getActivity().runOnUiThread(() -> {
+                    newsAdapter.setItems(newsResponse.getUserNews());
+                    isLastPage = newsResponse.getPages() <= currentPage;
+                    newsAdapter.isLoading = false;
+                });
+            }
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
+            Log.d("News", "onError");
             isLastPage = true;
             newsAdapter.isLoading = false;
             postRunnable.set(placeHolderAttachRunnable);
@@ -149,7 +174,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         newsAdapter.onChange(oldNews, newNews);
     }
 
-    public void updateNews(){
+    public void updateNews() {
         String token = UserPreferences.get().getAuthToken();
         Connection.get().news(refreshCallback, token, 0);
     }
@@ -159,7 +184,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         updateNews();
     }
 
-    private Runnable placeHolderAttachRunnable = () ->{
+    private Runnable placeHolderAttachRunnable = () -> {
         newsAdapter.setPlaceholder(true);
         recyclerView.smoothScrollToPosition(newsAdapter.getItemCount() - 1);
     };

@@ -40,30 +40,8 @@ public class ProposedTeamsFragment extends BaseFragment<ProposedTeamsFragmentBin
     public void bindData(ProposedTeamsFragmentBinding binding) {
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
-        String token = UserPreferences.get().getAuthToken();
-        Connection.get().proposedTeams(callback,
-                token
-                ,0);
+        viewModel.init();
     }
-
-
-    private Callback<ProposedTeamsResponse> callback = new Callback<ProposedTeamsResponse>() {
-        @Override
-        public void onSuccess(ProposedTeamsResponse teamsResponse) {
-            viewModel.init(teamsResponse.getTeams());
-        }
-
-        @Override
-        public void onSmthWrong(BaseError error) {
-
-        }
-
-        @Override
-        protected void subscribeActual(@NonNull Observer<? super ProposedTeamsResponse> observer) {
-
-        }
-    };
-
 
     @Override
     public int getBackPressType() {

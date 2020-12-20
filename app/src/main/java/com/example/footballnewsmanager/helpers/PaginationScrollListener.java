@@ -1,5 +1,7 @@
 package com.example.footballnewsmanager.helpers;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,8 +21,7 @@ public abstract class PaginationScrollListener extends RecyclerView.OnScrollList
 
         if (!isLoading() && !isLastPage()) {
             if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                    && firstVisibleItemPosition >= 0
-                    && totalItemCount >= PAGE_SIZE) {
+                    && firstVisibleItemPosition >= 0) {
                 loadMoreItems();
             }
         }

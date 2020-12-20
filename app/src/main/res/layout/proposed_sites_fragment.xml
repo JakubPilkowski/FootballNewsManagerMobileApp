@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.footballnewsmanager.fragments.proposed_settings.sites.ProposedSitesFragmentViewModel" />
@@ -36,12 +38,24 @@
         android:textSize="20sp"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="@{viewModel.layoutManager}"
-        app:recyclerViewAdapter="@{viewModel.recyclerViewAdapter}"
-        />
+        android:layout_height="match_parent" >
+
+        <com.example.footballnewsmanager.helpers.LoadingView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE }"
+            app:recyclerViewAdapter="@{viewModel.recyclerViewAdapter}"
+            />
+    </RelativeLayout>
 
 </LinearLayout>
 </layout>

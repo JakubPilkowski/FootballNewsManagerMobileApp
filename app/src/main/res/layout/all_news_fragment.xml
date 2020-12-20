@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -31,14 +32,24 @@
             />
 
 
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/all_news_swipe_refresh"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:onSwipeRefreshListener="@{viewModel.swipeRefreshListenerObservable}"
-            app:setColorScheme="@{viewModel.swipeRefreshColor}"
-            >
+            android:layout_height="match_parent" >
+
+            <com.example.footballnewsmanager.helpers.LoadingView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}"
+                />
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/all_news_swipe_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE }"
+                app:onSwipeRefreshListener="@{viewModel.swipeRefreshListenerObservable}"
+                app:setColorScheme="@{viewModel.swipeRefreshColor}"
+                >
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/all_news_recycler_view"
                     android:layout_width="match_parent"
@@ -47,6 +58,8 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:postRunnable="@{viewModel.postRunnable}"
                     app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        </RelativeLayout>
     </LinearLayout>
 </layout>
