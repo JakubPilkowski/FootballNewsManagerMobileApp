@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
@@ -19,10 +18,9 @@ import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.requests.news.TeamsFromTagsRequest;
 import com.example.footballnewsmanager.api.responses.main.BaseNewsAdjustment;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
+import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.databinding.AdditionalInfoNewsBinding;
 import com.example.footballnewsmanager.databinding.AdditionalInfoTeamsBinding;
-import com.example.footballnewsmanager.fragments.proposed_settings.teams.ProposedTeamsFragment;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.models.NewsTag;
 import com.example.footballnewsmanager.models.Tag;
@@ -116,11 +114,11 @@ public class NewsAdditionalInfoViewModel {
         concernTeams.set("Dotyczy: ");
     }
 
-    private Callback<ProposedTeamsResponse> callback = new Callback<ProposedTeamsResponse>() {
+    private Callback<TeamsResponse> callback = new Callback<TeamsResponse>() {
         @Override
-        public void onSuccess(ProposedTeamsResponse proposedTeamsResponse) {
+        public void onSuccess(TeamsResponse teamsResponse) {
             AdditionalNewsAdapter additionalNewsAdapter = new AdditionalNewsAdapter();
-            additionalNewsAdapter.setItems(proposedTeamsResponse.getTeams());
+            additionalNewsAdapter.setItems(teamsResponse.getTeams());
             adapterObservable.set(additionalNewsAdapter);
         }
 
@@ -130,7 +128,7 @@ public class NewsAdditionalInfoViewModel {
         }
 
         @Override
-        protected void subscribeActual(@io.reactivex.rxjava3.annotations.NonNull Observer<? super ProposedTeamsResponse> observer) {
+        protected void subscribeActual(@io.reactivex.rxjava3.annotations.NonNull Observer<? super TeamsResponse> observer) {
 
         }
     };

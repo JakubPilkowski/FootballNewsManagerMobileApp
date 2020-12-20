@@ -13,6 +13,7 @@ import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
+import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
 
@@ -62,7 +63,7 @@ public interface Service {
     @GET("teams/hot")
     Observable<ProposedTeamsResponse> proposedTeams(
             @Header("Authorization") String token,
-            @Query("count") int count
+            @Query("page") int page
     );
 
     @GET("sites")
@@ -105,7 +106,7 @@ public interface Service {
     );
 
     @POST("teams/findByTags")
-    Observable<ProposedTeamsResponse> findByTags(
+    Observable<TeamsResponse> findByTags(
             @Header("Authorization") String token,
             @Body TeamsFromTagsRequest teamsFromTagsRequest
     );

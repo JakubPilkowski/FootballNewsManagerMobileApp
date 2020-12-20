@@ -1,7 +1,6 @@
 package com.example.footballnewsmanager.activites.register;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -24,17 +23,13 @@ import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsAndSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ActivityProposedSettingsBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
-import com.example.footballnewsmanager.fragments.proposed_settings.others.ProposedOthersFragment;
-import com.example.footballnewsmanager.fragments.proposed_settings.others.ProposedOthersViewModel;
 import com.example.footballnewsmanager.fragments.proposed_settings.sites.ProposedSitesFragment;
 import com.example.footballnewsmanager.fragments.proposed_settings.teams.ProposedTeamsFragment;
-import com.example.footballnewsmanager.helpers.LanguageHelper;
 import com.example.footballnewsmanager.helpers.ScreenHelper;
 import com.example.footballnewsmanager.helpers.SoundPoolManager;
 import com.example.footballnewsmanager.helpers.UserPreferences;
@@ -59,7 +54,6 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
     public ObservableField<ViewPager2.OnPageChangeCallback> onPageChangeCallbackObservable = new ObservableField<>();
     public ObservableBoolean userInputEnabled = new ObservableBoolean(false);
 
-
     public ViewPager2 viewPager2;
     public View ball;
     public int item;
@@ -68,26 +62,6 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
     private String token;
 
     private ProposedSettingsViewPagerAdapter proposedSettingsViewPagerAdapter;
-
-    private Callback<ProposedTeamsAndSitesResponse> callback = new Callback<ProposedTeamsAndSitesResponse>() {
-        @Override
-        public void onSuccess(ProposedTeamsAndSitesResponse proposedTeamsAndSitesResponse) {
-            Log.d("ProposedSettActivity", "success" + (ProgressDialog.get().isShowing()));
-            ProgressDialog.get().dismiss();
-        }
-
-        @Override
-        public void onSmthWrong(BaseError error) {
-            Log.d("ProposedSettActivity", "error" + ProgressDialog.get().isShowing());
-            Log.d("ProposedSettActivity", "error" + error.getError());
-            ProgressDialog.get().dismiss();
-        }
-
-        @Override
-        protected void subscribeActual(@NonNull Observer<? super ProposedTeamsAndSitesResponse> observer) {
-
-        }
-    };
 
     public void init() {
         item = 0;
@@ -124,7 +98,7 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
             checkBackButtonEnabled();
             float translateValue = screenWidth * 19 / 50;
             ball.animate()
-                    .rotation(180 * item)
+                    .rotation(360 * item)
                     .translationX(translateValue * item).setDuration(400).start();
         }
     };
@@ -138,7 +112,7 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
         if (item == 1) {
             float translateValue = screenWidth * 19 / 50;
             ball.animate()
-                    .rotation(180 * 2)
+                    .rotation(360 * 2)
                     .translationX(translateValue * 2)
                     .setDuration(400)
                     .start();

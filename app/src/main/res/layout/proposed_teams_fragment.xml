@@ -33,13 +33,16 @@
         android:text="Wybierz interesujące Cię drużyny z polecanych"
         android:textAlignment="center"
         android:textColor="@color/colorTextPrimary"
+        android:layout_marginBottom="6dp"
         android:textSize="20sp"
          />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/proposed_teams_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="@{viewModel.layoutManager}"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:postRunnable="@{viewModel.postRunnable}"
         app:recyclerViewAdapter="@{viewModel.recyclerViewAdapter}"
         />
 </LinearLayout>

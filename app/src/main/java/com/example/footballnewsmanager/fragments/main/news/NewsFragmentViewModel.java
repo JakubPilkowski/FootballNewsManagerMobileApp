@@ -33,7 +33,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
     public ObservableField<SwipeRefreshLayout.OnRefreshListener> swipeRefreshListenerObservable = new ObservableField<>();
     public ObservableInt swipeRefreshColor = new ObservableInt(R.color.colorPrimary);
 
-    private boolean isLastPage = false;
+    private boolean isLastPage;
     private int currentPage = 0;
     private NewsAdapter newsAdapter;
     private RecyclerView recyclerView;
@@ -41,6 +41,9 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
 
     public void init(NewsResponse newsResponse, BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
+        Log.d("News", "getPages" + newsResponse.getPages());
+//        isLastPage = newsResponse.getPages()-1 == currentPage;
+        Log.d("News", "isLastPage" + isLastPage);
         swipeRefreshListenerObservable.set(this::updateNews);
         recyclerView = ((NewsFragmentBinding) getBinding()).newsRecyclerView;
         newsAdapter = new NewsAdapter(getActivity());
@@ -80,7 +83,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         public void onSuccess(NewsResponse newsResponse) {
             getActivity().runOnUiThread(() -> {
                 currentPage = 0;
-                isLastPage = newsResponse.getPages() <= currentPage;
+                isLastPage = newsResponse.getPages() - 1 == currentPage;
                 newsAdapter.isLoading = false;
                 newsAdapter.setCountAll(newsResponse.getNewsCount());
                 newsAdapter.setCountToday(newsResponse.getNewsToday());

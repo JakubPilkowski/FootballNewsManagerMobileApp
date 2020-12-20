@@ -3,18 +3,14 @@ package com.example.footballnewsmanager.fragments.main.news_info;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
-import androidx.cardview.widget.CardView;
-import androidx.databinding.Observable;
 import androidx.databinding.ObservableField;
-import androidx.databinding.ObservableInt;
-import androidx.lifecycle.ViewModel;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.requests.news.TeamsFromTagsRequest;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
+import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.NewsInfoFragmentBinding;
 import com.example.footballnewsmanager.databinding.NewsInfoTeamLayoutBinding;
@@ -23,7 +19,6 @@ import com.example.footballnewsmanager.models.NewsTag;
 import com.example.footballnewsmanager.models.Tag;
 import com.example.footballnewsmanager.models.Team;
 import com.example.footballnewsmanager.models.UserNews;
-import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,12 +54,12 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
         Connection.get().findByTags(callback, token, request);
     }
 
-    private Callback<ProposedTeamsResponse> callback = new Callback<ProposedTeamsResponse>() {
+    private Callback<TeamsResponse> callback = new Callback<TeamsResponse>() {
         @Override
-        public void onSuccess(ProposedTeamsResponse proposedTeamsResponse) {
+        public void onSuccess(TeamsResponse teamsResponse) {
             getActivity().runOnUiThread(() -> {
                 LinearLayout layout = ((NewsInfoFragmentBinding) getBinding()).newsInfoLinearLayout;
-                for (Team team : proposedTeamsResponse.getTeams()) {
+                for (Team team : teamsResponse.getTeams()) {
                     LinearLayout cardView = (LinearLayout) LayoutInflater.from(getFragment().getContext()).inflate(R.layout.news_info_team_layout, layout, false);
                     NewsInfoTeamLayoutBinding binding = NewsInfoTeamLayoutBinding.bind(cardView);
                     NewsInfoTeamViewModel viewModel = new NewsInfoTeamViewModel();
@@ -81,7 +76,7 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
         }
 
         @Override
-        protected void subscribeActual(@NonNull Observer<? super ProposedTeamsResponse> observer) {
+        protected void subscribeActual(@NonNull Observer<? super TeamsResponse> observer) {
 
         }
     };

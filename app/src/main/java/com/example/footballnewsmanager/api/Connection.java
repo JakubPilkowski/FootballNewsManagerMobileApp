@@ -12,8 +12,8 @@ import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsAndSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
+import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
 
@@ -76,8 +76,8 @@ public class Connection {
         registerObservable.subscribe(callback);
     }
 
-    public void proposedTeams(Callback<ProposedTeamsResponse> callback, String token, int count) {
-        Observable<ProposedTeamsResponse> proposedTeamsObservable = client.getService().proposedTeams(token, count)
+    public void proposedTeams(Callback<ProposedTeamsResponse> callback, String token, int page) {
+        Observable<ProposedTeamsResponse> proposedTeamsObservable = client.getService().proposedTeams(token, page)
                 .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
         proposedTeamsObservable.subscribe(callback);
     }
@@ -86,15 +86,6 @@ public class Connection {
         Observable<ProposedSitesResponse> proposedSitesObservable = client.getService().proposedSites(token, page)
                 .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
         proposedSitesObservable.subscribe(callback);
-    }
-
-    public void proposedTeamsAndSites(Callback<ProposedTeamsAndSitesResponse> callback, String token, int teamsCount, int sitesPage) {
-        Observable<ProposedTeamsResponse> proposedTeamsObservable = client.getService().proposedTeams(token, teamsCount)
-                .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
-        Observable<ProposedSitesResponse> proposedSitesObservable = client.getService().proposedSites(token, sitesPage)
-                .subscribeOn(Schedulers.newThread()).observeOn(Schedulers.computation());
-        Observable<ProposedTeamsAndSitesResponse> combined = Observable.zip(proposedTeamsObservable, proposedSitesObservable, ProposedTeamsAndSitesResponse::new);
-        combined.subscribe(callback);
     }
 
     public void userSettingsResponse(Callback<ProposedUserResponse> callback, String token, UserSettingsRequest userSettingsRequest) {
@@ -125,8 +116,8 @@ public class Connection {
         toggleDislikeObservable.subscribe(callback);
     }
 
-    public void findByTags(Callback<ProposedTeamsResponse> callback, String token, TeamsFromTagsRequest request) {
-        Observable<ProposedTeamsResponse> teamsObservable = client.getService()
+    public void findByTags(Callback<TeamsResponse> callback, String token, TeamsFromTagsRequest request) {
+        Observable<TeamsResponse> teamsObservable = client.getService()
                 .findByTags(token, request).subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation());
         teamsObservable.subscribe(callback);

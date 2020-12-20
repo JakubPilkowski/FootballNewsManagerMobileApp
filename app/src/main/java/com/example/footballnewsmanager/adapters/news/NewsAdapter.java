@@ -37,6 +37,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final static int ITEM_HIGHLIGHTED = 2;
     private final static int ITEM_LOADING = 3;
     private final static int PLACEHOLDER = 4;
+
     public boolean isLoading = false;
     public boolean isPlaceholder = false;
     private NewsRecyclerViewListener newsRecyclerViewListener;
@@ -102,7 +103,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return new NewsHighlightedViewHolder(view, allNewsHighlightedLayoutBinding);
             }
             case ITEM_LOADING: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_progress_view, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_progress_view, parent, false);
                 return new ProgressViewHolder(view);
             }
             case PLACEHOLDER: {
@@ -212,13 +213,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int index = items.indexOf(oldNews);
         items.set(index, newNews);
         viewModels.get(index).update(newNews);
-    }
-
-    public void refresh(AllNewsResponse userNews) {
-        items.clear();
-        viewModels.clear();
-        notifyItemRangeRemoved(0, items.size()+2);
-        setItems(userNews.getUserNews());
     }
 
     public class NewsHeaderViewHolder extends RecyclerView.ViewHolder {
