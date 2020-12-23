@@ -1,11 +1,13 @@
 package com.example.footballnewsmanager.fragments.main.news_info;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamViewModel;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -64,7 +66,7 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
                     NewsInfoTeamLayoutBinding binding = NewsInfoTeamLayoutBinding.bind(cardView);
                     NewsInfoTeamViewModel viewModel = new NewsInfoTeamViewModel();
                     binding.setViewModel(viewModel);
-                    viewModel.init(team);
+                    viewModel.init(team, getActivity());
                     layout.addView(cardView);
                 }
             });

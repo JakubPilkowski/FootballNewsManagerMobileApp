@@ -1,4 +1,4 @@
-package com.example.footballnewsmanager.adapters.news;
+package com.example.footballnewsmanager.adapters.news.newsForTeam;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -13,10 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamViewModel;
+import com.example.footballnewsmanager.adapters.news.NewsAdapterViewModel;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
-import com.example.footballnewsmanager.databinding.NewsHeaderLayoutBinding;
+import com.example.footballnewsmanager.databinding.NewsForTeamHeaderBinding;
+import com.example.footballnewsmanager.databinding.NewsForTeamItemLayoutBinding;
 import com.example.footballnewsmanager.databinding.NewsHighlightedLayoutBinding;
-import com.example.footballnewsmanager.databinding.NewsItemsPlaceholderBinding;
 import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
@@ -25,25 +27,22 @@ import com.example.footballnewsmanager.models.UserNews;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity activity;
     private List<UserNews> items = new ArrayList<>();
-    private List<NewsAdapterViewModel> viewModels = new ArrayList<>();
+    private List<NewsForTeamAdapterViewModel> viewModels = new ArrayList<>();
 
     private final static int HEADER = 0;
     private final static int ITEM = 1;
-    private final static int ITEM_HIGHLIGHTED = 2;
-    private final static int ITEM_LOADING = 3;
-    private final static int PLACEHOLDER = 4;
+    private final static int ITEM_LOADING = 2;
+    private final static int PLACEHOLDER = 3;
 
     public boolean isLoading = false;
     public boolean isPlaceholder = false;
     private NewsRecyclerViewListener newsRecyclerViewListener;
-    private BadgeListener badgeListener;
     private Long countAll;
     private Long countToday;
-    private Long id;
     private String name;
     private String img;
 
@@ -55,6 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void setPlaceholder(boolean placeholder) {
+        Log.d(NewsForTeamViewModel.TAG, "setPlaceholder: ");
         isPlaceholder = placeholder;
         notifyDataSetChanged();
     }
@@ -70,16 +70,12 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void refresh(NewsResponse userNews) {
         items.clear();
         viewModels.clear();
-        notifyItemRangeRemoved(0, items.size()+2);
+        notifyItemRangeRemoved(0, items.size() + 2);
         setItems(userNews.getUserNews());
     }
 
-    public void setBadgeListener(BadgeListener badgeListener) {
-        this.badgeListener = badgeListener;
-    }
 
-
-    public NewsAdapter(Activity activity) {
+    public NewsForTeamAdapter(Activity activity) {
         this.activity = activity;
     }
 
@@ -90,19 +86,14 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         View view;
         switch (viewType) {
             case HEADER: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_header_layout, parent, false);
-                NewsHeaderLayoutBinding newsHeaderLayoutBinding = NewsHeaderLayoutBinding.bind(view);
-                return new NewsHeaderViewHolder(view, newsHeaderLayoutBinding);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_for_team_header, parent, false);
+                NewsForTeamHeaderBinding newsForTeamHeaderBinding = NewsForTeamHeaderBinding.bind(view);
+                return new NewsHeaderViewHolder(view, newsForTeamHeaderBinding);
             }
             case ITEM: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_layout, parent, false);
-                NewsLayoutBinding allNewsLayoutBinding = NewsLayoutBinding.bind(view);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_for_team_item_layout, parent, false);
+                NewsForTeamItemLayoutBinding allNewsLayoutBinding = NewsForTeamItemLayoutBinding.bind(view);
                 return new NewsViewHolder(view, allNewsLayoutBinding);
-            }
-            case ITEM_HIGHLIGHTED: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_highlighted_layout, parent, false);
-                NewsHighlightedLayoutBinding allNewsHighlightedLayoutBinding = NewsHighlightedLayoutBinding.bind(view);
-                return new NewsHighlightedViewHolder(view, allNewsHighlightedLayoutBinding);
             }
             case ITEM_LOADING: {
                 Log.d("News", "onCreateViewHolder IsLoading");
@@ -111,13 +102,12 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
             case PLACEHOLDER: {
                 Log.d("News", "onCreateViewHolder Placeholder");
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_items_placeholder, parent, false);
-                NewsItemsPlaceholderBinding newsPlaceholderBinding = NewsItemsPlaceholderBinding.bind(view);
-                return new PlaceholderViewHolder(view, newsPlaceholderBinding);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_for_team_placeholder, parent, false);
+                return new PlaceholderViewHolder(view);
             }
             default:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_layout, parent, false);
-                NewsLayoutBinding allNewsLayoutBinding = NewsLayoutBinding.bind(view);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_for_team_item_layout, parent, false);
+                NewsForTeamItemLayoutBinding allNewsLayoutBinding = NewsForTeamItemLayoutBinding.bind(view);
                 return new NewsViewHolder(view, allNewsLayoutBinding);
         }
     }
@@ -127,7 +117,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (position == items.size() + 1 && !isPlaceholder)
             return;
         else if (position == items.size() + 1 && isPlaceholder) {
-            View bottleView = ((PlaceholderViewHolder) holder).itemView.findViewById(R.id.news_items_placeholder_bottle);
+            View bottleView = ((PlaceholderViewHolder) holder).itemView.findViewById(R.id.news_for_team_placeholder_bottle);
             Animation animation = AnimationUtils.loadAnimation(bottleView.getContext(), R.anim.shake);
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -147,36 +137,35 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
             bottleView.startAnimation(animation);
-            NewsAdapterPlaceholderViewModel viewModel = new NewsAdapterPlaceholderViewModel();
-            viewModel.init(activity, newsRecyclerViewListener);
-            NewsItemsPlaceholderBinding binding = ((PlaceholderViewHolder) holder).binding;
-            binding.setViewModel(viewModel);
             return;
         } else if (position == 0) {
-            NewsHeaderAdapterViewModel viewModel = new NewsHeaderAdapterViewModel();
-            viewModel.init(countAll, countToday, newsRecyclerViewListener);
-            NewsHeaderLayoutBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
+            NewsForTeamHeaderAdapterViewModel viewModel = new NewsForTeamHeaderAdapterViewModel();
+            viewModel.init(name, img, countAll, countToday);
+            NewsForTeamHeaderBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
             return;
-        }
-        else{
-            NewsAdapterViewModel viewModel;
+        } else {
+            NewsForTeamAdapterViewModel viewModel;
             int itemsPosition = position - 1;
             if (viewModels.size() <= itemsPosition) {
-                viewModel = new NewsAdapterViewModel();
+                viewModel = new NewsForTeamAdapterViewModel();
                 viewModels.add(viewModel);
             } else {
                 viewModel = viewModels.get(itemsPosition);
             }
-            if (items.get(itemsPosition).getNews().isHighlighted()) {
-                viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener, badgeListener);
-                NewsHighlightedLayoutBinding binding = ((NewsHighlightedViewHolder) holder).getBinding();
-                binding.setViewModel(viewModel);
-            } else {
-                viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener, badgeListener);
-                NewsLayoutBinding binding = ((NewsViewHolder) holder).getBinding();
-                binding.setViewModel(viewModel);
-            }
+            viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener);
+            NewsForTeamItemLayoutBinding binding = ((NewsViewHolder) holder).getBinding();
+            binding.setViewModel(viewModel);
+//
+//            if (items.get(itemsPosition).getNews().isHighlighted()) {
+//                viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener, badgeListener);
+//                NewsHighlightedLayoutBinding binding = ((NewsHighlightedViewHolder) holder).getBinding();
+//                binding.setViewModel(viewModel);
+//            } else {
+//                viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener, badgeListener);
+//                NewsLayoutBinding binding = ((NewsViewHolder) holder).getBinding();
+//                binding.setViewModel(viewModel);
+//            }
         }
 
     }
@@ -193,8 +182,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         else if (position == items.size() + 1) {
             return isPlaceholder ? PLACEHOLDER : ITEM_LOADING;
         } else {
-            UserNews news = items.get(position - 1);
-            return news.getNews().isHighlighted() ? ITEM_HIGHLIGHTED : ITEM;
+            return ITEM;
         }
     }
 
@@ -218,53 +206,39 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         viewModels.get(index).update(newNews);
     }
 
-    public void setHeaderItems(Long id, String name, String img) {
-        this.id = id;
+    public void setHeaderItems(String name, String img) {
         this.name = name;
         this.img = img;
     }
 
     public class NewsHeaderViewHolder extends RecyclerView.ViewHolder {
 
-        NewsHeaderLayoutBinding binding;
+        NewsForTeamHeaderBinding binding;
 
-        public NewsHeaderViewHolder(@NonNull View itemView, NewsHeaderLayoutBinding binding) {
+        public NewsHeaderViewHolder(@NonNull View itemView, NewsForTeamHeaderBinding binding) {
             super(itemView);
             this.binding = binding;
         }
 
-        public NewsHeaderLayoutBinding getBinding() {
+        public NewsForTeamHeaderBinding getBinding() {
             return binding;
         }
     }
 
     public class NewsViewHolder extends RecyclerView.ViewHolder {
 
-        NewsLayoutBinding binding;
+        NewsForTeamItemLayoutBinding binding;
 
-        public NewsViewHolder(@NonNull View itemView, NewsLayoutBinding binding) {
+        public NewsViewHolder(@NonNull View itemView, NewsForTeamItemLayoutBinding binding) {
             super(itemView);
             this.binding = binding;
         }
 
-        public NewsLayoutBinding getBinding() {
+        public NewsForTeamItemLayoutBinding getBinding() {
             return binding;
         }
     }
 
-    public class NewsHighlightedViewHolder extends RecyclerView.ViewHolder {
-
-        NewsHighlightedLayoutBinding binding;
-
-        public NewsHighlightedViewHolder(@NonNull View itemView, NewsHighlightedLayoutBinding binding) {
-            super(itemView);
-            this.binding = binding;
-        }
-
-        public NewsHighlightedLayoutBinding getBinding() {
-            return binding;
-        }
-    }
 
     public class ProgressViewHolder extends RecyclerView.ViewHolder {
 
@@ -275,12 +249,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class PlaceholderViewHolder extends RecyclerView.ViewHolder {
 
-        NewsItemsPlaceholderBinding binding;
-
-        public PlaceholderViewHolder(@NonNull View itemView, NewsItemsPlaceholderBinding binding) {
+        public PlaceholderViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.binding = binding;
         }
-
     }
 }

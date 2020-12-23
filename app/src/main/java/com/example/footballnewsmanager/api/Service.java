@@ -84,6 +84,13 @@ public interface Service {
             @Query("page") int page
     );
 
+    @GET("news/team={tid}")
+    Observable<NewsResponse> getNewsForTeam(
+            @Header("Authorization") String token,
+            @Path("tid") Long teamId,
+            @Query("page") int page
+    );
+
     @GET("news/all")
     Observable<AllNewsResponse> getAllNews(
             @Header("Authorization") String token,

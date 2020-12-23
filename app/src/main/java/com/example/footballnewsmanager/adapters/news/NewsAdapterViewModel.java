@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
-import android.view.View;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -47,6 +46,7 @@ public class NewsAdapterViewModel {
     private NewsRecyclerViewListener listener;
     private BadgeListener badgeListener;
 
+
     public void init(UserNews news, Activity activity, NewsRecyclerViewListener listener, BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
         this.activity = activity;
@@ -66,7 +66,7 @@ public class NewsAdapterViewModel {
         isBadgeVisited.set(!news.isBadged() ? R.drawable.not_visited : R.drawable.visited);
         heartDrawable.set(news.isLiked() ? R.drawable.heart_with_ripple : R.drawable.heart_empty_with_ripple);
 
-        title.set(newsDetails.getTitle().length() > 40 ? newsDetails.getTitle().substring(0,37)+"..." : newsDetails.getTitle());
+        title.set(newsDetails.getTitle().length() > 40 ? newsDetails.getTitle().substring(0, 37) + "..." : newsDetails.getTitle());
         imageUrl.set(newsDetails.getImageUrl());
         date.set("Dodano: " + newsDetails.getDate());
         siteLogo.set(newsDetails.getSite().getLogoUrl());
@@ -111,7 +111,7 @@ public class NewsAdapterViewModel {
             });
             if (!newsResponse.message.equals("Odwiedzono wiadomość"))
                 likesToggle();
-            else{
+            else {
                 badgeListener.onBadgeChange();
             }
         }

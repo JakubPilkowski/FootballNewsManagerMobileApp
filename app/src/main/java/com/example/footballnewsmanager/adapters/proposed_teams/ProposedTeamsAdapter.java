@@ -1,27 +1,16 @@
 package com.example.footballnewsmanager.adapters.proposed_teams;
 
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.adapters.news.NewsAdapter;
-import com.example.footballnewsmanager.adapters.news.NewsAdapterPlaceholderViewModel;
-import com.example.footballnewsmanager.base.BaseViewHolder;
-import com.example.footballnewsmanager.databinding.NewsHighlightedLayoutBinding;
-import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
-import com.example.footballnewsmanager.databinding.NewsPlaceholderBinding;
 import com.example.footballnewsmanager.databinding.ProposedTeamLayoutBinding;
 import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
 import com.example.footballnewsmanager.models.Team;
-import com.example.footballnewsmanager.models.UserNews;
 
 import java.util.ArrayList;
 import java.util.List;
