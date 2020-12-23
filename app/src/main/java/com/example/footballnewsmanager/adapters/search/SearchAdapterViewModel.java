@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
+import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -49,7 +50,11 @@ public class SearchAdapterViewModel {
             activity.startActivity(intent);
         }
         else {
-            //open news for team activity
+            Intent intent = new Intent(activity, NewsForTeamActivity.class);
+            intent.putExtra("id", Long.parseLong(searchResult.getId()));
+            intent.putExtra("name", searchResult.getName());
+            intent.putExtra("img", searchResult.getImgUrl());
+            activity.startActivity(intent);
         }
     }
 

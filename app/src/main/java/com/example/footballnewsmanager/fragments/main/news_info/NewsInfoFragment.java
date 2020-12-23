@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,12 @@ public class NewsInfoFragment extends BaseFragment<NewsInfoFragmentBinding, News
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
         viewModel.init(news);
+    }
+
+    @Override
+    public void onResume() {
+        Log.d("NewsForTeam", "onResume: ");
+        super.onResume();
     }
 
     @Override

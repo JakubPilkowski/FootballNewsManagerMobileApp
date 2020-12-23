@@ -158,6 +158,15 @@ public class Connection {
         newsObservable.subscribe(callback);
     }
 
+
+    public void newsForTeam(Callback<NewsResponse> callback, String token, Long teamId, int page){
+        Observable<NewsResponse> newsForTeamObservable = client.getService()
+                .getNewsForTeam(token, teamId, page).subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        newsForTeamObservable.subscribe(callback);
+    }
+
+
     public void getQueryResults(Callback<SearchResponse> callback, String token, String query) {
         Observable<SearchResponse> searchObservable = client.getService()
                 .getQueryResults(token, query)

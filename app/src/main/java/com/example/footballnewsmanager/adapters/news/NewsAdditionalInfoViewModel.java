@@ -104,13 +104,6 @@ public class NewsAdditionalInfoViewModel {
             }
         });
 
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append("Dotyczy: ");
-//        for (NewsTag tag : newsExtras.getUserNews().getTags()) {
-//            stringBuilder.append(tag.getTag().getName());
-//            if (newsExtras.getUserNews().getTags().indexOf(tag) + 1 != newsExtras.getUserNews().getTags().size())
-//                stringBuilder.append(", ");
-//        }
         concernTeams.set("Dotyczy: ");
     }
 

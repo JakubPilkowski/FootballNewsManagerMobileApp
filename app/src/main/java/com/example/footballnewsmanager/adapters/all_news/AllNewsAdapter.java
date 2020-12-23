@@ -23,8 +23,8 @@ import com.example.footballnewsmanager.databinding.AdditionalInfoNewsBinding;
 import com.example.footballnewsmanager.databinding.AdditionalInfoTeamsBinding;
 import com.example.footballnewsmanager.databinding.AllNewsHeaderBinding;
 import com.example.footballnewsmanager.databinding.NewsHighlightedLayoutBinding;
+import com.example.footballnewsmanager.databinding.NewsItemsPlaceholderBinding;
 import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
-import com.example.footballnewsmanager.databinding.NewsPlaceholderBinding;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
 import com.example.footballnewsmanager.models.UserNews;
@@ -106,7 +106,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case PLACEHOLDER: {
                 Log.d("News", "onCreateViewHolder Placeholder");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_items_placeholder, parent, false);
-                NewsPlaceholderBinding newsPlaceholderBinding = NewsPlaceholderBinding.bind(view);
+                NewsItemsPlaceholderBinding newsPlaceholderBinding = NewsItemsPlaceholderBinding.bind(view);
                 return new PlaceholderViewHolder(view, newsPlaceholderBinding);
             }
             default:
@@ -143,7 +143,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             bottleView.startAnimation(animation);
             NewsAdapterPlaceholderViewModel viewModel = new NewsAdapterPlaceholderViewModel();
             viewModel.init(activity, newsRecyclerViewListener);
-            NewsPlaceholderBinding binding = ((PlaceholderViewHolder) holder).binding;
+            NewsItemsPlaceholderBinding binding = ((PlaceholderViewHolder) holder).binding;
             binding.setViewModel(viewModel);
             return;
         } else if (position == 0) {
@@ -356,9 +356,9 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public class PlaceholderViewHolder extends RecyclerView.ViewHolder {
 
-        NewsPlaceholderBinding binding;
+        NewsItemsPlaceholderBinding binding;
 
-        public PlaceholderViewHolder(@NonNull View itemView, NewsPlaceholderBinding binding) {
+        public PlaceholderViewHolder(@NonNull View itemView, NewsItemsPlaceholderBinding binding) {
             super(itemView);
             this.binding = binding;
         }
