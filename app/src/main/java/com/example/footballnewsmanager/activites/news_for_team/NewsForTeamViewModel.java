@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.adapters.news.NewsAdapter;
 import com.example.footballnewsmanager.adapters.news.newsForTeam.NewsForTeamAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -22,7 +21,6 @@ import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
 import com.example.footballnewsmanager.models.UserNews;
 

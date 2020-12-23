@@ -1,40 +1,17 @@
 package com.example.footballnewsmanager.fragments.main.news;
 
 import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
-import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.main.MainActivity;
-import com.example.footballnewsmanager.api.Callback;
-import com.example.footballnewsmanager.api.Connection;
-import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.responses.main.BaseNewsAdjustment;
-import com.example.footballnewsmanager.api.responses.main.NewsExtras;
-import com.example.footballnewsmanager.api.responses.main.NewsResponse;
-import com.example.footballnewsmanager.api.responses.main.TeamExtras;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.Navigator;
-import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.Providers;
-import com.google.gson.Gson;
-
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
 
 public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragmentViewModel> implements Providers {
 

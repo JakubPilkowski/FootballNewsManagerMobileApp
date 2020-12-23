@@ -1,12 +1,6 @@
 package com.example.footballnewsmanager.fragments.main.news;
 
-import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;

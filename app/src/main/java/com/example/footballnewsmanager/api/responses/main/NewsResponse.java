@@ -4,7 +4,7 @@ import com.example.footballnewsmanager.models.UserNews;
 
 import java.util.List;
 
-public class NewsResponse{
+public class NewsResponse {
 
     private List<UserNews> userNews;
     private Long newsCount;

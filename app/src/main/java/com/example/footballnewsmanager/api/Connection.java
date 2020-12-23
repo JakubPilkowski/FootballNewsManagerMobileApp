@@ -16,6 +16,7 @@ import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsRespo
 import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
+import com.example.footballnewsmanager.api.responses.sites.SitesResponse;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -173,6 +174,15 @@ public class Connection {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation());
         searchObservable
+                .subscribe(callback);
+    }
+
+    public void getSites(Callback<SitesResponse> callback, String token, int page){
+        Observable<SitesResponse> sitesObservable = client.getService()
+                .getSites(token, page)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        sitesObservable
                 .subscribe(callback);
     }
 }
