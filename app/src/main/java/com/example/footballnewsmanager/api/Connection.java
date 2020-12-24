@@ -197,4 +197,12 @@ public class Connection {
                 .observeOn(Schedulers.computation());
         userProfileObservable.subscribe(callback);
     }
+
+    public void deleteAccount(Callback<BaseResponse> callback, String token) {
+        Observable<BaseResponse> accountObservable = client.getService()
+                .deleteAccount(token)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        accountObservable.subscribe(callback);
+    }
 }

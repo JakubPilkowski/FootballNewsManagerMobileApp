@@ -23,6 +23,7 @@ import com.example.footballnewsmanager.api.responses.sites.SitesResponse;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -158,6 +159,11 @@ public interface Service {
 
     @GET("users/me")
     Observable<UserProfileResponse> getUserProfile(
+            @Header("Authorization") String token
+    );
+
+    @DELETE("users/me")
+    Observable<BaseResponse> deleteAccount(
             @Header("Authorization") String token
     );
 }

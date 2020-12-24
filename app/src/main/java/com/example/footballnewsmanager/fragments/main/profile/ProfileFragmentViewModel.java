@@ -1,34 +1,24 @@
 package com.example.footballnewsmanager.fragments.main.profile;
 
-import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Switch;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
-import androidx.databinding.ObservableInt;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
-import androidx.lifecycle.ViewModel;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
-import com.example.footballnewsmanager.adapters.sites.SitesAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse;
-import com.example.footballnewsmanager.api.responses.sites.SitesResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
-import com.example.footballnewsmanager.databinding.ProfileFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.ProposedLanguageDialogManager;
 import com.example.footballnewsmanager.helpers.UserPreferences;
@@ -63,7 +53,7 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
 
     public void initItemsView(UserProfileResponse userProfileResponse){
         name.set(userProfileResponse.getUser().getUsername());
-        date.set("Od : " +userProfileResponse.getUser().getAddedDate().split("T")[0]);
+        date.set("Konto od : " +userProfileResponse.getUser().getAddedDate().split("T")[0]);
         proposedNews.set(userProfileResponse.getUser().isProposedNews());
         currentLanguage.set(String.valueOf(userProfileResponse.getUser().getLanguage()));
         languageDrawable.set(getActivity().getDrawable(R.drawable.ic_poland_small));
@@ -134,14 +124,19 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
         }
     };
 
-    public void onClick() {
-
+    public void onLogoutClick() {
         ProgressDialog.get().show();
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().logout(logoutCallback, token);
+        Connection.get().logout(accountCallback, token);
     }
 
-    private Callback<BaseResponse> logoutCallback = new Callback<BaseResponse>() {
+    public void onDeleteAccountClick(){
+        ProgressDialog.get().show();
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().deleteAccount(accountCallback, token);
+    }
+
+    private Callback<BaseResponse> accountCallback = new Callback<BaseResponse>() {
         @Override
         public void onSuccess(BaseResponse baseResponse) {
             ProgressDialog.get().dismiss();
@@ -162,4 +157,5 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
 
         }
     };
+
 }
