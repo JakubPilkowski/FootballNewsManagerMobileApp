@@ -1,5 +1,7 @@
 package com.example.footballnewsmanager.api;
 
+import androidx.databinding.ObservableField;
+
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
@@ -11,6 +13,7 @@ import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
+import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
@@ -138,7 +141,7 @@ public interface Service {
 
     @GET("news/markAllAsVisited")
     Observable<BaseResponse> markAllAsVisited(
-        @Header("Authorization") String token
+            @Header("Authorization") String token
     );
 
     @GET("news/query={query}")
@@ -149,7 +152,12 @@ public interface Service {
 
     @GET("sites")
     Observable<SitesResponse> getSites(
-        @Header("Authorization") String token,
-        @Query("page") int page
+            @Header("Authorization") String token,
+            @Query("page") int page
+    );
+
+    @GET("users/me")
+    Observable<UserProfileResponse> getUserProfile(
+            @Header("Authorization") String token
     );
 }

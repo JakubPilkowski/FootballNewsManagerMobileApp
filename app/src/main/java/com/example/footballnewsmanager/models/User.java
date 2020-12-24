@@ -36,4 +36,8 @@ public class User {
     public boolean isProposedNews() {
         return proposedNews;
     }
+
+    public String getAddedDate() {
+        return addedDate;
+    }
 }

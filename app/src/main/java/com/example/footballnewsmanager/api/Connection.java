@@ -1,5 +1,7 @@
 package com.example.footballnewsmanager.api;
 
+import android.telecom.Call;
+
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
@@ -11,6 +13,7 @@ import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
+import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
@@ -184,5 +187,14 @@ public class Connection {
                 .observeOn(Schedulers.computation());
         sitesObservable
                 .subscribe(callback);
+    }
+
+    public void getUserProfile(Callback<UserProfileResponse> callback, String token)
+    {
+        Observable<UserProfileResponse> userProfileObservable = client.getService()
+                .getUserProfile(token)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        userProfileObservable.subscribe(callback);
     }
 }

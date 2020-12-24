@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -15,51 +16,57 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".fragments.main.all_news.AllNewsFragment"
-        >
-
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        tools:context=".fragments.main.all_news.AllNewsFragment">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/all_news_search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/search_background"
+            app:closeIcon="@drawable/ic_close"
             app:iconifiedByDefault="false"
             app:queryHint="Szukaj drużyn lub newsów"
-            app:searchIcon="@drawable/ic_search_black_24dp"
-            app:closeIcon="@drawable/ic_close"
-            />
+            app:searchIcon="@drawable/ic_search_black_24dp" />
 
-
-        <RelativeLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp">
 
-            <com.example.footballnewsmanager.helpers.LoadingView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}"
-                />
+                android:layout_height="match_parent">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/all_news_swipe_refresh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE }"
-                app:onSwipeRefreshListener="@{viewModel.swipeRefreshListenerObservable}"
-                app:setColorScheme="@{viewModel.swipeRefreshColor}"
-                >
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/all_news_recycler_view"
+                <com.example.footballnewsmanager.helpers.LoadingView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:overScrollMode="never"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:postRunnable="@{viewModel.postRunnable}"
-                    app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
 
-        </RelativeLayout>
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/all_news_swipe_refresh"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE }"
+                    app:onSwipeRefreshListener="@{viewModel.swipeRefreshListenerObservable}"
+                    app:setColorScheme="@{viewModel.swipeRefreshColor}">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/all_news_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:overScrollMode="never"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:postRunnable="@{viewModel.postRunnable}"
+                        app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </layout>

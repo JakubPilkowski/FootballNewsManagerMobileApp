@@ -1,29 +1,138 @@
 package com.example.footballnewsmanager.fragments.main.profile;
 
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.Switch;
 
+import androidx.databinding.ObservableBoolean;
+import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.lifecycle.ViewModel;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
+import com.example.footballnewsmanager.adapters.sites.SitesAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
+import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse;
+import com.example.footballnewsmanager.api.responses.sites.SitesResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
+import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
+import com.example.footballnewsmanager.databinding.ProfileFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.helpers.ProposedLanguageDialogManager;
 import com.example.footballnewsmanager.helpers.UserPreferences;
+import com.example.footballnewsmanager.interfaces.ProposedLanguageListener;
+import com.example.footballnewsmanager.models.LanguageField;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
-public class ProfileFragmentViewModel extends BaseViewModel {
+public class ProfileFragmentViewModel extends BaseViewModel implements ProposedLanguageListener {
     // TODO: Implement the ViewModel
 
-    public void init(){
+    public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
+    public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
+    public ObservableField<String> name = new ObservableField<>();
+    public ObservableField<String> date = new ObservableField<>();
+    public ObservableField<String> likes = new ObservableField<>("0");
+    public ObservableField<String> teamsCount = new ObservableField<>("0");
+    public ObservableBoolean proposedNews = new ObservableBoolean();
+    public ObservableField<Switch.OnCheckedChangeListener> proposedNewsChangeListenerAdapter = new ObservableField<>();
+    public ObservableField<String> currentLanguage = new ObservableField<>("Polski");
+    public ObservableField<Drawable> languageDrawable = new ObservableField<>();
+
+    private Switch.OnCheckedChangeListener proposedNewsChangeListener = (buttonView, isChecked) -> proposedNews.set(isChecked);
+
+    public void init() {
+        loadingVisibility.set(true);
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().getUserProfile(callback, token);
+        proposedNewsChangeListenerAdapter.set(proposedNewsChangeListener);
+    }
+
+    public void initItemsView(UserProfileResponse userProfileResponse){
+        name.set(userProfileResponse.getUser().getUsername());
+        date.set("Od : " +userProfileResponse.getUser().getAddedDate().split("T")[0]);
+        proposedNews.set(userProfileResponse.getUser().isProposedNews());
+        currentLanguage.set(String.valueOf(userProfileResponse.getUser().getLanguage()));
+        languageDrawable.set(getActivity().getDrawable(R.drawable.ic_poland_small));
+        initValuesAnimation(userProfileResponse.getLikes().intValue(), userProfileResponse.getUser().getFavouriteTeams().size());
+    }
+
+    private void initValuesAnimation(int likesCount, int teams) {
+        ValueAnimator likesAnimator = ValueAnimator.ofInt(0, likesCount);
+        likesAnimator.setDuration(1000);
+        likesAnimator.setInterpolator(new FastOutSlowInInterpolator());
+        likesAnimator.addUpdateListener(animation -> likes.set(String.valueOf((int)animation.getAnimatedValue())));
+        likesAnimator.start();
+
+        ValueAnimator teamsCountAnimator = ValueAnimator.ofInt(0, teams);
+        teamsCountAnimator.setDuration(1000);
+        teamsCountAnimator.setInterpolator(new FastOutSlowInInterpolator());
+        teamsCountAnimator.addUpdateListener(animation -> teamsCount.set(String.valueOf((int)animation.getAnimatedValue())));
+        teamsCountAnimator.start();
+    }
+
+    public void languageClick() {
+        ProposedLanguageDialogManager.get().show(this);
+    }
+
+
+    public void onManageTeamsClick(){
+        //add remove teams view
+    }
+    public void onLikedNewsClick(){
 
     }
+
+    @Override
+    public void onLanguageClick(LanguageField field) {
+        currentLanguage.set(field.getName());
+        languageDrawable.set(field.getDrawableSmall());
+    }
+
+
+    private Callback<UserProfileResponse> callback = new Callback<UserProfileResponse>() {
+        @Override
+        public void onSuccess(UserProfileResponse userProfileResponse) {
+                loadingVisibility.set(false);
+                itemsVisibility.set(true);
+                getActivity().runOnUiThread(() -> {
+                    initItemsView(userProfileResponse);
+                });
+
+        }
+
+        @Override
+        public void onSmthWrong(BaseError error) {
+//            if(error instanceof SingleMessageError){
+//                String message = ((SingleMessageError) error).getMessage();
+//                if(message.equals("Nie ma już więcej wyników")){
+                    loadingVisibility.set(false);
+//                }
+//                if(message.equals("Dla podanej frazy nie ma żadnej drużyny"))
+//                {
+//                    loadingVisibility.set(false);
+//                }
+//            }
+        }
+
+        @Override
+        protected void subscribeActual(@NonNull Observer<? super UserProfileResponse> observer) {
+
+        }
+    };
 
     public void onClick() {
 

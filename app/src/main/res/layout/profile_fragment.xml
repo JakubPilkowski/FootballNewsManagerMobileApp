@@ -1,26 +1,282 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
             type="com.example.footballnewsmanager.fragments.main.profile.ProfileFragmentViewModel" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        tools:context=".fragments.main.profile.ProfileFragment">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->viewModel.onClick()}"
-            android:text="Wyloguj" />
+        <com.example.footballnewsmanager.helpers.LoadingView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
 
-    </LinearLayout>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE }"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:text="@{viewModel.name}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="30sp"
+                        android:textStyle="bold|italic" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="18dp"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <View
+                                    android:layout_width="150dp"
+                                    android:layout_height="150dp"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/profile_ring" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:text="@{viewModel.teamsCount}"
+                                    android:textColor="@color/colorTextPrimary"
+                                    android:textSize="36sp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Drużyny"
+                                android:textColor="@color/colorTextPrimary"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <View
+                                    android:layout_width="150dp"
+                                    android:layout_height="150dp"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/profile_ring" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:text="@{viewModel.likes}"
+                                    android:textColor="@color/colorTextPrimary"
+                                    android:textSize="36sp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Polubienia"
+                                android:textColor="@color/colorTextPrimary"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginBottom="18dp"
+                        android:text="@{viewModel.date}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="20sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="1"
+                        android:layout_marginTop="18dp"
+                        android:orientation="horizontal"
+                        android:background="@drawable/profile_item_ripple"
+                        android:onClick="@{()-> viewModel.onManageTeamsClick()}"
+                        android:layout_marginBottom="18dp"
+                        android:gravity="center_vertical"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Zarządzaj drużynami"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="20sp" />
+
+                        <View
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/ic_arrow_forward_white_32dp"
+                            />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="1"
+                        android:layout_marginTop="18dp"
+                        android:orientation="horizontal"
+                        android:onClick="@{()-> viewModel.onLikedNewsClick()}"
+                        android:background="@drawable/profile_item_ripple"
+                        android:layout_marginBottom="18dp"
+                        android:gravity="center_vertical"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Przeglądaj polubione"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="20sp" />
+
+                        <View
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/ic_arrow_forward_white_32dp"
+                            />
+                    </LinearLayout>
+
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="1"
+                        android:layout_marginTop="18dp"
+                        android:onClick="@{()->viewModel.languageClick()}"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="18dp"
+                        android:background="@drawable/profile_item_ripple"
+                        android:gravity="center_vertical"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/language"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@{viewModel.languageDrawable}"
+                            android:drawablePadding="6dp"
+                            android:text="@{viewModel.currentLanguage}"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="20sp"
+                            />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginBottom="18dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="6dp"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/proposed_news"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="20sp" />
+
+                        <Switch
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:checked="@={viewModel.proposedNews}"
+                            android:switchMinWidth="56dp"
+                            android:thumb="@drawable/switch_thumb_on"
+                            android:track="@drawable/track_selector"
+                            app:switchChangeListener="@{viewModel.proposedNewsChangeListenerAdapter}" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/colorPrimary" />
+
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/profile_item_ripple"
+                            android:onClick="@{()->viewModel.onClick()}"
+                            android:padding="12dp"
+                            android:text="Wyloguj"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="16sp" />
+                </LinearLayout>
+            </ScrollView>
+    </RelativeLayout>
 </layout>
