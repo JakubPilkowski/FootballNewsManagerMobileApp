@@ -16,6 +16,7 @@ import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsRespo
 import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
+import com.example.footballnewsmanager.api.responses.sites.SitesResponse;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
@@ -144,5 +145,11 @@ public interface Service {
     Observable<SearchResponse> getQueryResults(
             @Header("Authorization") String token,
             @Path("query") String query
+    );
+
+    @GET("sites")
+    Observable<SitesResponse> getSites(
+        @Header("Authorization") String token,
+        @Query("page") int page
     );
 }

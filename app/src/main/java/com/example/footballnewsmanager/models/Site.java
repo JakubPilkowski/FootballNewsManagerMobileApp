@@ -8,7 +8,16 @@ public class Site {
     private String siteUrl;
     private String description;
     private boolean highlighted;
+    private Long clicks;
+    private Long newsCount;
 
+    public Long getClicks() {
+        return clicks;
+    }
+
+    public Long getNewsCount() {
+        return newsCount;
+    }
 
     public String getName() {
         return name;

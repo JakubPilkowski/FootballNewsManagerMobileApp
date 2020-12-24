@@ -14,13 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamViewModel;
-import com.example.footballnewsmanager.adapters.news.NewsAdapterViewModel;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.databinding.NewsForTeamHeaderBinding;
 import com.example.footballnewsmanager.databinding.NewsForTeamItemLayoutBinding;
-import com.example.footballnewsmanager.databinding.NewsHighlightedLayoutBinding;
-import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
-import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
 import com.example.footballnewsmanager.models.UserNews;
 

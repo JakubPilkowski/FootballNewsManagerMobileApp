@@ -2,10 +2,6 @@ package com.example.footballnewsmanager.fragments.main.all_news;
 
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.databinding.ObservableBoolean;
@@ -17,15 +13,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.search.SearchActivity;
 import com.example.footballnewsmanager.adapters.all_news.AllNewsAdapter;
-import com.example.footballnewsmanager.adapters.news.NewsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
-import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.AllNewsFragmentBinding;
-import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.UserPreferences;
