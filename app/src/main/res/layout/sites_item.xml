@@ -40,7 +40,7 @@
                     android:background="@drawable/site_logo_background"
                     >
                     <ImageView
-                        android:layout_width="match_parent"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         app:imageUrl="@{viewModel.logoUrl}" />
@@ -67,75 +67,6 @@
                         android:text="@{viewModel.description}"
                         android:textColor="@color/colorTextPrimary" />
                 </LinearLayout>
-<!--                <LinearLayout-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="100dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:gravity="center"-->
-<!--                    android:orientation="vertical">-->
-
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        >-->
-
-<!--                        <View-->
-<!--                            android:layout_width="80dp"-->
-<!--                            android:layout_height="80dp"-->
-<!--                            android:layout_centerInParent="true"-->
-<!--                            android:background="@drawable/success_screen_background" />-->
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_centerInParent="true"-->
-<!--                            android:textSize="18sp"-->
-<!--                            android:textStyle="bold"-->
-<!--                            android:text="@{viewModel.newsCount}"-->
-<!--                            android:textColor="@color/colorTextSecondary" />-->
-<!--                    </RelativeLayout>-->
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textColor="@color/colorTextSecondary"-->
-<!--                        android:text="Newsy"-->
-<!--                        />-->
-<!--                </LinearLayout>-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="100dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:gravity="center"-->
-<!--                    android:orientation="vertical">-->
-
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content">-->
-
-<!--                        <View-->
-<!--                            android:layout_width="80dp"-->
-<!--                            android:layout_height="80dp"-->
-<!--                            android:layout_centerInParent="true"-->
-<!--                            android:background="@drawable/success_screen_background" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_centerInParent="true"-->
-<!--                            android:text="@{viewModel.clicks}"-->
-<!--                            android:textSize="18sp"-->
-<!--                            android:textStyle="bold"-->
-<!--                            android:textColor="@color/colorTextSecondary" />-->
-<!--                    </RelativeLayout>-->
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textColor="@color/colorTextSecondary"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:text="Kliknięcia"-->
-<!--                        />-->
-<!--                </LinearLayout>-->
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

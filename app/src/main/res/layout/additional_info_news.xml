@@ -103,7 +103,7 @@
         <!--                android:layout_marginBottom="3dp"-->
         <!--                android:clickable="true"-->
         <!--                android:focusable="true"-->
-        <!--                android:onClick="@{()->viewModel.onLikeToggle()}"-->
+        <!--                android:onLogoutClick="@{()->viewModel.onLikeToggle()}"-->
         <!--                app:drawableAsResource="@{viewModel.heartDrawable}"-->
         <!--                app:setEnabled="@{viewModel.likeEnabled}" />-->
 
@@ -112,7 +112,7 @@
         <!--                android:layout_height="wrap_content"-->
         <!--                android:layout_marginStart="6dp"-->
         <!--                android:background="@drawable/green_ripple"-->
-        <!--                android:onClick="@{()->viewModel.onLikeToggle()}"-->
+        <!--                android:onLogoutClick="@{()->viewModel.onLikeToggle()}"-->
         <!--                android:text="@{viewModel.likes}"-->
         <!--                android:textColor="#000"-->
         <!--                android:textSize="20sp" />-->
@@ -124,7 +124,7 @@
         <!--                android:layout_marginStart="18dp"-->
         <!--                android:clickable="true"-->
         <!--                android:focusable="true"-->
-        <!--                android:onClick="@{()->viewModel.onDislikeToggle()}"-->
+        <!--                android:onLogoutClick="@{()->viewModel.onDislikeToggle()}"-->
         <!--                app:drawableAsResource="@{viewModel.heartbreakDrawable}"-->
         <!--                app:setEnabled="@{viewModel.dislikeEnabled}" />-->
 
@@ -132,7 +132,7 @@
         <!--                android:layout_width="wrap_content"-->
         <!--                android:layout_height="wrap_content"-->
         <!--                android:layout_marginStart="6dp"-->
-        <!--                android:onClick="@{()->viewModel.onDislikeToggle()}"-->
+        <!--                android:onLogoutClick="@{()->viewModel.onDislikeToggle()}"-->
         <!--                android:text="@{viewModel.dislikes}"-->
         <!--                android:textColor="#000"-->
         <!--                android:textSize="20sp" />-->

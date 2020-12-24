@@ -4,4 +4,9 @@
     <solid android:color="@color/backgroundColor" />
     <corners android:topRightRadius="24dp"
         android:topLeftRadius="24dp" />
+    <gradient
+        android:startColor="@color/colorbackgroundPrimary"
+        android:endColor="@color/colorPrimary"
+        android:angle="90"
+        />
 </shape>
