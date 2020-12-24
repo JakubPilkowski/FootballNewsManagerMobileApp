@@ -33,7 +33,7 @@ public class SitesFragmentViewModel extends BaseViewModel {
     }
 
     private void initItemsView(SitesResponse sitesResponse) {
-        sitesAdapter = new SitesAdapter();
+        sitesAdapter = new SitesAdapter(getActivity());
         sitesAdapter.setItems(sitesResponse.getSites());
         adapterObservable.set(sitesAdapter);
     }

@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.adapters.sites;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,12 @@ import java.util.List;
 public class SitesAdapter extends BaseHeadAndItemRVAdapter<Site, BaseViewHolder, BaseViewHolder> {
 
     private List<SitesAdapterViewModel> viewModels = new ArrayList<>();
+
+    private Activity activity;
+
+    public SitesAdapter(Activity activity) {
+        this.activity = activity;
+    }
 
 
     @Override
@@ -52,12 +59,10 @@ public class SitesAdapter extends BaseHeadAndItemRVAdapter<Site, BaseViewHolder,
             viewModel = new SitesAdapterViewModel();
             viewModels.add(viewModel);
             holder.setViewModel(viewModel);
-            ((SitesItemBinding) holder.getBinding()).setViewModel(viewModel);
-            holder.setElement(items.get(position));
         } else {
             viewModel = viewModels.get(position);
-            ((SitesItemBinding) holder.getBinding()).setViewModel(viewModel);
-            holder.setElement(items.get(position));
         }
+        ((SitesItemBinding) holder.getBinding()).setViewModel(viewModel);
+        holder.setElement(items.get(position), activity);
     }
 }
