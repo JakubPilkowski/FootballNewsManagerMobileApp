@@ -7,6 +7,7 @@ public class Site {
     private String logoUrl;
     private String siteUrl;
     private String description;
+    private String language;
     private boolean highlighted;
     private Long clicks;
     private Long newsCount;
@@ -37,5 +38,9 @@ public class Site {
 
     public String getSiteUrl() {
         return siteUrl;
+    }
+
+    public String getLanguage() {
+        return language;
     }
 }

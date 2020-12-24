@@ -15,6 +15,7 @@ public class SitesAdapterViewModel extends BaseAdapterViewModel {
     public ObservableField<String> description = new ObservableField<>();
     public ObservableField<String> logoUrl = new ObservableField<>();
     public ObservableField<String> clicks = new ObservableField<>();
+    public ObservableField<String> language = new ObservableField<>();
     public ObservableField<String> newsCount = new ObservableField<>();
 
     private Site site;
@@ -25,9 +26,10 @@ public class SitesAdapterViewModel extends BaseAdapterViewModel {
         site = (Site) values[0];
         activity = (Activity) values[1];
         name.set(site.getName());
-        description.set(site.getDescription());
+        description.set("Opis: "+site.getDescription());
         logoUrl.set(site.getLogoUrl());
         clicks.set(String.valueOf(site.getClicks()));
+        language.set(site.getLanguage());
         newsCount.set(String.valueOf(site.getNewsCount()));
     }
 
