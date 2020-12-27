@@ -16,15 +16,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".activites.news_for_team.NewsForTeamActivity"
+        <activity
+            android:name=".activites.manageTeams.ManageTeamsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NewsForTeamActivity"
-            ></activity>
+            android:theme="@style/ManageTeams"
+            />
+        <activity
+            android:name=".activites.news_for_team.NewsForTeamActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NewsForTeamActivity" />
         <activity
             android:name=".activites.search.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SearchActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activites.register.ProposedSettingsActivity"
             android:screenOrientation="portrait"

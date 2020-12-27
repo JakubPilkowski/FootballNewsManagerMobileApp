@@ -23,8 +23,10 @@
             android:background="@drawable/auth_background"
             android:overScrollMode="never"
             android:tag="mainViewPager"
+            app:userInputEnabled="@{viewModel.userInputEnabled}"
             app:pageChangeCallback="@{viewModel.onPageChangeCallbackObservable}"
-            app:viewpager2Adapter="@{viewModel.viewPagerAdapterObservable}" />
+            app:viewpager2Adapter="@{viewModel.viewPagerAdapterObservable}"
+            />
 
         <View
             android:layout_width="match_parent"

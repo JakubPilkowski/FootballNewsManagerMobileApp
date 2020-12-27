@@ -1,14 +1,16 @@
 package com.example.footballnewsmanager.api.responses.proposed;
 
 import com.example.footballnewsmanager.models.Team;
+import com.example.footballnewsmanager.models.User;
+import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.List;
 
 public class ProposedTeamsResponse {
-    private List<Team> teams;
+    private List<UserTeam> teams;
     private int pages;
 
-    public List<Team> getTeams() {
+    public List<UserTeam> getTeams() {
         return teams;
     }
 

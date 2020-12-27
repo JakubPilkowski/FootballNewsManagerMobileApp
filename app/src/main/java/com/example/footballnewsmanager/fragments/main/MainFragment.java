@@ -53,6 +53,16 @@ public class MainFragment extends BaseFragment<MainFragmentBinding, MainFragment
     }
 
     @Override
+    public String getToolbarName() {
+        return "";
+    }
+
+    @Override
+    public int getHomeIcon() {
+        return 0;
+    }
+
+    @Override
     public ViewDataBinding getBinding() {
         return binding;
     }

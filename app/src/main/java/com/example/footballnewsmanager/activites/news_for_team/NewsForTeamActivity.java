@@ -12,7 +12,7 @@ import com.example.footballnewsmanager.databinding.ActivityNewsForTeamBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
 
-public class NewsForTeamActivity extends BaseActivity<ActivityNewsForTeamBinding, NewsForTeamViewModel> implements Providers {
+public class NewsForTeamActivity extends BaseActivity<ActivityNewsForTeamBinding, ForTeamViewItemsModel> implements Providers {
 
 
 
@@ -28,8 +28,8 @@ public class NewsForTeamActivity extends BaseActivity<ActivityNewsForTeamBinding
     }
 
     @Override
-    protected Class<NewsForTeamViewModel> getViewModel() {
-        return NewsForTeamViewModel.class;
+    protected Class<ForTeamViewItemsModel> getViewModel() {
+        return ForTeamViewItemsModel.class;
     }
 
     @Override

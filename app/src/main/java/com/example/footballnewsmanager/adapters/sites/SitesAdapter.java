@@ -59,10 +59,13 @@ public class SitesAdapter extends BaseHeadAndItemRVAdapter<Site, BaseViewHolder,
             viewModel = new SitesAdapterViewModel();
             viewModels.add(viewModel);
             holder.setViewModel(viewModel);
+            ((SitesItemBinding) holder.getBinding()).setViewModel(viewModel);
+            holder.setElement(items.get(position), activity);
         } else {
             viewModel = viewModels.get(position);
+            ((SitesItemBinding) holder.getBinding()).setViewModel(viewModel);
+            holder.setElement(items.get(position), activity);
         }
-        ((SitesItemBinding) holder.getBinding()).setViewModel(viewModel);
-        holder.setElement(items.get(position), activity);
+
     }
 }

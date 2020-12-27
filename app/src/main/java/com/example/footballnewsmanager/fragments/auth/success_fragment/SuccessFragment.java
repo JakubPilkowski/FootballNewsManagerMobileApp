@@ -49,6 +49,16 @@ public class SuccessFragment extends BaseFragment<SuccessFragmentBinding,Success
     }
 
     @Override
+    public String getToolbarName() {
+        return null;
+    }
+
+    @Override
+    public int getHomeIcon() {
+        return 0;
+    }
+
+    @Override
     public ViewDataBinding getBinding() {
         return binding;
     }

@@ -12,6 +12,7 @@ import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
+import com.example.footballnewsmanager.api.responses.manage_teams.LeagueResponse;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
 import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
@@ -20,6 +21,7 @@ import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
 import com.example.footballnewsmanager.api.responses.sites.SitesResponse;
+import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
@@ -110,13 +112,6 @@ public interface Service {
             @Path("id") Long newsId
     );
 
-    @PUT("news/dislike/site={sid}/id={id}")
-    Observable<SingleNewsResponse> toggleDislikes(
-            @Header("Authorization") String token,
-            @Path("sid") Long siteId,
-            @Path("id") Long newsId
-    );
-
     @POST("teams/findByTags")
     Observable<TeamsResponse> findByTags(
             @Header("Authorization") String token,
@@ -165,5 +160,28 @@ public interface Service {
     @DELETE("users/me")
     Observable<BaseResponse> deleteAccount(
             @Header("Authorization") String token
+    );
+
+    @GET("leagues")
+    Observable<LeagueResponse> getLeagues(
+            @Header("Authorization") String token
+    );
+
+    @GET("teams/league={lid}")
+    Observable<TeamsResponse> getTeamsFromLeague(
+            @Header("Authorization") String token,
+            @Path("lid") Long leagueId,
+            @Query("page") int page
+    );
+
+    @GET("teams/favouriteTeams")
+    Observable<TeamsResponse> getFavouriteTeams(
+            @Header("Authorization") String token
+    );
+
+    @PUT("users/me/toggleTeam/{tid}")
+    Observable<UserTeam> toggleTeam(
+            @Header("Authorization") String token,
+            @Path("tid") Long teamId
     );
 }

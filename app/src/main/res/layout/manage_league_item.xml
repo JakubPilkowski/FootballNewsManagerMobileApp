@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.footballnewsmanager.adapters.manage_teams.all.ManageLeaguesAdapterViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:padding="0dp"
+            android:gravity="center_vertical"
+            android:onClick="@{()->viewModel.onClick()}"
+            android:background="@drawable/manage_teams_item_background"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/site_logo_background"
+                android:padding="3dp"
+                android:layout_margin="6dp"
+                app:imageUrl="@{viewModel.img}"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{viewModel.name}"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="16sp"
+                />
+
+            <View
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="6dp"
+                android:background="@drawable/ic_arrow_forward_button"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/playerColor"
+            />
+    </LinearLayout>
+</layout>

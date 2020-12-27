@@ -4,21 +4,12 @@ import androidx.databinding.ViewDataBinding;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.register.ProposedSettingsActivity;
-import com.example.footballnewsmanager.api.Callback;
-import com.example.footballnewsmanager.api.Connection;
-import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
-import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ProposedTeamsFragmentBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
-import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.Providers;
 
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
-
-public class ProposedTeamsFragment extends BaseFragment<ProposedTeamsFragmentBinding, ProposedTeamsViewModel> implements Providers {
+public class ProposedTeamsFragment extends BaseFragment<ProposedTeamsFragmentBinding, ProposedTeamsViewItemsModel> implements Providers {
 
 
 
@@ -32,8 +23,8 @@ public class ProposedTeamsFragment extends BaseFragment<ProposedTeamsFragmentBin
     }
 
     @Override
-    public Class<ProposedTeamsViewModel> getViewModelClass() {
-        return ProposedTeamsViewModel.class;
+    public Class<ProposedTeamsViewItemsModel> getViewModelClass() {
+        return ProposedTeamsViewItemsModel.class;
     }
 
     @Override
@@ -45,6 +36,16 @@ public class ProposedTeamsFragment extends BaseFragment<ProposedTeamsFragmentBin
 
     @Override
     public int getBackPressType() {
+        return 0;
+    }
+
+    @Override
+    public String getToolbarName() {
+        return null;
+    }
+
+    @Override
+    public int getHomeIcon() {
         return 0;
     }
 

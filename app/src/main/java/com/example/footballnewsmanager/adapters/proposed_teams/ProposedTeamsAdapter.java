@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.databinding.ProposedTeamLayoutBinding;
-import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
-import com.example.footballnewsmanager.models.Team;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +18,17 @@ import java.util.List;
 public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ProposedTeamsAdapterViewModel> viewModels = new ArrayList<>();
-    private List<Team> items = new ArrayList<>();
+    private List<UserTeam> items = new ArrayList<>();
 
     private final static int ITEM = 0;
     private final static int ITEM_LOADING = 1;
     private final static int PLACEHOLDER = 2;
     public boolean isLoading = false;
     public boolean isPlaceholder = false;
-    private NewsRecyclerViewListener newsRecyclerViewListener;
+    private RecyclerViewItemsListener recyclerViewItemsListener;
 
 
-    public void setItems(List<Team> items) {
+    public void setItems(List<UserTeam> items) {
         int start = this.items.size();
         this.items.addAll(items);
         notifyItemRangeChanged(start, items.size());
@@ -39,8 +39,8 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
         notifyDataSetChanged();
     }
 
-    public void setNewsRecyclerViewListener(NewsRecyclerViewListener newsRecyclerViewListener) {
-        this.newsRecyclerViewListener = newsRecyclerViewListener;
+    public void setRecyclerViewItemsListener(RecyclerViewItemsListener recyclerViewItemsListener) {
+        this.recyclerViewItemsListener = recyclerViewItemsListener;
     }
 
     public List<ProposedTeamsAdapterViewModel> getViewModels() {
@@ -110,7 +110,7 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         if (holder instanceof PlaceholderViewHolder) {
-            newsRecyclerViewListener.onDetached();
+            recyclerViewItemsListener.onDetached();
         }
     }
 

@@ -4,16 +4,17 @@ import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.base.BaseAdapterViewModel;
 import com.example.footballnewsmanager.models.Team;
+import com.example.footballnewsmanager.models.UserTeam;
 
 public class AdditionalNewsAdapterViewModel extends BaseAdapterViewModel {
 
-    private Team team;
+    private UserTeam team;
 
     public ObservableField<String> imageUrl = new ObservableField<>();
 
     @Override
     public void init(Object[] values) {
-        team = (Team) values[0];
-        imageUrl.set(team.getLogoUrl());
+        team = (UserTeam) values[0];
+        imageUrl.set(team.getTeam().getLogoUrl());
     }
 }

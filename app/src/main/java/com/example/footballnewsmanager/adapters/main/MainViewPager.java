@@ -5,42 +5,36 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.footballnewsmanager.fragments.main.all_news.AllNewsFragment;
+import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.fragments.main.news.NewsFragment;
 import com.example.footballnewsmanager.fragments.main.profile.ProfileFragment;
 import com.example.footballnewsmanager.fragments.main.sites.SitesFragment;
-import com.example.footballnewsmanager.interfaces.BadgeListener;
+
+import java.util.List;
 
 public class MainViewPager extends FragmentStateAdapter {
 
-    private BadgeListener badgeListener;
+    private List<BaseFragment> fragments;
 
-    public MainViewPager(@NonNull FragmentActivity fragmentActivity, BadgeListener badgeListener) {
+    public MainViewPager(@NonNull FragmentActivity fragmentActivity, List<BaseFragment> fragments) {
         super(fragmentActivity);
-        this.badgeListener = badgeListener;
+        this.fragments = fragments;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-
-        Fragment fragment;
-        switch (position){
+        switch (position) {
             case 1:
-                fragment = AllNewsFragment.newInstance(badgeListener);
-                break;
+                return fragments.get(1);
             case 2:
-                fragment = SitesFragment.newInstance();
-                break;
+                return fragments.get(2);
             case 3:
-                fragment = ProfileFragment.newInstance();
-                break;
+                return fragments.get(3);
             case 0:
             default:
-                fragment = NewsFragment.newInstance(badgeListener);
+                return fragments.get(0);
         }
-
-        return fragment;
     }
 
     @Override

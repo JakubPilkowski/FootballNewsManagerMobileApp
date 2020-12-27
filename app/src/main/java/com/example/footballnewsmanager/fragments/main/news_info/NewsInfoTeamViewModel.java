@@ -7,21 +7,22 @@ import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamActivity;
 import com.example.footballnewsmanager.models.Team;
-
-import java.util.Observable;
+import com.example.footballnewsmanager.models.UserTeam;
 
 public class NewsInfoTeamViewModel {
 
     public ObservableField<String> name = new ObservableField<>();
     public ObservableField<String> teamUrl = new ObservableField<>();
 
+    private UserTeam userTeam;
     private Team team;
     private Activity activity;
 
 
-    public void init(Team team, Activity activity) {
+    public void init(UserTeam userTeam, Activity activity) {
         this.activity = activity;
-        this.team = team;
+        this.userTeam = userTeam;
+        team = userTeam.getTeam();
         name.set(team.getName());
         teamUrl.set(team.getLogoUrl());
     }

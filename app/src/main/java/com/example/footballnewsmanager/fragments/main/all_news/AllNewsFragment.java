@@ -10,7 +10,7 @@ import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.Providers;
 
-public class AllNewsFragment extends BaseFragment<AllNewsFragmentBinding,AllNewsFragmentViewModel> implements Providers {
+public class AllNewsFragment extends BaseFragment<AllNewsFragmentBinding, AllFragmentViewItemsModel> implements Providers {
 
 
     public static final String TAG = "AllNews";
@@ -32,8 +32,8 @@ public class AllNewsFragment extends BaseFragment<AllNewsFragmentBinding,AllNews
     }
 
     @Override
-    public Class<AllNewsFragmentViewModel> getViewModelClass() {
-        return AllNewsFragmentViewModel.class;
+    public Class<AllFragmentViewItemsModel> getViewModelClass() {
+        return AllFragmentViewItemsModel.class;
     }
 
     @Override
@@ -45,6 +45,16 @@ public class AllNewsFragment extends BaseFragment<AllNewsFragmentBinding,AllNews
 
     @Override
     public int getBackPressType() {
+        return 0;
+    }
+
+    @Override
+    public String getToolbarName() {
+        return null;
+    }
+
+    @Override
+    public int getHomeIcon() {
         return 0;
     }
 

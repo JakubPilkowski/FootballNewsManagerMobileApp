@@ -1,13 +1,11 @@
 package com.example.footballnewsmanager.fragments.main.news_info;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamViewModel;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -19,8 +17,8 @@ import com.example.footballnewsmanager.databinding.NewsInfoTeamLayoutBinding;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.models.NewsTag;
 import com.example.footballnewsmanager.models.Tag;
-import com.example.footballnewsmanager.models.Team;
 import com.example.footballnewsmanager.models.UserNews;
+import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,12 +59,12 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
         public void onSuccess(TeamsResponse teamsResponse) {
             getActivity().runOnUiThread(() -> {
                 LinearLayout layout = ((NewsInfoFragmentBinding) getBinding()).newsInfoLinearLayout;
-                for (Team team : teamsResponse.getTeams()) {
+                for (UserTeam userTeam : teamsResponse.getTeams()) {
                     LinearLayout cardView = (LinearLayout) LayoutInflater.from(getFragment().getContext()).inflate(R.layout.news_info_team_layout, layout, false);
                     NewsInfoTeamLayoutBinding binding = NewsInfoTeamLayoutBinding.bind(cardView);
                     NewsInfoTeamViewModel viewModel = new NewsInfoTeamViewModel();
                     binding.setViewModel(viewModel);
-                    viewModel.init(team, getActivity());
+                    viewModel.init(userTeam, getActivity());
                     layout.addView(cardView);
                 }
             });

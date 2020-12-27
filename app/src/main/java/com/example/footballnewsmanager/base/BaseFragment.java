@@ -39,4 +39,8 @@ public abstract class BaseFragment<B extends ViewDataBinding, VM extends BaseVie
 
     public abstract int getBackPressType();
 
+    public abstract String getToolbarName();
+
+    public abstract int getHomeIcon();
+
 }

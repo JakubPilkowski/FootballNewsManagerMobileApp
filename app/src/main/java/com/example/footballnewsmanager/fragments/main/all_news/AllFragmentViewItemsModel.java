@@ -1,7 +1,9 @@
-package com.example.footballnewsmanager.activites.news_for_team;
+package com.example.footballnewsmanager.fragments.main.all_news;
 
+import android.content.Intent;
 import android.util.Log;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
@@ -9,76 +11,78 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.adapters.news.newsForTeam.NewsForTeamAdapter;
+import com.example.footballnewsmanager.activites.search.SearchActivity;
+import com.example.footballnewsmanager.adapters.all_news.AllNewsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.errors.SingleMessageError;
-import com.example.footballnewsmanager.api.responses.main.NewsResponse;
+import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.ActivityNewsForTeamBinding;
-import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
+import com.example.footballnewsmanager.databinding.AllNewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
+import com.example.footballnewsmanager.interfaces.BadgeListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserNews;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
-public class NewsForTeamViewModel extends BaseViewModel implements NewsRecyclerViewListener {
+public class AllFragmentViewItemsModel extends BaseViewModel implements RecyclerViewItemsListener<UserNews> {
 
-
-    public static final String TAG = "NewsForTeam";
-
-    public ObservableField<NewsForTeamAdapter> adapterObservable = new ObservableField<>();
+    public ObservableField<AllNewsAdapter> adapterObservable = new ObservableField<>();
     public ObservableField<Runnable> postRunnable = new ObservableField<>();
     public ObservableField<SwipeRefreshLayout.OnRefreshListener> swipeRefreshListenerObservable = new ObservableField<>();
     public ObservableInt swipeRefreshColor = new ObservableInt(R.color.colorPrimary);
     public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
-    public ObservableBoolean placeholderVisibility = new ObservableBoolean(false);
 
 
     private boolean isLastPage;
     private int currentPage = 0;
-    private NewsForTeamAdapter newsAdapter;
+    private AllNewsAdapter newsAdapter;
     private RecyclerView recyclerView;
+    private BadgeListener badgeListener;
 
+    // TODO: Implement the ViewModel
+    public void init(BadgeListener badgeListener) {
+        this.badgeListener = badgeListener;
+        SearchView searchView = ((AllNewsFragmentBinding)getBinding()).allNewsSearchView;
+        searchView.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SearchActivity.class);
+            getActivity().startActivity(intent);
+        });
 
-    private Long id;
-    private String name;
-    private String img;
-
-
-
-    public void init(Long id, String name, String img) {
-        this.id = id;
-        this.name = name;
-        this.img = img;
+        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
         swipeRefreshListenerObservable.set(this::updateNews);
-        recyclerView = ((ActivityNewsForTeamBinding) getBinding()).newsForTeamRecyclerView;
+        recyclerView = ((AllNewsFragmentBinding) getBinding()).allNewsRecyclerView;
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().newsForTeam(callback, token, id, currentPage);
+        Connection.get().allNews(callback, token, currentPage);
     }
 
-    private void initItemsView(NewsResponse newsResponse) {
-        newsAdapter = new NewsForTeamAdapter(getActivity());
-        newsAdapter.setNewsRecyclerViewListener(this);
-        newsAdapter.setHeaderItems(name, img);
-        newsAdapter.setCountAll(newsResponse.getNewsCount());
-        newsAdapter.setCountToday(newsResponse.getNewsToday());
-        newsAdapter.setItems(newsResponse.getUserNews());
+
+    private void initItemsView(AllNewsResponse allNewsResponse) {
+        newsAdapter = new AllNewsAdapter(getActivity());
+        newsAdapter.setRecyclerViewItemsListener(this);
+        newsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getAdditionalContent());
+        newsAdapter.setBadgeListener(badgeListener);
+        newsAdapter.setCountAll(allNewsResponse.getNewsCount());
+        newsAdapter.setCountToday(allNewsResponse.getNewsToday());
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
             @Override
             protected void loadMoreItems() {
                 currentPage++;
-                Log.d("NewsForTeam", "loadMoreItems");
+                Log.d("News", "loadMoreItems");
                 newsAdapter.isLoading = true;
                 String token = UserPreferences.get().getAuthToken();
-                Connection.get().newsForTeam(callback, token, id, currentPage);
+                Connection.get().allNews(callback, token, currentPage);
             }
 
             @Override
@@ -96,10 +100,10 @@ public class NewsForTeamViewModel extends BaseViewModel implements NewsRecyclerV
     }
 
 
-    private Callback<NewsResponse> refreshCallback = new Callback<NewsResponse>() {
+
+    private Callback<AllNewsResponse> refreshCallback = new Callback<AllNewsResponse>() {
         @Override
-        public void onSuccess(NewsResponse newsResponse) {
-            placeholderVisibility.set(false);
+        public void onSuccess(AllNewsResponse newsResponse) {
             getActivity().runOnUiThread(() -> {
                 currentPage = 0;
                 isLastPage = newsResponse.getPages() <= currentPage;
@@ -107,7 +111,7 @@ public class NewsForTeamViewModel extends BaseViewModel implements NewsRecyclerV
                 newsAdapter.setCountAll(newsResponse.getNewsCount());
                 newsAdapter.setCountToday(newsResponse.getNewsToday());
                 newsAdapter.refresh(newsResponse);
-                ((NewsFragmentBinding) getBinding()).newsSwipeRefresh
+                ((AllNewsFragmentBinding) getBinding()).allNewsSwipeRefresh
                         .setRefreshing(false);
                 ProgressDialog.get().dismiss();
             });
@@ -118,32 +122,33 @@ public class NewsForTeamViewModel extends BaseViewModel implements NewsRecyclerV
             currentPage = 0;
             isLastPage = true;
             newsAdapter.isLoading = false;
-            ((NewsFragmentBinding) getBinding()).newsSwipeRefresh
+            ((AllNewsFragmentBinding) getBinding()).allNewsSwipeRefresh
                     .setRefreshing(false);
             postRunnable.set(placeHolderAttachRunnable);
         }
 
         @Override
-        protected void subscribeActual(@NonNull Observer<? super NewsResponse> observer) {
+        protected void subscribeActual(@NonNull Observer<? super AllNewsResponse> observer) {
 
         }
+
+
     };
 
-    private Callback<NewsResponse> callback = new Callback<NewsResponse>() {
+
+    private Callback<AllNewsResponse> callback = new Callback<AllNewsResponse>() {
         @Override
-        public void onSuccess(NewsResponse newsResponse) {
+        public void onSuccess(AllNewsResponse newsResponse) {
+
             if (loadingVisibility.get()) {
                 loadingVisibility.set(false);
-                placeholderVisibility.set(false);
                 itemsVisibility.set(true);
                 getActivity().runOnUiThread(() -> {
-                    Log.d(TAG, "onSuccessFirst: ");
                     initItemsView(newsResponse);
                 });
             } else {
-                Log.d(TAG, "onSuccessOther: ");
                 getActivity().runOnUiThread(() -> {
-                    newsAdapter.setItems(newsResponse.getUserNews());
+                    newsAdapter.setItems(newsResponse.getUserNews(), newsResponse.getAdditionalContent());
                     isLastPage = newsResponse.getPages() <= currentPage;
                     newsAdapter.isLoading = false;
                 });
@@ -152,30 +157,27 @@ public class NewsForTeamViewModel extends BaseViewModel implements NewsRecyclerV
 
         @Override
         public void onSmthWrong(BaseError error) {
-            Log.d(TAG, "onSmthWrong: ");
-            if(error instanceof SingleMessageError){
-                String message = ((SingleMessageError) error).getMessage();
-                if(message.equals("Nie ma już więcej wyników")){
-                    Log.d(TAG, "onSmthWrong: nie ma więcej wyników");
-                    isLastPage = true;
-                    newsAdapter.isLoading = false;
-                    postRunnable.set(placeHolderAttachRunnable);
-                }
-                if(message.equals("Dla podanej frazy nie ma żadnej drużyny"))
-                {
-                    loadingVisibility.set(false);
-                    placeholderVisibility.set(true);
-                }
-
-            }
-
+            isLastPage = true;
+            newsAdapter.isLoading = false;
+            postRunnable.set(placeHolderAttachRunnable);
         }
 
         @Override
-        protected void subscribeActual(@NonNull Observer<? super NewsResponse> observer) {
+        protected void subscribeActual(@NonNull Observer<? super AllNewsResponse> observer) {
 
         }
     };
+
+    private Runnable placeHolderAttachRunnable = () -> {
+        newsAdapter.setPlaceholder(true);
+        recyclerView.smoothScrollToPosition(newsAdapter.getItemCount() - 1);
+    };
+
+    private Runnable placeHolderDetachRunnable = () -> {
+        isLastPage = false;
+        newsAdapter.setPlaceholder(false);
+    };
+    private Runnable backToFrontRunnable = () -> recyclerView.scrollToPosition(0);
 
     @Override
     public void onDetached() {
@@ -194,23 +196,11 @@ public class NewsForTeamViewModel extends BaseViewModel implements NewsRecyclerV
 
     public void updateNews() {
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().newsForTeam(refreshCallback, token, id, 0);
+        Connection.get().allNews(refreshCallback, token, 0);
     }
 
     @Override
     public void onChangeItems() {
         updateNews();
     }
-
-    private Runnable placeHolderAttachRunnable = () -> {
-        newsAdapter.setPlaceholder(true);
-        recyclerView.smoothScrollToPosition(newsAdapter.getItemCount() - 1);
-    };
-
-    private Runnable placeHolderDetachRunnable = () -> {
-        isLastPage = false;
-        newsAdapter.setPlaceholder(false);
-    };
-    private Runnable backToFrontRunnable = () -> recyclerView.scrollToPosition(0);
-
 }
