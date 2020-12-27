@@ -3,9 +3,12 @@ package com.example.footballnewsmanager.fragments.main.news_info;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.adapters.news_info.NewsInfoAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -29,22 +32,17 @@ import io.reactivex.rxjava3.core.Observer;
 public class NewsInfoFragmentViewModel extends BaseViewModel {
     // TODO: Implement the ViewModel
 
-    public ObservableField<String> newsTitle = new ObservableField<>();
-    public ObservableField<String> siteTitle = new ObservableField<>();
-    public ObservableField<String> date = new ObservableField<>();
-    public ObservableField<String> likes = new ObservableField<>();
-    public ObservableField<String> clicks = new ObservableField<>();
+
+    public ObservableField<RecyclerView.Adapter> adapterObservable = new ObservableField<>();
+    public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
+    public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
 
     private UserNews news;
+    private NewsInfoAdapter newsInfoAdapter;
 
     public void init(UserNews news) {
         this.news = news;
-        newsTitle.set(news.getNews().getTitle());
-        siteTitle.set(news.getNews().getSite().getName());
-        String dateFormatted = news.getNews().getDate().replace("T"," ");
-        date.set(dateFormatted);
-        likes.set(String.valueOf(news.getNews().getLikes()));
-        clicks.set(String.valueOf(news.getNews().getClicks()));
+        loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         List<Tag> tags = new ArrayList<>();
         for (NewsTag newsTag : news.getNews().getTags()) {
@@ -54,19 +52,20 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
         Connection.get().findByTags(callback, token, request);
     }
 
+    public void initItemsView(TeamsResponse teamsResponse){
+        newsInfoAdapter = new NewsInfoAdapter(getActivity());
+        adapterObservable.set(newsInfoAdapter);
+        newsInfoAdapter.setUserNews(news);
+        newsInfoAdapter.setItems(teamsResponse.getTeams());
+        loadingVisibility.set(false);
+        itemsVisibility.set(true);
+    }
+
     private Callback<TeamsResponse> callback = new Callback<TeamsResponse>() {
         @Override
         public void onSuccess(TeamsResponse teamsResponse) {
             getActivity().runOnUiThread(() -> {
-                LinearLayout layout = ((NewsInfoFragmentBinding) getBinding()).newsInfoLinearLayout;
-                for (UserTeam userTeam : teamsResponse.getTeams()) {
-                    LinearLayout cardView = (LinearLayout) LayoutInflater.from(getFragment().getContext()).inflate(R.layout.news_info_team_layout, layout, false);
-                    NewsInfoTeamLayoutBinding binding = NewsInfoTeamLayoutBinding.bind(cardView);
-                    NewsInfoTeamViewModel viewModel = new NewsInfoTeamViewModel();
-                    binding.setViewModel(viewModel);
-                    viewModel.init(userTeam, getActivity());
-                    layout.addView(cardView);
-                }
+                initItemsView(teamsResponse);
             });
         }
 
