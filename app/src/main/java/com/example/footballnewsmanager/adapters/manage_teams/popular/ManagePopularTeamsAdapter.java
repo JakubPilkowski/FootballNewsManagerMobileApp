@@ -32,7 +32,10 @@ public class ManagePopularTeamsAdapter extends RecyclerView.Adapter<RecyclerView
 
     private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
 
-    public void setItems(List<UserTeam> items) {
+    public void setItems(List<UserTeam> items, int currentPage) {
+        if (currentPage == 0) {
+            this.items.clear();
+        }
         int start = this.items.size();
         this.items.addAll(items);
         notifyItemRangeChanged(start, items.size());
@@ -79,7 +82,7 @@ public class ManagePopularTeamsAdapter extends RecyclerView.Adapter<RecyclerView
             }
             ManageTeamItemBinding binding = ((TeamViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
-            viewModel.init(items.get(position),activity, recyclerViewItemsListener);
+            viewModel.init(items.get(position), activity, recyclerViewItemsListener);
         }
 
     }
@@ -107,7 +110,7 @@ public class ManagePopularTeamsAdapter extends RecyclerView.Adapter<RecyclerView
         boolean exist = false;
         int index = 0;
         for (UserTeam userTeam : items) {
-            if(userTeam.getTeam().getId().equals(oldTeam.getTeam().getId())){
+            if (userTeam.getTeam().getId().equals(oldTeam.getTeam().getId())) {
                 exist = true;
                 index = items.indexOf(userTeam);
                 break;
@@ -115,7 +118,7 @@ public class ManagePopularTeamsAdapter extends RecyclerView.Adapter<RecyclerView
         }
         if (exist) {
             items.set(index, newTeam);
-            if(viewModels.size() >= index){
+            if (viewModels.size() >= index) {
                 viewModels.get(index).update(newTeam);
             }
         }

@@ -8,6 +8,7 @@ import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -52,7 +53,8 @@ public class ManageTeamsViewModel {
         intent.putExtra("id", team.getId());
         intent.putExtra("name", team.getName());
         intent.putExtra("img", team.getLogoUrl());
-        activity.startActivity(intent);
+        intent.putExtra("favourite", userTeam.isFavourite());
+        activity.startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS_FROM_TEAM_NEWS);
     }
 
     public void toggleTeam() {

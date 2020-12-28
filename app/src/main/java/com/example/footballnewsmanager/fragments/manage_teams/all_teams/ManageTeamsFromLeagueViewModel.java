@@ -29,23 +29,32 @@ public class ManageTeamsFromLeagueViewModel extends BaseViewModel {
 
     private ManageTeamsAdapter manageTeamsAdapter;
     private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
+    private Long id;
 
     public void init(Long id, RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
+        this.id = id;
         this.recyclerViewItemsListener = recyclerViewItemsListener;
+        load();
+    }
+
+    public void load(){
         String token = UserPreferences.get().getAuthToken();
-        ProgressDialog.get().show();
+//        ProgressDialog.get().show();
         Connection.get().getTeamsFromLeague(callback, token, id, 0);
     }
+
 
     private Callback<TeamsResponse> callback = new Callback<TeamsResponse>() {
         @Override
         public void onSuccess(TeamsResponse teamsResponse) {
             getActivity().runOnUiThread(() -> {
-                manageTeamsAdapter = new ManageTeamsAdapter(getActivity());
-                manageTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
-                adapterObservable.set(manageTeamsAdapter);
+                if(manageTeamsAdapter == null){
+                    manageTeamsAdapter = new ManageTeamsAdapter(getActivity());
+                    manageTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
+                    adapterObservable.set(manageTeamsAdapter);
+                }
                 manageTeamsAdapter.setItems(teamsResponse.getTeams());
-                ProgressDialog.get().dismiss();
+//                ProgressDialog.get().dismiss();
             });
         }
 

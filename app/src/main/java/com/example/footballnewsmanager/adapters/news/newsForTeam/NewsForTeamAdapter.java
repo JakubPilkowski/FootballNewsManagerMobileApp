@@ -13,12 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.activites.news_for_team.ForTeamViewItemsModel;
+import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamViewModel;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.databinding.NewsForTeamHeaderBinding;
 import com.example.footballnewsmanager.databinding.NewsForTeamItemLayoutBinding;
 import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserNews;
+import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +37,14 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public boolean isLoading = false;
     public boolean isPlaceholder = false;
+    private RecyclerViewItemsListener<UserTeam> headerRecyclerViewItemsListener;
     private RecyclerViewItemsListener recyclerViewItemsListener;
     private Long countAll;
     private Long countToday;
     private String name;
     private String img;
+    private boolean isFavourite;
+    private Long id;
 
 
     public void setItems(List<UserNews> items) {
@@ -50,7 +54,7 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void setPlaceholder(boolean placeholder) {
-        Log.d(ForTeamViewItemsModel.TAG, "setPlaceholder: ");
+        Log.d(NewsForTeamViewModel.TAG, "setPlaceholder: ");
         isPlaceholder = placeholder;
         notifyDataSetChanged();
     }
@@ -136,7 +140,7 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             return;
         } else if (position == 0) {
             NewsForTeamHeaderAdapterViewModel viewModel = new NewsForTeamHeaderAdapterViewModel();
-            viewModel.init(name, img, countAll, countToday);
+            viewModel.init(id, name, img, isFavourite, countAll, countToday, headerRecyclerViewItemsListener);
             NewsForTeamHeaderBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
             return;
@@ -202,9 +206,15 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         viewModels.get(index).update(newNews);
     }
 
-    public void setHeaderItems(String name, String img) {
+    public void setHeaderItems(Long id, String name, String img, boolean isFavourite) {
+        this.id = id;
         this.name = name;
         this.img = img;
+        this.isFavourite = isFavourite;
+    }
+
+    public void setHeaderRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> headerRecyclerViewItemsListener) {
+        this.headerRecyclerViewItemsListener = headerRecyclerViewItemsListener;
     }
 
     public class NewsHeaderViewHolder extends RecyclerView.ViewHolder {

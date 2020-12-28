@@ -10,7 +10,6 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -37,11 +36,14 @@
             app:imageUrl="@{viewModel.img}" />
 
         <Button
+            android:backgroundTint="@{viewModel.isFavouriteBackground ? @color/errorColor : @color/colorPrimary}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:drawablePadding="6dp"
+            android:drawableEnd="@{viewModel.isFavouriteBackground ? @drawable/ic_remove : @drawable/ic_add_basic}"
             android:onClick="@{()->viewModel.toggleFavourites()}"
-            android:text="Dodaj do ulubionych" />
+            android:text="@{viewModel.isFavouriteText}" />
 
         <LinearLayout
             android:layout_width="match_parent"

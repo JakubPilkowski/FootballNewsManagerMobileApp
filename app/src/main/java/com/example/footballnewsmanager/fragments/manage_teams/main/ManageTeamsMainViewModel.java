@@ -9,10 +9,13 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity;
 import com.example.footballnewsmanager.adapters.manage_teams.ManageTeamsViewPagerAdapter;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ManageTeamsMainFragmentBinding;
+import com.example.footballnewsmanager.fragments.manage_teams.all_teams.ManageTeamsFromLeagueFragment;
+import com.example.footballnewsmanager.fragments.manage_teams.all_teams.ManageTeamsFromLeagueViewModel;
 import com.example.footballnewsmanager.fragments.manage_teams.main.all.ManageAllTeamsFragment;
 import com.example.footballnewsmanager.fragments.manage_teams.main.popular.ManagePopularTeamsFragment;
 import com.example.footballnewsmanager.fragments.manage_teams.main.popular.ManagePopularTeamsViewModel;
@@ -92,6 +95,7 @@ public class ManageTeamsMainViewModel extends BaseViewModel implements RecyclerV
         Log.d("ManageTeams", "onChangeItem: oldItem "+oldItem.isFavourite());
         Log.d("ManageTeams", "onChangeItem: newItem "+newItem.isFavourite());
         getActivity().runOnUiThread(() -> {
+            ((ManageTeamsActivity)getActivity()).reload = true;
             for (BaseFragment fragment : fragments) {
                 if (fragment instanceof ManageSelectedTeamsFragment) {
                     ManageSelectedTeamsViewModel viewModel = (ManageSelectedTeamsViewModel) fragment.viewModel;
@@ -105,6 +109,25 @@ public class ManageTeamsMainViewModel extends BaseViewModel implements RecyclerV
             }
         });
     }
+
+//    public void reload(){
+//        for (BaseFragment fragment : ) {
+//            if (fragment instanceof ManageSelectedTeamsFragment) {
+//                ManageSelectedTeamsViewModel viewModel = (ManageSelectedTeamsViewModel) fragment.viewModel;
+//                if (viewModel != null)
+//                    viewModel.load();
+//            } else if (fragment instanceof ManagePopularTeamsFragment) {
+//                ManagePopularTeamsViewModel viewModel = (ManagePopularTeamsViewModel) fragment.viewModel;
+//                if (viewModel != null)
+//                    viewModel.load();
+//            }
+//            else if(fragment instanceof ManageTeamsFromLeagueFragment){
+//                ManageTeamsFromLeagueViewModel viewModel = (ManageTeamsFromLeagueViewModel) fragment.viewModel;
+//                if(viewModel != null)
+//                    viewModel.load();
+//            }
+//        }
+//    }
 
     @Override
     public void onChangeItems() {

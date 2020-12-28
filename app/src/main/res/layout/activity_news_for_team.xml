@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.activites.news_for_team.ForTeamViewItemsModel" />
+            type="com.example.footballnewsmanager.activites.news_for_team.NewsForTeamViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

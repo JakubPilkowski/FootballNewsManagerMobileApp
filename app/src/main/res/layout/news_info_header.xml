@@ -15,29 +15,52 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="12dp"
         tools:context=".fragments.main.news_info.NewsInfoFragment">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="9dp"
-            android:text="Informacje"
-            android:textAlignment="center"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="30sp"
-            android:textStyle="bold|italic" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="9dp"
-            android:background="@color/colorPrimary" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="18dp"
+            >
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Informacje"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="20sp"
+                android:textStyle="italic" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary" />
+
+        </LinearLayout>
+
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_marginBottom="9dp"-->
+<!--            android:background="@color/playerColor" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -57,16 +80,16 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="9dp"
-            android:background="@color/colorPrimary" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_marginBottom="9dp"-->
+<!--            android:background="@color/playerColor" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="18dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -86,16 +109,16 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="9dp"
-            android:background="@color/colorPrimary" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_marginBottom="9dp"-->
+<!--            android:background="@color/playerColor" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="18dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -115,16 +138,16 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="9dp"
-            android:background="@color/colorPrimary" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_marginBottom="9dp"-->
+<!--            android:background="@color/playerColor" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="18dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -144,16 +167,16 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="9dp"
-            android:background="@color/colorPrimary" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_marginBottom="9dp"-->
+<!--            android:background="@color/playerColor" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="18dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -173,20 +196,47 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="9dp"
-            android:background="@color/colorPrimary" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_marginBottom="9dp"-->
+<!--            android:background="@color/playerColor" />-->
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="Dotyczy:"
-            android:textAlignment="center"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="24sp" />
+            android:layout_marginBottom="18dp"
+            android:gravity="center_vertical"
+            >
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dotyczy"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="20sp"
+                android:textStyle="italic" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary" />
+
+        </LinearLayout>
+
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:background="@color/playerColor" />-->
     </LinearLayout>
 </layout>

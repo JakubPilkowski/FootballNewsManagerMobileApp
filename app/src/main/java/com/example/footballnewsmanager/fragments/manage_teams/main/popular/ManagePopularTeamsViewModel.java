@@ -7,7 +7,6 @@ import androidx.databinding.ObservableField;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.adapters.manage_teams.popular.ManagePopularTeamsAdapter;
-import com.example.footballnewsmanager.adapters.proposed_teams.ProposedTeamsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -43,9 +42,16 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
         Connection.get().proposedTeams(callback, token, currentPage);
     }
 
+    public void load(){
+        currentPage = 0;
+        loadingVisibility.set(true);
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().proposedTeams(callback, token, currentPage);
+    }
+
     private void initItemsView(ProposedTeamsResponse proposedTeamsResponse) {
         managePopularTeamsAdapter = new ManagePopularTeamsAdapter(getActivity());
-        managePopularTeamsAdapter.setItems(proposedTeamsResponse.getTeams());
+        managePopularTeamsAdapter.setItems(proposedTeamsResponse.getTeams(), currentPage);
         managePopularTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
 
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
@@ -85,7 +91,7 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
                 });
             } else {
                 getActivity().runOnUiThread(() -> {
-                    managePopularTeamsAdapter.setItems(proposedTeamsResponse.getTeams());
+                    managePopularTeamsAdapter.setItems(proposedTeamsResponse.getTeams(), currentPage);
                     isLastPage = proposedTeamsResponse.getPages() <= currentPage;
                     managePopularTeamsAdapter.isLoading = false;
                 });

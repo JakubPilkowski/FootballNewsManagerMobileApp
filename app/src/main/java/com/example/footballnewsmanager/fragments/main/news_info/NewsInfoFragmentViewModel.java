@@ -39,23 +39,22 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
 
     private UserNews news;
     private NewsInfoAdapter newsInfoAdapter;
+    private List<Tag> tags = new ArrayList<>();
 
     public void init(UserNews news) {
         this.news = news;
-        loadingVisibility.set(true);
-        String token = UserPreferences.get().getAuthToken();
-        List<Tag> tags = new ArrayList<>();
         for (NewsTag newsTag : news.getNews().getTags()) {
             tags.add(newsTag.getTag());
         }
-        TeamsFromTagsRequest request = new TeamsFromTagsRequest(tags);
-        Connection.get().findByTags(callback, token, request);
+        load();
     }
 
-    public void initItemsView(TeamsResponse teamsResponse){
-        newsInfoAdapter = new NewsInfoAdapter(getActivity());
-        adapterObservable.set(newsInfoAdapter);
-        newsInfoAdapter.setUserNews(news);
+    public void initItemsView(TeamsResponse teamsResponse) {
+        if (newsInfoAdapter == null) {
+            newsInfoAdapter = new NewsInfoAdapter(getActivity());
+            adapterObservable.set(newsInfoAdapter);
+            newsInfoAdapter.setUserNews(news);
+        }
         newsInfoAdapter.setItems(teamsResponse.getTeams());
         loadingVisibility.set(false);
         itemsVisibility.set(true);
@@ -79,4 +78,12 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
 
         }
     };
+
+    public void load() {
+        itemsVisibility.set(false);
+        loadingVisibility.set(true);
+        String token = UserPreferences.get().getAuthToken();
+        TeamsFromTagsRequest request = new TeamsFromTagsRequest(tags);
+        Connection.get().findByTags(callback, token, request);
+    }
 }

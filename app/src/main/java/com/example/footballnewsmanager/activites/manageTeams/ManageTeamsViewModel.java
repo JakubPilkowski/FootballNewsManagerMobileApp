@@ -34,4 +34,5 @@ public class ManageTeamsViewModel extends BaseViewModel {
         title.set(fragment.getToolbarName());
     }
 
+
 }

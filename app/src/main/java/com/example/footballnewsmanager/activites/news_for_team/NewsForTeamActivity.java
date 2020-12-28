@@ -11,10 +11,11 @@ import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityNewsForTeamBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 
-public class NewsForTeamActivity extends BaseActivity<ActivityNewsForTeamBinding, ForTeamViewItemsModel> implements Providers {
+public class NewsForTeamActivity extends BaseActivity<ActivityNewsForTeamBinding, NewsForTeamViewModel> implements Providers, RecyclerViewItemsListener {
 
-
+    private boolean refresh = false;
 
     @Override
     protected void initActivity(ActivityNewsForTeamBinding binding) {
@@ -24,12 +25,20 @@ public class NewsForTeamActivity extends BaseActivity<ActivityNewsForTeamBinding
         Long id = intent.getLongExtra("id", 0L);
         String name = intent.getStringExtra("name");
         String img = intent.getStringExtra("img");
-        viewModel.init(id, name, img);
+        boolean isFavourite = intent.getBooleanExtra("favourite", false);
+        viewModel.init(id, name, img, isFavourite, this);
     }
 
     @Override
-    protected Class<ForTeamViewItemsModel> getViewModel() {
-        return ForTeamViewItemsModel.class;
+    public void onBackPressed() {
+        if(refresh)
+            setResult(RESULT_OK);
+        super.onBackPressed();
+    }
+
+    @Override
+    protected Class<NewsForTeamViewModel> getViewModel() {
+        return NewsForTeamViewModel.class;
     }
 
     @Override
@@ -60,5 +69,25 @@ public class NewsForTeamActivity extends BaseActivity<ActivityNewsForTeamBinding
     @Override
     public Navigator getNavigator() {
         return navigator;
+    }
+
+    @Override
+    public void onDetached() {
+
+    }
+
+    @Override
+    public void backToFront() {
+
+    }
+
+    @Override
+    public void onChangeItem(Object oldItem, Object newItem) {
+        refresh = true;
+    }
+
+    @Override
+    public void onChangeItems() {
+
     }
 }

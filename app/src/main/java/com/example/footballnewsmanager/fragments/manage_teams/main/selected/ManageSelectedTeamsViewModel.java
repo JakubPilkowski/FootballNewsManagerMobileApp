@@ -32,8 +32,12 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
     // TODO: Implement the ViewModel
     public void init(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
         this.recyclerViewItemsListener = recyclerViewItemsListener;
+        load();
+    }
+
+    public void load() {
         String token = UserPreferences.get().getAuthToken();
-        ProgressDialog.get().show();
+//        ProgressDialog.get().show();
         Connection.get().getFavouriteTeams(callback, token);
     }
 
