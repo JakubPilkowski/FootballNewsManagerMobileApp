@@ -1,7 +1,7 @@
 package com.example.footballnewsmanager.api.responses.main;
 
 import com.example.footballnewsmanager.models.News;
-import com.example.footballnewsmanager.models.Team;
+import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class BaseNewsAdjustment {
     private String title;
     private NewsInfoType type;
     private News news;
-    private List<Team> teams;
+    private List<UserTeam> teams;
 
 
     public BaseNewsAdjustment(String title, NewsInfoType type) {
@@ -29,7 +29,7 @@ public class BaseNewsAdjustment {
         return news;
     }
 
-    public List<Team> getTeams() {
+    public List<UserTeam> getTeams() {
         return teams;
     }
 }
