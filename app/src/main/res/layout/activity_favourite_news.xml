@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="android.view.View" />
+        <import type="android.view.View"/>
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.activites.news_for_team.NewsForTeamViewModel" />
+            type="com.example.footballnewsmanager.activites.liked_news.LikedNewsActivityViewModel" />
     </data>
 
     <LinearLayout
@@ -39,7 +39,7 @@
                     android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/news_for_team_recycler_view"
+                    android:id="@+id/favourite_news_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:overScrollMode="never"
@@ -57,7 +57,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Dla tej drużyny nie ma wiadomości"
+                        android:text="Nie ma ulubionych"
                         android:textAlignment="center"
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="20sp" />
@@ -70,5 +70,4 @@
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
-
 </layout>

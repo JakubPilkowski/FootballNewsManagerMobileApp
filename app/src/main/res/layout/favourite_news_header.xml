@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="18dp"
+    android:textSize="30sp"
+    android:text="Polubione"
+    android:textAlignment="center"
+    android:textColor="@color/colorTextPrimary"
+    android:textStyle="bold|italic"
+    android:layout_marginBottom="18dp" />

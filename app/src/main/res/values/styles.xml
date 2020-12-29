@@ -119,4 +119,13 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="FavouriteNews" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>
+        <item name="colorControlHighlight">#fff</item>
+        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>
+    </style>
+
+
 </resources>

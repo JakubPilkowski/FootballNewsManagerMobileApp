@@ -1,7 +1,5 @@
 package com.example.footballnewsmanager.api;
 
-import android.telecom.Call;
-
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
@@ -21,7 +19,6 @@ import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
 import com.example.footballnewsmanager.api.responses.sites.SitesResponse;
-import com.example.footballnewsmanager.models.User;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -233,6 +230,14 @@ public class Connection {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation());
         toggleTeamObservable.subscribe(callback);
+    }
+
+    public void getLikedNews(Callback<NewsResponse> callback, String token, int page){
+        Observable<NewsResponse> likedNewsObservable = client.getService()
+                .getLikedNews(token, page)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        likedNewsObservable.subscribe(callback);
     }
 
 }
