@@ -12,6 +12,8 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
+import com.example.footballnewsmanager.activites.main.MainActivity;
+import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -45,10 +47,15 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
     private Switch.OnCheckedChangeListener proposedNewsChangeListener = (buttonView, isChecked) -> proposedNews.set(isChecked);
 
     public void init() {
+        load();
+        proposedNewsChangeListenerAdapter.set(proposedNewsChangeListener);
+    }
+
+    public void load(){
+        itemsVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().getUserProfile(callback, token);
-        proposedNewsChangeListenerAdapter.set(proposedNewsChangeListener);
     }
 
     public void initItemsView(UserProfileResponse userProfileResponse){
@@ -57,7 +64,7 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
         proposedNews.set(userProfileResponse.getUser().isProposedNews());
         currentLanguage.set(String.valueOf(userProfileResponse.getUser().getLanguage()));
         languageDrawable.set(getActivity().getDrawable(R.drawable.ic_poland_small));
-        initValuesAnimation(userProfileResponse.getLikes().intValue(), userProfileResponse.getUser().getFavouriteTeams().size());
+        initValuesAnimation(userProfileResponse.getLikes().intValue(), userProfileResponse.getFavouritesCount().intValue());
     }
 
     private void initValuesAnimation(int likesCount, int teams) {
@@ -81,6 +88,8 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
 
     public void onManageTeamsClick(){
         //add remove teams view
+        Intent intent = new Intent(getActivity(), ManageTeamsActivity.class);
+        getActivity().startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS);
     }
     public void onLikedNewsClick(){
 

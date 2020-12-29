@@ -2,15 +2,15 @@ package com.example.footballnewsmanager.api.responses.proposed;
 
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.models.Team;
+import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.List;
 
-public class TeamsResponse extends BaseResponse {
+public class TeamsResponse {
 
-    private List<Team> teams;
+    private List<UserTeam> teams;
 
-
-    public List<Team> getTeams() {
+    public List<UserTeam> getTeams() {
         return teams;
     }
 }

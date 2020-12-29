@@ -50,6 +50,16 @@ public class SitesFragment extends BaseFragment<SitesFragmentBinding, SitesFragm
     }
 
     @Override
+    public String getToolbarName() {
+        return null;
+    }
+
+    @Override
+    public int getHomeIcon() {
+        return 0;
+    }
+
+    @Override
     public ViewDataBinding getBinding() {
         return binding;
     }

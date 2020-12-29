@@ -12,6 +12,7 @@ import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
+import com.example.footballnewsmanager.api.responses.manage_teams.LeagueResponse;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
 import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
@@ -20,6 +21,8 @@ import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
 import com.example.footballnewsmanager.api.responses.sites.SitesResponse;
+import com.example.footballnewsmanager.models.User;
+import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -113,12 +116,6 @@ public class Connection {
         toggleLikeObservable.subscribe(callback);
     }
 
-    public void toggleDisLikes(Callback<SingleNewsResponse> callback, String token, Long siteId, Long newsId) {
-        Observable<SingleNewsResponse> toggleDislikeObservable = client.getService()
-                .toggleDislikes(token, siteId, newsId).subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.computation());
-        toggleDislikeObservable.subscribe(callback);
-    }
 
     public void findByTags(Callback<TeamsResponse> callback, String token, TeamsFromTagsRequest request) {
         Observable<TeamsResponse> teamsObservable = client.getService()
@@ -205,4 +202,38 @@ public class Connection {
                 .observeOn(Schedulers.computation());
         accountObservable.subscribe(callback);
     }
+
+    public void getLeagues(Callback<LeagueResponse> callback, String token){
+        Observable<LeagueResponse> leagueObservable = client.getService()
+                .getLeagues(token)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        leagueObservable.subscribe(callback);
+    }
+
+    public void getTeamsFromLeague(Callback<TeamsResponse> callback, String token, Long leagueId, int page){
+        Observable<TeamsResponse> teamsFromLeagueObservable = client.getService()
+                .getTeamsFromLeague(token, leagueId, page)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        teamsFromLeagueObservable.subscribe(callback);
+    }
+
+    public void getFavouriteTeams(Callback<TeamsResponse> callback, String token){
+        Observable<TeamsResponse> favouriteTeamsObservable = client.getService()
+                .getFavouriteTeams(token)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        favouriteTeamsObservable.subscribe(callback);
+    }
+
+    public void toggleTeam(Callback<UserTeam> callback, String token, Long id){
+        Observable<UserTeam> toggleTeamObservable = client.getService()
+                .toggleTeam(token, id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation());
+        toggleTeamObservable.subscribe(callback);
+    }
+
 }
+

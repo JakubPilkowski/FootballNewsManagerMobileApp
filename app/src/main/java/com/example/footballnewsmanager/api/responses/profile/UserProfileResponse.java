@@ -6,6 +6,7 @@ public class UserProfileResponse {
 
     private User user;
     private Long likes;
+    private Long favouritesCount;
 
     public User getUser() {
         return user;
@@ -13,5 +14,9 @@ public class UserProfileResponse {
 
     public Long getLikes() {
         return likes;
+    }
+
+    public Long getFavouritesCount() {
+        return favouritesCount;
     }
 }

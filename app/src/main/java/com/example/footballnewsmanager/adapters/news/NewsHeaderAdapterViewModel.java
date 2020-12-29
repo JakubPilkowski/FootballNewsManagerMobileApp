@@ -8,7 +8,7 @@ import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -19,11 +19,11 @@ public class NewsHeaderAdapterViewModel {
     public ObservableField<String> countAll = new ObservableField<>();
     public ObservableField<String> countToday = new ObservableField<>();
 
-    private NewsRecyclerViewListener newsRecyclerViewListener;
-    public void init(Long countAll, Long countToday, NewsRecyclerViewListener newsRecyclerViewListener) {
+    private RecyclerViewItemsListener recyclerViewItemsListener;
+    public void init(Long countAll, Long countToday, RecyclerViewItemsListener recyclerViewItemsListener) {
         this.countAll.set("Łącznie: "+countAll);
         this.countToday.set("Dzisiaj: "+ countToday);
-        this.newsRecyclerViewListener = newsRecyclerViewListener;
+        this.recyclerViewItemsListener = recyclerViewItemsListener;
     }
 
     public void onClick(){
@@ -35,7 +35,7 @@ public class NewsHeaderAdapterViewModel {
     private Callback<BaseResponse> callback = new Callback<BaseResponse>() {
         @Override
         public void onSuccess(BaseResponse baseResponse) {
-            newsRecyclerViewListener.onChangeItems();
+            recyclerViewItemsListener.onChangeItems();
         }
 
         @Override

@@ -1,16 +1,11 @@
 package com.example.footballnewsmanager.adapters;
 
-import android.widget.ListView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.footballnewsmanager.base.BaseFragment;
-import com.example.footballnewsmanager.fragments.proposed_settings.others.ProposedOthersFragment;
-import com.example.footballnewsmanager.fragments.proposed_settings.sites.ProposedSitesFragment;
-import com.example.footballnewsmanager.fragments.proposed_settings.teams.ProposedTeamsFragment;
 
 import java.util.ArrayList;
 import java.util.List;

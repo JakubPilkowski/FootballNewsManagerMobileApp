@@ -3,6 +3,7 @@ package com.example.footballnewsmanager.helpers;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -67,7 +68,6 @@ public class NewsPlaceholder extends LinearLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
                 onAnimationRepeat(animation);
-
             }
 
             @Override
@@ -79,9 +79,9 @@ public class NewsPlaceholder extends LinearLayout {
 
     @Override
     protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
-        if(visibility == VISIBLE)
+        if (visibility == VISIBLE && bottleView.getAnimation() == null) {
             bottleView.startAnimation(animation);
-        else
+        } else if (visibility == INVISIBLE)
             bottleView.clearAnimation();
         super.onVisibilityChanged(changedView, visibility);
     }

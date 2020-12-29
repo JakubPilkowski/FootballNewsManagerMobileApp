@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.fragments.main.news;
 
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.databinding.ObservableBoolean;
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.activites.main.MainActivity;
+import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity;
 import com.example.footballnewsmanager.adapters.news.NewsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -22,13 +25,13 @@ import com.example.footballnewsmanager.helpers.NewsPlaceholder;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
-import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserNews;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
-public class NewsFragmentViewModel extends BaseViewModel implements NewsRecyclerViewListener {
+public class NewsFragmentViewModel extends BaseViewModel implements RecyclerViewItemsListener<UserNews> {
     // TODO: Implement the ViewModel
 
     public ObservableField<NewsAdapter> adapterObservable = new ObservableField<>();
@@ -51,6 +54,12 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         swipeRefreshListenerObservable.set(this::updateNews);
         initPlaceholder();
         recyclerView = ((NewsFragmentBinding) getBinding()).newsRecyclerView;
+        load();
+    }
+
+    public void load(){
+        placeholderVisibility.set(false);
+        itemsVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().news(callback, token, currentPage);
@@ -60,13 +69,15 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
         NewsPlaceholder newsPlaceholder = ((NewsFragmentBinding)getBinding()).newsPlaceholderView;
         newsPlaceholder.setOnAddTeamsInterface(() -> {
             //przejście do dodawania drużyn
+            Intent intent = new Intent(getActivity(), ManageTeamsActivity.class);
+            getActivity().startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS);
         });
     }
 
 
     private void initItemsView(NewsResponse newsResponse) {
         newsAdapter = new NewsAdapter(getActivity());
-        newsAdapter.setNewsRecyclerViewListener(this);
+        newsAdapter.setRecyclerViewItemsListener(this);
         newsAdapter.setBadgeListener(badgeListener);
         newsAdapter.setItems(newsResponse.getUserNews());
         newsAdapter.setCountAll(newsResponse.getNewsCount());
@@ -162,6 +173,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements NewsRecycler
                 }
                 if(message.equals("Dla podanej frazy nie ma żadnej drużyny"))
                 {
+                    itemsVisibility.set(false);
                     loadingVisibility.set(false);
                     placeholderVisibility.set(true);
                 }

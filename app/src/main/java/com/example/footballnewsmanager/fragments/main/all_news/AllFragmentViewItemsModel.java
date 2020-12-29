@@ -23,13 +23,13 @@ import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
-import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserNews;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
-public class AllNewsFragmentViewModel extends BaseViewModel implements NewsRecyclerViewListener {
+public class AllFragmentViewItemsModel extends BaseViewModel implements RecyclerViewItemsListener<UserNews> {
 
     public ObservableField<AllNewsAdapter> adapterObservable = new ObservableField<>();
     public ObservableField<Runnable> postRunnable = new ObservableField<>();
@@ -70,7 +70,7 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements NewsRecyc
 
     private void initItemsView(AllNewsResponse allNewsResponse) {
         newsAdapter = new AllNewsAdapter(getActivity());
-        newsAdapter.setNewsRecyclerViewListener(this);
+        newsAdapter.setRecyclerViewItemsListener(this);
         newsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getAdditionalContent());
         newsAdapter.setBadgeListener(badgeListener);
         newsAdapter.setCountAll(allNewsResponse.getNewsCount());

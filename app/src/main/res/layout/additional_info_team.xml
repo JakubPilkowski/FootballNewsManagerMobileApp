@@ -8,9 +8,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_marginEnd="12dp"
     android:layout_width="wrap_content"
-    android:layout_marginStart="9dp"
-    android:layout_marginEnd="9dp"
     android:layout_height="wrap_content">
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
@@ -46,31 +45,15 @@
                 android:layout_marginBottom="12dp"
                 />
 
-            <RelativeLayout
+            <Button
+                android:backgroundTint="@{viewModel.isFavouriteBackground ? @color/errorColor : @color/colorPrimary}"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dodaj"
-                    android:layout_centerInParent="true"
-                    android:drawablePadding="6dp"
-                    android:drawableEnd="@drawable/ic_add"
-                    android:visibility="@{viewModel.addButtonVisibility}"
-                    android:onClick="@{()->viewModel.addToggle()}"
-                    />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dodano"
-                    android:backgroundTint="#f00"
-                    android:layout_centerInParent="true"
-                    android:drawablePadding="6dp"
-                    android:drawableEnd="@drawable/ic_remove"
-                    android:visibility="@{viewModel.removeButtonVisibility}"
-                    android:onClick="@{()->viewModel.removeToggle()}"
-                    />
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:drawableEnd="@{viewModel.isFavouriteBackground ? @drawable/ic_remove : @drawable/ic_add_basic}"
+                android:onClick="@{()->viewModel.toggleFavourites()}"
+                android:text="@{viewModel.isFavouriteText}" />
+
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

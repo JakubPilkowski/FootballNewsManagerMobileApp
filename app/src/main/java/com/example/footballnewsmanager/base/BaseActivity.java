@@ -55,7 +55,6 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
 
     @Override
     public void onBackPressed() {
-
         if(getSupportFragmentManager().getBackStackEntryCount()<=1)
             finish();
         else {

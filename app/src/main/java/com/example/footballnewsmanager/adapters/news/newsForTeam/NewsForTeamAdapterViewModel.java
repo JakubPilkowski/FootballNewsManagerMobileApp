@@ -7,15 +7,13 @@ import android.util.Log;
 
 import androidx.databinding.ObservableField;
 
-import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.BadgeListener;
-import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.News;
 import com.example.footballnewsmanager.models.UserNews;
 
@@ -30,9 +28,9 @@ public class NewsForTeamAdapterViewModel {
     public UserNews news;
     private News newsDetails;
     private Activity activity;
-    private NewsRecyclerViewListener listener;
+    private RecyclerViewItemsListener listener;
 
-    public void init(UserNews news, Activity activity, NewsRecyclerViewListener listener) {
+    public void init(UserNews news, Activity activity, RecyclerViewItemsListener listener) {
         this.activity = activity;
         this.listener = listener;
         update(news);

@@ -51,6 +51,16 @@ public class ProfileFragment extends BaseFragment<ProfileFragmentBinding, Profil
     }
 
     @Override
+    public String getToolbarName() {
+        return null;
+    }
+
+    @Override
+    public int getHomeIcon() {
+        return 0;
+    }
+
+    @Override
     public ViewDataBinding getBinding() {
         return binding;
     }

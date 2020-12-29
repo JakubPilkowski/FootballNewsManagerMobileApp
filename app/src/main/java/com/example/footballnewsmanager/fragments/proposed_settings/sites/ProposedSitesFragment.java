@@ -61,6 +61,16 @@ public class ProposedSitesFragment extends BaseFragment<ProposedSitesFragmentBin
     }
 
     @Override
+    public String getToolbarName() {
+        return null;
+    }
+
+    @Override
+    public int getHomeIcon() {
+        return 0;
+    }
+
+    @Override
     public ViewDataBinding getBinding() {
         return binding;
     }

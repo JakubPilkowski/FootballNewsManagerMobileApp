@@ -26,7 +26,7 @@ import com.example.footballnewsmanager.databinding.NewsHighlightedLayoutBinding;
 import com.example.footballnewsmanager.databinding.NewsItemsPlaceholderBinding;
 import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
-import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserNews;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Long countToday;
     public boolean isLoading = false;
     public boolean isPlaceholder = false;
-    private NewsRecyclerViewListener newsRecyclerViewListener;
+    private RecyclerViewItemsListener recyclerViewItemsListener;
     private BadgeListener badgeListener;
 
     public void setItems(List<UserNews> items, BaseNewsAdjustment additionalContent) {
@@ -142,7 +142,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             });
             bottleView.startAnimation(animation);
             NewsAdapterPlaceholderViewModel viewModel = new NewsAdapterPlaceholderViewModel();
-            viewModel.init(activity, newsRecyclerViewListener);
+            viewModel.init(activity, recyclerViewItemsListener);
             NewsItemsPlaceholderBinding binding = ((PlaceholderViewHolder) holder).binding;
             binding.setViewModel(viewModel);
             return;
@@ -188,11 +188,11 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 viewModel = viewModels.get(itemsPosition);
             }
             if (items.get(itemsPosition).getNews().isHighlighted()) {
-                viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener, badgeListener);
+                viewModel.init(items.get(itemsPosition), activity, recyclerViewItemsListener, badgeListener);
                 NewsHighlightedLayoutBinding binding = ((NewsHighlightedViewHolder) holder).getBinding();
                 binding.setViewModel(viewModel);
             } else {
-                viewModel.init(items.get(itemsPosition), activity, newsRecyclerViewListener, badgeListener);
+                viewModel.init(items.get(itemsPosition), activity, recyclerViewItemsListener, badgeListener);
                 NewsLayoutBinding binding = ((NewsViewHolder) holder).getBinding();
                 binding.setViewModel(viewModel);
             }
@@ -242,7 +242,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         if (holder instanceof PlaceholderViewHolder) {
-            newsRecyclerViewListener.onDetached();
+            recyclerViewItemsListener.onDetached();
         }
     }
 
@@ -260,8 +260,8 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.countToday = countToday;
     }
 
-    public void setNewsRecyclerViewListener(NewsRecyclerViewListener newsRecyclerViewListener) {
-        this.newsRecyclerViewListener = newsRecyclerViewListener;
+    public void setRecyclerViewItemsListener(RecyclerViewItemsListener recyclerViewItemsListener) {
+        this.recyclerViewItemsListener = recyclerViewItemsListener;
     }
 
     public void refresh(AllNewsResponse userNews) {

@@ -20,7 +20,7 @@ import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.fragments.main.news_info.NewsInfoFragment;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
-import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.News;
 import com.example.footballnewsmanager.models.UserNews;
 
@@ -43,11 +43,11 @@ public class NewsAdapterViewModel {
     public UserNews news;
     private News newsDetails;
     private Activity activity;
-    private NewsRecyclerViewListener listener;
+    private RecyclerViewItemsListener<UserNews> listener;
     private BadgeListener badgeListener;
 
 
-    public void init(UserNews news, Activity activity, NewsRecyclerViewListener listener, BadgeListener badgeListener) {
+    public void init(UserNews news, Activity activity, RecyclerViewItemsListener<UserNews> listener, BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
         this.activity = activity;
         this.listener = listener;

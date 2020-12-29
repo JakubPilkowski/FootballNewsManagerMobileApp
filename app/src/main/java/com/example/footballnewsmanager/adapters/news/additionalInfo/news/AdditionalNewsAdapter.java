@@ -4,20 +4,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.adapters.news.additionalInfo.news.AdditionalNewsAdapterViewModel;
 import com.example.footballnewsmanager.base.BaseRecyclerViewAdapter;
 import com.example.footballnewsmanager.base.BaseViewHolder;
-import com.example.footballnewsmanager.databinding.AdditionalInfoNewsBinding;
-import com.example.footballnewsmanager.databinding.AdditionalInfoNewsBindingImpl;
-import com.example.footballnewsmanager.databinding.AdditionalInfoNewsBinding;
 import com.example.footballnewsmanager.databinding.AdditionalInfoNewsItemBinding;
-import com.example.footballnewsmanager.databinding.AdditionalInfoTeamBinding;
 import com.example.footballnewsmanager.models.Team;
+import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdditionalNewsAdapter extends BaseRecyclerViewAdapter<Team, BaseViewHolder> {
+public class AdditionalNewsAdapter extends BaseRecyclerViewAdapter<UserTeam, BaseViewHolder> {
 
 
     private List<AdditionalNewsAdapterViewModel> viewModels = new ArrayList<>();

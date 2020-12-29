@@ -21,21 +21,20 @@ import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.NewsRecyclerViewListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserNews;
+import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
-public class NewsForTeamViewModel extends BaseViewModel implements NewsRecyclerViewListener {
+public class NewsForTeamViewModel extends BaseViewModel implements RecyclerViewItemsListener<UserNews> {
 
 
     public static final String TAG = "NewsForTeam";
 
     public ObservableField<NewsForTeamAdapter> adapterObservable = new ObservableField<>();
     public ObservableField<Runnable> postRunnable = new ObservableField<>();
-    public ObservableField<SwipeRefreshLayout.OnRefreshListener> swipeRefreshListenerObservable = new ObservableField<>();
-    public ObservableInt swipeRefreshColor = new ObservableInt(R.color.colorPrimary);
     public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
     public ObservableBoolean placeholderVisibility = new ObservableBoolean(false);
@@ -50,14 +49,16 @@ public class NewsForTeamViewModel extends BaseViewModel implements NewsRecyclerV
     private Long id;
     private String name;
     private String img;
+    private boolean isFavourite;
+    private RecyclerViewItemsListener<UserTeam> listener;
 
 
-
-    public void init(Long id, String name, String img) {
+    public void init(Long id, String name, String img, boolean isFavourite, RecyclerViewItemsListener<UserTeam> listener) {
         this.id = id;
         this.name = name;
         this.img = img;
-        swipeRefreshListenerObservable.set(this::updateNews);
+        this.listener = listener;
+        this.isFavourite = isFavourite;
         recyclerView = ((ActivityNewsForTeamBinding) getBinding()).newsForTeamRecyclerView;
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
@@ -66,8 +67,9 @@ public class NewsForTeamViewModel extends BaseViewModel implements NewsRecyclerV
 
     private void initItemsView(NewsResponse newsResponse) {
         newsAdapter = new NewsForTeamAdapter(getActivity());
-        newsAdapter.setNewsRecyclerViewListener(this);
-        newsAdapter.setHeaderItems(name, img);
+        newsAdapter.setRecyclerViewItemsListener(this);
+        newsAdapter.setHeaderItems(id, name, img, isFavourite);
+        newsAdapter.setHeaderRecyclerViewItemsListener(listener);
         newsAdapter.setCountAll(newsResponse.getNewsCount());
         newsAdapter.setCountToday(newsResponse.getNewsToday());
         newsAdapter.setItems(newsResponse.getUserNews());

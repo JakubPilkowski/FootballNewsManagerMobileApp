@@ -3,6 +3,7 @@ package com.example.footballnewsmanager.fragments.main;
 import android.util.Log;
 import android.view.MenuItem;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +15,20 @@ import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
+import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.MainFragmentBinding;
+import com.example.footballnewsmanager.fragments.main.all_news.AllNewsFragment;
+import com.example.footballnewsmanager.fragments.main.news.NewsFragment;
+import com.example.footballnewsmanager.fragments.main.profile.ProfileFragment;
+import com.example.footballnewsmanager.fragments.main.sites.SitesFragment;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -32,12 +41,21 @@ public class MainFragmentViewModel extends BaseViewModel implements BadgeListene
     public ObservableField<BottomNavigationView.OnNavigationItemSelectedListener> navigationItemSelectedListenerObservable = new ObservableField<>();
     public ObservableField<RecyclerView.Adapter> viewPagerAdapterObservable = new ObservableField<>();
     public ObservableField<ViewPager2.OnPageChangeCallback> onPageChangeCallbackObservable = new ObservableField<>();
+    public ObservableBoolean userInputEnabled = new ObservableBoolean(false);
 
+
+    public List<BaseFragment> fragments = new ArrayList<>();
 
     public void init() {
         viewPager2 = ((MainFragmentBinding) getBinding()).mainViewpager;
         bottomNavigationView = ((MainFragmentBinding) getBinding()).mainBottomNavView;
-        MainViewPager viewPagerAdapter = new MainViewPager((FragmentActivity) getActivity(), this);
+
+        fragments.add(NewsFragment.newInstance(this));
+        fragments.add(AllNewsFragment.newInstance(this));
+        fragments.add(SitesFragment.newInstance());
+        fragments.add(ProfileFragment.newInstance());
+
+        MainViewPager viewPagerAdapter = new MainViewPager((FragmentActivity) getActivity(), fragments);
         viewPagerAdapterObservable.set(viewPagerAdapter);
         onPageChangeCallbackObservable.set(onPageChangeCallback);
         navigationItemSelectedListenerObservable.set(navigationItemSelectedListener);

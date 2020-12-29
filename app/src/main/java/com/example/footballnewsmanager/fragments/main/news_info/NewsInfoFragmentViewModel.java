@@ -1,13 +1,14 @@
 package com.example.footballnewsmanager.fragments.main.news_info;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamViewModel;
+import com.example.footballnewsmanager.adapters.news_info.NewsInfoAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -19,8 +20,8 @@ import com.example.footballnewsmanager.databinding.NewsInfoTeamLayoutBinding;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.models.NewsTag;
 import com.example.footballnewsmanager.models.Tag;
-import com.example.footballnewsmanager.models.Team;
 import com.example.footballnewsmanager.models.UserNews;
+import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,44 +32,39 @@ import io.reactivex.rxjava3.core.Observer;
 public class NewsInfoFragmentViewModel extends BaseViewModel {
     // TODO: Implement the ViewModel
 
-    public ObservableField<String> newsTitle = new ObservableField<>();
-    public ObservableField<String> siteTitle = new ObservableField<>();
-    public ObservableField<String> date = new ObservableField<>();
-    public ObservableField<String> likes = new ObservableField<>();
-    public ObservableField<String> clicks = new ObservableField<>();
+
+    public ObservableField<RecyclerView.Adapter> adapterObservable = new ObservableField<>();
+    public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
+    public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
 
     private UserNews news;
+    private NewsInfoAdapter newsInfoAdapter;
+    private List<Tag> tags = new ArrayList<>();
 
     public void init(UserNews news) {
         this.news = news;
-        newsTitle.set(news.getNews().getTitle());
-        siteTitle.set(news.getNews().getSite().getName());
-        String dateFormatted = news.getNews().getDate().replace("T"," ");
-        date.set(dateFormatted);
-        likes.set(String.valueOf(news.getNews().getLikes()));
-        clicks.set(String.valueOf(news.getNews().getClicks()));
-        String token = UserPreferences.get().getAuthToken();
-        List<Tag> tags = new ArrayList<>();
         for (NewsTag newsTag : news.getNews().getTags()) {
             tags.add(newsTag.getTag());
         }
-        TeamsFromTagsRequest request = new TeamsFromTagsRequest(tags);
-        Connection.get().findByTags(callback, token, request);
+        load();
+    }
+
+    public void initItemsView(TeamsResponse teamsResponse) {
+        if (newsInfoAdapter == null) {
+            newsInfoAdapter = new NewsInfoAdapter(getActivity());
+            adapterObservable.set(newsInfoAdapter);
+            newsInfoAdapter.setUserNews(news);
+        }
+        newsInfoAdapter.setItems(teamsResponse.getTeams());
+        loadingVisibility.set(false);
+        itemsVisibility.set(true);
     }
 
     private Callback<TeamsResponse> callback = new Callback<TeamsResponse>() {
         @Override
         public void onSuccess(TeamsResponse teamsResponse) {
             getActivity().runOnUiThread(() -> {
-                LinearLayout layout = ((NewsInfoFragmentBinding) getBinding()).newsInfoLinearLayout;
-                for (Team team : teamsResponse.getTeams()) {
-                    LinearLayout cardView = (LinearLayout) LayoutInflater.from(getFragment().getContext()).inflate(R.layout.news_info_team_layout, layout, false);
-                    NewsInfoTeamLayoutBinding binding = NewsInfoTeamLayoutBinding.bind(cardView);
-                    NewsInfoTeamViewModel viewModel = new NewsInfoTeamViewModel();
-                    binding.setViewModel(viewModel);
-                    viewModel.init(team, getActivity());
-                    layout.addView(cardView);
-                }
+                initItemsView(teamsResponse);
             });
         }
 
@@ -82,4 +78,12 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
 
         }
     };
+
+    public void load() {
+        itemsVisibility.set(false);
+        loadingVisibility.set(true);
+        String token = UserPreferences.get().getAuthToken();
+        TeamsFromTagsRequest request = new TeamsFromTagsRequest(tags);
+        Connection.get().findByTags(callback, token, request);
+    }
 }
