@@ -28,13 +28,12 @@ public class NewsForTeamAdapterViewModel {
     public UserNews news;
     private News newsDetails;
     private Activity activity;
-    private RecyclerViewItemsListener listener;
 
-    public void init(UserNews news, Activity activity, RecyclerViewItemsListener listener) {
+    public void init(UserNews news, Activity activity) {
         this.activity = activity;
-        this.listener = listener;
         update(news);
     }
+
     public void update(UserNews news) {
         this.news = news;
         this.newsDetails = news.getNews();
@@ -50,12 +49,11 @@ public class NewsForTeamAdapterViewModel {
         intent.setData(Uri.parse(newsDetails.getNewsUrl()));
         activity.startActivity(intent);
     }
+
     private Callback<SingleNewsResponse> callback = new Callback<SingleNewsResponse>() {
         @Override
         public void onSuccess(SingleNewsResponse newsResponse) {
-            activity.runOnUiThread(() -> {
-                listener.onChangeItem(news, newsResponse.getNews());
-            });
+
         }
 
         @Override

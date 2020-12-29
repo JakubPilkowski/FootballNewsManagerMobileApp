@@ -22,7 +22,7 @@ public class LikedNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private List<UserNews> items = new ArrayList<>();
 
-    private List<NewsForTeamAdapterViewModel> viewModels = new ArrayList();
+    private List<NewsForTeamAdapterViewModel> viewModels = new ArrayList<>();
 
     private static final int HEADER = 0;
     private static final int ITEM = 1;
@@ -30,7 +30,6 @@ public class LikedNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public boolean isLoading = false;
 
     private Activity activity;
-    private RecyclerViewItemsListener<UserNews> listener;
 
     public LikedNewsAdapter(Activity activity){
         this.activity = activity;
@@ -85,7 +84,7 @@ public class LikedNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             } else {
                 viewModel = viewModels.get(itemsPosition);
             }
-            viewModel.init(items.get(itemsPosition), activity, listener);
+            viewModel.init(items.get(itemsPosition), activity);
             ((ItemViewHolder) holder).binding.setViewModel(viewModel);
         }
     }
@@ -110,9 +109,6 @@ public class LikedNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return items.size() + 1;
     }
 
-    public void setListener(RecyclerViewItemsListener<UserNews> listener) {
-        this.listener = listener;
-    }
 
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
