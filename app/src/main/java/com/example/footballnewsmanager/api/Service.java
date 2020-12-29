@@ -184,4 +184,10 @@ public interface Service {
             @Header("Authorization") String token,
             @Path("tid") Long teamId
     );
+
+    @GET("news/liked")
+    Observable<NewsResponse> getLikedNews(
+            @Header("Authorization") String token,
+            @Query("page") int page
+    );
 }

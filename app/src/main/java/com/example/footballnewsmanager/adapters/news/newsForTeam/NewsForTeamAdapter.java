@@ -156,16 +156,6 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             viewModel.init(items.get(itemsPosition), activity, recyclerViewItemsListener);
             NewsForTeamItemLayoutBinding binding = ((NewsViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
-//
-//            if (items.get(itemsPosition).getNews().isHighlighted()) {
-//                viewModel.init(items.get(itemsPosition), activity, recyclerViewItemsListener, badgeListener);
-//                NewsHighlightedLayoutBinding binding = ((NewsHighlightedViewHolder) holder).getBinding();
-//                binding.setViewModel(viewModel);
-//            } else {
-//                viewModel.init(items.get(itemsPosition), activity, recyclerViewItemsListener, badgeListener);
-//                NewsLayoutBinding binding = ((NewsViewHolder) holder).getBinding();
-//                binding.setViewModel(viewModel);
-//            }
         }
 
     }

@@ -12,6 +12,7 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
+import com.example.footballnewsmanager.activites.liked_news.LikedNewsActivity;
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity;
 import com.example.footballnewsmanager.api.Callback;
@@ -92,7 +93,8 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
         getActivity().startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS);
     }
     public void onLikedNewsClick(){
-
+        Intent intent = new Intent(getActivity(), LikedNewsActivity.class);
+        getActivity().startActivity(intent);
     }
 
     @Override
