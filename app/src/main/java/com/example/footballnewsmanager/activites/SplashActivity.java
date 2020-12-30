@@ -58,11 +58,19 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void onSmthWrong(BaseError error) {
-            ProgressDialog.get().dismiss();
-            Log.d("SplashActivity", ((SingleMessageError) error).getMessage());
-            Intent intent = new Intent(SplashActivity.this, AuthActivity.class);
-            startActivity(intent);
-            finish();
+//            ProgressDialog.get().dismiss();
+            Log.d("SplashActivity", "onSmthWrong: ");
+            if(error.getStatus() == 598){
+
+            }
+            else if(error.getStatus() == 408){
+
+            }
+            else{
+                Intent intent = new Intent(SplashActivity.this, AuthActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
 
         @Override
