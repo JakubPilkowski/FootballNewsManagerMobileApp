@@ -148,10 +148,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements RecyclerView
                 loadingVisibility.set(false);
                 placeholderVisibility.set(false);
                 itemsVisibility.set(true);
-                getActivity().runOnUiThread(() -> {
-                    Log.d("News", "onSuccessFirst");
-                    initItemsView(newsResponse);
-                });
+                getActivity().runOnUiThread(() -> initItemsView(newsResponse));
             } else {
                 getActivity().runOnUiThread(() -> {
                     newsAdapter.setItems(newsResponse.getUserNews());

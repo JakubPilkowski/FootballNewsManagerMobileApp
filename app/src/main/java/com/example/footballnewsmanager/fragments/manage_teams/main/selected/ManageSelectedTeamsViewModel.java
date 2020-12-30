@@ -2,6 +2,7 @@ package com.example.footballnewsmanager.fragments.manage_teams.main.selected;
 
 import android.util.Log;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +25,8 @@ import io.reactivex.rxjava3.core.Observer;
 public class ManageSelectedTeamsViewModel extends BaseViewModel {
 
     public ObservableField<RecyclerView.Adapter> adapterObservable = new ObservableField<>();
+    public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
+    public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
     public SelectedTeamsAdapter selectedTeamsAdapter;
 
 
@@ -36,28 +39,42 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
     }
 
     public void load() {
+        itemsVisibility.set(false);
+        loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
-//        ProgressDialog.get().show();
         Connection.get().getFavouriteTeams(callback, token);
+    }
+
+    public void initTeamsView(TeamsResponse teamsResponse){
+        selectedTeamsAdapter = new SelectedTeamsAdapter(getActivity());
+        selectedTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
+        adapterObservable.set(selectedTeamsAdapter);
+        selectedTeamsAdapter.setItems(teamsResponse.getTeams());
     }
 
     private Callback<TeamsResponse> callback = new Callback<TeamsResponse>() {
         @Override
         public void onSuccess(TeamsResponse teamsResponse) {
             getActivity().runOnUiThread(() -> {
-                if (selectedTeamsAdapter == null) {
-                    selectedTeamsAdapter = new SelectedTeamsAdapter(getActivity());
-                    selectedTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
-                    adapterObservable.set(selectedTeamsAdapter);
+                if(loadingVisibility.get()){
+                    loadingVisibility.set(false);
+                    itemsVisibility.set(true);
+                    getActivity().runOnUiThread(()->{
+                        initTeamsView(teamsResponse);
+                    });
                 }
-                selectedTeamsAdapter.setItems(teamsResponse.getTeams());
-                ProgressDialog.get().dismiss();
+                else{
+                    getActivity().runOnUiThread(()-> {
+                        selectedTeamsAdapter.setItems(teamsResponse.getTeams());
+                    });
+                }
             });
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
-            ProgressDialog.get().dismiss();
+            loadingVisibility.set(false);
+            itemsVisibility.set(true);
             selectedTeamsAdapter = new SelectedTeamsAdapter(getActivity());
             selectedTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
             adapterObservable.set(selectedTeamsAdapter);

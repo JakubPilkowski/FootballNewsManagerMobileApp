@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="com.example.footballnewsmanager.fragments.manage_teams.main.popular.ManagePopularTeamsViewModel" />
     </data>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.manage_teams.main.popular.ManagePopularTeamsFragment">
+
+
+    <com.example.footballnewsmanager.helpers.LoadingView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}"
+        />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -17,8 +25,9 @@
         android:layout_height="match_parent"
         android:id="@+id/manage_popular_teams_recycler_view"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE}"
         app:recyclerViewAdapter="@{viewModel.recyclerViewAdapter}"
         />
 
-</LinearLayout>
+</RelativeLayout>
 </layout>

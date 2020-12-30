@@ -41,6 +41,12 @@ public class ManagePopularTeamsAdapter extends RecyclerView.Adapter<RecyclerView
         notifyItemRangeChanged(start, items.size());
     }
 
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+        if(!isLoading)
+            notifyItemChanged(items.size());
+    }
+
     public ManagePopularTeamsAdapter(Activity activity) {
         this.activity = activity;
     }
@@ -103,7 +109,9 @@ public class ManagePopularTeamsAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public int getItemCount() {
-        return items.size() + 1;
+        if (isLoading)
+            return items.size() + 1;
+        return items.size();
     }
 
     public void onChange(UserTeam oldTeam, UserTeam newTeam) {

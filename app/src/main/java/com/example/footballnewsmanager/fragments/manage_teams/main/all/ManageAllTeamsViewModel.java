@@ -23,31 +23,51 @@ import io.reactivex.rxjava3.core.Observer;
 public class ManageAllTeamsViewModel extends BaseViewModel {
 
     public ObservableField<RecyclerView.Adapter> adapterObservable = new ObservableField<>();
-
+    public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
+    public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
     private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
+    private ManageLeaguesAdapter manageLeaguesAdapter;
+
 
     public void init(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener){
-        Log.d("ManageAll", "init: ");
         this.recyclerViewItemsListener = recyclerViewItemsListener;
+        load();
+    }
+
+
+    public void load(){
+        itemsVisibility.set(false);
+        loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
-        ProgressDialog.get().show();
         Connection.get().getLeagues(callback, token);
     }
+
 
     private Callback<LeagueResponse> callback = new Callback<LeagueResponse>() {
         @Override
         public void onSuccess(LeagueResponse leagueResponse) {
-            getActivity().runOnUiThread(()->{
-                ManageLeaguesAdapter manageLeaguesAdapter = new ManageLeaguesAdapter(getNavigator());
-                adapterObservable.set(manageLeaguesAdapter);
-                manageLeaguesAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
-                manageLeaguesAdapter.setItems(leagueResponse.getLeagues());
-                ProgressDialog.get().dismiss();
-            });
+
+            if(loadingVisibility.get()){
+                loadingVisibility.set(false);
+                itemsVisibility.set(true);
+                getActivity().runOnUiThread(()->{
+                    manageLeaguesAdapter = new ManageLeaguesAdapter(getNavigator());
+                    manageLeaguesAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
+                    manageLeaguesAdapter.setItems(leagueResponse.getLeagues());
+                    adapterObservable.set(manageLeaguesAdapter);
+                });
+            }
+            else{
+                getActivity().runOnUiThread(()->{
+                    manageLeaguesAdapter.setItems(leagueResponse.getLeagues());
+                });
+            }
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
+            itemsVisibility.set(false);
+            loadingVisibility.set(false);
             Log.d("ManageTeams", "allTeams onSmthWrong: ");
         }
 

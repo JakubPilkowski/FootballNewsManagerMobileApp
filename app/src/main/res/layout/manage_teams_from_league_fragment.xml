@@ -4,23 +4,32 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.footballnewsmanager.fragments.manage_teams.all_teams.ManageTeamsFromLeagueViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         >
 
+        <com.example.footballnewsmanager.helpers.LoadingView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE: View.GONE}"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/manage_teams_from_league_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE}"
             app:recyclerViewAdapter="@{viewModel.adapterObservable}"
             />
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>
