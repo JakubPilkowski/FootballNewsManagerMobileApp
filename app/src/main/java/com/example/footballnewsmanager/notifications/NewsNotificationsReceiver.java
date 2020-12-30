@@ -51,7 +51,7 @@ public class NewsNotificationsReceiver extends BroadcastReceiver {
             activityIntent.putExtra("restart", "restart");
             PendingIntent contentIntent = PendingIntent.getActivity(context, 2, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            if(!notificationsAmount.equals(notifications)){
+            if(!notificationsAmount.equals(notifications) && notificationsAmount != 0){
                 Notification notification = new NotificationCompat.Builder(context, NEWS_NOTIFICATIONS_CHANNEL)
                         .setSmallIcon(R.drawable.notification_icon)
                         .setContentTitle("Dodano " + notifications + " nowych newsów!")

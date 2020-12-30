@@ -36,6 +36,8 @@ public class NewsAdapterViewModel {
     public ObservableField<String> siteLogo = new ObservableField<>();
     public ObservableField<String> siteName = new ObservableField<>();
     public ObservableBoolean likeEnabled = new ObservableBoolean(true);
+    public ObservableBoolean heartVisibility = new ObservableBoolean(true);
+    public ObservableBoolean loadingHeartVisibility = new ObservableBoolean(false);
     public ObservableInt heartDrawable = new ObservableInt();
     public ObservableInt isBadgeVisited = new ObservableInt();
     public ObservableInt isVisited = new ObservableInt();
@@ -94,6 +96,8 @@ public class NewsAdapterViewModel {
 
     public void onLikeToggle() {
         likesToggle();
+        heartVisibility.set(false);
+        loadingHeartVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().toggleLikes(callback, token, newsDetails.getSiteId(), newsDetails.getId());
     }
@@ -109,8 +113,11 @@ public class NewsAdapterViewModel {
             activity.runOnUiThread(() -> {
                 listener.onChangeItem(news, newsResponse.getNews());
             });
-            if (!newsResponse.message.equals("Odwiedzono wiadomość"))
+            if (!newsResponse.message.equals("Odwiedzono wiadomość")){
                 likesToggle();
+                loadingHeartVisibility.set(false);
+                heartVisibility.set(true);
+            }
             else {
                 badgeListener.onBadgeChange();
             }

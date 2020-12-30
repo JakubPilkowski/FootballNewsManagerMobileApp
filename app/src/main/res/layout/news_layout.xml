@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.footballnewsmanager.adapters.news.NewsAdapterViewModel" />
@@ -14,16 +16,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
-        app:cardCornerRadius="12dp"
         app:cardBackgroundColor="@{viewModel.isVisited}"
+        app:cardCornerRadius="12dp"
         app:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="9dp"
-            >
+            android:padding="9dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,26 +56,41 @@
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_margin="6dp"
-                    app:drawableAsResource="@{viewModel.isBadgeVisited}"
-                    />
+                    app:drawableAsResource="@{viewModel.isBadgeVisited}" />
 
-                <View
-                    android:id="@+id/news_heart"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="6dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="@{()->viewModel.onLikeToggle()}"
-                    app:drawableAsResource="@{viewModel.heartDrawable}"
-                    app:setEnabled="@{viewModel.likeEnabled}" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp">
+
+                    <ProgressBar
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:indeterminateDuration="1000"
+                        android:indeterminateTint="@color/colorTextPrimary"
+                        android:visibility="@{viewModel.loadingHeartVisibility ? View.VISIBLE : View.GONE}"
+                        />
+
+                    <View
+                        android:id="@+id/news_heart"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:visibility="@{viewModel.heartVisibility ? View.VISIBLE : View.GONE}"
+                        android:onClick="@{()->viewModel.onLikeToggle()}"
+                        app:drawableAsResource="@{viewModel.heartDrawable}"
+                        app:setEnabled="@{viewModel.likeEnabled}" />
+
+                </RelativeLayout>
 
                 <Button
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_marginStart="6dp"
-                    android:onClick="@{()->viewModel.onMoreInfoClick()}"
-                    android:background="@drawable/info_with_ripple" />
+                    android:background="@drawable/info_with_ripple"
+                    android:onClick="@{()->viewModel.onMoreInfoClick()}" />
             </LinearLayout>
 
             <RelativeLayout
@@ -94,71 +110,71 @@
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/news_title_background"
                     android:paddingStart="6dp"
-                    android:paddingBottom="9dp"
-                    android:paddingEnd="6dp"
                     android:paddingTop="18dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="9dp"
                     android:text="@{viewModel.title}"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="18sp" />
             </RelativeLayout>
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:elevation="2dp"-->
-<!--                android:paddingTop="6dp">-->
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:elevation="2dp"-->
+            <!--                android:paddingTop="6dp">-->
 
-<!--                <View-->
-<!--                    android:id="@+id/news_heart"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:layout_marginStart="6dp"-->
-<!--                    android:layout_marginBottom="3dp"-->
-<!--                    android:clickable="true"-->
-<!--                    android:focusable="true"-->
-<!--                    android:onLogoutClick="@{()->viewModel.onLikeToggle()}"-->
-<!--                    app:drawableAsResource="@{viewModel.heartDrawable}"-->
-<!--                    app:setEnabled="@{viewModel.likeEnabled}" />-->
+            <!--                <View-->
+            <!--                    android:id="@+id/news_heart"-->
+            <!--                    android:layout_width="30dp"-->
+            <!--                    android:layout_height="30dp"-->
+            <!--                    android:layout_marginStart="6dp"-->
+            <!--                    android:layout_marginBottom="3dp"-->
+            <!--                    android:clickable="true"-->
+            <!--                    android:focusable="true"-->
+            <!--                    android:onLogoutClick="@{()->viewModel.onLikeToggle()}"-->
+            <!--                    app:drawableAsResource="@{viewModel.heartDrawable}"-->
+            <!--                    app:setEnabled="@{viewModel.likeEnabled}" />-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="6dp"-->
-<!--                    android:background="@drawable/green_ripple"-->
-<!--                    android:onLogoutClick="@{()->viewModel.onLikeToggle()}"-->
-<!--                    android:text="@{viewModel.likes}"-->
-<!--                    android:textColor="#000"-->
-<!--                    android:textSize="20sp" />-->
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="6dp"-->
+            <!--                    android:background="@drawable/green_ripple"-->
+            <!--                    android:onLogoutClick="@{()->viewModel.onLikeToggle()}"-->
+            <!--                    android:text="@{viewModel.likes}"-->
+            <!--                    android:textColor="#000"-->
+            <!--                    android:textSize="20sp" />-->
 
-<!--                <View-->
-<!--                    android:id="@+id/news_heart_break"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:layout_marginStart="18dp"-->
-<!--                    android:clickable="true"-->
-<!--                    android:focusable="true"-->
-<!--                    android:onLogoutClick="@{()->viewModel.onDislikeToggle()}"-->
-<!--                    app:drawableAsResource="@{viewModel.heartbreakDrawable}"-->
-<!--                    app:setEnabled="@{viewModel.dislikeEnabled}" />-->
+            <!--                <View-->
+            <!--                    android:id="@+id/news_heart_break"-->
+            <!--                    android:layout_width="30dp"-->
+            <!--                    android:layout_height="30dp"-->
+            <!--                    android:layout_marginStart="18dp"-->
+            <!--                    android:clickable="true"-->
+            <!--                    android:focusable="true"-->
+            <!--                    android:onLogoutClick="@{()->viewModel.onDislikeToggle()}"-->
+            <!--                    app:drawableAsResource="@{viewModel.heartbreakDrawable}"-->
+            <!--                    app:setEnabled="@{viewModel.dislikeEnabled}" />-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="6dp"-->
-<!--                    android:onLogoutClick="@{()->viewModel.onDislikeToggle()}"-->
-<!--                    android:text="@{viewModel.dislikes}"-->
-<!--                    android:textColor="#000"-->
-<!--                    android:textSize="20sp" />-->
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="6dp"-->
+            <!--                    android:onLogoutClick="@{()->viewModel.onDislikeToggle()}"-->
+            <!--                    android:text="@{viewModel.dislikes}"-->
+            <!--                    android:textColor="#000"-->
+            <!--                    android:textSize="20sp" />-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@{viewModel.date}"-->
-<!--                    android:textAlignment="textEnd"-->
-<!--                    android:textColor="#000"-->
-<!--                    android:paddingTop="3dp"-->
-<!--                    android:textSize="14sp" />-->
-<!--            </LinearLayout>-->
+            <!--                <TextView-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="@{viewModel.date}"-->
+            <!--                    android:textAlignment="textEnd"-->
+            <!--                    android:textColor="#000"-->
+            <!--                    android:paddingTop="3dp"-->
+            <!--                    android:textSize="14sp" />-->
+            <!--            </LinearLayout>-->
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

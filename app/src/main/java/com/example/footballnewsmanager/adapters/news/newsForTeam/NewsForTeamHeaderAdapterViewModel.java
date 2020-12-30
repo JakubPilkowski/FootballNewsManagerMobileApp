@@ -25,6 +25,9 @@ public class NewsForTeamHeaderAdapterViewModel {
     public ObservableField<String> countToday = new ObservableField<>();
     public ObservableField<String> isFavouriteText = new ObservableField<>();
     public ObservableBoolean isFavouriteBackground = new ObservableBoolean();
+    public ObservableBoolean loadingButtonVisibility = new ObservableBoolean(false);
+    public ObservableBoolean toggleButtonVisibility = new ObservableBoolean(true);
+
 
     private boolean isFavourite;
     private Long id;
@@ -48,6 +51,8 @@ public class NewsForTeamHeaderAdapterViewModel {
 
 
     public void toggleFavourites(){
+        toggleButtonVisibility.set(false);
+        loadingButtonVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().toggleTeam(callback, token, id);
     }
@@ -56,6 +61,8 @@ public class NewsForTeamHeaderAdapterViewModel {
         @Override
         public void onSuccess(UserTeam newsUserTeam) {
             updateFavouriteState(newsUserTeam.isFavourite());
+            loadingButtonVisibility.set(false);
+            toggleButtonVisibility.set(true);
             headerRecyclerViewItemsListener.onChangeItem(new UserTeam(), newsUserTeam);
         }
 
