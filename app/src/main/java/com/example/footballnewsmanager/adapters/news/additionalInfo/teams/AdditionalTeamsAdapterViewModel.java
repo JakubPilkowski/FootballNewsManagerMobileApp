@@ -27,6 +27,8 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
     public ObservableField<String> logoUrl = new ObservableField<>();
     public ObservableField<String> isFavouriteText = new ObservableField<>();
     public ObservableBoolean isFavouriteBackground = new ObservableBoolean();
+    public ObservableBoolean loadingButtonVisibility = new ObservableBoolean(false);
+    public ObservableBoolean toggleButtonVisibility = new ObservableBoolean(true);
     private UserTeam team;
 
     @Override
@@ -46,6 +48,8 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
 
 
     public void toggleFavourites(){
+        toggleButtonVisibility.set(false);
+        loadingButtonVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().toggleTeam(callback, token, team.getTeam().getId());
     }
@@ -55,6 +59,8 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
         public void onSuccess(UserTeam newsUserTeam) {
             team = newsUserTeam;
             updateFavouriteState(newsUserTeam.isFavourite());
+            loadingButtonVisibility.set(false);
+            toggleButtonVisibility.set(true);
 //            headerRecyclerViewItemsListener.onChangeItem(new UserTeam(), newsUserTeam);
         }
 

@@ -21,6 +21,10 @@ public abstract class BaseRecyclerViewAdapter<T, VH extends BaseViewHolder> exte
         notifyDataSetChanged();
     }
 
+    public ArrayList<T> getItems() {
+        return items;
+    }
+
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

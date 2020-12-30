@@ -22,12 +22,11 @@ import com.example.footballnewsmanager.models.UserNews;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
-public class LikedNewsActivityViewModel extends BaseViewModel implements RecyclerViewItemsListener<UserNews>{
+public class LikedNewsActivityViewModel extends BaseViewModel{
 
 
 
     public ObservableField<LikedNewsAdapter> adapterObservable = new ObservableField<>();
-    public ObservableField<Runnable> postRunnable = new ObservableField<>();
     public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
     public ObservableBoolean placeholderVisibility = new ObservableBoolean(false);
@@ -52,7 +51,6 @@ public class LikedNewsActivityViewModel extends BaseViewModel implements Recycle
 
     private void initItemsView(NewsResponse newsResponse) {
         likedNewsAdapter = new LikedNewsAdapter(getActivity());
-        likedNewsAdapter.setListener(this);
         likedNewsAdapter.setItems(newsResponse.getUserNews());
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
             @Override
@@ -122,23 +120,5 @@ public class LikedNewsActivityViewModel extends BaseViewModel implements Recycle
 
         }
     };
-
-    @Override
-    public void onDetached() {
-    }
-
-    @Override
-    public void backToFront() {
-    }
-
-    @Override
-    public void onChangeItem(UserNews oldNews, UserNews newNews) {
-    }
-
-
-    @Override
-    public void onChangeItems() {
-//        updateNews();
-    }
 
 }

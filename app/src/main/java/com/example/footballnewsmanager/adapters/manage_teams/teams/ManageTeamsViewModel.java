@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 
@@ -27,6 +28,8 @@ public class ManageTeamsViewModel {
     public ObservableField<String> name = new ObservableField<>();
     public ObservableField<String> img = new ObservableField<>();
     public ObservableInt toggleImg = new ObservableInt();
+    public ObservableBoolean loadingButtonVisibility = new ObservableBoolean(false);
+    public ObservableBoolean toggleButtonVisibility = new ObservableBoolean(true);
 
     private UserTeam userTeam;
     private Team team;
@@ -48,6 +51,7 @@ public class ManageTeamsViewModel {
         this.innerRecyclerViewItemsListener = innerRecyclerViewListener;
         update(userTeam);
     }
+
     public void onTeamClick() {
         Intent intent = new Intent(activity, NewsForTeamActivity.class);
         intent.putExtra("id", team.getId());
@@ -58,6 +62,8 @@ public class ManageTeamsViewModel {
     }
 
     public void toggleTeam() {
+        toggleButtonVisibility.set(false);
+        loadingButtonVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().toggleTeam(callback, token, team.getId());
     }
@@ -65,11 +71,9 @@ public class ManageTeamsViewModel {
     private Callback<UserTeam> callback = new Callback<UserTeam>() {
         @Override
         public void onSuccess(UserTeam newsUserTeam) {
-
-            Log.d("ManageTeams", "onSuccess: userTeam "+userTeam.isFavourite());
-            Log.d("ManageTeams", "onSuccess: newTeam "+ newsUserTeam.isFavourite());
+            loadingButtonVisibility.set(false);
+            toggleButtonVisibility.set(true);
             recyclerViewItemsListener.onChangeItem(userTeam, newsUserTeam);
-
             if(innerRecyclerViewItemsListener != null){
                 innerRecyclerViewItemsListener.onChangeItem(userTeam, newsUserTeam);
             }

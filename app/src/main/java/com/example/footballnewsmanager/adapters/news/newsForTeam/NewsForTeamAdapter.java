@@ -33,12 +33,9 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final static int HEADER = 0;
     private final static int ITEM = 1;
     private final static int ITEM_LOADING = 2;
-    private final static int PLACEHOLDER = 3;
 
     public boolean isLoading = false;
-    public boolean isPlaceholder = false;
     private RecyclerViewItemsListener<UserTeam> headerRecyclerViewItemsListener;
-    private RecyclerViewItemsListener recyclerViewItemsListener;
     private Long countAll;
     private Long countToday;
     private String name;
@@ -46,17 +43,14 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private boolean isFavourite;
     private Long id;
 
-
     public void setItems(List<UserNews> items) {
         int start = this.items.size();
         this.items.addAll(items);
         notifyItemRangeChanged(start + 1, items.size());
     }
 
-    public void setPlaceholder(boolean placeholder) {
-        Log.d(NewsForTeamViewModel.TAG, "setPlaceholder: ");
-        isPlaceholder = placeholder;
-        notifyDataSetChanged();
+    public List<UserNews> getItems() {
+        return items;
     }
 
     public void setCountAll(Long countAll) {
@@ -67,18 +61,17 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.countToday = countToday;
     }
 
-    public void refresh(NewsResponse userNews) {
-        items.clear();
-        viewModels.clear();
-        notifyItemRangeRemoved(0, items.size() + 2);
-        setItems(userNews.getUserNews());
-    }
-
 
     public NewsForTeamAdapter(Activity activity) {
         this.activity = activity;
     }
 
+
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+        if(!isLoading)
+            notifyItemChanged(items.size()+1);
+    }
 
     @NonNull
     @Override
@@ -100,11 +93,6 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_progress_view, parent, false);
                 return new ProgressViewHolder(view);
             }
-            case PLACEHOLDER: {
-                Log.d("News", "onCreateViewHolder Placeholder");
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_for_team_placeholder, parent, false);
-                return new PlaceholderViewHolder(view);
-            }
             default:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_for_team_item_layout, parent, false);
                 NewsForTeamItemLayoutBinding allNewsLayoutBinding = NewsForTeamItemLayoutBinding.bind(view);
@@ -114,29 +102,7 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (position == items.size() + 1 && !isPlaceholder)
-            return;
-        else if (position == items.size() + 1 && isPlaceholder) {
-            View bottleView = ((PlaceholderViewHolder) holder).itemView.findViewById(R.id.news_for_team_placeholder_bottle);
-            Animation animation = AnimationUtils.loadAnimation(bottleView.getContext(), R.anim.shake);
-            animation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    bottleView.startAnimation(animation);
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    onAnimationRepeat(animation);
-
-                }
-
-                @Override
-                public void onAnimationRepeat(final Animation animation) {
-                    new Handler().postDelayed(() -> onAnimationStart(animation), 750);
-                }
-            });
-            bottleView.startAnimation(animation);
+        if (position == items.size() + 1 && isLoading) {
             return;
         } else if (position == 0) {
             NewsForTeamHeaderAdapterViewModel viewModel = new NewsForTeamHeaderAdapterViewModel();
@@ -153,24 +119,18 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             } else {
                 viewModel = viewModels.get(itemsPosition);
             }
-            viewModel.init(items.get(itemsPosition), activity, recyclerViewItemsListener);
-            NewsForTeamItemLayoutBinding binding = ((NewsViewHolder) holder).getBinding();
-            binding.setViewModel(viewModel);
+            viewModel.init(items.get(itemsPosition), activity);
+            ((NewsViewHolder) holder).binding.setViewModel(viewModel);
         }
 
     }
-
-    public void setRecyclerViewItemsListener(RecyclerViewItemsListener recyclerViewItemsListener) {
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
-    }
-
 
     @Override
     public int getItemViewType(int position) {
         if (position == 0)
             return HEADER;
         else if (position == items.size() + 1) {
-            return isPlaceholder ? PLACEHOLDER : ITEM_LOADING;
+            return ITEM_LOADING;
         } else {
             return ITEM;
         }
@@ -178,23 +138,15 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return items.size() + 2;
-    }
-
-
-    @Override
-    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
-        super.onViewDetachedFromWindow(holder);
-        if (holder instanceof PlaceholderViewHolder) {
-            recyclerViewItemsListener.onDetached();
+        if (isLoading)
+        {
+            Log.d("ItemCount", "getItemCount: true");
+            return items.size() + 2;
         }
+        Log.d("ItemCount", "getItemCount: false");
+        return items.size() + 1;
     }
 
-    public void onChange(UserNews oldNews, UserNews newNews) {
-        int index = items.indexOf(oldNews);
-        items.set(index, newNews);
-        viewModels.get(index).update(newNews);
-    }
 
     public void setHeaderItems(Long id, String name, String img, boolean isFavourite) {
         this.id = id;
@@ -239,13 +191,6 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public class ProgressViewHolder extends RecyclerView.ViewHolder {
 
         public ProgressViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
-
-    public class PlaceholderViewHolder extends RecyclerView.ViewHolder {
-
-        public PlaceholderViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }

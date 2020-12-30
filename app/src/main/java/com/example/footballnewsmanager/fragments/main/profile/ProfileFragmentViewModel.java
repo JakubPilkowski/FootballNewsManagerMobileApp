@@ -8,7 +8,9 @@ import android.widget.Switch;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
@@ -22,6 +24,7 @@ import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
+import com.example.footballnewsmanager.databinding.ProfileFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.ProposedLanguageDialogManager;
 import com.example.footballnewsmanager.helpers.UserPreferences;
@@ -36,6 +39,8 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
 
     public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
+    public ObservableInt swipeRefreshColor = new ObservableInt(R.color.colorPrimary);
+    public ObservableField<SwipeRefreshLayout.OnRefreshListener> swipeRefreshListenerObservable = new ObservableField<>();
     public ObservableField<String> name = new ObservableField<>();
     public ObservableField<String> date = new ObservableField<>();
     public ObservableField<String> likes = new ObservableField<>("0");
@@ -46,40 +51,36 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
     public ObservableField<Drawable> languageDrawable = new ObservableField<>();
 
     private Switch.OnCheckedChangeListener proposedNewsChangeListener = (buttonView, isChecked) -> proposedNews.set(isChecked);
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
     public void init() {
+        swipeRefreshLayout = ((ProfileFragmentBinding) getBinding()).profileSwipeRefresh;
         load();
         proposedNewsChangeListenerAdapter.set(proposedNewsChangeListener);
+        swipeRefreshListenerObservable.set(this::refresh);
     }
 
-    public void load(){
+    public void load() {
         itemsVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().getUserProfile(callback, token);
     }
 
-    public void initItemsView(UserProfileResponse userProfileResponse){
+    public void refresh() {
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().getUserProfile(callback, token);
+    }
+
+    public void initItemsView(UserProfileResponse userProfileResponse) {
         name.set(userProfileResponse.getUser().getUsername());
-        date.set("Konto od : " +userProfileResponse.getUser().getAddedDate().split("T")[0]);
+        date.set("Konto od : " + userProfileResponse.getUser().getAddedDate().split("T")[0]);
         proposedNews.set(userProfileResponse.getUser().isProposedNews());
         currentLanguage.set(String.valueOf(userProfileResponse.getUser().getLanguage()));
         languageDrawable.set(getActivity().getDrawable(R.drawable.ic_poland_small));
-        initValuesAnimation(userProfileResponse.getLikes().intValue(), userProfileResponse.getFavouritesCount().intValue());
-    }
-
-    private void initValuesAnimation(int likesCount, int teams) {
-        ValueAnimator likesAnimator = ValueAnimator.ofInt(0, likesCount);
-        likesAnimator.setDuration(1000);
-        likesAnimator.setInterpolator(new FastOutSlowInInterpolator());
-        likesAnimator.addUpdateListener(animation -> likes.set(String.valueOf((int)animation.getAnimatedValue())));
-        likesAnimator.start();
-
-        ValueAnimator teamsCountAnimator = ValueAnimator.ofInt(0, teams);
-        teamsCountAnimator.setDuration(1000);
-        teamsCountAnimator.setInterpolator(new FastOutSlowInInterpolator());
-        teamsCountAnimator.addUpdateListener(animation -> teamsCount.set(String.valueOf((int)animation.getAnimatedValue())));
-        teamsCountAnimator.start();
+        likes.set(String.valueOf(userProfileResponse.getLikes()));
+        teamsCount.set(String.valueOf(userProfileResponse.getFavouritesCount()));
     }
 
     public void languageClick() {
@@ -87,12 +88,13 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
     }
 
 
-    public void onManageTeamsClick(){
+    public void onManageTeamsClick() {
         //add remove teams view
         Intent intent = new Intent(getActivity(), ManageTeamsActivity.class);
         getActivity().startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS);
     }
-    public void onLikedNewsClick(){
+
+    public void onLikedNewsClick() {
         Intent intent = new Intent(getActivity(), LikedNewsActivity.class);
         getActivity().startActivity(intent);
     }
@@ -107,11 +109,12 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
     private Callback<UserProfileResponse> callback = new Callback<UserProfileResponse>() {
         @Override
         public void onSuccess(UserProfileResponse userProfileResponse) {
-                loadingVisibility.set(false);
-                itemsVisibility.set(true);
-                getActivity().runOnUiThread(() -> {
-                    initItemsView(userProfileResponse);
-                });
+            loadingVisibility.set(false);
+            itemsVisibility.set(true);
+            getActivity().runOnUiThread(() -> {
+                swipeRefreshLayout.setRefreshing(false);
+                initItemsView(userProfileResponse);
+            });
 
         }
 
@@ -120,7 +123,10 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
 //            if(error instanceof SingleMessageError){
 //                String message = ((SingleMessageError) error).getMessage();
 //                if(message.equals("Nie ma już więcej wyników")){
-                    loadingVisibility.set(false);
+            getActivity().runOnUiThread(() -> {
+                swipeRefreshLayout.setRefreshing(false);
+                loadingVisibility.set(false);
+            });
 //                }
 //                if(message.equals("Dla podanej frazy nie ma żadnej drużyny"))
 //                {
@@ -141,7 +147,7 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
         Connection.get().logout(accountCallback, token);
     }
 
-    public void onDeleteAccountClick(){
+    public void onDeleteAccountClick() {
         ProgressDialog.get().show();
         String token = UserPreferences.get().getAuthToken();
         Connection.get().deleteAccount(accountCallback, token);

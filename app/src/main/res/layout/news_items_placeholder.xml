@@ -58,23 +58,5 @@
             android:onClick="@{()->viewModel.showTeamsFragment()}"
             android:text="Dodaj drużyny" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Wróć na początek"
-            android:textAlignment="center"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/news_arrow_background"
-            android:onClick="@{()->viewModel.backToFront()}"
-            android:padding="12dp"
-            android:src="@drawable/ic_arrow_up" />
-
     </LinearLayout>
 </layout>

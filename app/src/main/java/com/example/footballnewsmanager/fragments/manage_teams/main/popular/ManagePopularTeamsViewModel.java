@@ -34,16 +34,16 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
     private boolean isLastPage = false;
     private int currentPage = 0;
     private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
-    public void init(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener){
-        recyclerView = ((ManagePopularTeamsFragmentBinding)getBinding()).managePopularTeamsRecyclerView;
+
+    public void init(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
+        recyclerView = ((ManagePopularTeamsFragmentBinding) getBinding()).managePopularTeamsRecyclerView;
         this.recyclerViewItemsListener = recyclerViewItemsListener;
-        loadingVisibility.set(true);
-        String token = UserPreferences.get().getAuthToken();
-        Connection.get().proposedTeams(callback, token, currentPage);
+        load();
     }
 
-    public void load(){
+    public void load() {
         currentPage = 0;
+        itemsVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().proposedTeams(callback, token, currentPage);
@@ -59,7 +59,7 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
             protected void loadMoreItems() {
                 Log.d("News", "loadMoreItems");
                 currentPage++;
-                managePopularTeamsAdapter.isLoading = true;
+                managePopularTeamsAdapter.setLoading(true);
                 String token = UserPreferences.get().getAuthToken();
                 Connection.get().proposedTeams(callback, token, currentPage);
             }
@@ -93,15 +93,17 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
                 getActivity().runOnUiThread(() -> {
                     managePopularTeamsAdapter.setItems(proposedTeamsResponse.getTeams(), currentPage);
                     isLastPage = proposedTeamsResponse.getPages() <= currentPage;
-                    managePopularTeamsAdapter.isLoading = false;
+                    managePopularTeamsAdapter.setLoading(false);
                 });
             }
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
-            isLastPage = true;
-            managePopularTeamsAdapter.isLoading = false;
+            getActivity().runOnUiThread(() -> {
+                isLastPage = true;
+                managePopularTeamsAdapter.setLoading(false);
+            });
         }
 
         @Override

@@ -10,12 +10,11 @@
             type="com.example.footballnewsmanager.activites.news_for_team.NewsForTeamViewModel" />
     </data>
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:background="@drawable/auth_background"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/auth_background">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -45,7 +44,6 @@
                     android:overScrollMode="never"
                     android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:postRunnable="@{viewModel.postRunnable}"
                     app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
 
                 <LinearLayout

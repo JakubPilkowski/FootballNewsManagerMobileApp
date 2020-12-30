@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.footballnewsmanager.adapters.news.newsForTeam.NewsForTeamHeaderAdapterViewModel" />
@@ -35,15 +37,44 @@
             android:scaleType="centerCrop"
             app:imageUrl="@{viewModel.img}" />
 
-        <Button
-            android:backgroundTint="@{viewModel.isFavouriteBackground ? @color/errorColor : @color/colorPrimary}"
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="115dp"
             android:layout_marginTop="12dp"
-            android:drawablePadding="6dp"
-            android:drawableEnd="@{viewModel.isFavouriteBackground ? @drawable/ic_remove : @drawable/ic_add_basic}"
+            android:background="@{viewModel.isFavouriteBackground ? @drawable/delete_team_button : @drawable/add_team_button }"
             android:onClick="@{()->viewModel.toggleFavourites()}"
-            android:text="@{viewModel.isFavouriteText}" />
+            android:paddingStart="12dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="6dp">
+
+
+            <ProgressBar
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerInParent="true"
+                android:indeterminateDuration="1000"
+                android:indeterminateTint="@color/colorTextPrimary"
+                android:visibility="@{viewModel.loadingButtonVisibility ? View.VISIBLE : View.GONE}"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableEnd="@{viewModel.isFavouriteBackground ? @drawable/ic_remove : @drawable/ic_add_basic}"
+                android:drawablePadding="6dp"
+                android:letterSpacing="0.05"
+                android:text="@{viewModel.isFavouriteText}"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="17sp"
+                android:visibility="@{viewModel.toggleButtonVisibility ? View.VISIBLE : View.GONE}" />
+
+        </RelativeLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
