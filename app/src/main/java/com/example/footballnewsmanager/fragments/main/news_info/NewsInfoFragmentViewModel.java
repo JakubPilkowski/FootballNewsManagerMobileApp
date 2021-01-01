@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
@@ -12,11 +13,13 @@ import com.example.footballnewsmanager.adapters.news_info.NewsInfoAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
+import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.requests.news.TeamsFromTagsRequest;
 import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.NewsInfoFragmentBinding;
 import com.example.footballnewsmanager.databinding.NewsInfoTeamLayoutBinding;
+import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.models.NewsTag;
 import com.example.footballnewsmanager.models.Tag;
@@ -40,13 +43,20 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
     private UserNews news;
     private NewsInfoAdapter newsInfoAdapter;
     private List<Tag> tags = new ArrayList<>();
+    public ObservableBoolean errorVisibility = new ObservableBoolean(false);
+    public ObservableInt status = new ObservableInt();
+    public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
+    private ErrorView.OnTryAgainListener listener = this::load;
 
     public void init(UserNews news) {
-        this.news = news;
-        for (NewsTag newsTag : news.getNews().getTags()) {
-            tags.add(newsTag.getTag());
+        if (news != null) {
+            this.news = news;
+            tryAgainListener.set(listener);
+            for (NewsTag newsTag : news.getNews().getTags()) {
+                tags.add(newsTag.getTag());
+            }
+            load();
         }
-        load();
     }
 
     public void initItemsView(TeamsResponse teamsResponse) {
@@ -70,7 +80,28 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
+            loadingVisibility.set(false);
+            itemsVisibility.set(false);
 
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                status.set(error.getStatus());
+                errorVisibility.set(true);
+            } else {
+                if (error instanceof SingleMessageError) {
+                    String message = ((SingleMessageError) error).getMessage();
+//                    if (message.equals("Nie ma już więcej wyników")) {
+//                        isLastPage = true;
+//                        newsAdapter.isLoading = false;
+//                        postRunnable.set(placeHolderAttachRunnable);
+//                    }
+//                    if (message.equals("Brak wyników")) {
+//                        itemsVisibility.set(false);
+//                        loadingVisibility.set(false);
+//                        errorVisibility.set(false);
+//                        placeholderVisibility.set(true);
+//                    }
+                }
+            }
         }
 
         @Override
@@ -80,6 +111,7 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
     };
 
     public void load() {
+        errorVisibility.set(false);
         itemsVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();

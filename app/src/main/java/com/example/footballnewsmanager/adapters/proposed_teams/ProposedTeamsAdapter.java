@@ -24,7 +24,6 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
     private final static int ITEM_LOADING = 1;
     private final static int PLACEHOLDER = 2;
     public boolean isLoading = false;
-    public boolean isPlaceholder = false;
     private RecyclerViewItemsListener recyclerViewItemsListener;
 
 
@@ -34,9 +33,10 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
         notifyItemRangeChanged(start, items.size());
     }
 
-    public void setPlaceholder(boolean placeholder) {
-        isPlaceholder = placeholder;
-        notifyDataSetChanged();
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+        if (!isLoading)
+            notifyItemChanged(items.size());
     }
 
     public void setRecyclerViewItemsListener(RecyclerViewItemsListener recyclerViewItemsListener) {
@@ -61,10 +61,6 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_progress_view, parent, false);
                 return new ProgressViewHolder(view);
             }
-            case PLACEHOLDER: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.proposed_teams_placeholder, parent, false);
-                return new PlaceholderViewHolder(view);
-            }
             default:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.proposed_team_layout, parent, false);
                 ProposedTeamLayoutBinding proposedTeamLayoutBinding = ProposedTeamLayoutBinding.bind(view);
@@ -75,34 +71,34 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        if ((position == items.size() && !isPlaceholder) || (position==items.size() && isPlaceholder))
+        if (position == items.size() && isLoading)
             return;
         else {
             ProposedTeamsAdapterViewModel viewModel;
             if (viewModels.size() <= position) {
                 viewModel = new ProposedTeamsAdapterViewModel();
                 viewModels.add(viewModel);
-                ((TeamsViewHolder)holder).getBinding().setViewModel(viewModel);
+                ((TeamsViewHolder) holder).getBinding().setViewModel(viewModel);
                 viewModel.init(items.get(position));
             } else {
                 viewModel = viewModels.get(position);
-                ((TeamsViewHolder)holder).getBinding().setViewModel(viewModel);
+                ((TeamsViewHolder) holder).getBinding().setViewModel(viewModel);
             }
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position == items.size()) {
-            return isPlaceholder ? PLACEHOLDER : ITEM_LOADING;
-        } else {
-            return ITEM;
-        }
+        if (position == items.size())
+            return ITEM_LOADING;
+        return ITEM;
     }
 
     @Override
     public int getItemCount() {
-        return items.size() + 1;
+        if(isLoading)
+            return items.size() +1;
+        return items.size();
     }
 
 

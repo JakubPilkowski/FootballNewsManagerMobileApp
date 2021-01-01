@@ -46,10 +46,19 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
 
+                <com.example.footballnewsmanager.helpers.ErrorView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
+                    app:errorStatus="@{viewModel.status}"
+                    app:errorTryAgainListener="@{viewModel.tryAgainListener}"
+                    />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
+                    android:gravity="center"
                     android:visibility="@{viewModel.placeholderVisibility ? View.VISIBLE : View.GONE}">
 
                     <TextView

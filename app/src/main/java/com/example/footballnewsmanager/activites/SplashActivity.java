@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.activites;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.example.footballnewsmanager.activites.error.ErrorActivity;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
@@ -23,28 +25,36 @@ import io.reactivex.rxjava3.core.Observer;
 
 public class SplashActivity extends AppCompatActivity {
 
+    public static final int REQUEST_SPLASH_ERROR = 6001;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        loggingValidation();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         ProgressDialog.init(this);
         Connection.init();
         UserPreferences.init(this);
+    }
 
-
+    public void loggingValidation(){
         new Handler().postDelayed(() -> {
             ProgressDialog.get().show();
-            if(UserPreferences.get().hasUser()){
+            if (UserPreferences.get().hasUser()) {
                 String token = UserPreferences.get().getAuthToken();
                 Connection.get().isLoggedIn(isLoggedInCallback, token);
-            }else{
+            } else {
                 ProgressDialog.get().dismiss();
                 Intent intent = new Intent(SplashActivity.this, AuthActivity.class);
                 startActivity(intent);
                 finish();
             }
-        },500);
-
+        }, 500);
     }
 
     private Callback<BaseResponse> isLoggedInCallback = new Callback<BaseResponse>() {
@@ -58,15 +68,14 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void onSmthWrong(BaseError error) {
-//            ProgressDialog.get().dismiss();
+            ProgressDialog.get().dismiss();
             Log.d("SplashActivity", "onSmthWrong: ");
-            if(error.getStatus() == 598){
-
-            }
-            else if(error.getStatus() == 408){
-
-            }
-            else{
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                Intent intent = new Intent(SplashActivity.this, ErrorActivity.class);
+                intent.putExtra("status", error.getStatus());
+                intent.putExtra("requestCode", REQUEST_SPLASH_ERROR);
+                startActivityForResult(intent, REQUEST_SPLASH_ERROR);
+            } else {
                 Intent intent = new Intent(SplashActivity.this, AuthActivity.class);
                 startActivity(intent);
                 finish();
@@ -79,4 +88,13 @@ public class SplashActivity extends AppCompatActivity {
         }
     };
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_SPLASH_ERROR && resultCode == RESULT_OK){
+            Log.d("SplashActivity", "onActivityResult: ");
+            loggingValidation();
+        }
+    }
 }

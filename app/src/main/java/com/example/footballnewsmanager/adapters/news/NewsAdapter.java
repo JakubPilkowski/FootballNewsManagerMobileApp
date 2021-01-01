@@ -83,6 +83,11 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.activity = activity;
     }
 
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+        if(!isLoading)
+            notifyItemChanged(items.size()+1);
+    }
 
     @NonNull
     @Override
@@ -200,6 +205,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
+        if(!isLoading && !isPlaceholder)
+            return items.size() + 1;
         return items.size() + 2;
     }
 

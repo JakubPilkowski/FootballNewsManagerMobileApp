@@ -96,6 +96,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
 
     }
 
+    public MainFragment getMainFragment(){
+        for(Fragment fragment : getSupportFragmentManager().getFragments()){
+            if(fragment instanceof MainFragment){
+                return (MainFragment) fragment;
+            }
+        }
+        return MainFragment.newInstance();
+    }
+
     public void reloadMainPage() {
         MainFragment fragment = (MainFragment) getSupportFragmentManager().getFragments().get(0);
         NewsFragment newsFragment = (NewsFragment) fragment.viewModel.fragments.get(0);

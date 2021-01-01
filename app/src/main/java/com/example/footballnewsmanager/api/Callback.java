@@ -48,18 +48,22 @@ public abstract class Callback<T> extends Subject<T> {
             Log.d("Error", throwable.getMessage());
             if(throwable.getMessage() != null && throwable.getMessage().contains("Unable to resolve host ")){
                 SingleMessageError singleMessageError = new SingleMessageError();
+                singleMessageError.setMessage("No network");
                 singleMessageError.setStatus(598);
                 onSmthWrong(singleMessageError);
             }
             else if(throwable.getMessage()!=null && throwable.getMessage().contains("The source did not signal an event for")){
                 SingleMessageError singleMessageError = new SingleMessageError();
+                singleMessageError.setMessage("Request timeout");
                 singleMessageError.setStatus(408);
                 onSmthWrong(singleMessageError);
             }
-            //            exception.printStackTrace();
+//            else {
+//                SingleMessageError singleMessageError = new SingleMessageError();
+//                singleMessageError.setStatus(500);
+//                onSmthWrong(singleMessageError);
+//            }
         }
-
-//        onSmthWrong(throwable);
     }
     @Override
     public boolean hasObservers() {
@@ -84,11 +88,11 @@ public abstract class Callback<T> extends Subject<T> {
 
     @Override
     public void onSubscribe(@NonNull Disposable d) {
-        Log.d("Error", "onSubscribe: ");
+
     }
 
     @Override
     public void onComplete() {
-        Log.d("Error", "onSubscribe: ");
+
     }
 }

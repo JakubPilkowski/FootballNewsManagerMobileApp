@@ -55,6 +55,15 @@
                 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
+                <com.example.footballnewsmanager.helpers.ErrorView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
+                    app:errorStatus="@{viewModel.status}"
+                    app:errorTryAgainListener="@{viewModel.tryAgainListener}"
+                    />
+
+
                 <com.example.footballnewsmanager.helpers.NewsPlaceholder
                     android:id="@+id/news_placeholder_view"
                     android:layout_width="match_parent"

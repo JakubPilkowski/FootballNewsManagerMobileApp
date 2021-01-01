@@ -53,14 +53,15 @@ public class SitesFragmentViewModel extends BaseViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
-            if(error instanceof SingleMessageError){
+            if (error instanceof SingleMessageError) {
                 String message = ((SingleMessageError) error).getMessage();
-                if(message.equals("Nie ma już więcej wyników")){
-                    loadingVisibility.set(false);
-                }
-                if(message.equals("Dla podanej frazy nie ma żadnej drużyny"))
-                {
-                    loadingVisibility.set(false);
+                if (message != null) {
+                    if (message.equals("Nie ma już więcej wyników")) {
+                        loadingVisibility.set(false);
+                    }
+                    if (message.equals("Brak wyników")) {
+                        loadingVisibility.set(false);
+                    }
                 }
             }
 

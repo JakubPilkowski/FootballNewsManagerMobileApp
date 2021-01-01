@@ -36,7 +36,7 @@ public class AdditionalTeamsAdapter extends BaseRecyclerViewAdapter<UserTeam, Ba
             viewModels.add(viewModel);
             ((AdditionalInfoTeamBinding)holder.getBinding()).setViewModel(viewModel);
             holder.setViewModel(viewModel);
-            holder.setElement(items.get(position));
+            holder.setElement(items.get(position), holder.getBinding());
         }
         else{
             viewModel = viewModels.get(position);

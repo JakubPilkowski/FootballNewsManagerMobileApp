@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
+import com.example.footballnewsmanager.activites.error.ErrorActivity;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.activites.resetPassword.ResetPasswordActivity;
@@ -79,7 +80,11 @@ public class ForgetPasswordViewModel extends BaseViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
-            errorText.set(((SingleMessageError) error).getMessage());
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                Intent intent = new Intent(getActivity(), ErrorActivity.class);
+                intent.putExtra("status", error.getStatus());
+                getActivity().startActivity(intent);
+            } else errorText.set(((SingleMessageError) error).getMessage());
             ProgressDialog.get().dismiss();
         }
 

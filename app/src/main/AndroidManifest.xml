@@ -16,10 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".activites.liked_news.LikedNewsActivity"
-            android:theme="@style/FavouriteNews"
+        <activity
+            android:name=".activites.error.ErrorActivity"
             android:screenOrientation="portrait"
-            />
+            android:theme="@style/ErrorActivity" />
+        <activity
+            android:name=".activites.liked_news.LikedNewsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FavouriteNews" />
         <activity
             android:name=".activites.manageTeams.ManageTeamsActivity"
             android:screenOrientation="portrait"

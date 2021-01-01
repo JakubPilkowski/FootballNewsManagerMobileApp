@@ -1,11 +1,14 @@
 package com.example.footballnewsmanager.fragments.proposed_settings.teams;
 
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.footballnewsmanager.activites.error.ErrorActivity;
 import com.example.footballnewsmanager.adapters.proposed_teams.ProposedTeamsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -13,6 +16,7 @@ import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ProposedTeamsFragmentBinding;
+import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
@@ -28,18 +32,30 @@ public class ProposedTeamsViewItemsModel extends BaseViewModel implements Recycl
     public ObservableField<Runnable> postRunnable = new ObservableField<>();
     public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
-
-
+    public ObservableBoolean errorVisibility = new ObservableBoolean(false);
+    public ObservableInt status = new ObservableInt();
+    public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
     private RecyclerView recyclerView;
     private ProposedTeamsAdapter proposedTeamsAdapter;
     private boolean isLastPage = false;
     private int currentPage = 0;
-    public void init(){
-        recyclerView = ((ProposedTeamsFragmentBinding)getBinding()).proposedTeamsRecyclerView;
+
+    private ErrorView.OnTryAgainListener listener = this::load;
+
+    public void init() {
+        recyclerView = ((ProposedTeamsFragmentBinding) getBinding()).proposedTeamsRecyclerView;
+        tryAgainListener.set(listener);
+        load();
+    }
+
+    public void load() {
+        itemsVisibility.set(false);
+        errorVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().proposedTeams(callback, token, currentPage);
     }
+
 
     private void initItemsView(ProposedTeamsResponse proposedTeamsResponse) {
         proposedTeamsAdapter = new ProposedTeamsAdapter();
@@ -51,7 +67,7 @@ public class ProposedTeamsViewItemsModel extends BaseViewModel implements Recycl
             protected void loadMoreItems() {
                 Log.d("News", "loadMoreItems");
                 currentPage++;
-                proposedTeamsAdapter.isLoading = true;
+                proposedTeamsAdapter.setLoading(true);
                 String token = UserPreferences.get().getAuthToken();
                 Connection.get().proposedTeams(callback, token, currentPage);
             }
@@ -85,16 +101,23 @@ public class ProposedTeamsViewItemsModel extends BaseViewModel implements Recycl
                 getActivity().runOnUiThread(() -> {
                     proposedTeamsAdapter.setItems(proposedTeamsResponse.getTeams());
                     isLastPage = proposedTeamsResponse.getPages() <= currentPage;
-                    proposedTeamsAdapter.isLoading = false;
+                    proposedTeamsAdapter.setLoading(false);
                 });
             }
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
-            isLastPage = true;
-            proposedTeamsAdapter.isLoading = false;
-            postRunnable.set(placeHolderAttachRunnable);
+            loadingVisibility.set(false);
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                status.set(error.getStatus());
+                errorVisibility.set(true);
+            } else {
+                getActivity().runOnUiThread(() -> {
+                    isLastPage = true;
+                    proposedTeamsAdapter.setLoading(false);
+                });
+            }
         }
 
         @Override
@@ -103,19 +126,9 @@ public class ProposedTeamsViewItemsModel extends BaseViewModel implements Recycl
         }
     };
 
-    private Runnable placeHolderAttachRunnable = () ->{
-        proposedTeamsAdapter.setPlaceholder(true);
-        recyclerView.smoothScrollToPosition(proposedTeamsAdapter.getItemCount() - 1);
-    };
-
-    private Runnable placeHolderDetachRunnable = () -> {
-        isLastPage = false;
-        proposedTeamsAdapter.setPlaceholder(false);
-    };
-
     @Override
     public void onDetached() {
-        postRunnable.set(placeHolderDetachRunnable);
+
     }
 
     @Override

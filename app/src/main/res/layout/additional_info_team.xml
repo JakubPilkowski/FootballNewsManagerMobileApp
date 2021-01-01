@@ -12,6 +12,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/additional_info_team_main_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
@@ -47,8 +48,17 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:layout_marginBottom="12dp"
                     app:imageUrl="@{viewModel.logoUrl}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/errorColor"
+                    android:textSize="16sp"
+                    android:text="@{viewModel.errorText}"
+                    android:visibility="@{viewModel.loaded ? View.INVISIBLE : View.VISIBLE}"
+                    />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"

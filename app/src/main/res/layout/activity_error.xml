@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.footballnewsmanager.activites.error.ErrorViewModel" />
+    </data>
+
+    <com.example.footballnewsmanager.helpers.ErrorView
+        android:id="@+id/activity_error_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/auth_background"
+        app:errorTryAgainListener="@{viewModel.tryAgainListenerObservable}"
+        app:errorStatus="@{viewModel.status}"
+        />
+</layout>

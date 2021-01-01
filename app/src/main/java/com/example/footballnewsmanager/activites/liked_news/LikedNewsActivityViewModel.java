@@ -22,8 +22,7 @@ import com.example.footballnewsmanager.models.UserNews;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
-public class LikedNewsActivityViewModel extends BaseViewModel{
-
+public class LikedNewsActivityViewModel extends BaseViewModel {
 
 
     public ObservableField<LikedNewsAdapter> adapterObservable = new ObservableField<>();
@@ -55,7 +54,7 @@ public class LikedNewsActivityViewModel extends BaseViewModel{
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
             @Override
             protected void loadMoreItems() {
-                if(likedNewsAdapter.getItems().size()<20){
+                if (likedNewsAdapter.getItems().size() < 20) {
                     return;
                 }
                 currentPage++;
@@ -102,15 +101,16 @@ public class LikedNewsActivityViewModel extends BaseViewModel{
         public void onSmthWrong(BaseError error) {
             if (error instanceof SingleMessageError) {
                 String message = ((SingleMessageError) error).getMessage();
-                if (message.equals("Nie ma już więcej wyników")) {
-                    isLastPage = true;
-                    likedNewsAdapter.isLoading = false;
+                if (message != null) {
+                    if (message.equals("Nie ma już więcej wyników")) {
+                        isLastPage = true;
+                        likedNewsAdapter.isLoading = false;
+                    }
+                    if (message.equals("Brak wyników")) {
+                        loadingVisibility.set(false);
+                        placeholderVisibility.set(true);
+                    }
                 }
-                if (message.equals("Dla podanej frazy nie ma żadnej drużyny")) {
-                    loadingVisibility.set(false);
-                    placeholderVisibility.set(true);
-                }
-
             }
 
         }
