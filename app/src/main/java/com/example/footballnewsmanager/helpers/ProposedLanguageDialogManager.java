@@ -3,12 +3,8 @@ package com.example.footballnewsmanager.helpers;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
-
-import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.databinding.LangugageDragViewBinding;
@@ -44,11 +40,6 @@ public class ProposedLanguageDialogManager {
         viewModel.init(listener, context);
         dialog = new AlertDialog.Builder(context, R.style.LanguageDialogTheme)
                 .setView(layout).create();
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                dialog.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-            }
-        }
         dialog.show();
     }
 

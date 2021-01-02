@@ -19,6 +19,7 @@ import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
 import com.example.footballnewsmanager.api.responses.sites.SitesResponse;
+import com.example.footballnewsmanager.models.Language;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import org.reactivestreams.Subscription;
@@ -26,6 +27,7 @@ import org.reactivestreams.Subscription;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Connection {
@@ -288,6 +290,7 @@ public class Connection {
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         likedNewsObservable.subscribe(callback);
     }
+
 
 }
 

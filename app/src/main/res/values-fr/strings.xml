@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">Football News Manager</string>
+    <string name="app_logo_name">Football News\nManager</string>
+    <string name="logo_news_title">Dzienne setki\nnowych newsów!!!</string>
+    <string name="logo_teams_title">Wiadomości dla najlepszych\nlig piłkarskich</string>
+    <string name="logo_sites_title">Dziesiątki stron\ndo wyboru</string>
+    <string name="lets_begin">Zaczynamy</string>
+    <string name="logging">Logowanie</string>
+    <string name="forget_password">Zapomniałem hasła</string>
+    <string name="password">Hasło</string>
+    <string name="email">Email</string>
+    <string name="log_in">Zaloguj się</string>
+
+    <!--    validation-->
+    <string name="field_not_blank">Pole nie może być puste</string>
+    <string name="email_invalid">Niepoprawny adres mailowy</string>
+    <string name="email_too_long">Adres mailowy może zawierać maksymalnie 40 znaków</string>
+    <string name="password_invalid">Hasło musi zawierać od 8 do 30 znaków</string>
+    <string name="loading">Ładowanie...</string>
+    <string name="login_successful">Poprawnie Zalogowano</string>
+    <string name="player_logo">player logo</string>
+    <string name="send">Wyślij</string>
+    <string name="forget_password_desc">Podaj adres mailowy na który\nwyślemy token aktywacyjny</string>
+    <string name="token">Token wysłany na adres mailowy</string>
+    <string name="new_password">Nowe hasło</string>
+    <string name="repeat_password">Powtórz hasło</string>
+    <string name="change_password">Zmień hasło</string>
+    <string name="password_must_match">Hasła muszą się zgadzać</string>
+    <string name="token_not_empty">Token nie może być pusty</string>
+    <string name="reset_password">Reset hasła</string>
+    <string name="next">Dalej</string>
+    <string name="registration">Rejestracja</string>
+    <string name="register">Zarejestruj</string>
+    <string name="login_size_error">Login musi zawierać od 4 do 20 znaków</string>
+    <string name="username">Nazwa</string>
+    <string name="back">Cofnij</string>
+    <string name="dark_mode">Ciemny motyw</string>
+    <string name="language">Język</string>
+    <string name="notifications">Powiadomienia</string>
+    <string name="proposed_news">Polecane wiadomości</string>
+    <string name="polish">Polski</string>
+    <string name="german">Niemiecki</string>
+    <string name="italish">Włoski</string>
+    <string name="spanish">Hiszpański</string>
+    <string name="french">Francuski</string>
+    <string name="english">Angielski</string>
+    <string name="menu_news_name"><i>Newsy</i></string>
+    <string name="menu_profile_name"><i>Profil</i></string>
+    <string name="menu_sites_name"><i>Strony</i></string>
+    <string name="menu_news_all"><i>Wszystko</i></string>
+    <string name="reload">odśwież</string>
+    <string name="no_network">Brak Internetu</string>
+    <string name="connection_timeout">Zbyt długi czas oczekiwania</string>
+    <string name="something_went_wrong">Coś poszło nie tak</string>
+    <string name="ok">ok</string>
+
+</resources>

@@ -2,6 +2,7 @@ package com.example.footballnewsmanager.fragments.main.profile;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
@@ -29,12 +30,16 @@ import com.example.footballnewsmanager.databinding.ProfileFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.fragments.main.MainFragment;
 import com.example.footballnewsmanager.helpers.ErrorView;
+import com.example.footballnewsmanager.helpers.LanguageHelper;
 import com.example.footballnewsmanager.helpers.ProposedLanguageDialogManager;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.ProposedLanguageListener;
 import com.example.footballnewsmanager.models.LanguageField;
+import com.example.footballnewsmanager.models.User;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Locale;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -61,7 +66,7 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
 
     private Switch.OnCheckedChangeListener proposedNewsChangeListener = (buttonView, isChecked) -> proposedNews.set(isChecked);
     private SwipeRefreshLayout swipeRefreshLayout;
-
+    private LanguageField languageField;
 
     public void init() {
         swipeRefreshLayout = ((ProfileFragmentBinding) getBinding()).profileSwipeRefresh;
@@ -87,8 +92,10 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
         name.set(userProfileResponse.getUser().getUsername());
         date.set("Konto od : " + userProfileResponse.getUser().getAddedDate().split("T")[0]);
         proposedNews.set(userProfileResponse.getUser().isProposedNews());
-        currentLanguage.set(String.valueOf(userProfileResponse.getUser().getLanguage()));
-        languageDrawable.set(getActivity().getDrawable(R.drawable.ic_poland_small));
+        String locale = UserPreferences.get().getLanguage();
+        currentLanguage.set(LanguageHelper.getName(locale, getActivity().getResources()));
+        languageDrawable.set(LanguageHelper.getDrawable(locale,
+                getActivity().getResources()));
         likes.set(String.valueOf(userProfileResponse.getLikes()));
         teamsCount.set(String.valueOf(userProfileResponse.getFavouritesCount()));
     }
@@ -110,8 +117,11 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
 
     @Override
     public void onLanguageClick(LanguageField field) {
-        currentLanguage.set(field.getName());
-        languageDrawable.set(field.getDrawableSmall());
+        languageField = field;
+        UserPreferences.get().setLanguage(languageField.getLocale());
+        Locale locale = new Locale(languageField.getLocale());
+        Locale.setDefault(locale);
+        ((MainActivity)getActivity()).changeLanguage(locale);
     }
 
 

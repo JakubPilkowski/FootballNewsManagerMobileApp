@@ -1,12 +1,10 @@
 package com.example.footballnewsmanager.adapters.news.newsForTeam;
 
 import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
-import androidx.databinding.ObservableLong;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.api.Callback;
