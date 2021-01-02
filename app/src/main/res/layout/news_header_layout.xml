@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.footballnewsmanager.adapters.news.NewsHeaderAdapterViewModel" />
@@ -11,48 +13,65 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_marginBottom="12dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
 
-        <Button
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Zaznacz wszystkie jako przeczytane"
-            android:textAllCaps="false"
-            android:foreground="?attr/selectableItemBackground"
-            android:onClick="@{()->viewModel.onClick()}"
-            android:background="@android:color/transparent"
-            android:drawablePadding="12dp"
-            android:drawableEnd="@drawable/ic_mark_all"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="15sp"
-            />
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="24dp"
+                android:minWidth="24dp"
+                android:layout_centerInParent="true"
+                android:indeterminateDuration="1500"
+                android:padding="6dp"
+                android:indeterminateTint="@color/colorTextPrimary"
+                android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableEnd="@drawable/ic_mark_all"
+                android:drawablePadding="12dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:onClick="@{()->viewModel.onClick()}"
+                android:text="Zaznacz wszystkie jako przeczytane"
+                android:textAllCaps="false"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="15sp"
+                android:visibility="@{viewModel.loading ? View.GONE : View.VISIBLE}" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="2">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:text="@{viewModel.countAll}"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="20sp" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:text="@{viewModel.countToday}"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{viewModel.countAll}"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{viewModel.countToday}"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="20sp" />
 
         </LinearLayout>
-
 
 
     </LinearLayout>

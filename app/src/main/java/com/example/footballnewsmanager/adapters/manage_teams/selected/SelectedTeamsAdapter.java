@@ -50,7 +50,7 @@ public class SelectedTeamsAdapter extends BaseRecyclerViewAdapter<UserTeam, Base
             viewModels.add(viewModel);
 //            holder.setViewModel(viewModel);
             ((ManageTeamItemBinding) holder.getBinding()).setViewModel(viewModel);
-            viewModel.init(items.get(position),activity, recyclerViewItemsListener);
+            viewModel.init(items.get(position),activity, recyclerViewItemsListener, (ManageTeamItemBinding) holder.getBinding());
             //            if(holder.getViewModel() != null){
 //                holder.setElement(items.get(position));
 //            }
@@ -61,7 +61,7 @@ public class SelectedTeamsAdapter extends BaseRecyclerViewAdapter<UserTeam, Base
 //            if(holder.getViewModel() != null){
 //                holder.setElement(items.get(position));
 //            }
-            viewModel.init(items.get(position),activity, recyclerViewItemsListener);
+            viewModel.init(items.get(position),activity, recyclerViewItemsListener, (ManageTeamItemBinding) holder.getBinding());
         }
 
     }

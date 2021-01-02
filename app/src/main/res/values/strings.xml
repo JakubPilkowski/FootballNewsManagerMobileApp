@@ -52,5 +52,6 @@
     <string name="no_network">Brak Internetu</string>
     <string name="connection_timeout">Zbyt długi czas oczekiwania</string>
     <string name="something_went_wrong">Coś poszło nie tak</string>
+    <string name="ok">ok</string>
 
 </resources>

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.adapters.manage_teams.all.ManageLeaguesAdapter;
@@ -15,6 +16,7 @@ import com.example.footballnewsmanager.api.responses.manage_teams.LeagueResponse
 import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
@@ -28,6 +30,11 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
     public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
     public SelectedTeamsAdapter selectedTeamsAdapter;
+    public ObservableBoolean errorVisibility = new ObservableBoolean(false);
+    public ObservableInt status = new ObservableInt();
+    public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
+    private ErrorView.OnTryAgainListener listener = this::load;
+
 
 
     private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
@@ -35,10 +42,12 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
     // TODO: Implement the ViewModel
     public void init(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
         this.recyclerViewItemsListener = recyclerViewItemsListener;
+        this.tryAgainListener.set(listener);
         load();
     }
 
     public void load() {
+        errorVisibility.set(false);
         itemsVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
@@ -74,11 +83,17 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
         @Override
         public void onSmthWrong(BaseError error) {
             loadingVisibility.set(false);
-            itemsVisibility.set(true);
-            selectedTeamsAdapter = new SelectedTeamsAdapter(getActivity());
-            selectedTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
-            adapterObservable.set(selectedTeamsAdapter);
-            Log.d("ManageTeams", "allTeams onSmthWrong: ");
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                itemsVisibility.set(false);
+                errorVisibility.set(true);
+                status.set(error.getStatus());
+            }
+            else {
+                itemsVisibility.set(true);
+                selectedTeamsAdapter = new SelectedTeamsAdapter(getActivity());
+                selectedTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
+                adapterObservable.set(selectedTeamsAdapter);
+            }
         }
 
         @Override

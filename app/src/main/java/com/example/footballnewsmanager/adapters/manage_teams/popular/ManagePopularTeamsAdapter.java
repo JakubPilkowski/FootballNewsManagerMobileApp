@@ -88,7 +88,7 @@ public class ManagePopularTeamsAdapter extends RecyclerView.Adapter<RecyclerView
             }
             ManageTeamItemBinding binding = ((TeamViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
-            viewModel.init(items.get(position), activity, recyclerViewItemsListener);
+            viewModel.init(items.get(position), activity, recyclerViewItemsListener, binding);
         }
 
     }

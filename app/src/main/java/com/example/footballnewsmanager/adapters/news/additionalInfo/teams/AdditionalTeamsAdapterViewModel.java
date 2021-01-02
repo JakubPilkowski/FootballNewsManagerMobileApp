@@ -91,7 +91,6 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
                         break;
                 }
             }
-            Log.d("ManageTeams", "onSmthWrong: ");
         }
 
         @Override

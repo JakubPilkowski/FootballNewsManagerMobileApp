@@ -1,7 +1,6 @@
 package com.example.footballnewsmanager.activites.news_for_team;
 
 import android.util.Log;
-import android.view.View;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -23,7 +22,6 @@ import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
-import com.google.android.material.snackbar.Snackbar;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -131,7 +129,7 @@ public class NewsForTeamViewModel extends BaseViewModel {
                     isLastPage = true;
                     newsForTeamAdapter.setLoading(false);
                 });
-                SnackbarHelper.getSnackBarFromStatus(recyclerView, error.getStatus())
+                SnackbarHelper.getInfinitiveSnackBarFromStatus(recyclerView, error.getStatus())
                         .setAction(R.string.reload, v -> paginationLoad())
                         .show();
             } else {

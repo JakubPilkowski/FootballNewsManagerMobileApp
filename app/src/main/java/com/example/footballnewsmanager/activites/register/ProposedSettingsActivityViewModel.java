@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.activites.SplashActivity;
+import com.example.footballnewsmanager.activites.error.ErrorActivity;
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.adapters.ProposedSettingsViewPagerAdapter;
 import com.example.footballnewsmanager.adapters.proposed_teams.ProposedTeamsAdapter;
@@ -183,9 +185,9 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
-            if (error instanceof SingleMessageError) {
-                Log.d("ProposedSettActivity", ((SingleMessageError) error).getMessage());
-            }
+            Intent intent = new Intent(getActivity(), ErrorActivity.class);
+            intent.putExtra("status", error.getStatus());
+            getActivity().startActivity(intent);
             enableButtons();
             ProgressDialog.get().dismiss();
         }

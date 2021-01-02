@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.adapters.manage_teams.all.ManageLeaguesAdapter;
@@ -13,6 +14,7 @@ import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.responses.manage_teams.LeagueResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
@@ -25,17 +27,23 @@ public class ManageAllTeamsViewModel extends BaseViewModel {
     public ObservableField<RecyclerView.Adapter> adapterObservable = new ObservableField<>();
     public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
+    public ObservableBoolean errorVisibility = new ObservableBoolean(false);
+    public ObservableInt status = new ObservableInt();
+    public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
+    private ErrorView.OnTryAgainListener listener = this::load;
     private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
     private ManageLeaguesAdapter manageLeaguesAdapter;
 
 
     public void init(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener){
         this.recyclerViewItemsListener = recyclerViewItemsListener;
+        tryAgainListener.set(listener);
         load();
     }
 
 
     public void load(){
+        errorVisibility.set(false);
         itemsVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
@@ -66,8 +74,13 @@ public class ManageAllTeamsViewModel extends BaseViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
-            itemsVisibility.set(false);
             loadingVisibility.set(false);
+            itemsVisibility.set(false);
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                status.set(error.getStatus());
+                errorVisibility.set(true);
+            }
+
             Log.d("ManageTeams", "allTeams onSmthWrong: ");
         }
 

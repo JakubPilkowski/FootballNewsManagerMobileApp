@@ -20,9 +20,9 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        UserPreferences.init(this);
+//        UserPreferences.init(this);
 //        UserPreferences.get().clearAuthToken();
-//        createNotificationChannels();
+        createNotificationChannels();
         initAlarmManager();
     }
 

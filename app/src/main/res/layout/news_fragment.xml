@@ -72,7 +72,6 @@
             </RelativeLayout>
 
         </com.google.android.material.card.MaterialCardView>
-        <!--        placeholder-->
     </LinearLayout>
 
 </layout>

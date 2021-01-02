@@ -36,7 +36,7 @@ public class NewsForTeamHeaderAdapterViewModel {
 
     private Long id;
     private RecyclerViewItemsListener<UserTeam> headerRecyclerViewItemsListener;
-//    private LinearLayout linearLayout;
+    private LinearLayout linearLayout;
 
 
     public void init(Long id, String name, String img, boolean isFavourite,
@@ -48,7 +48,7 @@ public class NewsForTeamHeaderAdapterViewModel {
         this.img.set(img);
         this.countAll.set("Łącznie: "+countAll);
         this.countToday.set("Dzisiaj: "+ countToday);
-//        linearLayout = binding.newsForTeamHeaderLayout;
+        linearLayout = binding.newsForTeamHeaderLayout;
         updateFavouriteState(isFavourite);
     }
 
@@ -78,11 +78,11 @@ public class NewsForTeamHeaderAdapterViewModel {
         public void onSmthWrong(BaseError error) {
             loadingButtonVisibility.set(false);
             toggleButtonVisibility.set(true);
-//            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
-//                SnackbarHelper.getSnackBarFromStatus(linearLayout, error.getStatus())
-//                        .setAction(R.string.reload, v -> toggleFavourites())
-//                        .show();
-//            }
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                Snackbar snackbar = SnackbarHelper.getShortSnackBarFromStatus(linearLayout, error.getStatus());
+                snackbar.setAction(R.string.ok, v -> snackbar.dismiss());
+                snackbar.show();
+            }
             Log.d("ManageTeams", "onSmthWrong: ");
         }
 

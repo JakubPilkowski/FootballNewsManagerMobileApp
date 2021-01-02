@@ -52,7 +52,6 @@ public class Connection {
         Observable<LoginResponse> loginResponseObservable = client.getService().login(loginRequest)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         loginResponseObservable.subscribe(callback);
     }
@@ -61,7 +60,6 @@ public class Connection {
         Observable<BaseResponse> baseResponseObservable = client.getService().isLoggedIn(token)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
 
         baseResponseObservable.subscribe(callback);
@@ -71,8 +69,7 @@ public class Connection {
         Observable<BaseResponse> baseResponseObservable = client.getService().logout(token)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         baseResponseObservable.subscribe(callback);
     }
 
@@ -80,7 +77,6 @@ public class Connection {
         Observable<BaseResponse> baseResponseObservable = client.getService().sendResetPassTokenMail(email)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         baseResponseObservable.subscribe(callback);
     }
@@ -89,7 +85,6 @@ public class Connection {
         Observable<BaseResponse> baseResponseObservable = client.getService().resetToken(resetPasswordRequest)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         baseResponseObservable.subscribe(callback);
     }
@@ -98,7 +93,6 @@ public class Connection {
         Observable<BaseResponse> registerObservable = client.getService().register(registerRequest)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         registerObservable.subscribe(callback);
     }
@@ -107,7 +101,6 @@ public class Connection {
         Observable<ProposedTeamsResponse> proposedTeamsObservable = client.getService().proposedTeams(token, page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         proposedTeamsObservable.subscribe(callback);
     }
@@ -116,7 +109,6 @@ public class Connection {
         Observable<ProposedSitesResponse> proposedSitesObservable = client.getService().proposedSites(token, page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         proposedSitesObservable.subscribe(callback);
     }
@@ -126,8 +118,7 @@ public class Connection {
                 .proposedUserResponse(token, userSettingsRequest)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         proposedUserObservable.subscribe(callback);
     }
 
@@ -136,7 +127,6 @@ public class Connection {
                 .getNewsByPage(token, page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         newsObservable.subscribe(callback);
     }
@@ -146,8 +136,7 @@ public class Connection {
                 .toggleLikes(token, siteId, newsId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         toggleLikeObservable.subscribe(callback);
     }
 
@@ -157,7 +146,6 @@ public class Connection {
                 .findByTags(token, request)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         teamsObservable.subscribe(callback);
     }
@@ -167,8 +155,7 @@ public class Connection {
                 .getNotifications(token)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         notificationResponseObservable.subscribe(callback);
     }
 
@@ -177,8 +164,7 @@ public class Connection {
                 .setNewsVisited(token, siteId, newsId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         notificationResponseObservable.subscribe(callback);
     }
 
@@ -187,8 +173,7 @@ public class Connection {
                 .getNotVisitedNewsAmount(token)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         badgesResponseObservable.subscribe(callback);
     }
 
@@ -197,8 +182,7 @@ public class Connection {
                 .markAllAsVisited(token)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         markAllObservable.subscribe(callback);
     }
 
@@ -207,8 +191,7 @@ public class Connection {
                 .getAllNews(token, page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         newsObservable.subscribe(callback);
     }
 
@@ -218,7 +201,6 @@ public class Connection {
                 .getNewsForTeam(token, teamId, page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         newsForTeamObservable.subscribe(callback);
     }
@@ -229,8 +211,7 @@ public class Connection {
                 .getQueryResults(token, query)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         searchObservable
                 .subscribe(callback);
     }
@@ -240,8 +221,7 @@ public class Connection {
                 .getSites(token, page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         sitesObservable
                 .subscribe(callback);
     }
@@ -251,8 +231,7 @@ public class Connection {
                 .getUserProfile(token)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         userProfileObservable.subscribe(callback);
     }
 
@@ -261,8 +240,7 @@ public class Connection {
                 .deleteAccount(token)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         accountObservable.subscribe(callback);
     }
 
@@ -271,8 +249,7 @@ public class Connection {
                 .getLeagues(token)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         leagueObservable.subscribe(callback);
     }
 
@@ -281,8 +258,7 @@ public class Connection {
                 .getTeamsFromLeague(token, leagueId, page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         teamsFromLeagueObservable.subscribe(callback);
     }
 
@@ -291,8 +267,7 @@ public class Connection {
                 .getFavouriteTeams(token)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         favouriteTeamsObservable.subscribe(callback);
     }
 
@@ -301,8 +276,7 @@ public class Connection {
                 .toggleTeam(token, id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         toggleTeamObservable.subscribe(callback);
     }
 
@@ -311,8 +285,7 @@ public class Connection {
                 .getLikedNews(token, page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
-//                .delay(6 * 1000, TimeUnit.MILLISECONDS)
-                .timeout(5 * 1000, TimeUnit.MILLISECONDS);
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         likedNewsObservable.subscribe(callback);
     }
 

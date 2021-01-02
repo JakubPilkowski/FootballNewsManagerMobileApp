@@ -58,11 +58,6 @@ public abstract class Callback<T> extends Subject<T> {
                 singleMessageError.setStatus(408);
                 onSmthWrong(singleMessageError);
             }
-//            else {
-//                SingleMessageError singleMessageError = new SingleMessageError();
-//                singleMessageError.setStatus(500);
-//                onSmthWrong(singleMessageError);
-//            }
         }
     }
     @Override

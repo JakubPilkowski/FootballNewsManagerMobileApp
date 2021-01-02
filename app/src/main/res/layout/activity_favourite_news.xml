@@ -38,6 +38,14 @@
                     android:layout_height="match_parent"
                     android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
 
+
+                <com.example.footballnewsmanager.helpers.ErrorView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
+                    app:errorStatus="@{viewModel.status}"
+                    app:errorTryAgainListener="@{viewModel.tryAgainListener}" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/favourite_news_recycler_view"
                     android:layout_width="match_parent"
@@ -49,8 +57,9 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
+                    android:gravity="center"
                     android:visibility="@{viewModel.placeholderVisibility ? View.VISIBLE : View.GONE}">
 
                     <TextView

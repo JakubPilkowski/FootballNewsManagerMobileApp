@@ -22,6 +22,7 @@ import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.AllNewsFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.fragments.main.MainFragment;
 import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
@@ -52,7 +53,7 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements RecyclerV
     private AllNewsAdapter allNewsAdapter;
     private RecyclerView recyclerView;
     private BadgeListener badgeListener;
-
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     // TODO: Implement the ViewModel
@@ -63,13 +64,13 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements RecyclerV
             Intent intent = new Intent(getActivity(), SearchActivity.class);
             getActivity().startActivity(intent);
         });
-
         searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
             if(hasFocus) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
                 getActivity().startActivity(intent);
             }
         });
+        swipeRefreshLayout = ((AllNewsFragmentBinding) getBinding()).allNewsSwipeRefresh;
         swipeRefreshListenerObservable.set(this::updateNews);
         recyclerView = ((AllNewsFragmentBinding) getBinding()).allNewsRecyclerView;
         tryAgainListener.set(listener);
@@ -138,7 +139,7 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements RecyclerV
                     allNewsAdapter.setLoading(false);
                     BottomNavigationView bottomNavigationView = ((MainActivity)getActivity()).getMainFragment()
                             .binding.mainBottomNavView;
-                    SnackbarHelper.getSnackBarFromStatus(recyclerView, error.getStatus())
+                    SnackbarHelper.getInfinitiveSnackBarFromStatus(recyclerView, error.getStatus())
                             .setAction(R.string.reload, v -> paginationLoad())
                             .setAnchorView(bottomNavigationView)
                             .show();
@@ -173,26 +174,32 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements RecyclerV
                 allNewsAdapter.setCountAll(newsResponse.getNewsCount());
                 allNewsAdapter.setCountToday(newsResponse.getNewsToday());
                 allNewsAdapter.refresh(newsResponse);
-                ((AllNewsFragmentBinding) getBinding()).allNewsSwipeRefresh
-                        .setRefreshing(false);
-                ProgressDialog.get().dismiss();
+                swipeRefreshLayout.setRefreshing(false);
             });
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
             loadingVisibility.set(false);
-            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
-                status.set(error.getStatus());
-                itemsVisibility.set(false);
-                errorVisibility.set(true);
-            }
             currentPage = 0;
             isLastPage = true;
-            allNewsAdapter.setLoading(false);
-            ((AllNewsFragmentBinding) getBinding()).allNewsSwipeRefresh
-                    .setRefreshing(false);
-//            postRunnable.set(placeHolderAttachRunnable);
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                if (swipeRefreshLayout.isRefreshing()) {
+                    getActivity().runOnUiThread(() -> {
+                        swipeRefreshLayout.setRefreshing(false);
+                        allNewsAdapter.setLoading(false);
+                    });
+                    MainFragment mainFragment = ((MainActivity) getActivity()).getMainFragment();
+                    SnackbarHelper.showDefaultSnackBarFromStatus(mainFragment.binding.mainBottomNavView, error.getStatus());
+                }
+            } else {
+                getActivity().runOnUiThread(() -> {
+                    swipeRefreshLayout.setRefreshing(false);
+                    allNewsAdapter.setLoading(false);
+                });
+                errorVisibility.set(false);
+                itemsVisibility.set(false);
+            }
         }
 
         @Override

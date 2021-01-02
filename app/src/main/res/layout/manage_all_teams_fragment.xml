@@ -2,6 +2,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -11,14 +12,12 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <com.example.footballnewsmanager.helpers.LoadingView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}"
-            />
+            android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -26,7 +25,13 @@
             android:layout_height="match_parent"
             android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:recyclerViewAdapter="@{viewModel.adapterObservable}"
-            />
+            app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
+
+        <com.example.footballnewsmanager.helpers.ErrorView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
+            app:errorStatus="@{viewModel.status}"
+            app:errorTryAgainListener="@{viewModel.tryAgainListener}" />
     </RelativeLayout>
 </layout>

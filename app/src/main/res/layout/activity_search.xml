@@ -49,9 +49,16 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:indeterminateDuration="1500"
-                    android:indeterminateTint="@color/colorTextPrimary"></ProgressBar>
+                    android:indeterminateTint="@color/colorTextPrimary"/>
             </LinearLayout>
 
+            <com.example.footballnewsmanager.helpers.ErrorView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
+                app:errorStatus="@{viewModel.status}"
+                app:errorTryAgainListener="@{viewModel.tryAgainListener}"
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/search_activity_recycler_view"
