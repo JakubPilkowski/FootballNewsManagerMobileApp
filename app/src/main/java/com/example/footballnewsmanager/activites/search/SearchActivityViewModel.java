@@ -1,19 +1,13 @@
 package com.example.footballnewsmanager.activites.search;
 
-import android.os.Build;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.adapters.search.SearchAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -21,24 +15,17 @@ import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ActivitySearchBinding;
-import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
+import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableEmitter;
-import io.reactivex.rxjava3.core.ObservableOnSubscribe;
-import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Function;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class SearchActivityViewModel extends BaseViewModel {
 
@@ -48,10 +35,23 @@ public class SearchActivityViewModel extends BaseViewModel {
     public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
     public ObservableBoolean placeholderVisibility = new ObservableBoolean(false);
+    private SearchView searchView;
+    public ObservableBoolean errorVisibility = new ObservableBoolean(false);
+    public ObservableInt status = new ObservableInt();
+    public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
+    private ErrorView.OnTryAgainListener listener = new ErrorView.OnTryAgainListener() {
+        @Override
+        public void onClick() {
+            load(queryText);
+        }
+    };
+
+    private String queryText;
 
     public void init() {
-        SearchView searchView = ((ActivitySearchBinding) getBinding()).searchActivitySearchView;
-        RecyclerView recyclerView  = ((ActivitySearchBinding)getBinding()).searchActivityRecyclerView;
+        searchView = ((ActivitySearchBinding) getBinding()).searchActivitySearchView;
+        tryAgainListener.set(listener);
+        RecyclerView recyclerView = ((ActivitySearchBinding) getBinding()).searchActivityRecyclerView;
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
@@ -62,7 +62,6 @@ public class SearchActivityViewModel extends BaseViewModel {
 
             @Override
             public void onScrolled(@androidx.annotation.NonNull RecyclerView recyclerView, int dx, int dy) {
-                Log.d("Search", "onScrolled: ");
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
@@ -78,8 +77,9 @@ public class SearchActivityViewModel extends BaseViewModel {
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
+                        queryText = newText;
                         if (!emitter.isDisposed()) {
-                                emitter.onNext(newText);
+                            emitter.onNext(newText);
                         }
                         return false;
                     }
@@ -88,6 +88,7 @@ public class SearchActivityViewModel extends BaseViewModel {
 
         observableQueryText
                 .debounce(400, TimeUnit.MILLISECONDS)
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS)
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -96,15 +97,21 @@ public class SearchActivityViewModel extends BaseViewModel {
 
                     @Override
                     public void onNext(@NonNull String newText) {
-                        itemsVisibility.set(false);
-                        loadingVisibility.set(true);
-                        String token = UserPreferences.get().getAuthToken();
-                        Connection.get().getQueryResults(callback, token, newText);
+                        load(newText);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-
+                        loadingVisibility.set(false);
+                        itemsVisibility.set(false);
+                        getActivity().runOnUiThread(() -> searchAdapter.removeItems());
+                        if(e.getMessage() != null && e.getMessage().contains("Unable to resolve host ")){
+                            status.set(598);
+                        }
+                        else if(e.getMessage()!=null && e.getMessage().contains("The source did not signal an event for")){
+                            status.set(408);
+                        }
+                        errorVisibility.set(true);
                     }
 
                     @Override
@@ -116,11 +123,16 @@ public class SearchActivityViewModel extends BaseViewModel {
         searchAdapter = new SearchAdapter();
         searchAdapter.setActivity(getActivity());
         searchAdapterObservable.set(searchAdapter);
-        loadingVisibility.set(true);
-        String token = UserPreferences.get().getAuthToken();
-        Connection.get().getQueryResults(callback, token, "");
+        load("");
     }
 
+    public void load(String text) {
+        itemsVisibility.set(false);
+        errorVisibility.set(false);
+        loadingVisibility.set(true);
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().getQueryResults(callback, token, text);
+    }
 
 
     private Callback<SearchResponse> callback = new Callback<SearchResponse>() {
@@ -135,11 +147,16 @@ public class SearchActivityViewModel extends BaseViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
-            Log.d("Search", "onSmthWrong: ");
+            Log.d("Search", "onSmthWrong: "+error.getStatus());
             loadingVisibility.set(false);
             itemsVisibility.set(false);
-            placeholderVisibility.set(true);
             getActivity().runOnUiThread(() -> searchAdapter.removeItems());
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                errorVisibility.set(true);
+                status.set(error.getStatus());
+            } else {
+                placeholderVisibility.set(true);
+            }
         }
 
         @Override

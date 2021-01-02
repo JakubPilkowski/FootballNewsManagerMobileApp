@@ -29,6 +29,7 @@ public abstract class Callback<T> extends Subject<T> {
     }
     @Override
     public void onError(@NonNull Throwable throwable) {
+        Log.d("Error", "onError");
         try {
             Response<?> responseBody = ((HttpException) throwable).response();
             if((responseBody != null ? responseBody.errorBody() : null) !=null){
@@ -45,10 +46,19 @@ public abstract class Callback<T> extends Subject<T> {
             }
         } catch (Exception exception) {
             Log.d("Error", throwable.getMessage());
-//            exception.printStackTrace();
+            if(throwable.getMessage() != null && throwable.getMessage().contains("Unable to resolve host ")){
+                SingleMessageError singleMessageError = new SingleMessageError();
+                singleMessageError.setMessage("No network");
+                singleMessageError.setStatus(598);
+                onSmthWrong(singleMessageError);
+            }
+            else if(throwable.getMessage()!=null && throwable.getMessage().contains("The source did not signal an event for")){
+                SingleMessageError singleMessageError = new SingleMessageError();
+                singleMessageError.setMessage("Request timeout");
+                singleMessageError.setStatus(408);
+                onSmthWrong(singleMessageError);
+            }
         }
-
-//        onSmthWrong(throwable);
     }
     @Override
     public boolean hasObservers() {

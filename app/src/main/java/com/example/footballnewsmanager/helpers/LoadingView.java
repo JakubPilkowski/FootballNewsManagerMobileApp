@@ -16,7 +16,6 @@ import com.example.footballnewsmanager.R;
 
 public class LoadingView extends LinearLayout {
 
-    private static final String TAG = "LoadingView";
     private View loadingView;
     private Animation loadingAnimation;
     private Context context;
@@ -45,18 +44,10 @@ public class LoadingView extends LinearLayout {
 
     @Override
     protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
-        Log.d(TAG, "onVisibilityChanged: ");
         if(visibility == VISIBLE)
             loadingView.startAnimation(loadingAnimation);
         else 
             loadingView.clearAnimation();
         super.onVisibilityChanged(changedView, visibility);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        Log.d(TAG, "onDetachedFromWindow: ");
-//        loadingView.clearAnimation();
-        super.onDetachedFromWindow();
     }
 }

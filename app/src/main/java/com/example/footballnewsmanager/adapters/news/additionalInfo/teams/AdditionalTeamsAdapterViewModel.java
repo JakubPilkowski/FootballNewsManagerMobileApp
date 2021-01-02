@@ -1,6 +1,7 @@
 package com.example.footballnewsmanager.adapters.news.additionalInfo.teams;
 
 import android.app.Activity;
+import android.graphics.drawable.shapes.OvalShape;
 import android.util.Log;
 import android.view.View;
 
@@ -9,10 +10,13 @@ import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.base.BaseAdapterViewModel;
+import com.example.footballnewsmanager.databinding.AdditionalInfoTeamBinding;
+import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.models.Team;
 import com.example.footballnewsmanager.models.UserTeam;
@@ -29,12 +33,16 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
     public ObservableBoolean isFavouriteBackground = new ObservableBoolean();
     public ObservableBoolean loadingButtonVisibility = new ObservableBoolean(false);
     public ObservableBoolean toggleButtonVisibility = new ObservableBoolean(true);
+    public ObservableBoolean loaded = new ObservableBoolean(false);
+    public ObservableField<String> errorText = new ObservableField<>();
     private UserTeam team;
 
+    private AdditionalInfoTeamBinding binding;
     @Override
     public void init(Object[] values) {
         team = (UserTeam) values[0];
         name.set(team.getTeam().getName());
+        binding = (AdditionalInfoTeamBinding) values[1];
         logoUrl.set(team.getTeam().getLogoUrl());
         updateFavouriteState(team.isFavourite());
     }
@@ -57,6 +65,7 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
     private Callback<UserTeam> callback = new Callback<UserTeam>() {
         @Override
         public void onSuccess(UserTeam newsUserTeam) {
+            loaded.set(true);
             team = newsUserTeam;
             updateFavouriteState(newsUserTeam.isFavourite());
             loadingButtonVisibility.set(false);
@@ -66,7 +75,22 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
-            Log.d("ManageTeams", "onSmthWrong: ");
+            loadingButtonVisibility.set(false);
+            toggleButtonVisibility.set(true);
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                loaded.set(false);
+                switch (error.getStatus()) {
+                    case 598:
+                        errorText.set("Brak połączenia z internetem");
+                        break;
+                    case 408:
+                        errorText.set("Zbyt długi czas oczekiwania");
+                        break;
+                    default:
+                        errorText.set("Coś poszło nie tak");
+                        break;
+                }
+            }
         }
 
         @Override

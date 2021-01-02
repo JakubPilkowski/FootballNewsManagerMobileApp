@@ -113,7 +113,7 @@ public class ManageTeamsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
             ManageTeamItemBinding binding = ((TeamViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
-            viewModel.init(items.get(position), activity, recyclerViewItemsListener, this);
+            viewModel.init(items.get(position), activity, recyclerViewItemsListener, binding);
         }
     }
 

@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.footballnewsmanager.adapters.news.NewsAdditionalInfoViewModel" />
@@ -10,6 +12,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/additional_info_main_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
@@ -76,13 +79,29 @@
                     android:textColor="#000"
                     android:text="@{viewModel.concernTeams}"
                     />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/additional_info_news_recyclerview"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:recyclerViewAdapter="@{viewModel.adapterObservable}"
-                    app:layoutManager="@{viewModel.layoutManager}"
-                    />
+                    >
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorTextPrimary"
+                        android:text="@string/reload"
+                        android:onClick="@{()->viewModel.load()}"
+                        android:visibility="@{viewModel.loaded ? View.GONE : View.VISIBLE}"
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/additional_info_news_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:recyclerViewAdapter="@{viewModel.adapterObservable}"
+                        app:layoutManager="@{viewModel.layoutManager}"
+                        android:visibility="@{viewModel.loaded ? View.VISIBLE : View.GONE}"
+                        />
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
 

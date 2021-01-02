@@ -3,6 +3,9 @@ package com.example.footballnewsmanager.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -26,6 +29,7 @@ public class Client {
                 .build();
         service = retrofit.create(Service.class);
     }
+
 
     public Service getService() {
         return service;

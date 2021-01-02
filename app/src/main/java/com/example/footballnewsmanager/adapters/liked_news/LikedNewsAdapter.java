@@ -41,6 +41,12 @@ public class LikedNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyItemRangeChanged(start + 1, this.items.size());
     }
 
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+        if(!isLoading)
+            notifyItemChanged(items.size()+1);
+    }
+
     public List<UserNews> getItems() {
         return items;
     }

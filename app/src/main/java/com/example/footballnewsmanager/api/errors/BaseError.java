@@ -6,6 +6,15 @@ public class BaseError {
     private String error;
     private String path;
 
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
     public String getTimestamp() {
         return timestamp;
     }

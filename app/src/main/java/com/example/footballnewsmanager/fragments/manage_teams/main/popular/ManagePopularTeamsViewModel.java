@@ -1,11 +1,14 @@
 package com.example.footballnewsmanager.fragments.manage_teams.main.popular;
 
 import android.util.Log;
+import android.view.View;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.adapters.manage_teams.popular.ManagePopularTeamsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -13,10 +16,13 @@ import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ManagePopularTeamsFragmentBinding;
+import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
+import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
+import com.google.android.material.snackbar.Snackbar;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -27,7 +33,10 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
     public ObservableField<Runnable> postRunnable = new ObservableField<>();
     public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
-
+    public ObservableBoolean errorVisibility = new ObservableBoolean(false);
+    public ObservableInt status = new ObservableInt();
+    public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
+    private ErrorView.OnTryAgainListener listener = this::load;
 
     private RecyclerView recyclerView;
     public ManagePopularTeamsAdapter managePopularTeamsAdapter;
@@ -38,11 +47,13 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
     public void init(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
         recyclerView = ((ManagePopularTeamsFragmentBinding) getBinding()).managePopularTeamsRecyclerView;
         this.recyclerViewItemsListener = recyclerViewItemsListener;
+        tryAgainListener.set(listener);
         load();
     }
 
     public void load() {
         currentPage = 0;
+        errorVisibility.set(false);
         itemsVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
@@ -59,9 +70,7 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
             protected void loadMoreItems() {
                 Log.d("News", "loadMoreItems");
                 currentPage++;
-                managePopularTeamsAdapter.setLoading(true);
-                String token = UserPreferences.get().getAuthToken();
-                Connection.get().proposedTeams(callback, token, currentPage);
+                paginationLoad();
             }
 
             @Override
@@ -78,6 +87,41 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
         recyclerViewAdapter.set(managePopularTeamsAdapter);
     }
 
+    public void paginationLoad() {
+        managePopularTeamsAdapter.setLoading(true);
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().proposedTeams(paginationCallback, token, currentPage);
+    }
+
+
+    private Callback<ProposedTeamsResponse> paginationCallback = new Callback<ProposedTeamsResponse>() {
+        @Override
+        public void onSuccess(ProposedTeamsResponse proposedTeamsResponse) {
+            getActivity().runOnUiThread(() -> {
+                managePopularTeamsAdapter.setItems(proposedTeamsResponse.getTeams(), currentPage);
+                isLastPage = proposedTeamsResponse.getPages() <= currentPage;
+                managePopularTeamsAdapter.setLoading(false);
+            });
+        }
+
+        @Override
+        public void onSmthWrong(BaseError error) {
+            getActivity().runOnUiThread(()-> {
+                isLastPage = true;
+                managePopularTeamsAdapter.setLoading(false);
+            });
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                SnackbarHelper.getInfinitiveSnackBarFromStatus(recyclerView, error.getStatus())
+                        .setAction(R.string.reload, v -> paginationLoad())
+                        .show();
+            }
+        }
+
+        @Override
+        protected void subscribeActual(@NonNull Observer<? super ProposedTeamsResponse> observer) {
+
+        }
+    };
 
     private Callback<ProposedTeamsResponse> callback = new Callback<ProposedTeamsResponse>() {
         @Override
@@ -90,20 +134,27 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
                     initItemsView(proposedTeamsResponse);
                 });
             } else {
-                getActivity().runOnUiThread(() -> {
-                    managePopularTeamsAdapter.setItems(proposedTeamsResponse.getTeams(), currentPage);
-                    isLastPage = proposedTeamsResponse.getPages() <= currentPage;
-                    managePopularTeamsAdapter.setLoading(false);
-                });
+//                getActivity().runOnUiThread(() -> {
+//                    managePopularTeamsAdapter.setItems(proposedTeamsResponse.getTeams(), currentPage);
+//                    isLastPage = proposedTeamsResponse.getPages() <= currentPage;
+//                    managePopularTeamsAdapter.setLoading(false);
+//                });
             }
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
-            getActivity().runOnUiThread(() -> {
-                isLastPage = true;
-                managePopularTeamsAdapter.setLoading(false);
-            });
+            loadingVisibility.set(false);
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                itemsVisibility.set(false);
+                errorVisibility.set(true);
+                status.set(error.getStatus());
+            } else {
+                getActivity().runOnUiThread(() -> {
+                    isLastPage = true;
+                    managePopularTeamsAdapter.setLoading(false);
+                });
+            }
         }
 
         @Override

@@ -83,6 +83,11 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.activity = activity;
     }
 
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+        if(!isLoading)
+            notifyItemChanged(items.size()+1);
+    }
 
     @NonNull
     @Override
@@ -154,7 +159,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return;
         } else if (position == 0) {
             NewsHeaderAdapterViewModel viewModel = new NewsHeaderAdapterViewModel();
-            viewModel.init(countAll, countToday, recyclerViewItemsListener);
+            viewModel.init(countAll, countToday, recyclerViewItemsListener, activity);
             NewsHeaderLayoutBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
             return;
@@ -200,6 +205,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
+        if(!isLoading && !isPlaceholder)
+            return items.size() + 1;
         return items.size() + 2;
     }
 
@@ -216,12 +223,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int index = items.indexOf(oldNews);
         items.set(index, newNews);
         viewModels.get(index).update(newNews);
-    }
-
-    public void setHeaderItems(Long id, String name, String img) {
-        this.id = id;
-        this.name = name;
-        this.img = img;
     }
 
     public class NewsHeaderViewHolder extends RecyclerView.ViewHolder {

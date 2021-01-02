@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.View;
 import android.widget.Switch;
 
 import androidx.databinding.ObservableBoolean;
@@ -26,10 +27,14 @@ import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ProfileFragmentBinding;
 import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.fragments.main.MainFragment;
+import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.ProposedLanguageDialogManager;
+import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.ProposedLanguageListener;
 import com.example.footballnewsmanager.models.LanguageField;
+import com.google.android.material.snackbar.Snackbar;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -49,6 +54,10 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
     public ObservableField<Switch.OnCheckedChangeListener> proposedNewsChangeListenerAdapter = new ObservableField<>();
     public ObservableField<String> currentLanguage = new ObservableField<>("Polski");
     public ObservableField<Drawable> languageDrawable = new ObservableField<>();
+    public ObservableBoolean errorVisibility = new ObservableBoolean(false);
+    public ObservableInt status = new ObservableInt();
+    public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
+    private ErrorView.OnTryAgainListener listener = this::load;
 
     private Switch.OnCheckedChangeListener proposedNewsChangeListener = (buttonView, isChecked) -> proposedNews.set(isChecked);
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -56,19 +65,20 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
 
     public void init() {
         swipeRefreshLayout = ((ProfileFragmentBinding) getBinding()).profileSwipeRefresh;
+        tryAgainListener.set(listener);
         load();
         proposedNewsChangeListenerAdapter.set(proposedNewsChangeListener);
         swipeRefreshListenerObservable.set(this::refresh);
     }
 
     public void load() {
+        errorVisibility.set(false);
         itemsVisibility.set(false);
         loadingVisibility.set(true);
-        String token = UserPreferences.get().getAuthToken();
-        Connection.get().getUserProfile(callback, token);
+        refresh();
     }
 
-    public void refresh() {
+    private void refresh() {
         String token = UserPreferences.get().getAuthToken();
         Connection.get().getUserProfile(callback, token);
     }
@@ -89,7 +99,6 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
 
 
     public void onManageTeamsClick() {
-        //add remove teams view
         Intent intent = new Intent(getActivity(), ManageTeamsActivity.class);
         getActivity().startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS);
     }
@@ -120,19 +129,22 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
 
         @Override
         public void onSmthWrong(BaseError error) {
-//            if(error instanceof SingleMessageError){
-//                String message = ((SingleMessageError) error).getMessage();
-//                if(message.equals("Nie ma już więcej wyników")){
-            getActivity().runOnUiThread(() -> {
-                swipeRefreshLayout.setRefreshing(false);
-                loadingVisibility.set(false);
-            });
-//                }
-//                if(message.equals("Dla podanej frazy nie ma żadnej drużyny"))
-//                {
-//                    loadingVisibility.set(false);
-//                }
-//            }
+            loadingVisibility.set(false);
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                if (swipeRefreshLayout.isRefreshing()) {
+                    itemsVisibility.set(true);
+                    getActivity().runOnUiThread(() -> {
+                        swipeRefreshLayout.setRefreshing(false);
+                    });
+                    MainFragment mainFragment = ((MainActivity) getActivity()).getMainFragment();
+                    SnackbarHelper.showDefaultSnackBarFromStatus(mainFragment.binding.mainBottomNavView, error.getStatus());
+                } else {
+                    itemsVisibility.set(false);
+                    status.set(error.getStatus());
+                    errorVisibility.set(true);
+
+                }
+            }
         }
 
         @Override
@@ -150,7 +162,8 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
     public void onDeleteAccountClick() {
         ProgressDialog.get().show();
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().deleteAccount(accountCallback, token);
+//        Connection.get().deleteAccount(accountCallback, token);
+        ProgressDialog.get().dismiss();
     }
 
     private Callback<BaseResponse> accountCallback = new Callback<BaseResponse>() {
@@ -166,7 +179,10 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
         @Override
         public void onSmthWrong(BaseError error) {
             ProgressDialog.get().dismiss();
-            Log.d("MainActivity", ((SingleMessageError) error).getMessage());
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                MainFragment mainFragment = ((MainActivity) getActivity()).getMainFragment();
+                SnackbarHelper.showDefaultSnackBarFromStatus(mainFragment.binding.mainBottomNavView, error.getStatus());
+            }
         }
 
         @Override

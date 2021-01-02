@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    >
+
+
+
+    <View
+        android:id="@+id/error_image_default"
+        android:layout_width="200dp"
+        android:layout_height="125dp"
+        android:layout_marginBottom="18dp"
+        />
+
+    <View
+        android:id="@+id/error_image"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginBottom="18dp"
+        />
+
+    <TextView
+        android:id="@+id/error_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="19sp"
+        android:textAlignment="center"
+        android:layout_marginBottom="18dp"
+        android:textStyle="italic"
+        />
+
+    <TextView
+        android:id="@+id/error_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spróbuj\nponownie"
+        android:background="@drawable/add_team_button"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="17sp"
+        android:letterSpacing="0.05"
+        android:textColor="@color/colorTextPrimary"
+        android:layout_marginBottom="18dp"
+        />
+</LinearLayout>

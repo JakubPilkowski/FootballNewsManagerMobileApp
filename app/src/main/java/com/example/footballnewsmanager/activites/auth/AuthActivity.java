@@ -13,7 +13,10 @@ import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityAuthBinding;
+import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.fragments.auth.forgetPassword.ForgetPasswordFragment;
 import com.example.footballnewsmanager.fragments.auth.login.LoginFragment;
+import com.example.footballnewsmanager.fragments.auth.registerFragment.RegisterFragment;
 import com.example.footballnewsmanager.fragments.auth.welcome.WelcomeFragment;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
@@ -21,6 +24,7 @@ import com.example.footballnewsmanager.interfaces.Providers;
 public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityViewModel> implements Providers {
 
     public static final int RESULT_RESET_PASSWORD = 1001;
+
 
     @Override
     protected void initActivity(ActivityAuthBinding binding) {

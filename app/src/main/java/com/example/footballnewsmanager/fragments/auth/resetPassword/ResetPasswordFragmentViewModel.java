@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.fragments.auth.resetPassword;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +12,7 @@ import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
 import com.bumptech.glide.util.ContentLengthInputStream;
+import com.example.footballnewsmanager.activites.error.ErrorActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -117,8 +119,14 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
-            errorText.set(((SingleMessageError) error).getMessage());
             ProgressDialog.get().dismiss();
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                Intent intent = new Intent(getActivity(), ErrorActivity.class);
+                intent.putExtra("status", error.getStatus());
+                getActivity().startActivity(intent);
+            } else {
+                errorText.set(((SingleMessageError) error).getMessage());
+            }
         }
 
         @Override

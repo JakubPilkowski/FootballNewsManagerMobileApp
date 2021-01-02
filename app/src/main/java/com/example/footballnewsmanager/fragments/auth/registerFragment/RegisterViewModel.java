@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
+import com.example.footballnewsmanager.activites.error.ErrorActivity;
 import com.example.footballnewsmanager.activites.register.ProposedSettingsActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -65,9 +66,9 @@ public class RegisterViewModel extends BaseViewModel {
         return false;
     };
 
-    public void init(){
+    public void init() {
         resources = getActivity().getResources();
-        binding = ((RegisterFragmentBinding)getBinding());
+        binding = ((RegisterFragmentBinding) getBinding());
         scrollView = binding.registerScrollview;
         usernameLayout = binding.registerLoginLayout;
         emailLayout = binding.registerEmailLayout;
@@ -80,22 +81,22 @@ public class RegisterViewModel extends BaseViewModel {
 
     }
 
-    private boolean validateAll(){
+    private boolean validateAll() {
         boolean loginValidation = Validator.validateLogin(username.get(), usernameLayout, resources);
         boolean emailValidation = Validator.validateEmail(email.get(), emailLayout, resources);
         boolean passwordValidation = Validator.validatePassword(password.get(), passwordLayout, resources);
         return loginValidation && emailValidation && passwordValidation;
     }
 
-    public void validate(){
-        if(validateAll()){
+    public void validate() {
+        if (validateAll()) {
             errorText.set("");
 //            Intent intent = new Intent(getActivity(), ProposedSettingsActivity.class);
 //            getActivity().startActivity(intent);
 //            getActivity().finish();
             ProgressDialog.get().show();
             RegisterRequest registerRequest = new RegisterRequest(username.get(), email.get(), password.get());
-            Connection.get().register(callback,registerRequest);
+            Connection.get().register(callback, registerRequest);
         }
     }
 
@@ -109,22 +110,26 @@ public class RegisterViewModel extends BaseViewModel {
         @Override
         public void onSmthWrong(BaseError error) {
             errorText.set(error.getError());
-            if(error instanceof SingleMessageError){
-                errorText.set(((SingleMessageError) error).getMessage());
-            }
-            else if(error instanceof MultipleMessageError)
-            {
-                StringBuilder stringBuilder = new StringBuilder();
-                for (String key:
-                     ((MultipleMessageError) error).getMessages().keySet()) {
-                    String value = ((MultipleMessageError) error).getMessages().get(key);
-                    stringBuilder.append(value);
-                    stringBuilder.append("\n");
-                }
-                errorText.set(stringBuilder.toString());
-            }
             ProgressDialog.get().dismiss();
-            scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                Intent intent = new Intent(getActivity(), ErrorActivity.class);
+                intent.putExtra("status", error.getStatus());
+                getActivity().startActivity(intent);
+            } else {
+                if (error instanceof SingleMessageError) {
+                    errorText.set(((SingleMessageError) error).getMessage());
+                } else if (error instanceof MultipleMessageError) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (String key :
+                            ((MultipleMessageError) error).getMessages().keySet()) {
+                        String value = ((MultipleMessageError) error).getMessages().get(key);
+                        stringBuilder.append(value);
+                        stringBuilder.append("\n");
+                    }
+                    errorText.set(stringBuilder.toString());
+                }
+                scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
+            }
         }
 
         @Override
@@ -145,7 +150,7 @@ public class RegisterViewModel extends BaseViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
-            errorText.set(((SingleMessageError)error).getMessage());
+            errorText.set(((SingleMessageError) error).getMessage());
             ProgressDialog.get().dismiss();
             //alert????
         }

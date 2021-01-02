@@ -58,6 +58,14 @@
             app:postRunnable="@{viewModel.postRunnable}"
             app:recyclerViewAdapter="@{viewModel.recyclerViewAdapter}"
             />
+
+        <com.example.footballnewsmanager.helpers.ErrorView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
+            app:errorStatus="@{viewModel.status}"
+            app:errorTryAgainListener="@{viewModel.tryAgainListener}"
+            />
     </RelativeLayout>
 
 </LinearLayout>

@@ -17,12 +17,15 @@ import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
+import com.example.footballnewsmanager.fragments.main.MainFragment;
 import com.example.footballnewsmanager.fragments.main.news_info.NewsInfoFragment;
+import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.News;
 import com.example.footballnewsmanager.models.UserNews;
+import com.google.android.material.snackbar.Snackbar;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -85,9 +88,6 @@ public class NewsAdapterViewModel {
     public void onNewsClick() {
         String token = UserPreferences.get().getAuthToken();
         Connection.get().setNewsVisited(callback, token, newsDetails.getSiteId(), newsDetails.getId());
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(newsDetails.getNewsUrl()));
-        activity.startActivity(intent);
     }
 
     public void onMoreInfoClick() {
@@ -110,25 +110,34 @@ public class NewsAdapterViewModel {
     private Callback<SingleNewsResponse> callback = new Callback<SingleNewsResponse>() {
         @Override
         public void onSuccess(SingleNewsResponse newsResponse) {
-            activity.runOnUiThread(() -> {
-                listener.onChangeItem(news, newsResponse.getNews());
-            });
+            activity.runOnUiThread(() -> listener.onChangeItem(news, newsResponse.getNews()));
             if (!newsResponse.message.equals("Odwiedzono wiadomość")){
                 likesToggle();
                 loadingHeartVisibility.set(false);
                 heartVisibility.set(true);
             }
             else {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(newsDetails.getNewsUrl()));
+                activity.startActivity(intent);
                 badgeListener.onBadgeChange();
             }
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
-            if (error instanceof SingleMessageError) {
-                Log.d("News", ((SingleMessageError) error).getMessage());
+
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                MainFragment mainFragment = ((MainActivity)activity).getMainFragment();
+                SnackbarHelper.getShortSnackBarFromStatus(mainFragment.binding.mainBottomNavView, error.getStatus())
+                        .setAnchorView(mainFragment.binding.mainBottomNavView)
+                        .show();
             }
-            likesToggle();
+            if (!likeEnabled.get()) {
+                likesToggle();
+            }
+            loadingHeartVisibility.set(false);
+            heartVisibility.set(true);
         }
 
         @Override

@@ -168,5 +168,14 @@ public class BindingAdapter {
         swipeRefreshLayout.setColorSchemeColors(swipeRefreshLayout.getResources().getColor(color));
     }
 
+    @androidx.databinding.BindingAdapter("errorStatus")
+    public static void setErrorStatus(ErrorView errorView, int status){
+        errorView.setStatus(status);
+    }
+
+    @androidx.databinding.BindingAdapter("errorTryAgainListener")
+    public static void setErrorTryAgainListener(ErrorView errorView, ErrorView.OnTryAgainListener listener){
+        errorView.setOnTryAgainListener(listener);
+    }
 
 }

@@ -3,6 +3,7 @@ package com.example.footballnewsmanager.adapters.manage_teams.teams;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.LinearLayout;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -14,6 +15,8 @@ import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamActivi
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
+import com.example.footballnewsmanager.databinding.ManageTeamItemBinding;
+import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.Team;
@@ -36,19 +39,26 @@ public class ManageTeamsViewModel {
     private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
     private RecyclerViewItemsListener<UserTeam> innerRecyclerViewItemsListener;
     private Activity activity;
+    private ManageTeamItemBinding binding;
+    private LinearLayout mainLayout;
 
-    public void init(UserTeam userTeam,Activity activity, RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
+    public void init(UserTeam userTeam, Activity activity, RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener,
+                     ManageTeamItemBinding binding) {
         this.activity = activity;
+        this.binding = binding;
         this.recyclerViewItemsListener = recyclerViewItemsListener;
+        mainLayout = binding.manageTeamMainLayout;
         update(userTeam);
     }
 
     public void init(UserTeam userTeam,Activity activity, RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener
-            , RecyclerViewItemsListener<UserTeam> innerRecyclerViewListener)
+            , RecyclerViewItemsListener<UserTeam> innerRecyclerViewListener, ManageTeamItemBinding binding)
     {
         this.activity = activity;
+        this.binding = binding;
         this.recyclerViewItemsListener = recyclerViewItemsListener;
         this.innerRecyclerViewItemsListener = innerRecyclerViewListener;
+        mainLayout = binding.manageTeamMainLayout;
         update(userTeam);
     }
 
@@ -81,6 +91,11 @@ public class ManageTeamsViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
+            loadingButtonVisibility.set(false);
+            toggleButtonVisibility.set(true);
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                SnackbarHelper.showDefaultSnackBarFromStatus(mainLayout,error.getStatus());
+            }
             Log.d("ManageTeams", "onSmthWrong: ");
         }
 

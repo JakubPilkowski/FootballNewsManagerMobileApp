@@ -106,8 +106,8 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             return;
         } else if (position == 0) {
             NewsForTeamHeaderAdapterViewModel viewModel = new NewsForTeamHeaderAdapterViewModel();
-            viewModel.init(id, name, img, isFavourite, countAll, countToday, headerRecyclerViewItemsListener);
             NewsForTeamHeaderBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
+            viewModel.init(id, name, img, isFavourite, countAll, countToday, headerRecyclerViewItemsListener, binding);
             binding.setViewModel(viewModel);
             return;
         } else {
@@ -139,11 +139,7 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemCount() {
         if (isLoading)
-        {
-            Log.d("ItemCount", "getItemCount: true");
             return items.size() + 2;
-        }
-        Log.d("ItemCount", "getItemCount: false");
         return items.size() + 1;
     }
 

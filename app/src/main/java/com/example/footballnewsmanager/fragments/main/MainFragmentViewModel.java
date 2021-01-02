@@ -22,6 +22,7 @@ import com.example.footballnewsmanager.fragments.main.all_news.AllNewsFragment;
 import com.example.footballnewsmanager.fragments.main.news.NewsFragment;
 import com.example.footballnewsmanager.fragments.main.profile.ProfileFragment;
 import com.example.footballnewsmanager.fragments.main.sites.SitesFragment;
+import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.google.android.material.badge.BadgeDrawable;
@@ -119,19 +120,18 @@ public class MainFragmentViewModel extends BaseViewModel implements BadgeListene
             Log.d(MainFragment.TAG, "onSuccess: ");
             Long amount = badgesResponse.getAmount();
             UserPreferences.get().changeNotification(amount);
-            if(amount > 0){
-                BadgeDrawable badgeDrawable = ((MainFragmentBinding)getBinding()).mainBottomNavView.getOrCreateBadge(R.id.nav_news);
+            if (amount > 0) {
+                BadgeDrawable badgeDrawable = ((MainFragmentBinding) getBinding()).mainBottomNavView.getOrCreateBadge(R.id.nav_news);
                 badgeDrawable.setMaxCharacterCount(99);
                 badgeDrawable.setNumber(amount.intValue());
-            }
-            else{
-                ((MainFragmentBinding)getBinding()).mainBottomNavView.removeBadge(R.id.nav_news);
+            } else {
+                ((MainFragmentBinding) getBinding()).mainBottomNavView.removeBadge(R.id.nav_news);
             }
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
-            Log.d(MainFragment.TAG, "onSmthWrong: ");
+            SnackbarHelper.showDefaultSnackBarFromStatus(bottomNavigationView, error.getStatus());
         }
 
         @Override

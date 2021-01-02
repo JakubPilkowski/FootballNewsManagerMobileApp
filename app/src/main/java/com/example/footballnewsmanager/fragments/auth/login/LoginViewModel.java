@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
+import com.example.footballnewsmanager.activites.auth.AuthActivity;
+import com.example.footballnewsmanager.activites.error.ErrorActivity;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.MultipleMessageError;
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
@@ -35,7 +37,7 @@ import io.reactivex.rxjava3.core.Observer;
 public class LoginViewModel extends BaseViewModel {
 
 
-//    private TextInputEditText email;
+    //    private TextInputEditText email;
 //    private TextInputEditText password;
     private TextInputLayout emailLayout;
     private TextInputLayout passwordLayout;
@@ -82,7 +84,8 @@ public class LoginViewModel extends BaseViewModel {
     public void validate() {
         if (validateBoth()) {
             errorText.set("");
-            ProgressDialog.get().show();
+            if(ProgressDialog.get() != null && !ProgressDialog.get().isShowing())
+                ProgressDialog.get().show();
             LoginRequest loginRequest = new LoginRequest(email.get(), password.get());
             Connection.get().login(callback, loginRequest);
         }
@@ -107,20 +110,25 @@ public class LoginViewModel extends BaseViewModel {
         @Override
         public void onSmthWrong(BaseError error) {
             ProgressDialog.get().dismiss();
-            Log.d(LoginFragment.TAG, error.getError());
-            Log.d(LoginFragment.TAG, String.valueOf(error.getStatus()));
-            //            errorText.set(error.getError());
-            if (error instanceof SingleMessageError) {
-                errorText.set(((SingleMessageError) error).getMessage());
-            }
-            else if(error instanceof MultipleMessageError){
-                StringBuilder stringBuilder = new StringBuilder();
-                for (String key:
-                        ((MultipleMessageError) error).getMessages().keySet()) {
-                    String value = ((MultipleMessageError) error).getMessages().get(key);
-                    stringBuilder.append(value);
+//            Log.d(LoginFragment.TAG, error.getError());
+//            Log.d(LoginFragment.TAG, String.valueOf(error.getStatus()));
+
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                Intent intent = new Intent(getActivity(), ErrorActivity.class);
+                intent.putExtra("status", error.getStatus());
+                getActivity().startActivity(intent);
+            } else {
+                if (error instanceof SingleMessageError) {
+                    errorText.set(((SingleMessageError) error).getMessage());
+                } else if (error instanceof MultipleMessageError) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (String key :
+                            ((MultipleMessageError) error).getMessages().keySet()) {
+                        String value = ((MultipleMessageError) error).getMessages().get(key);
+                        stringBuilder.append(value);
+                    }
+                    errorText.set(stringBuilder.toString());
                 }
-                errorText.set(stringBuilder.toString());
             }
         }
     };
