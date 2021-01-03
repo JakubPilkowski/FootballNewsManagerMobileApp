@@ -8,6 +8,5 @@
     android:drawablePadding="12dp"
     android:textSize="18sp"
     android:textColor="@color/colorTextSecondary"
-    >
-</TextView>
+    />
 

@@ -55,7 +55,6 @@ public class WelcomeViewModel extends BaseViewModel {
         drawables.add(resources.getDrawable(R.drawable.ic_spain_small));
         drawables.add(resources.getDrawable(R.drawable.ic_france_small));
 
-
         String locale = UserPreferences.get().getLanguage();
         String language = LanguageHelper.getName(locale, resources);
         drawables.set(0, drawables.set(nameArray.indexOf(language), drawables.get(0)));
@@ -106,11 +105,11 @@ public class WelcomeViewModel extends BaseViewModel {
                 ((WelcomeFragmentBinding) getBinding()).authForgetPasswordButton, "forget password fragment title");
     }
 
-    public void onItemSelected(AdapterView<?> parentView, View selectItemView, int position, long id) {
-        String localeName = LanguageHelper.nameToLocale(nameArray.get(position), getActivity().getResources());
-        Locale locale = new Locale(localeName);
-        Locale.setDefault(locale);
-        UserPreferences.get().setLanguage(localeName);
-        ((AuthActivity) getActivity()).changeLanguage(locale);
-    }
+//    public void onItemSelected(AdapterView<?> parentView, View selectItemView, int position, long id) {
+//        String localeName = LanguageHelper.nameToLocale(nameArray.get(position), getActivity().getResources());
+//        Locale locale = new Locale(localeName);
+//        Locale.setDefault(locale);
+//        UserPreferences.get().setLanguage(localeName);
+//        ((AuthActivity) getActivity()).changeLanguage(locale);
+//    }
 }

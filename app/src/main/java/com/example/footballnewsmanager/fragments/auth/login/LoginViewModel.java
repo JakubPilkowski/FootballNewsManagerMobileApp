@@ -110,8 +110,8 @@ public class LoginViewModel extends BaseViewModel {
         @Override
         public void onSmthWrong(BaseError error) {
             ProgressDialog.get().dismiss();
-//            Log.d(LoginFragment.TAG, error.getError());
-//            Log.d(LoginFragment.TAG, String.valueOf(error.getStatus()));
+            Log.d(LoginFragment.TAG, error.getError());
+            Log.d(LoginFragment.TAG, String.valueOf(error.getStatus()));
 
             if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
                 Intent intent = new Intent(getActivity(), ErrorActivity.class);

@@ -74,7 +74,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Statystyki"
+                            android:text="@string/statistics"
                             android:textAlignment="center"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="20sp"
@@ -125,7 +125,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Drużyny"
+                                android:text="@string/teams"
                                 android:textColor="@color/colorTextPrimary"
                                 android:textSize="22sp"
                                 android:textStyle="bold" />
@@ -161,7 +161,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Polubienia"
+                                android:text="@string/likes_de"
                                 android:textColor="@color/colorTextPrimary"
                                 android:textSize="22sp"
                                 android:textStyle="bold" />
@@ -193,7 +193,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Zarządzanie"
+                            android:text="@string/managment"
                             android:textAlignment="center"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="20sp"
@@ -224,7 +224,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Zarządzaj drużynami"
+                            android:text="@string/teams"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="18sp" />
 
@@ -251,7 +251,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Przeglądaj polubione"
+                            android:text="@string/liked"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="18sp" />
 
@@ -308,7 +308,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/proposed_news"
+                            android:text="@string/proposed_teams"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="18sp" />
 
@@ -333,14 +333,14 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="2dp"
-                            android:layout_marginRight="12dp"
+                            android:layout_marginEnd="12dp"
                             android:layout_weight="1"
                             android:background="@color/colorPrimary" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Konto"
+                            android:text="@string/account"
                             android:textAlignment="center"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="20sp"
@@ -371,7 +371,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Wyloguj się"
+                            android:text="@string/logout"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="18sp" />
 
@@ -397,7 +397,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Usuń konto"
+                            android:text="@string/delete_account"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="18sp" />
 

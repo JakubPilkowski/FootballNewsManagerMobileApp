@@ -1,10 +1,12 @@
 package com.example.footballnewsmanager.adapters.news;
 
 import android.app.Activity;
+import android.content.res.Resources;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
+import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -30,8 +32,9 @@ public class NewsHeaderAdapterViewModel {
     private Activity activity;
 
     public void init(Long countAll, Long countToday, RecyclerViewItemsListener recyclerViewItemsListener, Activity activity) {
-        this.countAll.set("Łącznie: " + countAll);
-        this.countToday.set("Dzisiaj: " + countToday);
+        Resources resources = activity.getResources();
+        this.countAll.set(resources.getString(R.string.total) + countAll);
+        this.countToday.set(resources.getString(R.string.today) + countToday);
         this.recyclerViewItemsListener = recyclerViewItemsListener;
         this.activity = activity;
     }

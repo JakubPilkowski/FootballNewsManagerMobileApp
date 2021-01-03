@@ -36,7 +36,7 @@
         android:id="@+id/error_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Spróbuj\nponownie"
+        android:text="@string/try_again"
         android:background="@drawable/add_team_button"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"
