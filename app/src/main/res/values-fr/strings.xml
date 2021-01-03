@@ -31,9 +31,7 @@
     <string name="login_size_error">Login musi zawierać od 4 do 20 znaków</string>
     <string name="username">Nazwa</string>
     <string name="back">Cofnij</string>
-    <string name="dark_mode">Ciemny motyw</string>
     <string name="language">Język</string>
-    <string name="notifications">Powiadomienia</string>
     <string name="proposed_teams">Polecane wiadomości</string>
     <string name="polish">Polski</string>
     <string name="german">Niemiecki</string>
@@ -69,7 +67,7 @@
     <string name="add_teams">Add Teams</string>
     <string name="statistics">Statistics</string>
     <string name="likes_de">Likes</string>
-    <string name="managment">Managment</string>
+    <string name="management">Managment</string>
     <string name="account">Account</string>
     <string name="logout">Logout</string>
     <string name="delete_account">Delete Account</string>
@@ -78,5 +76,13 @@
     <string name="password_changed">Password changed</string>
     <string name="total">Total:</string>
     <string name="today">Today:</string>
+    <string name="delete">Delete</string>
+    <string name="add">Add</string>
+    <string name="description">Description</string>
+    <string name="account_from">Account from:</string>
+    <string name="added_de">Added</string>
+    <string name="all">All</string>
+    <string name="popular">Popular</string>
+    <string name="teams_management">Teams Management</string>
 
 </resources>

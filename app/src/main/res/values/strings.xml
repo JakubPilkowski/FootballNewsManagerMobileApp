@@ -31,9 +31,7 @@
     <string name="login_size_error">Login musi zawierać od 4 do 20 znaków</string>
     <string name="username">Name</string>
     <string name="back">Back</string>
-    <string name="dark_mode">Ciemny motyw</string>
     <string name="language">Language</string>
-    <string name="notifications">Notifications</string>
     <string name="proposed_teams">Proposed Teams</string>
     <string name="polish">Polish</string>
     <string name="german">German</string>
@@ -41,7 +39,7 @@
     <string name="spanish">Spain</string>
     <string name="french">French</string>
     <string name="english">English</string>
-    <string name="menu_news_name"><i>Your News</i></string>
+    <string name="menu_news_name"><i>Selected</i></string>
     <string name="menu_profile_name"><i>Profile</i></string>
     <string name="menu_sites_name"><i>Sites</i></string>
     <string name="menu_news_all"><i>All</i></string>
@@ -55,7 +53,7 @@
     <string name="search_for_teams_and_news">Search for teams or news</string>
     <string name="search_result_empty">There is no result for given phrase</string>
     <string name="try_again">Try Again</string>
-    <string name="liked">Liked</string>
+    <string name="liked">Liked News</string>
     <string name="empty_content">It\'s a bit empty in here</string>
     <string name="mark_all_as_read">Mark all as read</string>
     <string name="information">Information</string>
@@ -69,14 +67,22 @@
     <string name="add_teams">Add Teams</string>
     <string name="statistics">Statistics</string>
     <string name="likes_de">Likes</string>
-    <string name="managment">Managment</string>
+    <string name="management">Management</string>
     <string name="account">Account</string>
     <string name="logout">Logout</string>
     <string name="delete_account">Delete Account</string>
     <string name="choose_favourite_sites">Choose favourite sites</string>
     <string name="proposed_teams_title">Choose the teams you are interested in</string>
     <string name="password_changed">Password changed</string>
-    <string name="total">Total: </string>
-    <string name="today">Today: </string>
+    <string name="total">Total:&#160;</string>
+    <string name="today">Today:&#160;</string>
+    <string name="delete">Delete</string>
+    <string name="add">Add</string>
+    <string name="description">Description:&#160;</string>
+    <string name="account_from">Account from:&#160;</string>
+    <string name="added_de">Added</string>
+    <string name="all">&#160;All</string>
+    <string name="popular">Popular</string>
+    <string name="teams_management">Teams Management</string>
 
 </resources>

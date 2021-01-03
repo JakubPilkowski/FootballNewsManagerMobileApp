@@ -90,7 +90,7 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
 
     public void initItemsView(UserProfileResponse userProfileResponse) {
         name.set(userProfileResponse.getUser().getUsername());
-        date.set("Konto od : " + userProfileResponse.getUser().getAddedDate().split("T")[0]);
+        date.set(getActivity().getResources().getString(R.string.account_from) + userProfileResponse.getUser().getAddedDate().split("T")[0]);
         proposedNews.set(userProfileResponse.getUser().isProposedNews());
         String locale = UserPreferences.get().getLanguage();
         currentLanguage.set(LanguageHelper.getName(locale, getActivity().getResources()));

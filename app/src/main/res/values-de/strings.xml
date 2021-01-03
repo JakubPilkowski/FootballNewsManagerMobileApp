@@ -1,44 +1,57 @@
 <resources>
     <string name="app_name">Football News Manager</string>
     <string name="app_logo_name">Football News\nManager</string>
-    <string name="lets_begin">Zaczynamy</string>
-    <string name="logging">Logowanie</string>
-    <string name="forget_password">Zapomniałem hasła</string>
-    <string name="password">Hasło</string>
+    <string name="lets_begin">Wir beginnen</string>
+    <string name="logging">Anmeldung</string>
+    <string name="forget_password">Passwort vergessen</string>
+    <string name="password">Passwort</string>
     <string name="email">Email</string>
-    <string name="log_in">Zaloguj się</string>
-
+    <string name="log_in">Anmelden</string>
     <!--    validation-->
-    <string name="field_not_blank">Pole nie może być puste</string>
-    <string name="email_invalid">Niepoprawny adres mailowy</string>
-    <string name="email_too_long">Adres mailowy może zawierać maksymalnie 40 znaków</string>
-    <string name="password_invalid">Hasło musi zawierać od 8 do 30 znaków</string>
-    <string name="loading">Ładowanie...</string>
-    <string name="login_successful">Poprawnie Zalogowano</string>
+    <string name="field_not_blank">Das Feld darf nicht leer sein</string>
+    <string name="email_invalid">Falsche E-Mail Adresse</string>
+    <string name="email_too_long">Die E-Mail-Adresse kann bis zu 40 Zeichen enthalten</string>
+    <string name="password_invalid">Das Passwort muss 8 bis 30 Zeichen lang sein</string>
+    <string name="loading">Landung…</string>
+    <string name="login_successful">Erfolgreich angemeldet</string>
     <string name="player_logo">player logo</string>
-    <string name="send">Wyślij</string>
-    <string name="forget_password_desc">Podaj adres mailowy na który\nwyślemy token aktywacyjny</string>
-    <string name="token">Token wysłany na adres mailowy</string>
-    <string name="new_password">Nowe hasło</string>
-    <string name="repeat_password">Powtórz hasło</string>
-    <string name="change_password">Zmień hasło</string>
-    <string name="password_must_match">Hasła muszą się zgadzać</string>
-    <string name="token_not_empty">Token nie może być pusty</string>
-    <string name="reset_password">Reset hasła</string>
-    <string name="next">Dalej</string>
-    <string name="registration">Rejestracja</string>
-    <string name="register">Zarejestruj</string>
-    <string name="login_size_error">Login musi zawierać od 4 do 20 znaków</string>
-    <string name="username">Nazwa</string>
-    <string name="back">Cofnij</string>
-    <string name="dark_mode">Ciemny motyw</string>
-    <string name="language">Język</string>
-    <string name="notifications">Powiadomienia</string>
-    <string name="proposed_teams">Polecane wiadomości</string>
-    <string name="polish">Polski</string>
-    <string name="german">Niemiecki</string>
-    <string name="italish">Włoski</string>
-    <string name="spanish">Hiszpański</string>
+    <string name="send">Senden</string>
+    <string name="forget_password_desc">
+Geben Sie Ihre E-Mail-Adresse ein, an\ndie wir das Aktivierungs-Token senden</string>
+    <string name="token">
+Token an die E-Mail-Adresse gesendet</string>
+    <string name="new_password">Neues Passwort</string>
+    <string name="repeat_password">
+Wiederhole das Passwort</string>
+    <string name="change_password">
+Passwort ändern</string>
+    <string name="password_must_match">
+Passwörter müssen übereinstimmen</string>
+    <string name="token_not_empty">Das Token darf nicht leer sein</string>
+    <string name="reset_password">
+Passwort zurücksetzen</string>
+    <string name="next">Fort</string>
+    <string name="registration">
+Anmeldung</string>
+    <string name="register">
+Registrieren</string>
+    <string name="login_size_error">Die Anmeldung muss zwischen 4 und 20 Zeichen lang sein</string>
+    <string name="username">
+Name</string>
+    <string name="back">
+Rückgängig machen</string>
+    <string name="language">
+Sprache</string>
+    <string name="proposed_teams">
+Vorgeschlagene Nachrichten</string>
+    <string name="polish">
+Polieren</string>
+    <string name="german">
+Deutsche</string>
+    <string name="italish">
+Italienisch</string>
+    <string name="spanish">
+Spanisch</string>
     <string name="french">Francuski</string>
     <string name="english">Angielski</string>
     <string name="menu_news_name"><i>Newsy</i></string>
@@ -69,7 +82,7 @@
     <string name="add_teams">Add Teams</string>
     <string name="statistics">Statistics</string>
     <string name="likes_de">Likes</string>
-    <string name="managment">Managment</string>
+    <string name="management">Managment</string>
     <string name="account">Account</string>
     <string name="logout">Logout</string>
     <string name="delete_account">Delete Account</string>
@@ -78,5 +91,13 @@
     <string name="password_changed">Password changed</string>
     <string name="total">Total:</string>
     <string name="today">Today:</string>
+    <string name="delete">Delete</string>
+    <string name="add">Add</string>
+    <string name="description">Description</string>
+    <string name="account_from">Account from:</string>
+    <string name="added_de">Added</string>
+    <string name="all">All</string>
+    <string name="popular">Popular</string>
+    <string name="teams_management">Teams Management</string>
 
 </resources>
