@@ -1,7 +1,6 @@
 package com.example.footballnewsmanager.activites.register;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 
 import androidx.databinding.ObservableBoolean;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.activites.SplashActivity;
 import com.example.footballnewsmanager.activites.error.ErrorActivity;
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.adapters.ProposedSettingsViewPagerAdapter;
@@ -23,9 +21,7 @@ import com.example.footballnewsmanager.adapters.propsed_sites.ProposedSitesAdapt
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ActivityProposedSettingsBinding;
@@ -35,9 +31,9 @@ import com.example.footballnewsmanager.fragments.proposed_settings.teams.Propose
 import com.example.footballnewsmanager.helpers.ScreenHelper;
 import com.example.footballnewsmanager.helpers.SoundPoolManager;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.models.Language;
 import com.example.footballnewsmanager.models.Site;
 import com.example.footballnewsmanager.models.Team;
+import com.example.footballnewsmanager.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,12 +127,9 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
 
                         List<Team> chosenTeams = getSelectedTeams(fragments);
                         List<Site> chosenSites = getSelectedSites(fragments);
-                        UserSettingsRequest userSettingsRequest = new UserSettingsRequest(
-                                chosenTeams, chosenSites, true, Language.POLSKI);
-
+                        UserSettingsRequest userSettingsRequest = new UserSettingsRequest(chosenTeams, chosenSites);
                         Connection.get().userSettingsResponse(savedSettingsResponse,
                                 token, userSettingsRequest);
-
                     })
                     .start();
         } else {
@@ -174,9 +167,9 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
     }
 
 
-    private Callback<ProposedUserResponse> savedSettingsResponse = new Callback<ProposedUserResponse>() {
+    private Callback<User> savedSettingsResponse = new Callback<User>() {
         @Override
-        public void onSuccess(ProposedUserResponse proposedUserResponse) {
+        public void onSuccess(User user) {
             ProgressDialog.get().dismiss();
             Intent intent = new Intent(getActivity(), MainActivity.class);
             getActivity().startActivity(intent);
@@ -193,7 +186,7 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
         }
 
         @Override
-        protected void subscribeActual(@NonNull Observer<? super ProposedUserResponse> observer) {
+        protected void subscribeActual(@NonNull Observer<? super User> observer) {
 
         }
     };

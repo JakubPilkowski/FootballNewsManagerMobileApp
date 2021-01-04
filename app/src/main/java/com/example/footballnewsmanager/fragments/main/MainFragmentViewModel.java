@@ -14,7 +14,6 @@ import com.example.footballnewsmanager.adapters.main.MainViewPager;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.MainFragmentBinding;
@@ -61,7 +60,7 @@ public class MainFragmentViewModel extends BaseViewModel implements BadgeListene
         onPageChangeCallbackObservable.set(onPageChangeCallback);
         navigationItemSelectedListenerObservable.set(navigationItemSelectedListener);
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().getNotVisitedNewsAmount(notificationResponseCallback, token);
+        Connection.get().getNotifications(notificationResponseCallback, token);
     }
 
 
@@ -111,14 +110,13 @@ public class MainFragmentViewModel extends BaseViewModel implements BadgeListene
     public void onBadgeChange() {
         Log.d(MainFragment.TAG, "onBadgeChange");
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().getNotVisitedNewsAmount(notificationResponseCallback, token);
+        Connection.get().getNotifications(notificationResponseCallback, token);
     }
 
-    private Callback<BadgesResponse> notificationResponseCallback = new Callback<BadgesResponse>() {
+    private Callback<Long> notificationResponseCallback = new Callback<Long>() {
         @Override
-        public void onSuccess(BadgesResponse badgesResponse) {
+        public void onSuccess(Long amount) {
             Log.d(MainFragment.TAG, "onSuccess: ");
-            Long amount = badgesResponse.getAmount();
             UserPreferences.get().changeNotification(amount);
             if (amount > 0) {
                 BadgeDrawable badgeDrawable = ((MainFragmentBinding) getBinding()).mainBottomNavView.getOrCreateBadge(R.id.nav_news);
@@ -135,7 +133,7 @@ public class MainFragmentViewModel extends BaseViewModel implements BadgeListene
         }
 
         @Override
-        protected void subscribeActual(@NonNull Observer<? super BadgesResponse> observer) {
+        protected void subscribeActual(@NonNull Observer<? super Long> observer) {
 
         }
     };

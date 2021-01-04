@@ -15,7 +15,6 @@ public class News {
     private double popularity;
     private Long clicks;
     private Long likes;
-    private boolean highlighted;
 
 
     public Long getSiteId() {
@@ -48,10 +47,6 @@ public class News {
 
     public Long getLikes() {
         return likes;
-    }
-
-    public boolean isHighlighted() {
-        return highlighted;
     }
 
     public Site getSite() {

@@ -1,10 +1,14 @@
 package com.example.footballnewsmanager.api.responses.main;
 
+import com.example.footballnewsmanager.models.UserTeam;
+
+import java.util.List;
+
 public class AllNewsResponse extends NewsResponse {
 
-    private BaseNewsAdjustment additionalContent;
+    private List<UserTeam> proposedTeams;
 
-    public BaseNewsAdjustment getAdditionalContent() {
-        return additionalContent;
+    public List<UserTeam> getProposedTeams() {
+        return proposedTeams;
     }
 }

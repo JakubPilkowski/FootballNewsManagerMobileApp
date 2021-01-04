@@ -1,8 +1,6 @@
 package com.example.footballnewsmanager.fragments.proposed_settings.teams;
 
-import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -10,12 +8,11 @@ import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.activites.error.ErrorActivity;
 import com.example.footballnewsmanager.adapters.proposed_teams.ProposedTeamsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
+import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ProposedTeamsFragmentBinding;
 import com.example.footballnewsmanager.helpers.ErrorView;
@@ -60,9 +57,9 @@ public class ProposedTeamsViewItemsModel extends BaseViewModel implements Recycl
     }
 
 
-    private void initItemsView(ProposedTeamsResponse proposedTeamsResponse) {
+    private void initItemsView(TeamsResponse teamsResponse) {
         proposedTeamsAdapter = new ProposedTeamsAdapter();
-        proposedTeamsAdapter.setItems(proposedTeamsResponse.getTeams());
+        proposedTeamsAdapter.setItems(teamsResponse.getTeams());
         proposedTeamsAdapter.setRecyclerViewItemsListener(this);
 
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
@@ -93,12 +90,12 @@ public class ProposedTeamsViewItemsModel extends BaseViewModel implements Recycl
         Connection.get().proposedTeams(paginationCallback, token, currentPage);
     }
 
-    private Callback<ProposedTeamsResponse> paginationCallback = new Callback<ProposedTeamsResponse>() {
+    private Callback<TeamsResponse> paginationCallback = new Callback<TeamsResponse>() {
         @Override
-        public void onSuccess(ProposedTeamsResponse proposedTeamsResponse) {
+        public void onSuccess(TeamsResponse teamsResponse) {
             getActivity().runOnUiThread(() -> {
-                proposedTeamsAdapter.setItems(proposedTeamsResponse.getTeams());
-                isLastPage = proposedTeamsResponse.getPages() <= currentPage;
+                proposedTeamsAdapter.setItems(teamsResponse.getTeams());
+                isLastPage = teamsResponse.getPages() <= currentPage;
                 proposedTeamsAdapter.setLoading(false);
             });
         }
@@ -118,25 +115,25 @@ public class ProposedTeamsViewItemsModel extends BaseViewModel implements Recycl
         }
 
         @Override
-        protected void subscribeActual(@NonNull Observer<? super ProposedTeamsResponse> observer) {
+        protected void subscribeActual(@NonNull Observer<? super TeamsResponse> observer) {
 
         }
     };
 
-    private Callback<ProposedTeamsResponse> callback = new Callback<ProposedTeamsResponse>() {
+    private Callback<TeamsResponse> callback = new Callback<TeamsResponse>() {
         @Override
-        public void onSuccess(ProposedTeamsResponse proposedTeamsResponse) {
+        public void onSuccess(TeamsResponse teamsResponse) {
             if (loadingVisibility.get()) {
                 loadingVisibility.set(false);
                 itemsVisibility.set(true);
                 getActivity().runOnUiThread(() -> {
                     Log.d("News", "onSuccessFirst");
-                    initItemsView(proposedTeamsResponse);
+                    initItemsView(teamsResponse);
                 });
             } else {
 //                getActivity().runOnUiThread(() -> {
-//                    proposedTeamsAdapter.setItems(proposedTeamsResponse.getTeams());
-//                    isLastPage = proposedTeamsResponse.getPages() <= currentPage;
+//                    proposedTeamsAdapter.setItems(TeamsResponse.getTeams());
+//                    isLastPage = TeamsResponse.getPages() <= currentPage;
 //                    proposedTeamsAdapter.setLoading(false);
 //                });
             }
@@ -152,7 +149,7 @@ public class ProposedTeamsViewItemsModel extends BaseViewModel implements Recycl
         }
 
         @Override
-        protected void subscribeActual(@NonNull Observer<? super ProposedTeamsResponse> observer) {
+        protected void subscribeActual(@NonNull Observer<? super TeamsResponse> observer) {
 
         }
     };

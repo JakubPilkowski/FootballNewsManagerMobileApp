@@ -1,7 +1,5 @@
 package com.example.footballnewsmanager.api;
 
-import androidx.databinding.ObservableField;
-
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
@@ -13,15 +11,11 @@ import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.manage_teams.LeagueResponse;
-import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
 import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
 import com.example.footballnewsmanager.api.responses.sites.SitesResponse;
-import com.example.footballnewsmanager.models.Language;
+import com.example.footballnewsmanager.models.User;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -69,19 +63,19 @@ public interface Service {
 
 
     @GET("teams/hot")
-    Observable<ProposedTeamsResponse> proposedTeams(
+    Observable<TeamsResponse> proposedTeams(
             @Header("Authorization") String token,
             @Query("page") int page
     );
 
     @GET("sites")
-    Observable<ProposedSitesResponse> proposedSites(
+    Observable<SitesResponse> proposedSites(
             @Header("Authorization") String token,
             @Query("page") int page
     );
 
     @PUT("users/me")
-    Observable<ProposedUserResponse> proposedUserResponse(
+    Observable<User> proposedUserResponse(
             @Header("Authorization") String token,
             @Body UserSettingsRequest request
     );
@@ -102,7 +96,8 @@ public interface Service {
     @GET("news/all")
     Observable<AllNewsResponse> getAllNews(
             @Header("Authorization") String token,
-            @Query("page") int page
+            @Query("page") int page,
+            @Query("proposed") boolean proposed
     );
 
 
@@ -131,9 +126,11 @@ public interface Service {
             @Path("id") Long newsId
     );
 
-    @GET("news/notVisitedNewsAmount")
-    Observable<BadgesResponse> getNotVisitedNewsAmount(
-            @Header("Authorization") String token
+    @PUT("news/badge/site={sid}/id={id}")
+    Observable<SingleNewsResponse> setNewsBadged(
+            @Header("Authorization") String token,
+            @Path("sid") Long siteId,
+            @Path("id") Long newsId
     );
 
     @GET("news/markAllAsVisited")

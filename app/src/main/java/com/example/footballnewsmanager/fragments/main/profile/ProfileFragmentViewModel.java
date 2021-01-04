@@ -1,17 +1,12 @@
 package com.example.footballnewsmanager.fragments.main.profile;
 
-import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.view.View;
 import android.widget.Switch;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.footballnewsmanager.R;
@@ -22,7 +17,6 @@ import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
@@ -36,8 +30,6 @@ import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.ProposedLanguageListener;
 import com.example.footballnewsmanager.models.LanguageField;
-import com.example.footballnewsmanager.models.User;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
 
@@ -91,7 +83,7 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
     public void initItemsView(UserProfileResponse userProfileResponse) {
         name.set(userProfileResponse.getUser().getUsername());
         date.set(getActivity().getResources().getString(R.string.account_from) + userProfileResponse.getUser().getAddedDate().split("T")[0]);
-        proposedNews.set(userProfileResponse.getUser().isProposedNews());
+        proposedNews.set(true);
         String locale = UserPreferences.get().getLanguage();
         currentLanguage.set(LanguageHelper.getName(locale, getActivity().getResources()));
         languageDrawable.set(LanguageHelper.getDrawable(locale,

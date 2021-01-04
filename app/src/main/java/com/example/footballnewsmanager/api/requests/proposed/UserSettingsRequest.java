@@ -10,13 +10,9 @@ public class UserSettingsRequest {
 
     private List<Team> favouriteTeams;
     private List<Site> chosenSites;
-    private boolean proposedNews;
-    private Language language;
 
-    public UserSettingsRequest(List<Team> favouriteTeams, List<Site> chosenSites, boolean proposedNews, Language language) {
+    public UserSettingsRequest(List<Team> favouriteTeams, List<Site> chosenSites) {
         this.favouriteTeams = favouriteTeams;
         this.chosenSites = chosenSites;
-        this.proposedNews = proposedNews;
-        this.language = language;
     }
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -15,7 +14,6 @@ import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.fragments.main.MainFragment;
 import com.example.footballnewsmanager.fragments.main.news_info.NewsInfoFragment;
@@ -25,7 +23,6 @@ import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.News;
 import com.example.footballnewsmanager.models.UserNews;
-import com.google.android.material.snackbar.Snackbar;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -62,18 +59,12 @@ public class NewsAdapterViewModel {
     public void update(UserNews news) {
         this.news = news;
         this.newsDetails = news.getNews();
-        if (news.getNews().isHighlighted()) {
-            highlightedVisited.set(news.isVisited() ? activity.getResources().getDrawable(R.drawable.news_item_highlighted_visited_background_top) : activity.getResources().getDrawable(R.drawable.news_item_highlighted_background_top));
-        } else {
-            isVisited.set(news.isVisited() ? activity.getResources().getColor(R.color.colorVisited) : activity.getResources().getColor(R.color.colorTextPrimary));
-        }
-
+        isVisited.set(news.isVisited() ? activity.getResources().getColor(R.color.colorVisited) : activity.getResources().getColor(R.color.colorTextPrimary));
         isBadgeVisited.set(!news.isBadged() ? R.drawable.not_visited : R.drawable.visited);
         heartDrawable.set(news.isLiked() ? R.drawable.heart_with_ripple : R.drawable.heart_empty_with_ripple);
-
         title.set(newsDetails.getTitle().length() > 40 ? newsDetails.getTitle().substring(0, 37) + "..." : newsDetails.getTitle());
         imageUrl.set(newsDetails.getImageUrl());
-        date.set("Dodano: " + newsDetails.getDate());
+        date.set(activity.getResources().getString(R.string.added) + newsDetails.getDate());
         siteLogo.set(newsDetails.getSite().getLogoUrl());
         siteName.set(newsDetails.getSite().getName());
     }
@@ -111,12 +102,11 @@ public class NewsAdapterViewModel {
         @Override
         public void onSuccess(SingleNewsResponse newsResponse) {
             activity.runOnUiThread(() -> listener.onChangeItem(news, newsResponse.getNews()));
-            if (!newsResponse.message.equals("Odwiedzono wiadomość")){
+            if (!newsResponse.message.equals("Odwiedzono wiadomość")) {
                 likesToggle();
                 loadingHeartVisibility.set(false);
                 heartVisibility.set(true);
-            }
-            else {
+            } else {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(newsDetails.getNewsUrl()));
                 activity.startActivity(intent);
@@ -128,7 +118,7 @@ public class NewsAdapterViewModel {
         public void onSmthWrong(BaseError error) {
 
             if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
-                MainFragment mainFragment = ((MainActivity)activity).getMainFragment();
+                MainFragment mainFragment = ((MainActivity) activity).getMainFragment();
                 SnackbarHelper.getShortSnackBarFromStatus(mainFragment.binding.mainBottomNavView, error.getStatus())
                         .setAnchorView(mainFragment.binding.mainBottomNavView)
                         .show();
