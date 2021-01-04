@@ -1,6 +1,7 @@
 package com.example.footballnewsmanager.adapters.news.additionalInfo.teams;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.drawable.shapes.OvalShape;
 import android.util.Log;
 import android.view.View;
@@ -38,11 +39,13 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
     private UserTeam team;
 
     private AdditionalInfoTeamBinding binding;
+    private Resources resources;
     @Override
     public void init(Object[] values) {
         team = (UserTeam) values[0];
         name.set(team.getTeam().getName());
         binding = (AdditionalInfoTeamBinding) values[1];
+        resources = binding.additionalInfoTeamMainLayout.getResources();
         logoUrl.set(team.getTeam().getLogoUrl());
         updateFavouriteState(team.isFavourite());
     }
@@ -50,7 +53,7 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
 
 
     public void updateFavouriteState(boolean isFavourite){
-        isFavouriteText.set(isFavourite ? "Usuń" : "Dodaj");
+        isFavouriteText.set(resources.getString(isFavourite ? R.string.delete : R.string.add ));
         isFavouriteBackground.set(isFavourite);
     }
 

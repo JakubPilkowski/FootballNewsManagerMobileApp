@@ -16,88 +16,71 @@
     <string name="login_successful">Erfolgreich angemeldet</string>
     <string name="player_logo">player logo</string>
     <string name="send">Senden</string>
-    <string name="forget_password_desc">
-Geben Sie Ihre E-Mail-Adresse ein, an\ndie wir das Aktivierungs-Token senden</string>
-    <string name="token">
-Token an die E-Mail-Adresse gesendet</string>
+    <string name="forget_password_desc">Geben Sie Ihre E-Mail-Adresse ein, an\ndie wir das Aktivierungs-Token senden</string>
+    <string name="token">Token an die E-Mail-Adresse gesendet</string>
     <string name="new_password">Neues Passwort</string>
-    <string name="repeat_password">
-Wiederhole das Passwort</string>
-    <string name="change_password">
-Passwort ändern</string>
-    <string name="password_must_match">
-Passwörter müssen übereinstimmen</string>
+    <string name="repeat_password">Wiederhole das Passwort</string>
+    <string name="change_password">Passwort ändern</string>
+    <string name="password_must_match">Passwörter müssen übereinstimmen</string>
     <string name="token_not_empty">Das Token darf nicht leer sein</string>
-    <string name="reset_password">
-Passwort zurücksetzen</string>
+    <string name="reset_password">Passwort zurücksetzen</string>
     <string name="next">Fort</string>
-    <string name="registration">
-Anmeldung</string>
-    <string name="register">
-Registrieren</string>
+    <string name="registration">Anmeldung</string>
+    <string name="register">Registrieren</string>
     <string name="login_size_error">Die Anmeldung muss zwischen 4 und 20 Zeichen lang sein</string>
-    <string name="username">
-Name</string>
-    <string name="back">
-Rückgängig machen</string>
-    <string name="language">
-Sprache</string>
-    <string name="proposed_teams">
-Vorgeschlagene Nachrichten</string>
-    <string name="polish">
-Polieren</string>
-    <string name="german">
-Deutsche</string>
-    <string name="italish">
-Italienisch</string>
-    <string name="spanish">
-Spanisch</string>
-    <string name="french">Francuski</string>
-    <string name="english">Angielski</string>
-    <string name="menu_news_name"><i>Newsy</i></string>
+    <string name="username">Name</string>
+    <string name="back">Rückgängig machen</string>
+    <string name="language">Sprache</string>
+    <string name="proposed_teams">Vorgeschlagene Nachrichten</string>
+    <string name="polish">Polieren</string>
+    <string name="german">Deutsche</string>
+    <string name="italish">Italienisch</string>
+    <string name="spanish">Spanisch</string>
+    <string name="french">Französisch</string>
+    <string name="english">Englisch</string>
+    <string name="menu_news_name"><i>Nachrichten</i></string>
     <string name="menu_profile_name"><i>Profil</i></string>
-    <string name="menu_sites_name"><i>Strony</i></string>
-    <string name="menu_news_all"><i>Wszystko</i></string>
-    <string name="reload">odśwież</string>
-    <string name="no_network">Brak Internetu</string>
-    <string name="connection_timeout">Zbyt długi czas oczekiwania</string>
-    <string name="something_went_wrong">Coś poszło nie tak</string>
+    <string name="menu_sites_name"><i>Parteien</i></string>
+    <string name="menu_news_all"><i>Alle</i></string>
+    <string name="reload">Aktualisierung</string>
+    <string name="no_network">Kein Internet</string>
+    <string name="connection_timeout">Zu lange Wartezeit</string>
+    <string name="something_went_wrong">Etwas ist schief gelaufen</string>
     <string name="ok">ok</string>
-    <string name="empty_liked_news">There is no news</string>
-    <string name="no_news_for_team">There is no news for this team</string>
-    <string name="search_for_teams_and_news">Search for teams or news</string>
-    <string name="search_result_empty">There is no result for given phrase</string>
-    <string name="try_again">Try Again</string>
-    <string name="liked">liked</string>
-    <string name="empty_content">It\'s a bit empty in here</string>
-    <string name="mark_all_as_read">Mark all as read</string>
+    <string name="empty_liked_news">Es gibt keine Neuigkeiten</string>
+    <string name="no_news_for_team">Es gibt keine Neuigkeiten für dieses Team</string>
+    <string name="search_for_teams_and_news">Suche nach Teams oder Neuigkeiten</string>
+    <string name="search_result_empty">Es gibt kein Ergebnis für eine bestimmte Phrase</string>
+    <string name="try_again">Versuchen Sie es nochmal</string>
+    <string name="liked">Likes</string>
+    <string name="empty_content">Hier drinnen ist es ein bisschen leer</string>
+    <string name="mark_all_as_read">Alles als gelesen markieren</string>
     <string name="information">Information</string>
-    <string name="title">Title:</string>
-    <string name="source">Source:</string>
-    <string name="added">Added:</string>
-    <string name="clicks">Clicks:</string>
+    <string name="title">Titel:</string>
+    <string name="source">Quelle:</string>
+    <string name="added">Hinzugefügt:</string>
+    <string name="clicks">Klicks:</string>
     <string name="likes">Likes:</string>
     <string name="teams">Teams</string>
-    <string name="no_more_news">There is no more news</string>
-    <string name="add_teams">Add Teams</string>
-    <string name="statistics">Statistics</string>
+    <string name="no_more_news">Es gibt keine Neuigkeiten mehr</string>
+    <string name="add_teams">Teams hinzufügen</string>
+    <string name="statistics">Statistiken</string>
     <string name="likes_de">Likes</string>
-    <string name="management">Managment</string>
-    <string name="account">Account</string>
-    <string name="logout">Logout</string>
-    <string name="delete_account">Delete Account</string>
-    <string name="choose_favourite_sites">Choose favourite sites</string>
-    <string name="proposed_teams_title">Choose the teams you are interested in</string>
-    <string name="password_changed">Password changed</string>
-    <string name="total">Total:</string>
-    <string name="today">Today:</string>
-    <string name="delete">Delete</string>
-    <string name="add">Add</string>
-    <string name="description">Description</string>
-    <string name="account_from">Account from:</string>
-    <string name="added_de">Added</string>
-    <string name="all">All</string>
-    <string name="popular">Popular</string>
-    <string name="teams_management">Teams Management</string>
-
+    <string name="management">Management</string>
+    <string name="account">Konto</string>
+    <string name="logout">Ausloggen</string>
+    <string name="delete_account">Konto löschen</string>
+    <string name="choose_favourite_sites">Wählen Sie Lieblingsseiten</string>
+    <string name="proposed_teams_title">Wählen Sie die Teams aus, an denen Sie interessiert sind</string>
+    <string name="password_changed">Passwort geändert</string>
+    <string name="total">Gesamt:&#160;</string>
+    <string name="today">Heute:&#160;</string>
+    <string name="delete">Löschen</string>
+    <string name="add">Hinzufügen</string>
+    <string name="description">Beschreibung:&#160;</string>
+    <string name="account_from">Konto von:&#160;</string>
+    <string name="added_de">Hinzugefügt</string>
+    <string name="all">Alle</string>
+    <string name="popular">Beliebt</string>
+    <string name="teams_management">Teammanagement</string>
 </resources>

@@ -74,12 +74,12 @@
     <string name="choose_favourite_sites">Wybierz ulubione strony</string>
     <string name="proposed_teams_title">Wybierz ulubione drużyny</string>
     <string name="password_changed">Zmieniono hasło</string>
-    <string name="total">Łącznie:</string>
-    <string name="today">Dzisiaj:</string>
+    <string name="total">Łącznie:&#160;</string>
+    <string name="today">Dzisiaj:&#160;</string>
     <string name="delete">Usuń</string>
     <string name="add">Dodaj</string>
-    <string name="description">Opis</string>
-    <string name="account_from">Konto od:</string>
+    <string name="description">Opis:&#160;</string>
+    <string name="account_from">Konto od:&#160;</string>
     <string name="added_de">Dodane</string>
     <string name="all">Wszystkie</string>
     <string name="popular">Popularne</string>
