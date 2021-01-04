@@ -117,7 +117,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return;
         else if (position == 0) {
             AllNewsHeaderViewModel viewModel = new AllNewsHeaderViewModel();
-            viewModel.init(countAll, countToday);
+            viewModel.init(countAll, countToday, activity);
             AllNewsHeaderBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
             return;

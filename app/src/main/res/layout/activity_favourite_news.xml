@@ -65,7 +65,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nie ma ulubionych"
+                        android:text="@string/empty_liked_news"
                         android:textAlignment="center"
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="20sp" />

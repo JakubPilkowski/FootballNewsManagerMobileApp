@@ -11,8 +11,8 @@ public class UserPreferences {
     private static final String TAG = "UserPreferences";
     private static final String FILENAME = TAG + "_FootballNewsManager";
     private static final String AUTH_TOKEN = FILENAME + "_AuthToken";
-    private static final String NOTIFICATION_AMOUNT = FILENAME+"_NotificationsAmount";
-
+    private static final String NOTIFICATION_AMOUNT = FILENAME + "_NotificationsAmount";
+    private static final String LANGUAGE = FILENAME + "_Language";
 
     private static UserPreferences INSTANCE;
     private SharedPreferences sharedPreferences;
@@ -42,10 +42,11 @@ public class UserPreferences {
     }
 
 
-    public void changeNotification(Long amount){
+    public void changeNotification(Long amount) {
         sharedPreferences.edit().putLong(NOTIFICATION_AMOUNT, amount).apply();
     }
-    public void resetNotifications(){
+
+    public void resetNotifications() {
         sharedPreferences.edit().putLong(NOTIFICATION_AMOUNT, 0).apply();
     }
 
@@ -55,6 +56,14 @@ public class UserPreferences {
 
     public boolean hasUser() {
         return getAuthToken() != null && !getAuthToken().isEmpty();
+    }
+
+    public void setLanguage(String locale) {
+        sharedPreferences.edit().putString(LANGUAGE, locale).apply();
+    }
+
+    public String getLanguage() {
+        return sharedPreferences.getString(LANGUAGE, "pl");
     }
 
 }

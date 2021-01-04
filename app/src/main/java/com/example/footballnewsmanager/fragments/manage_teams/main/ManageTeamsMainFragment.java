@@ -20,7 +20,7 @@ public class ManageTeamsMainFragment extends BaseFragment<ManageTeamsMainFragmen
 
     @Override
     public String getToolbarName() {
-        return "Zarządzanie drużynami";
+        return getString(R.string.teams_management);
     }
 
     @Override

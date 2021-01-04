@@ -28,7 +28,7 @@
             android:background="@drawable/search_background"
             app:closeIcon="@drawable/ic_close"
             app:iconifiedByDefault="false"
-            app:queryHint="Szukaj drużyn lub newsów"
+            app:queryHint="@string/search_for_teams_and_news"
             app:searchIcon="@drawable/ic_search_black_24dp"
 
             />
@@ -85,7 +85,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Dla podanej frazy nie ma wyników"
+                    android:text="@string/search_result_empty"
                     android:textAlignment="center"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="20sp"

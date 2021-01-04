@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Coś tu pusto"
+            android:text="@string/empty_content"
             android:textAlignment="center"
             android:textColor="@color/colorTextPrimary"
             android:textSize="30sp"
@@ -46,7 +46,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nie ma już więcej newsów"
+            android:text="@string/no_more_news"
             android:textAlignment="center"
             android:textColor="@color/colorTextPrimary"
             android:textSize="20sp" />
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:onClick="@{()->viewModel.showTeamsFragment()}"
-            android:text="Dodaj drużyny" />
+            android:text="@string/add_teams" />
 
     </LinearLayout>
 </layout>

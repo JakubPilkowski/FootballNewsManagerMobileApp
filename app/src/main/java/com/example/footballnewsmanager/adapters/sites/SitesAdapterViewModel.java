@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import androidx.databinding.ObservableField;
 
+import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseAdapterViewModel;
 import com.example.footballnewsmanager.models.Site;
 
@@ -26,7 +27,7 @@ public class SitesAdapterViewModel extends BaseAdapterViewModel {
         site = (Site) values[0];
         activity = (Activity) values[1];
         name.set(site.getName());
-        description.set("Opis: "+site.getDescription());
+        description.set(activity.getResources().getString(R.string.description) +site.getDescription());
         logoUrl.set(site.getLogoUrl());
         clicks.set(String.valueOf(site.getClicks()));
         language.set(site.getLanguage());

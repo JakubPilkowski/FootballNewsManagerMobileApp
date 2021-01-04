@@ -1,12 +1,11 @@
 package com.example.footballnewsmanager.adapters.news.newsForTeam;
 
+import android.content.res.Resources;
 import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
-import androidx.databinding.ObservableLong;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.api.Callback;
@@ -37,23 +36,24 @@ public class NewsForTeamHeaderAdapterViewModel {
     private Long id;
     private RecyclerViewItemsListener<UserTeam> headerRecyclerViewItemsListener;
     private LinearLayout linearLayout;
-
+    private Resources resources;
 
     public void init(Long id, String name, String img, boolean isFavourite,
                      Long countAll, Long countToday, RecyclerViewItemsListener<UserTeam> headerRecyclerViewItemsListener,
                      NewsForTeamHeaderBinding binding){
+        linearLayout = binding.newsForTeamHeaderLayout;
+        resources = linearLayout.getResources();
         this.id = id;
         this.headerRecyclerViewItemsListener = headerRecyclerViewItemsListener;
         this.name.set(name);
         this.img.set(img);
-        this.countAll.set("Łącznie: "+countAll);
-        this.countToday.set("Dzisiaj: "+ countToday);
-        linearLayout = binding.newsForTeamHeaderLayout;
+        this.countAll.set(resources.getString(R.string.total)+countAll);
+        this.countToday.set(resources.getString(R.string.today)+ countToday);
         updateFavouriteState(isFavourite);
     }
 
     public void updateFavouriteState(boolean isFavourite){
-        isFavouriteText.set(isFavourite ? "Usuń" : "Dodaj");
+        isFavouriteText.set(resources.getString(isFavourite ? R.string.delete : R.string.add ));
         isFavouriteBackground.set(isFavourite);
     }
 
@@ -83,7 +83,6 @@ public class NewsForTeamHeaderAdapterViewModel {
                 snackbar.setAction(R.string.ok, v -> snackbar.dismiss());
                 snackbar.show();
             }
-            Log.d("ManageTeams", "onSmthWrong: ");
         }
 
         @Override

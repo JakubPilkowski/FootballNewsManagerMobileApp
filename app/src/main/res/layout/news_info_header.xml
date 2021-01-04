@@ -18,13 +18,11 @@
         tools:context=".fragments.main.news_info.NewsInfoFragment">
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_marginBottom="18dp"
-            >
+            android:gravity="center_vertical">
 
             <View
                 android:layout_width="0dp"
@@ -36,7 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Informacje"
+                android:text="@string/information"
                 android:textAlignment="center"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="20sp"
@@ -51,12 +49,6 @@
 
         </LinearLayout>
 
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="2dp"-->
-<!--            android:layout_marginBottom="9dp"-->
-<!--            android:background="@color/playerColor" />-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,7 +58,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tytuł: "
+                android:text="@string/title"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="18sp" />
 
@@ -80,12 +72,6 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="2dp"-->
-<!--            android:layout_marginBottom="9dp"-->
-<!--            android:background="@color/playerColor" />-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,7 +81,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Źródło: "
+                android:text="@string/source"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="18sp" />
 
@@ -109,11 +95,6 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="2dp"-->
-<!--            android:layout_marginBottom="9dp"-->
-<!--            android:background="@color/playerColor" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,7 +105,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dodano: "
+                android:text="@string/added"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="18sp" />
 
@@ -138,12 +119,6 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="2dp"-->
-<!--            android:layout_marginBottom="9dp"-->
-<!--            android:background="@color/playerColor" />-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -153,7 +128,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kliknięcia: "
+                android:text="@string/clicks"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="18sp" />
 
@@ -167,12 +142,6 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="2dp"-->
-<!--            android:layout_marginBottom="9dp"-->
-<!--            android:background="@color/playerColor" />-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -182,7 +151,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Polubienia: "
+                android:text="@string/likes"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="18sp" />
 
@@ -196,18 +165,11 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="2dp"-->
-<!--            android:layout_marginBottom="9dp"-->
-<!--            android:background="@color/playerColor" />-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="18dp"
-            android:gravity="center_vertical"
-            >
+            android:gravity="center_vertical">
 
             <View
                 android:layout_width="0dp"
@@ -219,7 +181,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dotyczy"
+                android:text="@string/teams"
                 android:textAlignment="center"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="20sp"
@@ -233,10 +195,5 @@
                 android:background="@color/colorPrimary" />
 
         </LinearLayout>
-
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="2dp"-->
-<!--            android:background="@color/playerColor" />-->
     </LinearLayout>
 </layout>

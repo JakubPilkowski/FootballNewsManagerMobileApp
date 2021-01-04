@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -178,4 +180,8 @@ public class BindingAdapter {
         errorView.setOnTryAgainListener(listener);
     }
 
+    @androidx.databinding.BindingAdapter("spinnerAdapter")
+    public static void setSpinnerAdapter(Spinner spinner, ArrayAdapter arrayAdapter) {
+        spinner.setAdapter(arrayAdapter);
+    }
 }

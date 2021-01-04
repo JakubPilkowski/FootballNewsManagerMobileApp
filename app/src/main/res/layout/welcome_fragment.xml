@@ -10,83 +10,104 @@
             type="com.example.footballnewsmanager.fragments.auth.welcome.WelcomeViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/auth_background"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        tools:context=".activites.auth.AuthActivity">
+        >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp">
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:context=".activites.auth.AuthActivity">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_auth_background" />
-        </RelativeLayout>
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/app_logo_name"
-            android:textAlignment="center"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="36sp"
-            android:textStyle="bold|italic" />
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:spinnerMode="dropdown"
+                    app:spinnerAdapter="@{viewModel.spinnerAdapter}" />
+            </RelativeLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/button_with_back_and_radius"
-            android:drawableEnd="@drawable/ic_arrow_forward_button"
-            android:drawablePadding="36dp"
-            android:onClick="@{()->viewModel.onRegister()}"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:text="@string/lets_begin"
-            android:textAllCaps="false"
-            android:textColor="@color/buttonColor"
-            android:textSize="20sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="270dp">
 
-        <Button
-            android:id="@+id/auth_login_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@android:color/transparent"
-            android:foreground="?selectableItemBackground"
-            android:onClick="@{()->viewModel.onLogin()}"
-            android:paddingStart="12dp"
-            android:paddingTop="3dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="3dp"
-            android:text="@string/logging"
-            android:textAllCaps="false"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="20sp"
-            android:transitionName="auth fragment logging" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_player" />
+            </RelativeLayout>
 
-        <Button
-            android:id="@+id/auth_forget_password_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@android:color/transparent"
-            android:foreground="?selectableItemBackground"
-            android:onClick="@{()->viewModel.onForgetPassword()}"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:text="@string/forget_password"
-            android:textAllCaps="false"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="18sp"
-            android:transitionName="auth fragment forget password" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/app_logo_name"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="36sp"
+                android:textStyle="bold|italic" />
 
-    </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/button_with_back_and_radius"
+                android:drawableEnd="@drawable/ic_arrow_forward_button"
+                android:drawablePadding="36dp"
+                android:onClick="@{()->viewModel.onRegister()}"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="@string/lets_begin"
+                android:textAllCaps="false"
+                android:textColor="@color/buttonColor"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/auth_login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@android:color/transparent"
+                android:foreground="?selectableItemBackground"
+                android:onClick="@{()->viewModel.onLogin()}"
+                android:paddingStart="12dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="3dp"
+                android:text="@string/logging"
+                android:textAllCaps="false"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="20sp"
+                android:transitionName="auth fragment logging" />
+
+            <Button
+                android:id="@+id/auth_forget_password_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@android:color/transparent"
+                android:foreground="?selectableItemBackground"
+                android:onClick="@{()->viewModel.onForgetPassword()}"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/forget_password"
+                android:textAllCaps="false"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="18sp"
+                android:transitionName="auth fragment forget password" />
+
+        </LinearLayout>
+    </ScrollView>
 </layout>

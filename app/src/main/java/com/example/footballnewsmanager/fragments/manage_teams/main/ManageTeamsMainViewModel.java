@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.fragments.manage_teams.main;
 
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.TextView;
@@ -48,15 +49,16 @@ public class ManageTeamsMainViewModel extends BaseViewModel implements RecyclerV
         ManageTeamsViewPagerAdapter manageTeamsViewPagerAdapter = new ManageTeamsViewPagerAdapter((FragmentActivity) getActivity(), fragments);
         viewPager2.setAdapter(manageTeamsViewPagerAdapter);
 
+        Resources resources = getActivity().getResources();
 
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, true, (tab, position) -> {
             TextView customTab = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.tab_item, null, false);
             if (position == 0) {
-                customTab.setText("Dodane");
+                customTab.setText(resources.getString(R.string.added_de));
             } else if (position == 1) {
-                customTab.setText("Wszystkie");
+                customTab.setText(resources.getString(R.string.all));
             } else {
-                customTab.setText("Popularne");
+                customTab.setText(resources.getString(R.string.popular));
             }
             tab.setCustomView(customTab);
         });

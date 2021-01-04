@@ -13,9 +13,6 @@ public class SoundPoolManager {
     private static SoundPoolManager INSTANCE;
 
     private static SoundPool soundPool;
-    private static int acceptSound;
-    private static int ballSound;
-    private static int notificationSound;
     private Context context;
     public SoundPoolManager(Context context){
         this.context = context;
@@ -23,7 +20,6 @@ public class SoundPoolManager {
 
     public static void init(Context context){
         INSTANCE = new SoundPoolManager(context);
-        //notificationSong
     }
 
     public static SoundPoolManager get(){
@@ -41,12 +37,7 @@ public class SoundPoolManager {
         int sound = soundPool.load(context, resource, 1);
 
 
-        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                soundPool.play(sound, volume, volume, 0,0,1f);
-            }
-        });
+        soundPool.setOnLoadCompleteListener((soundPool, sampleId, status) -> soundPool.play(sound, volume, volume, 0,0,1f));
     }
 
     public void dismiss(){

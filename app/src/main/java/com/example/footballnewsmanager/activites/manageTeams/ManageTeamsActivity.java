@@ -39,9 +39,7 @@ public class ManageTeamsActivity extends BaseActivity<ActivityManageTeamsBinding
 
     @Override
     public void onBackPressed() {
-        Log.d("ManageTeams", "onBackPressed: "+reload);
         if(getSupportFragmentManager().getBackStackEntryCount()<=1 && reload){
-            Log.d("ManageTeams", "onBackPressed: ");
             setResult(Activity.RESULT_OK);
         }
         super.onBackPressed();

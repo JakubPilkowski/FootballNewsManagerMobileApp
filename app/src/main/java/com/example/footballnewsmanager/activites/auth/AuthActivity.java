@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.ViewDataBinding;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityAuthBinding;
@@ -20,6 +24,8 @@ import com.example.footballnewsmanager.fragments.auth.registerFragment.RegisterF
 import com.example.footballnewsmanager.fragments.auth.welcome.WelcomeFragment;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
+
+import java.util.Locale;
 
 public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityViewModel> implements Providers {
 
@@ -32,6 +38,21 @@ public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityV
         viewModel.setProviders(this);
         viewModel.init();
         navigator.attach(WelcomeFragment.newInstance(), WelcomeFragment.TAG);
+    }
+
+    public void changeLanguage(Locale locale){
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        configuration.setLocale(locale);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
+            getApplicationContext().createConfigurationContext(configuration);
+        } else {
+            resources.updateConfiguration(configuration,displayMetrics);
+        }
+        Intent refresh = new Intent(this, AuthActivity.class);
+        finish();
+        startActivity(refresh);
     }
 
     @Override

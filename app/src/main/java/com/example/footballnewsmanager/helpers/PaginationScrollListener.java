@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class PaginationScrollListener extends RecyclerView.OnScrollListener {
-    private static final int PAGE_SIZE = 15;
 
     @Override
     public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {

@@ -44,21 +44,21 @@ public class ErrorView extends LinearLayout {
         Drawable drawable;
         switch (status) {
             case 408:
-                message = "Zbyt długi czas oczekiwania, sprawdź połączenie internetowe";
+                message = getResources().getString(R.string.connection_timeout);
                 drawable = context.getDrawable(R.drawable.ic_error_timeout);
                 errorImageDefault.setVisibility(GONE);
                 errorImage.setBackground(drawable);
                 errorImage.setVisibility(VISIBLE);
                 break;
             case 598:
-                message = "Brak połączenia internetowego";
+                message = getResources().getString(R.string.no_network);
                 drawable = context.getDrawable(R.drawable.ic_error_no_network);
                 errorImageDefault.setVisibility(GONE);
                 errorImage.setBackground(drawable);
                 errorImage.setVisibility(VISIBLE);
                 break;
             default:
-                message = "Coś poszło nie tak";
+                message = getResources().getString(R.string.something_went_wrong);
                 drawable = context.getDrawable(R.drawable.ic_error_default);
                 errorImage.setVisibility(GONE);
                 errorImageDefault.setBackground(drawable);

@@ -10,114 +10,119 @@
             type="com.example.footballnewsmanager.fragments.auth.login.LoginViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        tools:context=".fragments.auth.login.LoginFragment">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:contentDescription="@string/player_logo"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_auth_background" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/logging"
-            android:textAlignment="center"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="30sp"
-            android:textStyle="bold|italic"
-            android:transitionName="login fragment title" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/login_email_layout"
-            style="@style/LoginTextInputLayoutStyle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="12dp"
-            android:textColorHint="@color/colorTextPrimary"
-            app:hintTextAppearance="@style/TextLabel">
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:context=".fragments.auth.login.LoginFragment">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_email_input"
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="270dp"
+                android:contentDescription="@string/player_logo"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_player" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/logging"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
+                android:transitionName="login fragment title" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/login_email_layout"
+                style="@style/LoginTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email"
-                android:imeOptions="actionNext"
-                android:inputType="textEmailAddress"
-                android:maxLength="40"
-                android:maxLines="1"
-                android:padding="12dp"
-                android:text="@={viewModel.email}"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="17sp"
-                app:add_text_watcher="@{viewModel.emailValidationTextWatcher}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="12dp"
+                android:textColorHint="@color/colorTextPrimary"
+                app:hintTextAppearance="@style/TextLabel">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_email_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="40"
+                    android:maxLines="1"
+                    android:padding="12dp"
+                    android:text="@={viewModel.email}"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="17sp"
+                    app:add_text_watcher="@{viewModel.emailValidationTextWatcher}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/login_password_layout"
-            style="@style/LoginTextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="12dp"
-            android:textColorHint="@color/colorTextPrimary"
-            app:hintTextAppearance="@style/TextLabel"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/colorTextPrimary">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_password_input"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/login_password_layout"
+                style="@style/LoginTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="200dp"
-                android:hint="@string/password"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:maxLength="30"
-                android:maxLines="1"
-                android:text="@={viewModel.password}"
-                android:nextFocusForward="@id/login_validate_button"
-                android:padding="6dp"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="17sp"
-                app:clear_focus="@{viewModel.clearFocus}"
-                app:add_text_watcher="@{viewModel.passwordValidationTextWatcher}"
-                app:set_editor_action_listener="@{viewModel.passwordEditorActionListener}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="12dp"
+                android:textColorHint="@color/colorTextPrimary"
+                app:hintTextAppearance="@style/TextLabel"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorTextPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_password_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="200dp"
+                    android:hint="@string/password"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
+                    android:maxLines="1"
+                    android:nextFocusForward="@id/login_validate_button"
+                    android:padding="6dp"
+                    android:text="@={viewModel.password}"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="17sp"
+                    app:add_text_watcher="@{viewModel.passwordValidationTextWatcher}"
+                    app:clear_focus="@{viewModel.clearFocus}"
+                    app:set_editor_action_listener="@{viewModel.passwordEditorActionListener}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
-            android:id="@+id/login_validate_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/button_with_back_and_radius"
-            android:onClick="@{()->viewModel.validate()}"
-            android:paddingStart="48dp"
-            android:paddingEnd="48dp"
-            android:text="@string/log_in"
-            android:textAllCaps="false"
-            android:textColor="@color/buttonColor"
-            android:textSize="20sp" />
+            <Button
+                android:id="@+id/login_validate_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/button_with_back_and_radius"
+                android:onClick="@{()->viewModel.validate()}"
+                android:paddingStart="48dp"
+                android:paddingEnd="48dp"
+                android:text="@string/log_in"
+                android:textAllCaps="false"
+                android:textColor="@color/buttonColor"
+                android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@{viewModel.errorText}"
-            android:textAlignment="center"
-            android:textColor="@color/errorColor"
-            android:textSize="16sp" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@{viewModel.errorText}"
+                android:textAlignment="center"
+                android:textColor="@color/errorColor"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
 </layout>
