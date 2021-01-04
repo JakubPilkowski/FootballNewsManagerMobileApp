@@ -8,7 +8,6 @@ public class Site {
     private String siteUrl;
     private String description;
     private String language;
-    private boolean highlighted;
     private Long clicks;
     private Long newsCount;
 
@@ -30,10 +29,6 @@ public class Site {
 
     public String getDescription() {
         return description;
-    }
-
-    public boolean isHighlighted() {
-        return highlighted;
     }
 
     public String getSiteUrl() {

@@ -21,7 +21,6 @@ import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.AllNewsFragmentBinding;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.fragments.main.MainFragment;
 import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
@@ -82,14 +81,14 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements RecyclerV
         itemsVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().allNews(callback, token, currentPage);
+        Connection.get().allNews(callback, token, currentPage, true);
     }
 
 
     private void initItemsView(AllNewsResponse allNewsResponse) {
         allNewsAdapter = new AllNewsAdapter(getActivity());
         allNewsAdapter.setRecyclerViewItemsListener(this);
-        allNewsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getAdditionalContent());
+        allNewsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getProposedTeams());
         allNewsAdapter.setBadgeListener(badgeListener);
         allNewsAdapter.setCountAll(allNewsResponse.getNewsCount());
         allNewsAdapter.setCountToday(allNewsResponse.getNewsToday());
@@ -118,14 +117,14 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements RecyclerV
     private void paginationLoad(){
         allNewsAdapter.setLoading(true);
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().allNews(paginationCallback, token, currentPage);
+        Connection.get().allNews(paginationCallback, token, currentPage, true);
     }
 
     private Callback<AllNewsResponse> paginationCallback = new Callback<AllNewsResponse>() {
         @Override
         public void onSuccess(AllNewsResponse allNewsResponse) {
             getActivity().runOnUiThread(() -> {
-                allNewsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getAdditionalContent());
+                allNewsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getProposedTeams());
                 isLastPage = allNewsResponse.getPages() <= currentPage;
                 allNewsAdapter.setLoading(false);
             });
@@ -286,7 +285,7 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements RecyclerV
 
     public void updateNews() {
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().allNews(refreshCallback, token, 0);
+        Connection.get().allNews(refreshCallback, token, 0, true);
     }
 
     @Override

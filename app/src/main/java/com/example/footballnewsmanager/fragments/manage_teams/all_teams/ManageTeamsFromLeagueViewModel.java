@@ -5,27 +5,21 @@ import android.util.Log;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.adapters.manage_teams.popular.ManagePopularTeamsAdapter;
 import com.example.footballnewsmanager.adapters.manage_teams.teams.ManageTeamsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.ManagePopularTeamsFragmentBinding;
 import com.example.footballnewsmanager.databinding.ManageTeamsFromLeagueFragmentBinding;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
-import com.example.footballnewsmanager.models.User;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.annotations.NonNull;

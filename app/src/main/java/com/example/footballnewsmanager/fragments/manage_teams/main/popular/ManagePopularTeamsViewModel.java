@@ -1,7 +1,6 @@
 package com.example.footballnewsmanager.fragments.manage_teams.main.popular;
 
 import android.util.Log;
-import android.view.View;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -13,7 +12,7 @@ import com.example.footballnewsmanager.adapters.manage_teams.popular.ManagePopul
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
+import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ManagePopularTeamsFragmentBinding;
 import com.example.footballnewsmanager.helpers.ErrorView;
@@ -22,7 +21,6 @@ import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
-import com.google.android.material.snackbar.Snackbar;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -60,9 +58,9 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
         Connection.get().proposedTeams(callback, token, currentPage);
     }
 
-    private void initItemsView(ProposedTeamsResponse proposedTeamsResponse) {
+    private void initItemsView(TeamsResponse teamsResponse) {
         managePopularTeamsAdapter = new ManagePopularTeamsAdapter(getActivity());
-        managePopularTeamsAdapter.setItems(proposedTeamsResponse.getTeams(), currentPage);
+        managePopularTeamsAdapter.setItems(teamsResponse.getTeams(), currentPage);
         managePopularTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
 
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
@@ -94,12 +92,12 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
     }
 
 
-    private Callback<ProposedTeamsResponse> paginationCallback = new Callback<ProposedTeamsResponse>() {
+    private Callback<TeamsResponse> paginationCallback = new Callback<TeamsResponse>() {
         @Override
-        public void onSuccess(ProposedTeamsResponse proposedTeamsResponse) {
+        public void onSuccess(TeamsResponse teamsResponse) {
             getActivity().runOnUiThread(() -> {
-                managePopularTeamsAdapter.setItems(proposedTeamsResponse.getTeams(), currentPage);
-                isLastPage = proposedTeamsResponse.getPages() <= currentPage;
+                managePopularTeamsAdapter.setItems(teamsResponse.getTeams(), currentPage);
+                isLastPage = teamsResponse.getPages() <= currentPage;
                 managePopularTeamsAdapter.setLoading(false);
             });
         }
@@ -118,25 +116,25 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
         }
 
         @Override
-        protected void subscribeActual(@NonNull Observer<? super ProposedTeamsResponse> observer) {
+        protected void subscribeActual(@NonNull Observer<? super TeamsResponse> observer) {
 
         }
     };
 
-    private Callback<ProposedTeamsResponse> callback = new Callback<ProposedTeamsResponse>() {
+    private Callback<TeamsResponse> callback = new Callback<TeamsResponse>() {
         @Override
-        public void onSuccess(ProposedTeamsResponse proposedTeamsResponse) {
+        public void onSuccess(TeamsResponse teamsResponse) {
             if (loadingVisibility.get()) {
                 loadingVisibility.set(false);
                 itemsVisibility.set(true);
                 getActivity().runOnUiThread(() -> {
                     Log.d("News", "onSuccessFirst");
-                    initItemsView(proposedTeamsResponse);
+                    initItemsView(teamsResponse);
                 });
             } else {
 //                getActivity().runOnUiThread(() -> {
-//                    managePopularTeamsAdapter.setItems(proposedTeamsResponse.getTeams(), currentPage);
-//                    isLastPage = proposedTeamsResponse.getPages() <= currentPage;
+//                    managePopularTeamsAdapter.setItems(TeamsResponse.getTeams(), currentPage);
+//                    isLastPage = TeamsResponse.getPages() <= currentPage;
 //                    managePopularTeamsAdapter.setLoading(false);
 //                });
             }
@@ -158,7 +156,7 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
         }
 
         @Override
-        protected void subscribeActual(@NonNull Observer<? super ProposedTeamsResponse> observer) {
+        protected void subscribeActual(@NonNull Observer<? super TeamsResponse> observer) {
 
         }
     };

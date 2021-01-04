@@ -11,23 +11,16 @@ import com.example.footballnewsmanager.api.responses.main.AllNewsResponse;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
 import com.example.footballnewsmanager.api.responses.manage_teams.LeagueResponse;
-import com.example.footballnewsmanager.api.responses.news.BadgesResponse;
 import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedTeamsResponse;
 import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedUserResponse;
 import com.example.footballnewsmanager.api.responses.search.SearchResponse;
 import com.example.footballnewsmanager.api.responses.sites.SitesResponse;
-import com.example.footballnewsmanager.models.Language;
+import com.example.footballnewsmanager.models.User;
 import com.example.footballnewsmanager.models.UserTeam;
-
-import org.reactivestreams.Subscription;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Connection {
@@ -99,24 +92,24 @@ public class Connection {
         registerObservable.subscribe(callback);
     }
 
-    public void proposedTeams(Callback<ProposedTeamsResponse> callback, String token, int page) {
-        Observable<ProposedTeamsResponse> proposedTeamsObservable = client.getService().proposedTeams(token, page)
+    public void proposedTeams(Callback<TeamsResponse> callback, String token, int page) {
+        Observable<TeamsResponse> proposedTeamsObservable = client.getService().proposedTeams(token, page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         proposedTeamsObservable.subscribe(callback);
     }
 
-    public void proposedSites(Callback<ProposedSitesResponse> callback, String token, int page) {
-        Observable<ProposedSitesResponse> proposedSitesObservable = client.getService().proposedSites(token, page)
+    public void proposedSites(Callback<SitesResponse> callback, String token, int page) {
+        Observable<SitesResponse> proposedSitesObservable = client.getService().proposedSites(token, page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         proposedSitesObservable.subscribe(callback);
     }
 
-    public void userSettingsResponse(Callback<ProposedUserResponse> callback, String token, UserSettingsRequest userSettingsRequest) {
-        Observable<ProposedUserResponse> proposedUserObservable = client.getService()
+    public void userSettingsResponse(Callback<User> callback, String token, UserSettingsRequest userSettingsRequest) {
+        Observable<User> proposedUserObservable = client.getService()
                 .proposedUserResponse(token, userSettingsRequest)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
@@ -170,15 +163,6 @@ public class Connection {
         notificationResponseObservable.subscribe(callback);
     }
 
-    public void getNotVisitedNewsAmount(Callback<BadgesResponse> callback, String token) {
-        Observable<BadgesResponse> badgesResponseObservable = client.getService()
-                .getNotVisitedNewsAmount(token)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.computation())
-                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
-        badgesResponseObservable.subscribe(callback);
-    }
-
     public void markAllAsVisited(Callback<BaseResponse> callback, String token) {
         Observable<BaseResponse> markAllObservable = client.getService()
                 .markAllAsVisited(token)
@@ -188,9 +172,9 @@ public class Connection {
         markAllObservable.subscribe(callback);
     }
 
-    public void allNews(Callback<AllNewsResponse> callback, String token, int page) {
+    public void allNews(Callback<AllNewsResponse> callback, String token, int page, boolean proposed) {
         Observable<AllNewsResponse> newsObservable = client.getService()
-                .getAllNews(token, page)
+                .getAllNews(token, page, proposed)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.computation())
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
@@ -291,6 +275,14 @@ public class Connection {
         likedNewsObservable.subscribe(callback);
     }
 
+    public void setNewsBadged(Callback<SingleNewsResponse> callback, String token, Long siteId, Long newsId) {
+        Observable<SingleNewsResponse> notificationResponseObservable = client.getService()
+                .setNewsBadged(token, siteId, newsId)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation())
+                .timeout(15 * 1000, TimeUnit.MILLISECONDS);
+        notificationResponseObservable.subscribe(callback);
+    }
 
 }
 

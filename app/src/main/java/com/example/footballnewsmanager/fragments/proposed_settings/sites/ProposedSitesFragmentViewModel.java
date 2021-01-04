@@ -8,7 +8,7 @@ import com.example.footballnewsmanager.adapters.propsed_sites.ProposedSitesAdapt
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.responses.proposed.ProposedSitesResponse;
+import com.example.footballnewsmanager.api.responses.sites.SitesResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.UserPreferences;
@@ -38,20 +38,20 @@ public class ProposedSitesFragmentViewModel extends BaseViewModel {
         Connection.get().proposedSites(callback,
                 token,0);
     }
-    private void initItemsView(ProposedSitesResponse proposedSitesResponse){
+    private void initItemsView(SitesResponse sitesResponse){
         ProposedSitesAdapter proposedSitesAdapter = new ProposedSitesAdapter();
-        proposedSitesAdapter.setItems(proposedSitesResponse.getSites());
+        proposedSitesAdapter.setItems(sitesResponse.getSites());
         recyclerViewAdapter.set(proposedSitesAdapter);
     }
 
 
-    private Callback<ProposedSitesResponse> callback = new Callback<ProposedSitesResponse>() {
+    private Callback<SitesResponse> callback = new Callback<SitesResponse>() {
         @Override
-        public void onSuccess(ProposedSitesResponse proposedSitesResponse) {
+        public void onSuccess(SitesResponse sitesResponse) {
             loadingVisibility.set(false);
             itemsVisibility.set(true);
             getActivity().runOnUiThread(() -> {
-                initItemsView(proposedSitesResponse);
+                initItemsView(sitesResponse);
             });
         }
 
@@ -65,7 +65,7 @@ public class ProposedSitesFragmentViewModel extends BaseViewModel {
         }
 
         @Override
-        protected void subscribeActual(@NonNull Observer<? super ProposedSitesResponse> observer) {
+        protected void subscribeActual(@NonNull Observer<? super SitesResponse> observer) {
 
         }
     };
