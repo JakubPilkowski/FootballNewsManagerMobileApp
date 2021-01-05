@@ -8,9 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
-import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.notifications.NewsNotificationsReceiver;
 
 public class BaseApplication extends Application {
@@ -20,8 +18,8 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        UserPreferences.init(this);
-        UserPreferences.get().clearAuthToken();
+//        UserPreferences.init(this);
+//        UserPreferences.get().clearAuthToken();
         createNotificationChannels();
         initAlarmManager();
     }

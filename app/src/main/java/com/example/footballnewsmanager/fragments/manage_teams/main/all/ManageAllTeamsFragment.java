@@ -7,22 +7,22 @@ import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ManageAllTeamsFragmentBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.interfaces.Providers;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 public class ManageAllTeamsFragment extends BaseFragment<ManageAllTeamsFragmentBinding, ManageAllTeamsViewModel> implements Providers {
 
 
-    private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
-    public void setRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
+    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
-    public static ManageAllTeamsFragment newInstance(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
+    public static ManageAllTeamsFragment newInstance(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         ManageAllTeamsFragment manageAllTeamsFragment = new ManageAllTeamsFragment();
-        manageAllTeamsFragment.setRecyclerViewItemsListener(recyclerViewItemsListener);
+        manageAllTeamsFragment.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
         return manageAllTeamsFragment;
     }
 
@@ -41,7 +41,7 @@ public class ManageAllTeamsFragment extends BaseFragment<ManageAllTeamsFragmentB
     public void bindData(ManageAllTeamsFragmentBinding binding) {
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
-        viewModel.init(recyclerViewItemsListener);
+        viewModel.init(extendedRecyclerViewItemsListener);
     }
 
     @Override

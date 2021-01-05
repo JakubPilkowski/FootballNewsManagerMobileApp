@@ -10,7 +10,7 @@ import com.example.footballnewsmanager.adapters.manage_teams.teams.ManageTeamsVi
 import com.example.footballnewsmanager.base.BaseRecyclerViewAdapter;
 import com.example.footballnewsmanager.base.BaseViewHolder;
 import com.example.footballnewsmanager.databinding.ManageTeamItemBinding;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
 public class SelectedTeamsAdapter extends BaseRecyclerViewAdapter<UserTeam, BaseViewHolder> {
 
     private List<ManageTeamsViewModel> viewModels = new ArrayList<>();
-    private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
     @Override
     public int getItemLayoutRes() {
@@ -50,7 +50,7 @@ public class SelectedTeamsAdapter extends BaseRecyclerViewAdapter<UserTeam, Base
             viewModels.add(viewModel);
 //            holder.setViewModel(viewModel);
             ((ManageTeamItemBinding) holder.getBinding()).setViewModel(viewModel);
-            viewModel.init(items.get(position),activity, recyclerViewItemsListener, (ManageTeamItemBinding) holder.getBinding());
+            viewModel.init(items.get(position),activity, extendedRecyclerViewItemsListener, (ManageTeamItemBinding) holder.getBinding());
             //            if(holder.getViewModel() != null){
 //                holder.setElement(items.get(position));
 //            }
@@ -61,7 +61,7 @@ public class SelectedTeamsAdapter extends BaseRecyclerViewAdapter<UserTeam, Base
 //            if(holder.getViewModel() != null){
 //                holder.setElement(items.get(position));
 //            }
-            viewModel.init(items.get(position),activity, recyclerViewItemsListener, (ManageTeamItemBinding) holder.getBinding());
+            viewModel.init(items.get(position),activity, extendedRecyclerViewItemsListener, (ManageTeamItemBinding) holder.getBinding());
         }
 
     }
@@ -101,7 +101,7 @@ public class SelectedTeamsAdapter extends BaseRecyclerViewAdapter<UserTeam, Base
         }
     }
 
-    public void setRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
+    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 }

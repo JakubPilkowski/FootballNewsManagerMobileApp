@@ -1,7 +1,5 @@
 package com.example.footballnewsmanager.helpers;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,7 +9,6 @@ public abstract class PaginationScrollListener extends RecyclerView.OnScrollList
     @Override
     public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
-
         LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
         int visibleItemCount = layoutManager.getChildCount();
@@ -26,7 +23,6 @@ public abstract class PaginationScrollListener extends RecyclerView.OnScrollList
         }
 
     }
-
 
     protected abstract void loadMoreItems();
 

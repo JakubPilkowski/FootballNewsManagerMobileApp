@@ -5,16 +5,16 @@ import android.content.Intent;
 
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 
 public class NewsAdapterPlaceholderViewModel {
 
     private Activity activity;
-    private RecyclerViewItemsListener recyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener extendedRecyclerViewItemsListener;
 
-    public void init(Activity activity, RecyclerViewItemsListener newsAdapterListener){
+    public void init(Activity activity, ExtendedRecyclerViewItemsListener newsAdapterListener){
         this.activity = activity;
-        this.recyclerViewItemsListener = newsAdapterListener;
+        this.extendedRecyclerViewItemsListener = newsAdapterListener;
     }
 
     public void showTeamsFragment(){
@@ -22,6 +22,6 @@ public class NewsAdapterPlaceholderViewModel {
         activity.startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS);
     }
     public void backToFront(){
-        recyclerViewItemsListener.backToFront();
+        extendedRecyclerViewItemsListener.backToFront();
     }
 }

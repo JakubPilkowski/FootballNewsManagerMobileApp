@@ -20,7 +20,7 @@ import com.example.footballnewsmanager.fragments.main.news_info.NewsInfoFragment
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.News;
 import com.example.footballnewsmanager.models.UserNews;
 
@@ -31,7 +31,6 @@ public class NewsAdapterViewModel {
 
     public ObservableField<String> imageUrl = new ObservableField<>();
     public ObservableField<String> likes = new ObservableField<>();
-    public ObservableField<String> date = new ObservableField<>();
     public ObservableField<String> title = new ObservableField<>();
     public ObservableField<String> siteLogo = new ObservableField<>();
     public ObservableField<String> siteName = new ObservableField<>();
@@ -41,15 +40,18 @@ public class NewsAdapterViewModel {
     public ObservableInt heartDrawable = new ObservableInt();
     public ObservableInt isBadgeVisited = new ObservableInt();
     public ObservableInt isVisited = new ObservableInt();
+    public ObservableBoolean loadingMark = new ObservableBoolean(false);
     public ObservableField<Drawable> highlightedVisited = new ObservableField<>();
+    public ObservableBoolean markEnabled = new ObservableBoolean(false);
+    public ObservableBoolean isMarked = new ObservableBoolean();
     public UserNews news;
     private News newsDetails;
     private Activity activity;
-    private RecyclerViewItemsListener<UserNews> listener;
+    private ExtendedRecyclerViewItemsListener<UserNews> listener;
     private BadgeListener badgeListener;
 
 
-    public void init(UserNews news, Activity activity, RecyclerViewItemsListener<UserNews> listener, BadgeListener badgeListener) {
+    public void init(UserNews news, Activity activity, ExtendedRecyclerViewItemsListener<UserNews> listener, BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
         this.activity = activity;
         this.listener = listener;
@@ -61,10 +63,11 @@ public class NewsAdapterViewModel {
         this.newsDetails = news.getNews();
         isVisited.set(news.isVisited() ? activity.getResources().getColor(R.color.colorVisited) : activity.getResources().getColor(R.color.colorTextPrimary));
         isBadgeVisited.set(!news.isBadged() ? R.drawable.not_visited : R.drawable.visited);
+        markEnabled.set(!news.isVisited());
         heartDrawable.set(news.isLiked() ? R.drawable.heart_with_ripple : R.drawable.heart_empty_with_ripple);
+        isMarked.set(!news.isBadged());
         title.set(newsDetails.getTitle().length() > 40 ? newsDetails.getTitle().substring(0, 37) + "..." : newsDetails.getTitle());
         imageUrl.set(newsDetails.getImageUrl());
-        date.set(activity.getResources().getString(R.string.added) + newsDetails.getDate());
         siteLogo.set(newsDetails.getSite().getLogoUrl());
         siteName.set(newsDetails.getSite().getName());
     }
@@ -93,6 +96,13 @@ public class NewsAdapterViewModel {
         Connection.get().toggleLikes(callback, token, newsDetails.getSiteId(), newsDetails.getId());
     }
 
+    public void onMarkClick(){
+//        markEnabled.set(!markEnabled.get());
+        loadingMark.set(true);
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().setNewsBadged(callback, token, newsDetails.getSiteId(), newsDetails.getId());
+    }
+
     private void likesToggle() {
         likeEnabled.set(!likeEnabled.get());
     }
@@ -102,15 +112,21 @@ public class NewsAdapterViewModel {
         @Override
         public void onSuccess(SingleNewsResponse newsResponse) {
             activity.runOnUiThread(() -> listener.onChangeItem(news, newsResponse.getNews()));
-            if (!newsResponse.message.equals("Odwiedzono wiadomość")) {
-                likesToggle();
-                loadingHeartVisibility.set(false);
-                heartVisibility.set(true);
-            } else {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(newsDetails.getNewsUrl()));
-                activity.startActivity(intent);
-                badgeListener.onBadgeChange();
+            switch (newsResponse.getType()){
+                case LIKE:
+                    likesToggle();
+                    loadingHeartVisibility.set(false);
+                    heartVisibility.set(true);
+                    break;
+                case MARK:
+                    loadingMark.set(false);
+                    break;
+                case NEWS:
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(newsDetails.getNewsUrl()));
+                    activity.startActivity(intent);
+                    badgeListener.onBadgeChange();
+                    break;
             }
         }
 

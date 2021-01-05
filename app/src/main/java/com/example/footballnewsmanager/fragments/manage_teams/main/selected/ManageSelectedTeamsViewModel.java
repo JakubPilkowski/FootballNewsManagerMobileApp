@@ -1,24 +1,19 @@
 package com.example.footballnewsmanager.fragments.manage_teams.main.selected;
 
-import android.util.Log;
-
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.footballnewsmanager.adapters.manage_teams.all.ManageLeaguesAdapter;
 import com.example.footballnewsmanager.adapters.manage_teams.selected.SelectedTeamsAdapter;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.responses.manage_teams.LeagueResponse;
 import com.example.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -37,11 +32,11 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
 
 
 
-    private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
     // TODO: Implement the ViewModel
-    public void init(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
+    public void init(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
         this.tryAgainListener.set(listener);
         load();
     }
@@ -56,7 +51,7 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
 
     public void initTeamsView(TeamsResponse teamsResponse){
         selectedTeamsAdapter = new SelectedTeamsAdapter(getActivity());
-        selectedTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
+        selectedTeamsAdapter.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
         adapterObservable.set(selectedTeamsAdapter);
         selectedTeamsAdapter.setItems(teamsResponse.getTeams());
     }
@@ -91,7 +86,7 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
             else {
                 itemsVisibility.set(true);
                 selectedTeamsAdapter = new SelectedTeamsAdapter(getActivity());
-                selectedTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
+                selectedTeamsAdapter.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
                 adapterObservable.set(selectedTeamsAdapter);
             }
         }

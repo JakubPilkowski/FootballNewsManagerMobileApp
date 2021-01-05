@@ -1,10 +1,14 @@
 package com.example.footballnewsmanager.fragments.main.news;
 
 import android.content.Intent;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -19,22 +23,22 @@ import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.fragments.main.MainFragment;
 import com.example.footballnewsmanager.helpers.ErrorView;
+import com.example.footballnewsmanager.helpers.FabScrollListener;
 import com.example.footballnewsmanager.helpers.NewsPlaceholder;
-import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserNews;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
-public class NewsFragmentViewModel extends BaseViewModel implements RecyclerViewItemsListener<UserNews> {
+public class NewsFragmentViewModelExtended extends BaseViewModel implements ExtendedRecyclerViewItemsListener<UserNews> {
     // TODO: Implement the ViewModel
 
     public ObservableField<NewsAdapter> adapterObservable = new ObservableField<>();
@@ -56,14 +60,78 @@ public class NewsFragmentViewModel extends BaseViewModel implements RecyclerView
     public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
     private ErrorView.OnTryAgainListener listener = this::load;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private FloatingActionButton newsFab;
+    private Animation animation;
+    private boolean isAnimated = false;
+
+    private Animation.AnimationListener enterAnimation = new Animation.AnimationListener() {
+        @Override
+        public void onAnimationStart(Animation animation) {
+            isAnimated = true;
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            newsFab.setAlpha(1f);
+            newsFab.setVisibility(View.GONE);
+            isAnimated = false;
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+            onAnimationEnd(animation);
+        }
+    };
+
+    private Animation.AnimationListener closeAnimation = new Animation.AnimationListener() {
+        @Override
+        public void onAnimationStart(Animation animation) {
+            isAnimated = true;
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            newsFab.setVisibility(View.GONE);
+            isAnimated = false;
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+            onAnimationEnd(animation);
+        }
+    };
+
+    private Animation.AnimationListener openAnimation = new Animation.AnimationListener() {
+        @Override
+        public void onAnimationStart(Animation animation) {
+            newsFab.setVisibility(View.VISIBLE);
+            isAnimated = true;
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            isAnimated = false;
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+            onAnimationEnd(animation);
+        }
+    };
+
 
     public void init(BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
         swipeRefreshLayout = ((NewsFragmentBinding) getBinding()).newsSwipeRefresh;
+        newsFab = ((NewsFragmentBinding)getBinding()).newsFab;
+        recyclerView = ((NewsFragmentBinding) getBinding()).newsRecyclerView;
+        newsFab.setAlpha(0f);
+        animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
+        animation.setAnimationListener(enterAnimation);
+        newsFab.startAnimation(animation);
         tryAgainListener.set(listener);
         swipeRefreshListenerObservable.set(this::updateNews);
         initPlaceholder();
-        recyclerView = ((NewsFragmentBinding) getBinding()).newsRecyclerView;
         load();
     }
 
@@ -88,12 +156,38 @@ public class NewsFragmentViewModel extends BaseViewModel implements RecyclerView
 
     private void initItemsView(NewsResponse newsResponse) {
         newsAdapter = new NewsAdapter(getActivity());
-        newsAdapter.setRecyclerViewItemsListener(this);
+        newsAdapter.setExtendedRecyclerViewItemsListener(this);
         newsAdapter.setBadgeListener(badgeListener);
         newsAdapter.setItems(newsResponse.getUserNews());
         newsAdapter.setCountAll(newsResponse.getNewsCount());
         newsAdapter.setCountToday(newsResponse.getNewsToday());
-        PaginationScrollListener scrollListener = new PaginationScrollListener() {
+        FabScrollListener scrollListener = new FabScrollListener() {
+            @Override
+            public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int position = layoutManager.findFirstVisibleItemPosition();
+                if(position == 0 && newsFab.isShown() && !isAnimated){
+                    animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
+                    animation.setAnimationListener(closeAnimation);
+                    newsFab.startAnimation(animation);
+                }
+            }
+
+
+            @Override
+            protected void onScroll(int dx, int dy) {
+                if (dy < -20 && !newsFab.isShown() && !isAnimated) {
+                    animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_up);
+                    animation.setAnimationListener(openAnimation);
+                    newsFab.startAnimation(animation);
+                } else if (dy > 12 && newsFab.isShown() && !isAnimated) {
+                    animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
+                    animation.setAnimationListener(closeAnimation);
+                    newsFab.startAnimation(animation);
+                }
+            }
+
             @Override
             protected void loadMoreItems() {
                 currentPage++;
@@ -264,7 +358,6 @@ public class NewsFragmentViewModel extends BaseViewModel implements RecyclerView
 
     @Override
     public void backToFront() {
-        postRunnable.set(backToFrontRunnable);
     }
 
     @Override
@@ -277,18 +370,16 @@ public class NewsFragmentViewModel extends BaseViewModel implements RecyclerView
         Connection.get().news(refreshCallback, token, 0);
     }
 
+    public void onBackToTop(){
+        recyclerView.scrollToPosition(0);
+        animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
+        animation.setAnimationListener(closeAnimation);
+        newsFab.startAnimation(animation);
+    }
+
     @Override
     public void onChangeItems() {
         updateNews();
     }
-
-    private Runnable placeHolderAttachRunnable = () -> {
-        isLastPage = true;
-        newsAdapter.setLoading(false);
-        newsAdapter.setPlaceholder(true);
-        recyclerView.smoothScrollToPosition(newsAdapter.getItemCount() - 1);
-    };
-
-    private Runnable backToFrontRunnable = () -> recyclerView.scrollToPosition(0);
 
 }

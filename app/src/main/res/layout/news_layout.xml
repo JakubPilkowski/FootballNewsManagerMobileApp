@@ -43,32 +43,57 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="6dp"
                     android:layout_weight="1"
+                    android:layout_marginStart="6dp"
                     android:onClick="@{()->viewModel.onSiteClick()}"
                     android:text="@{viewModel.siteName}"
                     android:textColor="#000"
-                    android:textSize="20sp" />
-
+                    android:textSize="19sp"
+                    />
 
                 <View
                     android:layout_width="12dp"
                     android:layout_height="12dp"
-                    android:layout_margin="6dp"
+                    android:layout_margin="3dp"
                     app:drawableAsResource="@{viewModel.isBadgeVisited}" />
-
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="6dp">
+                    android:visibility="@{viewModel.isMarked ? View.VISIBLE : View.GONE}"
+                    android:layout_margin="3dp">
 
                     <ProgressBar
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:indeterminateDuration="1000"
-                        android:indeterminateTint="@color/colorTextPrimary"
+                        android:indeterminateTint="@color/colorPrimary"
+                        android:visibility="@{viewModel.loadingMark ? View.VISIBLE : View.GONE}" />
+
+                    <View
+                        android:id="@+id/news_mark"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_box_inactive_ripple"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="@{()->viewModel.onMarkClick()}"
+                        android:visibility="@{viewModel.loadingMark ? View.GONE : View.VISIBLE}"
+                        app:setEnabled="@{viewModel.markEnabled}"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp">
+
+                    <ProgressBar
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:indeterminateDuration="1000"
+                        android:indeterminateTint="@color/colorPrimary"
                         android:visibility="@{viewModel.loadingHeartVisibility ? View.VISIBLE : View.GONE}" />
 
                     <View
@@ -87,7 +112,7 @@
                 <Button
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="3dp"
                     android:background="@drawable/info_with_ripple"
                     android:onClick="@{()->viewModel.onMoreInfoClick()}" />
             </LinearLayout>

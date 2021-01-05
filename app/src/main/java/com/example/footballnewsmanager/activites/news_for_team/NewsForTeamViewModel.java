@@ -20,7 +20,7 @@ import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -52,10 +52,10 @@ public class NewsForTeamViewModel extends BaseViewModel {
     private String name;
     private String img;
     private boolean isFavourite;
-    private RecyclerViewItemsListener<UserTeam> listener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> listener;
 
 
-    public void init(Long id, String name, String img, boolean isFavourite, RecyclerViewItemsListener<UserTeam> listener) {
+    public void init(Long id, String name, String img, boolean isFavourite, ExtendedRecyclerViewItemsListener<UserTeam> listener) {
         this.id = id;
         this.name = name;
         this.img = img;
@@ -78,7 +78,7 @@ public class NewsForTeamViewModel extends BaseViewModel {
     private void initItemsView(NewsResponse newsResponse) {
         newsForTeamAdapter = new NewsForTeamAdapter(getActivity());
         newsForTeamAdapter.setHeaderItems(id, name, img, isFavourite);
-        newsForTeamAdapter.setHeaderRecyclerViewItemsListener(listener);
+        newsForTeamAdapter.setHeaderExtendedRecyclerViewItemsListener(listener);
         newsForTeamAdapter.setCountAll(newsResponse.getNewsCount());
         newsForTeamAdapter.setCountToday(newsResponse.getNewsToday());
         newsForTeamAdapter.setItems(newsResponse.getUserNews());

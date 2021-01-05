@@ -18,9 +18,8 @@ import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.databinding.ManageTeamItemBinding;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.Team;
-import com.example.footballnewsmanager.models.User;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -36,28 +35,28 @@ public class ManageTeamsViewModel {
 
     private UserTeam userTeam;
     private Team team;
-    private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
-    private RecyclerViewItemsListener<UserTeam> innerRecyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> innerExtendedRecyclerViewItemsListener;
     private Activity activity;
     private ManageTeamItemBinding binding;
     private LinearLayout mainLayout;
 
-    public void init(UserTeam userTeam, Activity activity, RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener,
+    public void init(UserTeam userTeam, Activity activity, ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener,
                      ManageTeamItemBinding binding) {
         this.activity = activity;
         this.binding = binding;
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
         mainLayout = binding.manageTeamMainLayout;
         update(userTeam);
     }
 
-    public void init(UserTeam userTeam,Activity activity, RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener
-            , RecyclerViewItemsListener<UserTeam> innerRecyclerViewListener, ManageTeamItemBinding binding)
+    public void init(UserTeam userTeam, Activity activity, ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener
+            , ExtendedRecyclerViewItemsListener<UserTeam> innerRecyclerViewListener, ManageTeamItemBinding binding)
     {
         this.activity = activity;
         this.binding = binding;
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
-        this.innerRecyclerViewItemsListener = innerRecyclerViewListener;
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
+        this.innerExtendedRecyclerViewItemsListener = innerRecyclerViewListener;
         mainLayout = binding.manageTeamMainLayout;
         update(userTeam);
     }
@@ -83,9 +82,9 @@ public class ManageTeamsViewModel {
         public void onSuccess(UserTeam newsUserTeam) {
             loadingButtonVisibility.set(false);
             toggleButtonVisibility.set(true);
-            recyclerViewItemsListener.onChangeItem(userTeam, newsUserTeam);
-            if(innerRecyclerViewItemsListener != null){
-                innerRecyclerViewItemsListener.onChangeItem(userTeam, newsUserTeam);
+            extendedRecyclerViewItemsListener.onChangeItem(userTeam, newsUserTeam);
+            if(innerExtendedRecyclerViewItemsListener != null){
+                innerExtendedRecyclerViewItemsListener.onChangeItem(userTeam, newsUserTeam);
             }
         }
 

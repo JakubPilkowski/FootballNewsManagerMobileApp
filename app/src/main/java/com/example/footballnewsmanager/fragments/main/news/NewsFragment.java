@@ -13,7 +13,7 @@ import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.Providers;
 
-public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragmentViewModel> implements Providers {
+public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragmentViewModelExtended> implements Providers {
 
 
     private BadgeListener badgeListener;
@@ -48,8 +48,8 @@ public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragment
     }
 
     @Override
-    public Class<NewsFragmentViewModel> getViewModelClass() {
-        return NewsFragmentViewModel.class;
+    public Class<NewsFragmentViewModelExtended> getViewModelClass() {
+        return NewsFragmentViewModelExtended.class;
     }
 
     @Override

@@ -7,22 +7,22 @@ import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ManagePopularTeamsFragmentBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.interfaces.Providers;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 public class ManagePopularTeamsFragment extends BaseFragment<ManagePopularTeamsFragmentBinding, ManagePopularTeamsViewModel> implements Providers {
 
 
-    private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
-    public void setRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
+    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
-    public static ManagePopularTeamsFragment newInstance(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
+    public static ManagePopularTeamsFragment newInstance(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         ManagePopularTeamsFragment managePopularTeamsFragment = new ManagePopularTeamsFragment();
-        managePopularTeamsFragment.setRecyclerViewItemsListener(recyclerViewItemsListener);
+        managePopularTeamsFragment.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
         return managePopularTeamsFragment;
     }
 
@@ -41,7 +41,7 @@ public class ManagePopularTeamsFragment extends BaseFragment<ManagePopularTeamsF
     public void bindData(ManagePopularTeamsFragmentBinding binding) {
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
-        viewModel.init(recyclerViewItemsListener);
+        viewModel.init(extendedRecyclerViewItemsListener);
     }
 
     @Override

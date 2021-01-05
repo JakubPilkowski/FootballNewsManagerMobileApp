@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.fragments.proposed_settings.teams.ProposedTeamsViewItemsModel" />
+            type="com.example.footballnewsmanager.fragments.proposed_settings.teams.ProposedTeamsViewItemsModelExtended" />
     </data>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"

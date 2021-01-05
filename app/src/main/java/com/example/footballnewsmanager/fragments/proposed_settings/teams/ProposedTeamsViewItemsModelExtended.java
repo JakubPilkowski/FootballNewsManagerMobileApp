@@ -19,13 +19,13 @@ import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserNews;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
-public class ProposedTeamsViewItemsModel extends BaseViewModel implements RecyclerViewItemsListener<UserNews> {
+public class ProposedTeamsViewItemsModelExtended extends BaseViewModel implements ExtendedRecyclerViewItemsListener<UserNews> {
     // TODO: Implement the ViewModel
 
     public ObservableField<RecyclerView.Adapter> recyclerViewAdapter = new ObservableField<>();
@@ -60,7 +60,7 @@ public class ProposedTeamsViewItemsModel extends BaseViewModel implements Recycl
     private void initItemsView(TeamsResponse teamsResponse) {
         proposedTeamsAdapter = new ProposedTeamsAdapter();
         proposedTeamsAdapter.setItems(teamsResponse.getTeams());
-        proposedTeamsAdapter.setRecyclerViewItemsListener(this);
+        proposedTeamsAdapter.setExtendedRecyclerViewItemsListener(this);
 
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
             @Override

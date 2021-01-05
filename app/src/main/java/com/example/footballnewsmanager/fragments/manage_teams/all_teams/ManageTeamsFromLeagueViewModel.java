@@ -19,7 +19,7 @@ import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -39,16 +39,16 @@ public class ManageTeamsFromLeagueViewModel extends BaseViewModel {
     private ErrorView.OnTryAgainListener listener = this::load;
 
     private ManageTeamsAdapter manageTeamsAdapter;
-    private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
     private Long id;
     private boolean isLastPage = false;
     private int currentPage = 0;
 
-    public void init(Long id, RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
+    public void init(Long id, ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         recyclerView = ((ManageTeamsFromLeagueFragmentBinding) getBinding()).manageTeamsFromLeagueRecyclerView;
         this.id = id;
         tryAgainListener.set(listener);
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
         load();
     }
 
@@ -64,7 +64,7 @@ public class ManageTeamsFromLeagueViewModel extends BaseViewModel {
 
     private void initTeamsView(TeamsResponse teamsResponse) {
         manageTeamsAdapter = new ManageTeamsAdapter(getActivity());
-        manageTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
+        manageTeamsAdapter.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
         manageTeamsAdapter.setItems(teamsResponse.getTeams());
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
             @Override
