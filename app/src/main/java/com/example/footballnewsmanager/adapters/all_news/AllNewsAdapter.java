@@ -39,6 +39,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public boolean isLoading = false;
     private ExtendedRecyclerViewItemsListener<UserNews> extendedRecyclerViewItemsListener;
     private BadgeListener badgeListener;
+    private boolean proposed;
 
     public void setItems(List<UserNews> items, List<UserTeam> additionalContent) {
         int start = this.items.size() + this.proposedTeams.size();
@@ -46,9 +47,14 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.proposedTeams.add(additionalContent);
         notifyItemRangeChanged(start + 1, items.size() + proposedTeams.size());
     }
+    public void setItems(List<UserNews> items) {
+        int start = this.items.size();
+        this.items.addAll(items);
+        notifyItemRangeChanged(start + 1, items.size());
+    }
 
-
-    public AllNewsAdapter(Activity activity) {
+    public AllNewsAdapter(Activity activity, boolean proposed) {
+        this.proposed = proposed;
         this.activity = activity;
     }
 
@@ -100,7 +106,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             binding.setViewModel(viewModel);
         }
         //additional content
-        else if (position % 16 == 0 || (position == items.size() + proposedTeams.size() && (items.size() + proposedTeams.size()) % 16 != 0)) {
+        else if (proposed && (position % 16 == 0 || (position == items.size() + proposedTeams.size() && (items.size() + proposedTeams.size()) % 16 != 0))) {
             NewsAdditionalInfoViewModel viewModel;
             int addContentPosition;
             if ((position == items.size() + proposedTeams.size() && (items.size() + proposedTeams.size()) % 16 != 0)) {
@@ -119,7 +125,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((AdditionalTeamsViewHolder) holder).binding.setViewModel(viewModel);
         } else {
             NewsAdapterViewModel viewModel;
-            int itemsPosition = position - (position / 16 + 1);
+            int itemsPosition = proposed ? (position - position/16-1) : position-1;
             if (viewModels.size() <= itemsPosition) {
                 viewModel = new NewsAdapterViewModel();
                 viewModels.add(viewModel);
@@ -139,7 +145,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return HEADER;
         else if (position == items.size() + proposedTeams.size() + 1) {
             return ITEM_LOADING;
-        } else if (position % 16 == 0 || (position == items.size() + proposedTeams.size() && (items.size() + proposedTeams.size()) % 16 != 0)) {
+        } else if (proposed && (position % 16 == 0 || (position == items.size() + proposedTeams.size() && (items.size() + proposedTeams.size()) % 16 != 0))) {
             return ADDITIONAL_INFO_TEAMS;
         }
         return ITEM;

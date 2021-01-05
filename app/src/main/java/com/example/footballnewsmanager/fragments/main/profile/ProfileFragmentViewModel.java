@@ -2,6 +2,7 @@ package com.example.footballnewsmanager.fragments.main.profile;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import androidx.databinding.ObservableBoolean;
@@ -56,7 +57,13 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
     public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
     private ErrorView.OnTryAgainListener listener = this::load;
 
-    private Switch.OnCheckedChangeListener proposedNewsChangeListener = (buttonView, isChecked) -> proposedNews.set(isChecked);
+    private Switch.OnCheckedChangeListener proposedNewsChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            proposedNews.set(isChecked);
+            UserPreferences.get().setProposed(isChecked);
+        }
+    };
     private SwipeRefreshLayout swipeRefreshLayout;
     private LanguageField languageField;
 
@@ -83,7 +90,7 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
     public void initItemsView(UserProfileResponse userProfileResponse) {
         name.set(userProfileResponse.getUser().getUsername());
         date.set(getActivity().getResources().getString(R.string.account_from) + userProfileResponse.getUser().getAddedDate().split("T")[0]);
-        proposedNews.set(true);
+        proposedNews.set(UserPreferences.get().getProposed());
         String locale = UserPreferences.get().getLanguage();
         currentLanguage.set(LanguageHelper.getName(locale, getActivity().getResources()));
         languageDrawable.set(LanguageHelper.getDrawable(locale,

@@ -120,6 +120,7 @@ public class NewsAdapterViewModel {
                     break;
                 case MARK:
                     loadingMark.set(false);
+                    badgeListener.onBadgeChange();
                     break;
                 case NEWS:
                     Intent intent = new Intent(Intent.ACTION_VIEW);
