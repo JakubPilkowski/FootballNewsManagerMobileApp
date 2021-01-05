@@ -19,7 +19,7 @@ import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -40,11 +40,11 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
     public ManagePopularTeamsAdapter managePopularTeamsAdapter;
     private boolean isLastPage = false;
     private int currentPage = 0;
-    private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
-    public void init(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
+    public void init(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         recyclerView = ((ManagePopularTeamsFragmentBinding) getBinding()).managePopularTeamsRecyclerView;
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
         tryAgainListener.set(listener);
         load();
     }
@@ -61,7 +61,7 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
     private void initItemsView(TeamsResponse teamsResponse) {
         managePopularTeamsAdapter = new ManagePopularTeamsAdapter(getActivity());
         managePopularTeamsAdapter.setItems(teamsResponse.getTeams(), currentPage);
-        managePopularTeamsAdapter.setRecyclerViewItemsListener(recyclerViewItemsListener);
+        managePopularTeamsAdapter.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
 
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
             @Override

@@ -10,10 +10,10 @@ import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityNewsForTeamBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.interfaces.Providers;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 
-public class NewsForTeamActivity extends BaseActivity<ActivityNewsForTeamBinding, NewsForTeamViewModel> implements Providers, RecyclerViewItemsListener {
+public class NewsForTeamActivity extends BaseActivity<ActivityNewsForTeamBinding, NewsForTeamViewModel> implements Providers, ExtendedRecyclerViewItemsListener {
 
     private boolean refresh = false;
 

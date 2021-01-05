@@ -20,7 +20,7 @@ import com.example.footballnewsmanager.fragments.main.news_info.NewsInfoFragment
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.News;
 import com.example.footballnewsmanager.models.UserNews;
 
@@ -47,11 +47,11 @@ public class NewsAdapterViewModel {
     public UserNews news;
     private News newsDetails;
     private Activity activity;
-    private RecyclerViewItemsListener<UserNews> listener;
+    private ExtendedRecyclerViewItemsListener<UserNews> listener;
     private BadgeListener badgeListener;
 
 
-    public void init(UserNews news, Activity activity, RecyclerViewItemsListener<UserNews> listener, BadgeListener badgeListener) {
+    public void init(UserNews news, Activity activity, ExtendedRecyclerViewItemsListener<UserNews> listener, BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
         this.activity = activity;
         this.listener = listener;
@@ -65,7 +65,7 @@ public class NewsAdapterViewModel {
         isBadgeVisited.set(!news.isBadged() ? R.drawable.not_visited : R.drawable.visited);
         markEnabled.set(!news.isVisited());
         heartDrawable.set(news.isLiked() ? R.drawable.heart_with_ripple : R.drawable.heart_empty_with_ripple);
-        isMarked.set(news.isVisited());
+        isMarked.set(!news.isBadged());
         title.set(newsDetails.getTitle().length() > 40 ? newsDetails.getTitle().substring(0, 37) + "..." : newsDetails.getTitle());
         imageUrl.set(newsDetails.getImageUrl());
         siteLogo.set(newsDetails.getSite().getLogoUrl());

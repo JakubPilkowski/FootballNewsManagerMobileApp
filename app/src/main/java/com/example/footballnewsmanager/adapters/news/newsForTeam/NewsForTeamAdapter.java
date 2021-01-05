@@ -1,23 +1,18 @@
 package com.example.footballnewsmanager.adapters.news.newsForTeam;
 
 import android.app.Activity;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamViewModel;
-import com.example.footballnewsmanager.api.responses.main.NewsResponse;
 import com.example.footballnewsmanager.databinding.NewsForTeamHeaderBinding;
 import com.example.footballnewsmanager.databinding.NewsForTeamItemLayoutBinding;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserNews;
 import com.example.footballnewsmanager.models.UserTeam;
 
@@ -35,7 +30,7 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final static int ITEM_LOADING = 2;
 
     public boolean isLoading = false;
-    private RecyclerViewItemsListener<UserTeam> headerRecyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> headerExtendedRecyclerViewItemsListener;
     private Long countAll;
     private Long countToday;
     private String name;
@@ -107,7 +102,7 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if (position == 0) {
             NewsForTeamHeaderAdapterViewModel viewModel = new NewsForTeamHeaderAdapterViewModel();
             NewsForTeamHeaderBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
-            viewModel.init(id, name, img, isFavourite, countAll, countToday, headerRecyclerViewItemsListener, binding);
+            viewModel.init(id, name, img, isFavourite, countAll, countToday, headerExtendedRecyclerViewItemsListener, binding);
             binding.setViewModel(viewModel);
             return;
         } else {
@@ -151,8 +146,8 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.isFavourite = isFavourite;
     }
 
-    public void setHeaderRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> headerRecyclerViewItemsListener) {
-        this.headerRecyclerViewItemsListener = headerRecyclerViewItemsListener;
+    public void setHeaderExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserTeam> headerExtendedRecyclerViewItemsListener) {
+        this.headerExtendedRecyclerViewItemsListener = headerExtendedRecyclerViewItemsListener;
     }
 
     public class NewsHeaderViewHolder extends RecyclerView.ViewHolder {

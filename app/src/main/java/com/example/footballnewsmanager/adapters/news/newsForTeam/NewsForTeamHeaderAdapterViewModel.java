@@ -1,7 +1,6 @@
 package com.example.footballnewsmanager.adapters.news.newsForTeam;
 
 import android.content.res.Resources;
-import android.util.Log;
 import android.widget.LinearLayout;
 
 import androidx.databinding.ObservableBoolean;
@@ -14,7 +13,7 @@ import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.databinding.NewsForTeamHeaderBinding;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -34,17 +33,17 @@ public class NewsForTeamHeaderAdapterViewModel {
 
 
     private Long id;
-    private RecyclerViewItemsListener<UserTeam> headerRecyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> headerExtendedRecyclerViewItemsListener;
     private LinearLayout linearLayout;
     private Resources resources;
 
     public void init(Long id, String name, String img, boolean isFavourite,
-                     Long countAll, Long countToday, RecyclerViewItemsListener<UserTeam> headerRecyclerViewItemsListener,
+                     Long countAll, Long countToday, ExtendedRecyclerViewItemsListener<UserTeam> headerExtendedRecyclerViewItemsListener,
                      NewsForTeamHeaderBinding binding){
         linearLayout = binding.newsForTeamHeaderLayout;
         resources = linearLayout.getResources();
         this.id = id;
-        this.headerRecyclerViewItemsListener = headerRecyclerViewItemsListener;
+        this.headerExtendedRecyclerViewItemsListener = headerExtendedRecyclerViewItemsListener;
         this.name.set(name);
         this.img.set(img);
         this.countAll.set(resources.getString(R.string.total)+countAll);
@@ -71,7 +70,7 @@ public class NewsForTeamHeaderAdapterViewModel {
             updateFavouriteState(newsUserTeam.isFavourite());
             loadingButtonVisibility.set(false);
             toggleButtonVisibility.set(true);
-            headerRecyclerViewItemsListener.onChangeItem(new UserTeam(), newsUserTeam);
+            headerExtendedRecyclerViewItemsListener.onChangeItem(new UserTeam(), newsUserTeam);
         }
 
         @Override

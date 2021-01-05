@@ -10,17 +10,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.databinding.ManageTeamItemBinding;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageTeamsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RecyclerViewItemsListener<UserTeam>{
+public class ManageTeamsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ExtendedRecyclerViewItemsListener<UserTeam> {
 
     private List<ManageTeamsViewModel> viewModels = new ArrayList<>();
 
-    private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
     private List<UserTeam> items = new ArrayList<>();
     private final static int ITEM = 1;
@@ -47,8 +47,8 @@ public class ManageTeamsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.activity = activity;
     }
 
-    public void setRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
+    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
 
@@ -113,7 +113,7 @@ public class ManageTeamsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
             ManageTeamItemBinding binding = ((TeamViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
-            viewModel.init(items.get(position), activity, recyclerViewItemsListener, binding);
+            viewModel.init(items.get(position), activity, extendedRecyclerViewItemsListener, binding);
         }
     }
 

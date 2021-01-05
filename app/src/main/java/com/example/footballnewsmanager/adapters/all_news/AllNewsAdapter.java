@@ -16,7 +16,7 @@ import com.example.footballnewsmanager.databinding.AdditionalInfoTeamsBinding;
 import com.example.footballnewsmanager.databinding.AllNewsHeaderBinding;
 import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserNews;
 import com.example.footballnewsmanager.models.UserTeam;
 
@@ -37,7 +37,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Long countAll;
     private Long countToday;
     public boolean isLoading = false;
-    private RecyclerViewItemsListener<UserNews> recyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserNews> extendedRecyclerViewItemsListener;
     private BadgeListener badgeListener;
 
     public void setItems(List<UserNews> items, List<UserTeam> additionalContent) {
@@ -126,7 +126,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             } else {
                 viewModel = viewModels.get(itemsPosition);
             }
-            viewModel.init(items.get(itemsPosition), activity, recyclerViewItemsListener, badgeListener);
+            viewModel.init(items.get(itemsPosition), activity, extendedRecyclerViewItemsListener, badgeListener);
             NewsLayoutBinding binding = ((NewsViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
         }
@@ -167,8 +167,8 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.countToday = countToday;
     }
 
-    public void setRecyclerViewItemsListener(RecyclerViewItemsListener<UserNews> recyclerViewItemsListener) {
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
+    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserNews> extendedRecyclerViewItemsListener) {
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
     public void refresh(AllNewsResponse userNews) {

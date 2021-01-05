@@ -9,7 +9,7 @@ import com.example.footballnewsmanager.databinding.ProposedTeamsFragmentBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
 
-public class ProposedTeamsFragment extends BaseFragment<ProposedTeamsFragmentBinding, ProposedTeamsViewItemsModel> implements Providers {
+public class ProposedTeamsFragment extends BaseFragment<ProposedTeamsFragmentBinding, ProposedTeamsViewItemsModelExtended> implements Providers {
 
 
 
@@ -23,8 +23,8 @@ public class ProposedTeamsFragment extends BaseFragment<ProposedTeamsFragmentBin
     }
 
     @Override
-    public Class<ProposedTeamsViewItemsModel> getViewModelClass() {
-        return ProposedTeamsViewItemsModel.class;
+    public Class<ProposedTeamsViewItemsModelExtended> getViewModelClass() {
+        return ProposedTeamsViewItemsModelExtended.class;
     }
 
     @Override

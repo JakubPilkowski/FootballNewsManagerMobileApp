@@ -1,18 +1,6 @@
 package com.example.footballnewsmanager.fragments.manage_teams.all_teams;
 
 import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.app.Activity;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity;
@@ -20,7 +8,7 @@ import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ManageTeamsFromLeagueFragmentBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 public class ManageTeamsFromLeagueFragment extends BaseFragment<ManageTeamsFromLeagueFragmentBinding, ManageTeamsFromLeagueViewModel> implements Providers {
@@ -30,21 +18,21 @@ public class ManageTeamsFromLeagueFragment extends BaseFragment<ManageTeamsFromL
 
     private String toolbarName = "";
     private Long leagueId = 0L;
-    private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
-    public void setRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
+    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
     public void setToolbarName(String toolbar) {
         this.toolbarName = toolbar;
     }
 
-    public static ManageTeamsFromLeagueFragment newInstance(String title, Long id, RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
+    public static ManageTeamsFromLeagueFragment newInstance(String title, Long id, ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         ManageTeamsFromLeagueFragment fragment = new ManageTeamsFromLeagueFragment();
         fragment.setToolbarName(title);
         fragment.setLeagueId(id);
-        fragment.setRecyclerViewItemsListener(recyclerViewItemsListener);
+        fragment.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
         return fragment;
     }
 
@@ -78,7 +66,7 @@ public class ManageTeamsFromLeagueFragment extends BaseFragment<ManageTeamsFromL
         ((ManageTeamsActivity)getActivity()).refreshToolbar();
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
-        viewModel.init(leagueId, recyclerViewItemsListener);
+        viewModel.init(leagueId, extendedRecyclerViewItemsListener);
     }
 
     @Override

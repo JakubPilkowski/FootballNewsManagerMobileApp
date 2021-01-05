@@ -15,14 +15,12 @@ import com.example.footballnewsmanager.adapters.manage_teams.ManageTeamsViewPage
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ManageTeamsMainFragmentBinding;
-import com.example.footballnewsmanager.fragments.manage_teams.all_teams.ManageTeamsFromLeagueFragment;
-import com.example.footballnewsmanager.fragments.manage_teams.all_teams.ManageTeamsFromLeagueViewModel;
 import com.example.footballnewsmanager.fragments.manage_teams.main.all.ManageAllTeamsFragment;
 import com.example.footballnewsmanager.fragments.manage_teams.main.popular.ManagePopularTeamsFragment;
 import com.example.footballnewsmanager.fragments.manage_teams.main.popular.ManagePopularTeamsViewModel;
 import com.example.footballnewsmanager.fragments.manage_teams.main.selected.ManageSelectedTeamsFragment;
 import com.example.footballnewsmanager.fragments.manage_teams.main.selected.ManageSelectedTeamsViewModel;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -30,7 +28,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageTeamsMainViewModel extends BaseViewModel implements RecyclerViewItemsListener<UserTeam> {
+public class ManageTeamsMainViewModelExtended extends BaseViewModel implements ExtendedRecyclerViewItemsListener<UserTeam> {
     // TODO: Implement the ViewModel
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;

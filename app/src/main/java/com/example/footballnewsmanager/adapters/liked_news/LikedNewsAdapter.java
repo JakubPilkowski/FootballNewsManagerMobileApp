@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.adapters.news.newsForTeam.NewsForTeamAdapterViewModel;
 import com.example.footballnewsmanager.databinding.NewsForTeamItemLayoutBinding;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserNews;
 
 import java.util.ArrayList;

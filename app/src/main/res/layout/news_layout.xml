@@ -60,7 +60,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.news.inFavourites ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{viewModel.isMarked ? View.VISIBLE : View.GONE}"
                     android:layout_margin="3dp">
 
                     <ProgressBar
@@ -74,7 +74,7 @@
                         android:id="@+id/news_mark"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:background="@{viewModel.isMarked ? @drawable/ic_check_box_active : @drawable/ic_check_box_inactive}"
+                        android:background="@drawable/check_box_inactive_ripple"
                         android:clickable="true"
                         android:focusable="true"
                         android:onClick="@{()->viewModel.onMarkClick()}"

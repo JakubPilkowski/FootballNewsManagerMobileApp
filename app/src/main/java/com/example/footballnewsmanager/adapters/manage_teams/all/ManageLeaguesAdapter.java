@@ -1,6 +1,5 @@
 package com.example.footballnewsmanager.adapters.manage_teams.all;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,7 +8,7 @@ import com.example.footballnewsmanager.base.BaseRecyclerViewAdapter;
 import com.example.footballnewsmanager.base.BaseViewHolder;
 import com.example.footballnewsmanager.databinding.ManageLeagueItemBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.League;
 import com.example.footballnewsmanager.models.UserTeam;
 
@@ -20,10 +19,10 @@ public class ManageLeaguesAdapter extends BaseRecyclerViewAdapter<League, BaseVi
 
     private List<ManageLeaguesAdapterViewModel> viewModels = new ArrayList<>();
     private Navigator navigator;
-    private RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
-    public void setRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> recyclerViewItemsListener) {
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
+    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
     public ManageLeaguesAdapter(Navigator navigator) {
@@ -50,12 +49,12 @@ public class ManageLeaguesAdapter extends BaseRecyclerViewAdapter<League, BaseVi
             viewModels.add(viewModel);
             holder.setViewModel(viewModel);
             ((ManageLeagueItemBinding) holder.getBinding()).setViewModel(viewModel);
-            holder.setElement(items.get(position), navigator, recyclerViewItemsListener);
+            holder.setElement(items.get(position), navigator, extendedRecyclerViewItemsListener);
         }
         else{
             viewModel = viewModels.get(position);
             ((ManageLeagueItemBinding) holder.getBinding()).setViewModel(viewModel);
-            holder.setElement(items.get(position), navigator, recyclerViewItemsListener);
+            holder.setElement(items.get(position), navigator, extendedRecyclerViewItemsListener);
         }
 
     }

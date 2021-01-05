@@ -9,7 +9,7 @@ import com.example.footballnewsmanager.databinding.ManageTeamsMainFragmentBindin
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
 
-public class ManageTeamsMainFragment extends BaseFragment<ManageTeamsMainFragmentBinding, ManageTeamsMainViewModel> implements Providers {
+public class ManageTeamsMainFragment extends BaseFragment<ManageTeamsMainFragmentBinding, ManageTeamsMainViewModelExtended> implements Providers {
 
     public static final String TAG = "ManageTeamsMainFragment";
 
@@ -34,8 +34,8 @@ public class ManageTeamsMainFragment extends BaseFragment<ManageTeamsMainFragmen
     }
 
     @Override
-    public Class<ManageTeamsMainViewModel> getViewModelClass() {
-        return ManageTeamsMainViewModel.class;
+    public Class<ManageTeamsMainViewModelExtended> getViewModelClass() {
+        return ManageTeamsMainViewModelExtended.class;
     }
 
 

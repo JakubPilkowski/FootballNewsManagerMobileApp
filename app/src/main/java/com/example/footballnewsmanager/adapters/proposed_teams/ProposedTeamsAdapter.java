@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.databinding.ProposedTeamLayoutBinding;
-import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
     private final static int ITEM_LOADING = 1;
     private final static int PLACEHOLDER = 2;
     public boolean isLoading = false;
-    private RecyclerViewItemsListener recyclerViewItemsListener;
+    private ExtendedRecyclerViewItemsListener extendedRecyclerViewItemsListener;
 
 
     public void setItems(List<UserTeam> items) {
@@ -39,8 +39,8 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
             notifyItemChanged(items.size());
     }
 
-    public void setRecyclerViewItemsListener(RecyclerViewItemsListener recyclerViewItemsListener) {
-        this.recyclerViewItemsListener = recyclerViewItemsListener;
+    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener extendedRecyclerViewItemsListener) {
+        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
     public List<ProposedTeamsAdapterViewModel> getViewModels() {
@@ -106,7 +106,7 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         if (holder instanceof PlaceholderViewHolder) {
-            recyclerViewItemsListener.onDetached();
+            extendedRecyclerViewItemsListener.onDetached();
         }
     }
 
