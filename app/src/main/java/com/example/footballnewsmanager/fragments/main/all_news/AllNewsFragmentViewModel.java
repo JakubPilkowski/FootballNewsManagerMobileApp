@@ -54,7 +54,7 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
 
     private boolean isLastPage;
     private int currentPage = 0;
-    private AllNewsAdapter allNewsAdapter;
+    public AllNewsAdapter allNewsAdapter;
     private RecyclerView recyclerView;
     private BadgeListener badgeListener;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -145,6 +145,7 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
     }
 
     public void load() {
+        currentPage = 0;
         errorVisibility.set(false);
         itemsVisibility.set(false);
         loadingVisibility.set(true);
@@ -155,10 +156,9 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
 
 
     private void initItemsView(AllNewsResponse allNewsResponse) {
-        Log.d("Proposed", "initItemsView: "+UserPreferences.get().getProposed());
+        Log.d("Proposed", "initItemsView: " + UserPreferences.get().getProposed());
         allNewsAdapter = new AllNewsAdapter(getActivity(), UserPreferences.get().getProposed());
         allNewsAdapter.setExtendedRecyclerViewItemsListener(this);
-
         if (allNewsResponse.getProposedTeams() != null)
             allNewsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getProposedTeams());
         else allNewsAdapter.setItems(allNewsResponse.getUserNews());
@@ -183,7 +183,7 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
             public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int position = layoutManager.findFirstVisibleItemPosition();
+                int position = layoutManager.findFirstCompletelyVisibleItemPosition();
                 if (position == 0 && newsFab.isShown() && !isAnimated) {
                     animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
                     animation.setAnimationListener(closeAnimation);
@@ -270,10 +270,7 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
             getActivity().runOnUiThread(() -> {
                 currentPage = 0;
                 isLastPage = newsResponse.getPages() <= currentPage;
-                allNewsAdapter.setLoading(false);
-                allNewsAdapter.setCountAll(newsResponse.getNewsCount());
-                allNewsAdapter.setCountToday(newsResponse.getNewsToday());
-                allNewsAdapter.refresh(newsResponse);
+                initItemsView(newsResponse);
                 swipeRefreshLayout.setRefreshing(false);
             });
         }
@@ -376,7 +373,8 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
 
     public void updateNews() {
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().allNews(refreshCallback, token, 0, true);
+        boolean proposed = UserPreferences.get().getProposed();
+        Connection.get().allNews(refreshCallback, token, 0, proposed);
     }
 
     @Override

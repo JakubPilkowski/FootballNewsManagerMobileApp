@@ -22,6 +22,7 @@ import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.News;
+import com.example.footballnewsmanager.models.NewsView;
 import com.example.footballnewsmanager.models.UserNews;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -49,12 +50,14 @@ public class NewsAdapterViewModel {
     private Activity activity;
     private ExtendedRecyclerViewItemsListener<UserNews> listener;
     private BadgeListener badgeListener;
+    private NewsView newsView;
 
-
-    public void init(UserNews news, Activity activity, ExtendedRecyclerViewItemsListener<UserNews> listener, BadgeListener badgeListener) {
+    public void init(UserNews news, Activity activity, ExtendedRecyclerViewItemsListener<UserNews> listener,
+                     BadgeListener badgeListener, NewsView newsView) {
         this.badgeListener = badgeListener;
         this.activity = activity;
         this.listener = listener;
+        this.newsView = newsView;
         update(news);
     }
 
@@ -96,7 +99,7 @@ public class NewsAdapterViewModel {
         Connection.get().toggleLikes(callback, token, newsDetails.getSiteId(), newsDetails.getId());
     }
 
-    public void onMarkClick(){
+    public void onMarkClick() {
 //        markEnabled.set(!markEnabled.get());
         loadingMark.set(true);
         String token = UserPreferences.get().getAuthToken();
@@ -111,12 +114,22 @@ public class NewsAdapterViewModel {
     private Callback<SingleNewsResponse> callback = new Callback<SingleNewsResponse>() {
         @Override
         public void onSuccess(SingleNewsResponse newsResponse) {
-            activity.runOnUiThread(() -> listener.onChangeItem(news, newsResponse.getNews()));
-            switch (newsResponse.getType()){
+            activity.runOnUiThread(() -> {
+                listener.onChangeItem(news, newsResponse.getNews());
+                if (newsView.equals(NewsView.SELECTED))
+                    ((MainActivity) activity).updateNews(news, newsResponse.getNews()
+                            , NewsView.ALL);
+                else if(newsView.equals(NewsView.ALL)){
+                    ((MainActivity) activity).updateNews(news, newsResponse.getNews()
+                            , NewsView.SELECTED);
+                }
+            });
+            switch (newsResponse.getType()) {
                 case LIKE:
                     likesToggle();
                     loadingHeartVisibility.set(false);
                     heartVisibility.set(true);
+                    ((MainActivity) activity).reloadProfile();
                     break;
                 case MARK:
                     loadingMark.set(false);

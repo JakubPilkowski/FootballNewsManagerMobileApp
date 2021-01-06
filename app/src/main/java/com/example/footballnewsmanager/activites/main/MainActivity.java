@@ -16,13 +16,16 @@ import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityMainBinding;
 import com.example.footballnewsmanager.fragments.main.MainFragment;
+import com.example.footballnewsmanager.fragments.main.all_news.AllNewsFragment;
 import com.example.footballnewsmanager.fragments.main.news.NewsFragment;
 import com.example.footballnewsmanager.fragments.main.news_info.NewsInfoFragment;
 import com.example.footballnewsmanager.fragments.main.profile.ProfileFragment;
 import com.example.footballnewsmanager.helpers.Navigator;
+import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.Providers;
+import com.example.footballnewsmanager.models.NewsView;
+import com.example.footballnewsmanager.models.UserNews;
 
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivityViewModel> implements Providers {
@@ -80,10 +83,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_MANAGE_TEAMS && resultCode == RESULT_OK) {
             reloadMainPage();
+            boolean proposed = UserPreferences.get().getProposed();
+            if(proposed)
+                reloadAllNews();
         }
         if (requestCode == RESULT_MANAGE_TEAMS_FROM_TEAM_NEWS && resultCode == RESULT_OK) {
             reloadMainPage();
             reloadNewsInfoPage();
+            boolean proposed = UserPreferences.get().getProposed();
+            if(proposed)
+                reloadAllNews();
         }
     }
 
@@ -101,9 +110,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
 
     }
 
-    public MainFragment getMainFragment(){
-        for(Fragment fragment : getSupportFragmentManager().getFragments()){
-            if(fragment instanceof MainFragment){
+    public MainFragment getMainFragment() {
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if (fragment instanceof MainFragment) {
                 return (MainFragment) fragment;
             }
         }
@@ -111,28 +120,76 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
     }
 
     public void reloadMainPage() {
-        MainFragment fragment = (MainFragment) getSupportFragmentManager().getFragments().get(0);
-        NewsFragment newsFragment = (NewsFragment) fragment.viewModel.fragments.get(0);
-        ProfileFragment profileFragment = (ProfileFragment) fragment.viewModel.fragments.get(3);
-        if (newsFragment.viewModel != null)
-            newsFragment.viewModel.load();
-        if (profileFragment.viewModel != null)
-            profileFragment.viewModel.load();
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if (fragment instanceof NewsFragment) {
+                NewsFragment newsFragment = (NewsFragment) fragment;
+                if (newsFragment.viewModel != null) {
+                    newsFragment.viewModel.load();
+                }
+            }
+            if (fragment instanceof ProfileFragment) {
+                ProfileFragment profileFragment = (ProfileFragment) fragment;
+                if (profileFragment.viewModel != null)
+                    profileFragment.viewModel.load();
+            }
+        }
     }
 
-    public void changeLanguage(Locale locale){
+    public void reloadAllNews() {
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if (fragment instanceof AllNewsFragment) {
+                AllNewsFragment allNewsFragment = (AllNewsFragment) fragment;
+                if (allNewsFragment.viewModel != null)
+                    allNewsFragment.viewModel.load();
+            }
+        }
+    }
+
+    public void changeLanguage(Locale locale) {
         Resources resources = getResources();
         Configuration configuration = resources.getConfiguration();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         configuration.setLocale(locale);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
             getApplicationContext().createConfigurationContext(configuration);
         } else {
-            resources.updateConfiguration(configuration,displayMetrics);
+            resources.updateConfiguration(configuration, displayMetrics);
         }
         Intent refresh = new Intent(this, MainActivity.class);
         finish();
         startActivity(refresh);
     }
 
+    public void reloadProfile() {
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if (fragment instanceof ProfileFragment) {
+                ProfileFragment allNewsFragment = (ProfileFragment) fragment;
+                if (allNewsFragment.viewModel != null)
+                    allNewsFragment.viewModel.load();
+            }
+        }
+    }
+
+    public void updateNews(UserNews oldUserNews, UserNews newUserNews, NewsView newsView){
+        switch (newsView){
+            case SELECTED:
+                for (Fragment fragment: getSupportFragmentManager().getFragments()) {
+                    if(fragment instanceof NewsFragment){
+                        NewsFragment newsFragment = (NewsFragment) fragment;
+                        if(newsFragment.viewModel != null)
+                            if (newsFragment.viewModel.newsAdapter != null)
+                                newsFragment.viewModel.newsAdapter.changeIfExists(oldUserNews, newUserNews);
+                    }
+                }
+            case ALL:
+                for (Fragment fragment: getSupportFragmentManager().getFragments()) {
+                    if(fragment instanceof AllNewsFragment){
+                        AllNewsFragment allNewsFragment = (AllNewsFragment) fragment;
+                        if(allNewsFragment.viewModel != null)
+                            if (allNewsFragment.viewModel.allNewsAdapter != null)
+                                allNewsFragment.viewModel.allNewsAdapter.changeIfExists(oldUserNews, newUserNews);
+                    }
+                }
+        }
+    }
 }

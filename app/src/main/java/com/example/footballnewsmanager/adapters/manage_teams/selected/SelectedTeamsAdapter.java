@@ -67,18 +67,6 @@ public class SelectedTeamsAdapter extends BaseRecyclerViewAdapter<UserTeam, Base
     }
 
     public void onChange(UserTeam oldTeam, UserTeam newTeam) {
-//        Log.d("ManageTeams", "onChange: oldTeam " + oldTeam.isFavourite());
-//        Log.d("ManageTeams", "onChange: newTeam " + newTeam.isFavourite());
-//        Log.d("ManageTeams", "onChange: size " + items.size());
-
-
-        //uwaga
-        if (items.size() > 0) {
-            Log.d("ManageTeams", "onChange: items[0] isFavourite" + items.get(0).isFavourite());
-            Log.d("ManageTeams", "onChange: oldItem isFavourite" + oldTeam.isFavourite());
-            Log.d("ManageTeams", "onChange: items[0] chosenAmount" + items.get(0).getTeam().getChosenAmount());
-            Log.d("ManageTeams", "onChange: oldItem chosenAmount" + oldTeam.getTeam().getChosenAmount());
-        }
         boolean exist = false;
         int index = 0;
         for (UserTeam userTeam : items) {

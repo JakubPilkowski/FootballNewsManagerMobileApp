@@ -38,7 +38,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
-public class NewsFragmentViewModelExtended extends BaseViewModel implements ExtendedRecyclerViewItemsListener<UserNews> {
+public class NewsFragmentViewModel extends BaseViewModel implements ExtendedRecyclerViewItemsListener<UserNews> {
     // TODO: Implement the ViewModel
 
     public ObservableField<NewsAdapter> adapterObservable = new ObservableField<>();
@@ -52,7 +52,7 @@ public class NewsFragmentViewModelExtended extends BaseViewModel implements Exte
 
     private boolean isLastPage;
     private int currentPage = 0;
-    private NewsAdapter newsAdapter;
+    public NewsAdapter newsAdapter;
     private RecyclerView recyclerView;
     private BadgeListener badgeListener;
     public ObservableBoolean errorVisibility = new ObservableBoolean(false);
@@ -166,7 +166,7 @@ public class NewsFragmentViewModelExtended extends BaseViewModel implements Exte
             public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int position = layoutManager.findFirstVisibleItemPosition();
+                int position = layoutManager.findFirstCompletelyVisibleItemPosition();
                 if(position == 0 && newsFab.isShown() && !isAnimated){
                     animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
                     animation.setAnimationListener(closeAnimation);
