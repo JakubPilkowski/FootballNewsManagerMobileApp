@@ -39,7 +39,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
-public class AllNewsFragmentViewModelExtended extends BaseViewModel implements ExtendedRecyclerViewItemsListener<UserNews> {
+public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedRecyclerViewItemsListener<UserNews> {
 
     public ObservableField<AllNewsAdapter> adapterObservable = new ObservableField<>();
     public ObservableField<Runnable> postRunnable = new ObservableField<>();
@@ -54,7 +54,7 @@ public class AllNewsFragmentViewModelExtended extends BaseViewModel implements E
 
     private boolean isLastPage;
     private int currentPage = 0;
-    private AllNewsAdapter allNewsAdapter;
+    public AllNewsAdapter allNewsAdapter;
     private RecyclerView recyclerView;
     private BadgeListener badgeListener;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -120,20 +120,20 @@ public class AllNewsFragmentViewModelExtended extends BaseViewModel implements E
     // TODO: Implement the ViewModel
     public void init(BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
-        SearchView searchView = ((AllNewsFragmentBinding)getBinding()).allNewsSearchView;
+        SearchView searchView = ((AllNewsFragmentBinding) getBinding()).allNewsSearchView;
         searchView.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SearchActivity.class);
             getActivity().startActivity(intent);
         });
         searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
-            if(hasFocus) {
+            if (hasFocus) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
                 getActivity().startActivity(intent);
             }
         });
         swipeRefreshLayout = ((AllNewsFragmentBinding) getBinding()).allNewsSwipeRefresh;
         swipeRefreshListenerObservable.set(this::updateNews);
-        newsFab = ((AllNewsFragmentBinding)getBinding()).allNewsFab;
+        newsFab = ((AllNewsFragmentBinding) getBinding()).allNewsFab;
         recyclerView = ((AllNewsFragmentBinding) getBinding()).allNewsRecyclerView;
         newsFab.setAlpha(0f);
         animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
@@ -144,19 +144,24 @@ public class AllNewsFragmentViewModelExtended extends BaseViewModel implements E
         load();
     }
 
-    public void load(){
+    public void load() {
+        currentPage = 0;
         errorVisibility.set(false);
         itemsVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().allNews(callback, token, currentPage, true);
+        boolean proposed = UserPreferences.get().getProposed();
+        Connection.get().allNews(callback, token, currentPage, proposed);
     }
 
 
     private void initItemsView(AllNewsResponse allNewsResponse) {
-        allNewsAdapter = new AllNewsAdapter(getActivity());
+        Log.d("Proposed", "initItemsView: " + UserPreferences.get().getProposed());
+        allNewsAdapter = new AllNewsAdapter(getActivity(), UserPreferences.get().getProposed());
         allNewsAdapter.setExtendedRecyclerViewItemsListener(this);
-        allNewsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getProposedTeams());
+        if (allNewsResponse.getProposedTeams() != null)
+            allNewsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getProposedTeams());
+        else allNewsAdapter.setItems(allNewsResponse.getUserNews());
         allNewsAdapter.setBadgeListener(badgeListener);
         allNewsAdapter.setCountAll(allNewsResponse.getNewsCount());
         allNewsAdapter.setCountToday(allNewsResponse.getNewsToday());
@@ -178,13 +183,14 @@ public class AllNewsFragmentViewModelExtended extends BaseViewModel implements E
             public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int position = layoutManager.findFirstVisibleItemPosition();
-                if(position == 0 && newsFab.isShown() && !isAnimated){
+                int position = layoutManager.findFirstCompletelyVisibleItemPosition();
+                if (position == 0 && newsFab.isShown() && !isAnimated) {
                     animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
                     animation.setAnimationListener(closeAnimation);
                     newsFab.startAnimation(animation);
                 }
             }
+
             @Override
             protected void loadMoreItems() {
                 currentPage++;
@@ -206,17 +212,20 @@ public class AllNewsFragmentViewModelExtended extends BaseViewModel implements E
         adapterObservable.set(allNewsAdapter);
     }
 
-    private void paginationLoad(){
+    private void paginationLoad() {
         allNewsAdapter.setLoading(true);
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().allNews(paginationCallback, token, currentPage, true);
+        boolean proposed = UserPreferences.get().getProposed();
+        Connection.get().allNews(paginationCallback, token, currentPage, proposed);
     }
 
     private Callback<AllNewsResponse> paginationCallback = new Callback<AllNewsResponse>() {
         @Override
         public void onSuccess(AllNewsResponse allNewsResponse) {
             getActivity().runOnUiThread(() -> {
-                allNewsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getProposedTeams());
+                if (allNewsResponse.getProposedTeams() != null)
+                    allNewsAdapter.setItems(allNewsResponse.getUserNews(), allNewsResponse.getProposedTeams());
+                else allNewsAdapter.setItems(allNewsResponse.getUserNews());
                 isLastPage = allNewsResponse.getPages() <= currentPage;
                 allNewsAdapter.setLoading(false);
             });
@@ -228,7 +237,7 @@ public class AllNewsFragmentViewModelExtended extends BaseViewModel implements E
                 getActivity().runOnUiThread(() -> {
                     isLastPage = true;
                     allNewsAdapter.setLoading(false);
-                    BottomNavigationView bottomNavigationView = ((MainActivity)getActivity()).getMainFragment()
+                    BottomNavigationView bottomNavigationView = ((MainActivity) getActivity()).getMainFragment()
                             .binding.mainBottomNavView;
                     SnackbarHelper.getInfinitiveSnackBarFromStatus(recyclerView, error.getStatus())
                             .setAction(R.string.reload, v -> paginationLoad())
@@ -239,7 +248,7 @@ public class AllNewsFragmentViewModelExtended extends BaseViewModel implements E
                 if (error instanceof SingleMessageError) {
                     String message = ((SingleMessageError) error).getMessage();
                     if (message.equals("Nie ma już więcej wyników")) {
-                        getActivity().runOnUiThread(()->{
+                        getActivity().runOnUiThread(() -> {
                             isLastPage = true;
                             allNewsAdapter.setLoading(false);
                         });
@@ -261,10 +270,7 @@ public class AllNewsFragmentViewModelExtended extends BaseViewModel implements E
             getActivity().runOnUiThread(() -> {
                 currentPage = 0;
                 isLastPage = newsResponse.getPages() <= currentPage;
-                allNewsAdapter.setLoading(false);
-                allNewsAdapter.setCountAll(newsResponse.getNewsCount());
-                allNewsAdapter.setCountToday(newsResponse.getNewsToday());
-                allNewsAdapter.refresh(newsResponse);
+                initItemsView(newsResponse);
                 swipeRefreshLayout.setRefreshing(false);
             });
         }
@@ -305,7 +311,6 @@ public class AllNewsFragmentViewModelExtended extends BaseViewModel implements E
     private Callback<AllNewsResponse> callback = new Callback<AllNewsResponse>() {
         @Override
         public void onSuccess(AllNewsResponse newsResponse) {
-
             if (loadingVisibility.get()) {
                 loadingVisibility.set(false);
                 itemsVisibility.set(true);
@@ -348,12 +353,14 @@ public class AllNewsFragmentViewModelExtended extends BaseViewModel implements E
     public void onDetached() {
 
     }
-    public void onBackToTop(){
+
+    public void onBackToTop() {
         recyclerView.scrollToPosition(0);
         animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
         animation.setAnimationListener(closeAnimation);
         newsFab.startAnimation(animation);
     }
+
     @Override
     public void backToFront() {
         postRunnable.set(backToFrontRunnable);
@@ -366,7 +373,8 @@ public class AllNewsFragmentViewModelExtended extends BaseViewModel implements E
 
     public void updateNews() {
         String token = UserPreferences.get().getAuthToken();
-        Connection.get().allNews(refreshCallback, token, 0, true);
+        boolean proposed = UserPreferences.get().getProposed();
+        Connection.get().allNews(refreshCallback, token, 0, proposed);
     }
 
     @Override

@@ -69,7 +69,7 @@ public class NewsAdditionalInfoViewModel {
             }
         });
 
-        AdditionalTeamsAdapter additionalTeamsAdapter = new AdditionalTeamsAdapter();
+        AdditionalTeamsAdapter additionalTeamsAdapter = new AdditionalTeamsAdapter(activity);
         additionalTeamsAdapter.setItems(teams);
         adapterObservable.set(additionalTeamsAdapter);
     }

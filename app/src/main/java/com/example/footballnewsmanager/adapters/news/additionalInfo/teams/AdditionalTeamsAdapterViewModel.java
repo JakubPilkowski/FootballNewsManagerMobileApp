@@ -2,24 +2,18 @@ package com.example.footballnewsmanager.adapters.news.additionalInfo.teams;
 
 import android.app.Activity;
 import android.content.res.Resources;
-import android.graphics.drawable.shapes.OvalShape;
-import android.util.Log;
-import android.view.View;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
-import androidx.databinding.ObservableInt;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.base.BaseAdapterViewModel;
 import com.example.footballnewsmanager.databinding.AdditionalInfoTeamBinding;
-import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.models.Team;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -40,11 +34,13 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
 
     private AdditionalInfoTeamBinding binding;
     private Resources resources;
+    private Activity activity;
     @Override
     public void init(Object[] values) {
         team = (UserTeam) values[0];
         name.set(team.getTeam().getName());
         binding = (AdditionalInfoTeamBinding) values[1];
+        activity = (Activity) values[2];
         resources = binding.additionalInfoTeamMainLayout.getResources();
         logoUrl.set(team.getTeam().getLogoUrl());
         updateFavouriteState(team.isFavourite());
@@ -73,6 +69,7 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
             updateFavouriteState(newsUserTeam.isFavourite());
             loadingButtonVisibility.set(false);
             toggleButtonVisibility.set(true);
+            ((MainActivity)activity).reloadMainPage();
 //            headerRecyclerViewItemsListener.onChangeItem(new UserTeam(), newsUserTeam);
         }
 

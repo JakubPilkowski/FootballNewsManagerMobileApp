@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.fragments.main.all_news.AllNewsFragmentViewModelExtended" />
+            type="com.example.footballnewsmanager.fragments.main.all_news.AllNewsFragmentViewModel" />
     </data>
 
     <LinearLayout

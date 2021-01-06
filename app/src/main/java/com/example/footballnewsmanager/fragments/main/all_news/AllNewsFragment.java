@@ -10,7 +10,7 @@ import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.Providers;
 
-public class AllNewsFragment extends BaseFragment<AllNewsFragmentBinding, AllNewsFragmentViewModelExtended> implements Providers {
+public class AllNewsFragment extends BaseFragment<AllNewsFragmentBinding, AllNewsFragmentViewModel> implements Providers {
 
 
     public static final String TAG = "AllNews";
@@ -32,8 +32,8 @@ public class AllNewsFragment extends BaseFragment<AllNewsFragmentBinding, AllNew
     }
 
     @Override
-    public Class<AllNewsFragmentViewModelExtended> getViewModelClass() {
-        return AllNewsFragmentViewModelExtended.class;
+    public Class<AllNewsFragmentViewModel> getViewModelClass() {
+        return AllNewsFragmentViewModel.class;
     }
 
     @Override

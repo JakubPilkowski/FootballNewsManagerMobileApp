@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.fragments.main.news.NewsFragmentViewModelExtended" />
+            type="com.example.footballnewsmanager.fragments.main.news.NewsFragmentViewModel" />
     </data>
 
     <LinearLayout

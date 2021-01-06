@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
-import com.google.gson.reflect.TypeToken;
 
 public class UserPreferences {
 
@@ -13,6 +12,7 @@ public class UserPreferences {
     private static final String AUTH_TOKEN = FILENAME + "_AuthToken";
     private static final String NOTIFICATION_AMOUNT = FILENAME + "_NotificationsAmount";
     private static final String LANGUAGE = FILENAME + "_Language";
+    private static final String PROPOSED = FILENAME + "_Proposed";
 
     private static UserPreferences INSTANCE;
     private SharedPreferences sharedPreferences;
@@ -66,4 +66,11 @@ public class UserPreferences {
         return sharedPreferences.getString(LANGUAGE, "pl");
     }
 
+
+    public void setProposed(boolean proposed){
+        sharedPreferences.edit().putBoolean(PROPOSED, proposed).apply();
+    }
+    public boolean getProposed(){
+        return sharedPreferences.getBoolean(PROPOSED, true);
+    }
 }

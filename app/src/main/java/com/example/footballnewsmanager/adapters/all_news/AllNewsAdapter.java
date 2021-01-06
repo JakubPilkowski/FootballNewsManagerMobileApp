@@ -17,6 +17,8 @@ import com.example.footballnewsmanager.databinding.AllNewsHeaderBinding;
 import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.models.News;
+import com.example.footballnewsmanager.models.NewsView;
 import com.example.footballnewsmanager.models.UserNews;
 import com.example.footballnewsmanager.models.UserTeam;
 
@@ -39,6 +41,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public boolean isLoading = false;
     private ExtendedRecyclerViewItemsListener<UserNews> extendedRecyclerViewItemsListener;
     private BadgeListener badgeListener;
+    private boolean proposed;
 
     public void setItems(List<UserNews> items, List<UserTeam> additionalContent) {
         int start = this.items.size() + this.proposedTeams.size();
@@ -46,9 +49,14 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.proposedTeams.add(additionalContent);
         notifyItemRangeChanged(start + 1, items.size() + proposedTeams.size());
     }
+    public void setItems(List<UserNews> items) {
+        int start = this.items.size();
+        this.items.addAll(items);
+        notifyItemRangeChanged(start + 1, items.size());
+    }
 
-
-    public AllNewsAdapter(Activity activity) {
+    public AllNewsAdapter(Activity activity, boolean proposed) {
+        this.proposed = proposed;
         this.activity = activity;
     }
 
@@ -100,7 +108,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             binding.setViewModel(viewModel);
         }
         //additional content
-        else if (position % 16 == 0 || (position == items.size() + proposedTeams.size() && (items.size() + proposedTeams.size()) % 16 != 0)) {
+        else if (proposed && (position % 16 == 0 || (position == items.size() + proposedTeams.size() && (items.size() + proposedTeams.size()) % 16 != 0))) {
             NewsAdditionalInfoViewModel viewModel;
             int addContentPosition;
             if ((position == items.size() + proposedTeams.size() && (items.size() + proposedTeams.size()) % 16 != 0)) {
@@ -119,14 +127,14 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((AdditionalTeamsViewHolder) holder).binding.setViewModel(viewModel);
         } else {
             NewsAdapterViewModel viewModel;
-            int itemsPosition = position - (position / 16 + 1);
+            int itemsPosition = proposed ? (position - position/16-1) : position-1;
             if (viewModels.size() <= itemsPosition) {
                 viewModel = new NewsAdapterViewModel();
                 viewModels.add(viewModel);
             } else {
                 viewModel = viewModels.get(itemsPosition);
             }
-            viewModel.init(items.get(itemsPosition), activity, extendedRecyclerViewItemsListener, badgeListener);
+            viewModel.init(items.get(itemsPosition), activity, extendedRecyclerViewItemsListener, badgeListener, NewsView.ALL);
             NewsLayoutBinding binding = ((NewsViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
         }
@@ -139,7 +147,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return HEADER;
         else if (position == items.size() + proposedTeams.size() + 1) {
             return ITEM_LOADING;
-        } else if (position % 16 == 0 || (position == items.size() + proposedTeams.size() && (items.size() + proposedTeams.size()) % 16 != 0)) {
+        } else if (proposed && (position % 16 == 0 || (position == items.size() + proposedTeams.size() && (items.size() + proposedTeams.size()) % 16 != 0))) {
             return ADDITIONAL_INFO_TEAMS;
         }
         return ITEM;
@@ -158,6 +166,21 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         items.set(index, newNews);
         viewModels.get(index).update(newNews);
     }
+
+    public void changeIfExists(UserNews oldUserNews, UserNews newUserNews){
+        for (UserNews userNews : items) {
+            News news = userNews.getNews();
+            News oldNews = oldUserNews.getNews();
+            if(news.getId().equals(oldNews.getId()) && news.getSiteId().equals(oldNews.getSiteId())){
+                int index = items.indexOf(userNews);
+                items.set(index, newUserNews);
+                if(viewModels.size() > index){
+                    viewModels.get(index).update(newUserNews);
+                }
+            }
+        }
+    }
+
 
     public void setCountAll(Long countAll) {
         this.countAll = countAll;

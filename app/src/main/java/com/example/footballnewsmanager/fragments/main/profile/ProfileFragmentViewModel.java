@@ -56,9 +56,12 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
     public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
     private ErrorView.OnTryAgainListener listener = this::load;
 
-    private Switch.OnCheckedChangeListener proposedNewsChangeListener = (buttonView, isChecked) -> proposedNews.set(isChecked);
+    private Switch.OnCheckedChangeListener proposedNewsChangeListener = (buttonView, isChecked) -> {
+        proposedNews.set(isChecked);
+        UserPreferences.get().setProposed(isChecked);
+        ((MainActivity)getActivity()).reloadAllNews();
+    };
     private SwipeRefreshLayout swipeRefreshLayout;
-    private LanguageField languageField;
 
     public void init() {
         swipeRefreshLayout = ((ProfileFragmentBinding) getBinding()).profileSwipeRefresh;
@@ -83,7 +86,7 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
     public void initItemsView(UserProfileResponse userProfileResponse) {
         name.set(userProfileResponse.getUser().getUsername());
         date.set(getActivity().getResources().getString(R.string.account_from) + userProfileResponse.getUser().getAddedDate().split("T")[0]);
-        proposedNews.set(true);
+        proposedNews.set(UserPreferences.get().getProposed());
         String locale = UserPreferences.get().getLanguage();
         currentLanguage.set(LanguageHelper.getName(locale, getActivity().getResources()));
         languageDrawable.set(LanguageHelper.getDrawable(locale,
@@ -92,10 +95,16 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
         teamsCount.set(String.valueOf(userProfileResponse.getFavouritesCount()));
     }
 
+
+    public void onProposedClick(){
+        proposedNews.set(!proposedNews.get());
+        UserPreferences.get().setProposed(proposedNews.get());
+        ((MainActivity)getActivity()).reloadAllNews();
+    }
+
     public void languageClick() {
         ProposedLanguageDialogManager.get().show(this);
     }
-
 
     public void onManageTeamsClick() {
         Intent intent = new Intent(getActivity(), ManageTeamsActivity.class);
@@ -109,9 +118,8 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
 
     @Override
     public void onLanguageClick(LanguageField field) {
-        languageField = field;
-        UserPreferences.get().setLanguage(languageField.getLocale());
-        Locale locale = new Locale(languageField.getLocale());
+        UserPreferences.get().setLanguage(field.getLocale());
+        Locale locale = new Locale(field.getLocale());
         Locale.setDefault(locale);
         ((MainActivity)getActivity()).changeLanguage(locale);
     }

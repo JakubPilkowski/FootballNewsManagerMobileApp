@@ -19,6 +19,8 @@ import com.example.footballnewsmanager.databinding.NewsItemsPlaceholderBinding;
 import com.example.footballnewsmanager.databinding.NewsLayoutBinding;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.models.News;
+import com.example.footballnewsmanager.models.NewsView;
 import com.example.footballnewsmanager.models.UserNews;
 
 import java.util.ArrayList;
@@ -162,7 +164,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else {
                 viewModel = viewModels.get(itemsPosition);
             }
-            viewModel.init(items.get(itemsPosition), activity, extendedRecyclerViewItemsListener, badgeListener);
+            viewModel.init(items.get(itemsPosition), activity, extendedRecyclerViewItemsListener, badgeListener, NewsView.SELECTED);
             NewsLayoutBinding binding = ((NewsViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
         }
@@ -205,6 +207,20 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int index = items.indexOf(oldNews);
         items.set(index, newNews);
         viewModels.get(index).update(newNews);
+    }
+
+    public void changeIfExists(UserNews oldUserNews, UserNews newUserNews){
+        for (UserNews userNews : items) {
+            News news = userNews.getNews();
+            News oldNews = oldUserNews.getNews();
+            if(news.getId().equals(oldNews.getId()) && news.getSiteId().equals(oldNews.getSiteId())){
+                int index = items.indexOf(userNews);
+                items.set(index, newUserNews);
+                if(viewModels.size() > index){
+                    viewModels.get(index).update(newUserNews);
+                }
+            }
+        }
     }
 
     public class NewsHeaderViewHolder extends RecyclerView.ViewHolder {

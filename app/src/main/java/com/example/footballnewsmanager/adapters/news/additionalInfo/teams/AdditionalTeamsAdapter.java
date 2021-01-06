@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.adapters.news.additionalInfo.teams;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -7,7 +8,6 @@ import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseRecyclerViewAdapter;
 import com.example.footballnewsmanager.base.BaseViewHolder;
 import com.example.footballnewsmanager.databinding.AdditionalInfoTeamBinding;
-import com.example.footballnewsmanager.models.Team;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
@@ -16,6 +16,11 @@ import java.util.List;
 public class AdditionalTeamsAdapter extends BaseRecyclerViewAdapter<UserTeam, BaseViewHolder> {
 
     private List<AdditionalTeamsAdapterViewModel> viewModels = new ArrayList<>();
+
+    private Activity activity;
+    public AdditionalTeamsAdapter(Activity activity){
+        this.activity = activity;
+    }
 
     @Override
     public int getItemLayoutRes() {
@@ -36,7 +41,7 @@ public class AdditionalTeamsAdapter extends BaseRecyclerViewAdapter<UserTeam, Ba
             viewModels.add(viewModel);
             ((AdditionalInfoTeamBinding)holder.getBinding()).setViewModel(viewModel);
             holder.setViewModel(viewModel);
-            holder.setElement(items.get(position), holder.getBinding());
+            holder.setElement(items.get(position), holder.getBinding(), activity);
         }
         else{
             viewModel = viewModels.get(position);
