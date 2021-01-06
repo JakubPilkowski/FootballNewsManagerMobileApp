@@ -15,7 +15,6 @@ import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.models.NotificationData;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;

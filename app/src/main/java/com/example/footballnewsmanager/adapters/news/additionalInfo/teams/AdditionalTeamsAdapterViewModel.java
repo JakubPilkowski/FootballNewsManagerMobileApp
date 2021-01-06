@@ -31,15 +31,13 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
     public ObservableBoolean loaded = new ObservableBoolean(false);
     public ObservableField<String> errorText = new ObservableField<>();
     private UserTeam team;
-
-    private AdditionalInfoTeamBinding binding;
     private Resources resources;
     private Activity activity;
     @Override
     public void init(Object[] values) {
         team = (UserTeam) values[0];
         name.set(team.getTeam().getName());
-        binding = (AdditionalInfoTeamBinding) values[1];
+        AdditionalInfoTeamBinding binding = (AdditionalInfoTeamBinding) values[1];
         activity = (Activity) values[2];
         resources = binding.additionalInfoTeamMainLayout.getResources();
         logoUrl.set(team.getTeam().getLogoUrl());
@@ -48,7 +46,7 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
 
 
 
-    public void updateFavouriteState(boolean isFavourite){
+    private void updateFavouriteState(boolean isFavourite){
         isFavouriteText.set(resources.getString(isFavourite ? R.string.delete : R.string.add ));
         isFavouriteBackground.set(isFavourite);
     }
@@ -70,7 +68,6 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
             loadingButtonVisibility.set(false);
             toggleButtonVisibility.set(true);
             ((MainActivity)activity).reloadMainPage();
-//            headerRecyclerViewItemsListener.onChangeItem(new UserTeam(), newsUserTeam);
         }
 
         @Override

@@ -6,9 +6,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.footballnewsmanager.base.BaseFragment;
-import com.example.footballnewsmanager.fragments.main.news.NewsFragment;
-import com.example.footballnewsmanager.fragments.main.profile.ProfileFragment;
-import com.example.footballnewsmanager.fragments.main.sites.SitesFragment;
 
 import java.util.List;
 

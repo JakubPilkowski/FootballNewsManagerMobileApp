@@ -1,14 +1,13 @@
 package com.example.footballnewsmanager.fragments.main.news;
 
-import androidx.databinding.ViewDataBinding;
-
 import android.content.Intent;
+
+import androidx.databinding.ViewDataBinding;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.BadgeListener;
 import com.example.footballnewsmanager.interfaces.Providers;
@@ -35,7 +34,6 @@ public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragment
         if(getActivity().getIntent()!= null){
             Intent intent = getActivity().getIntent();
             if(intent.getStringExtra("restart") != null && intent.getStringExtra("restart").equals("restart")){
-                ProgressDialog.get().show();
                 viewModel.updateNews();
             }
         }

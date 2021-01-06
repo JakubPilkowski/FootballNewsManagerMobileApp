@@ -1,6 +1,5 @@
 package com.example.footballnewsmanager.api.responses.sites;
 
-import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.models.Site;
 
 import java.util.List;

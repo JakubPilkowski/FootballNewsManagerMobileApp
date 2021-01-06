@@ -107,7 +107,6 @@ public class AllNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             AllNewsHeaderBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
         }
-        //additional content
         else if (proposed && (position % 16 == 0 || (position == items.size() + proposedTeams.size() && (items.size() + proposedTeams.size()) % 16 != 0))) {
             NewsAdditionalInfoViewModel viewModel;
             int addContentPosition;

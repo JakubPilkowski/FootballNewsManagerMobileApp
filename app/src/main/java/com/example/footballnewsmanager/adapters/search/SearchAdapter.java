@@ -1,7 +1,7 @@
 package com.example.footballnewsmanager.adapters.search;
 
 import android.app.Activity;
-import android.util.Log;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import com.example.footballnewsmanager.models.SearchResult;
 import com.example.footballnewsmanager.models.SearchType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -71,23 +70,20 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
+        Resources resources = activity.getResources();
         if (position == 0) {
             SearchLabelViewModel viewModel = new SearchLabelViewModel();
-            String label = "";
-            if (newsCounter > 0 && teamsCounter > 0) {
-                label = "Wiadomości";
-            } else if (teamsCounter > 0 && newsCounter == 0) {
-                label = "Drużyny";
-            } else {
-                label = "Wiadomości";
-            }
+            String label;
+            if (newsCounter > 0 && teamsCounter > 0) label = resources.getString(R.string.news);
+            else if (teamsCounter > 0 && newsCounter == 0) label = resources.getString(R.string.teams);
+            else label = resources.getString(R.string.news);
             ((SearchLabelViewHolder) holder).getBinding().setViewModel(viewModel);
             viewModel.init(label);
         } else if (newsCounter > 0 && teamsCounter > 0) {
             if(position == newsCounter+1){
                 SearchLabelViewModel viewModel = new SearchLabelViewModel();
                 ((SearchLabelViewHolder) holder).getBinding().setViewModel(viewModel);
-                viewModel.init("Drużyny");
+                viewModel.init(resources.getString(R.string.teams));
             }
             else{
                 int updatePosition;
@@ -163,7 +159,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         private SearchLabelBinding binding;
 
-        public SearchLabelViewHolder(@NonNull View itemView, SearchLabelBinding binding) {
+        SearchLabelViewHolder(@NonNull View itemView, SearchLabelBinding binding) {
             super(itemView);
             this.binding = binding;
         }
@@ -178,7 +174,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         private SearchResultBinding binding;
 
-        public SearchResultViewHolder(@NonNull View itemView, SearchResultBinding binding) {
+        SearchResultViewHolder(@NonNull View itemView, SearchResultBinding binding) {
             super(itemView);
             this.binding = binding;
         }

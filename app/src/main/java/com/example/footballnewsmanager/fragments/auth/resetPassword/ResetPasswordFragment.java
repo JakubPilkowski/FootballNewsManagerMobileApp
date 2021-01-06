@@ -1,17 +1,6 @@
 package com.example.footballnewsmanager.fragments.auth.resetPassword;
 
 import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.resetPassword.ResetPasswordActivity;
@@ -62,7 +51,7 @@ public class ResetPasswordFragment extends BaseFragment<ResetPasswordFragmentBin
 
     @Override
     public int getBackPressType() {
-        return 0; //dodac opcje 3 czyli zablokowane
+        return 0;
     }
 
     @Override

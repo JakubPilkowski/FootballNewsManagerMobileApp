@@ -15,17 +15,7 @@ public class SuccessViewModel extends BaseViewModel {
 
     public void init(String type) {
         this.type = type;
-        ((SuccessFragmentBinding) getBinding()).successAnimatedView.setResultListener(new AnimatedSuccessView.ResultListener() {
-            @Override
-            public void onResultAnimEnd() {
-                SoundPoolManager.get().playSong(R.raw.accept_sound, 0.8f);
-            }
-
-            @Override
-            public void onResultAnimStart() {
-
-            }
-        });
+        ((SuccessFragmentBinding) getBinding()).successAnimatedView.setResultListener(() -> SoundPoolManager.get().playSong(R.raw.accept_sound, 0.8f));
     }
 
     public void onNextClick() {

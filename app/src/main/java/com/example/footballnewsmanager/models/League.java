@@ -1,7 +1,5 @@
 package com.example.footballnewsmanager.models;
 
-import java.util.List;
-
 public class League {
     private Long id;
     private String name;

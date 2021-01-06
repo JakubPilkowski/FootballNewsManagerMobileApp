@@ -14,6 +14,7 @@ import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -32,10 +33,9 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
 
 
 
-    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
+    private RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
-    // TODO: Implement the ViewModel
-    public void init(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+    public void init(RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
         this.tryAgainListener.set(listener);
         load();
@@ -49,7 +49,7 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
         Connection.get().getFavouriteTeams(callback, token);
     }
 
-    public void initTeamsView(TeamsResponse teamsResponse){
+    private void initTeamsView(TeamsResponse teamsResponse){
         selectedTeamsAdapter = new SelectedTeamsAdapter(getActivity());
         selectedTeamsAdapter.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
         adapterObservable.set(selectedTeamsAdapter);

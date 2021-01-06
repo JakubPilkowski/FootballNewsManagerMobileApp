@@ -92,7 +92,7 @@ public class NewsAdapterViewModel {
     }
 
     public void onLikeToggle() {
-        likesToggle();
+        likeEnabled.set(!likeEnabled.get());
         heartVisibility.set(false);
         loadingHeartVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
@@ -100,16 +100,10 @@ public class NewsAdapterViewModel {
     }
 
     public void onMarkClick() {
-//        markEnabled.set(!markEnabled.get());
         loadingMark.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().setNewsBadged(callback, token, newsDetails.getSiteId(), newsDetails.getId());
     }
-
-    private void likesToggle() {
-        likeEnabled.set(!likeEnabled.get());
-    }
-
 
     private Callback<SingleNewsResponse> callback = new Callback<SingleNewsResponse>() {
         @Override
@@ -126,7 +120,7 @@ public class NewsAdapterViewModel {
             });
             switch (newsResponse.getType()) {
                 case LIKE:
-                    likesToggle();
+                    likeEnabled.set(!likeEnabled.get());
                     loadingHeartVisibility.set(false);
                     heartVisibility.set(true);
                     ((MainActivity) activity).reloadProfile();
@@ -154,7 +148,7 @@ public class NewsAdapterViewModel {
                         .show();
             }
             if (!likeEnabled.get()) {
-                likesToggle();
+                likeEnabled.set(!likeEnabled.get());
             }
             loadingHeartVisibility.set(false);
             heartVisibility.set(true);

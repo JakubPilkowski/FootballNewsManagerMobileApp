@@ -1,7 +1,5 @@
 package com.example.footballnewsmanager.activites.news_for_team;
 
-import android.util.Log;
-
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
@@ -20,7 +18,7 @@ import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -52,10 +50,10 @@ public class NewsForTeamViewModel extends BaseViewModel {
     private String name;
     private String img;
     private boolean isFavourite;
-    private ExtendedRecyclerViewItemsListener<UserTeam> listener;
+    private RecyclerViewItemsListener<UserTeam> listener;
 
 
-    public void init(Long id, String name, String img, boolean isFavourite, ExtendedRecyclerViewItemsListener<UserTeam> listener) {
+    public void init(Long id, String name, String img, boolean isFavourite, RecyclerViewItemsListener<UserTeam> listener) {
         this.id = id;
         this.name = name;
         this.img = img;
@@ -106,7 +104,7 @@ public class NewsForTeamViewModel extends BaseViewModel {
         adapterObservable.set(newsForTeamAdapter);
     }
 
-    public void paginationLoad() {
+    private void paginationLoad() {
         newsForTeamAdapter.setLoading(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().newsForTeam(paginationCallback, token, id, currentPage);
@@ -140,7 +138,6 @@ public class NewsForTeamViewModel extends BaseViewModel {
                             isLastPage = true;
                             newsForTeamAdapter.setLoading(false);
                         });
-                        Log.d(TAG, "onSmthWrong: nie ma więcej wyników");
                     }
 
                 }
@@ -183,13 +180,6 @@ public class NewsForTeamViewModel extends BaseViewModel {
             } else {
                 if (error instanceof SingleMessageError) {
                     String message = ((SingleMessageError) error).getMessage();
-//                    if (message.equals("Nie ma już więcej wyników")) {
-//                        getActivity().runOnUiThread(() -> {
-//                            isLastPage = true;
-//                            newsForTeamAdapter.setLoading(false);
-//                        });
-//                        Log.d(TAG, "onSmthWrong: nie ma więcej wyników");
-//                    }
                     if (message.equals("Brak wyników")) {
                         placeholderVisibility.set(true);
                     }

@@ -22,7 +22,7 @@ public class AllNewsFragment extends BaseFragment<AllNewsFragmentBinding, AllNew
         return fragment;
     }
 
-    public void setBadgeListener(BadgeListener badgeListener) {
+    private void setBadgeListener(BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
     }
 

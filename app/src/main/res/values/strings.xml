@@ -84,5 +84,6 @@
     <string name="all">&#160;All</string>
     <string name="popular">Popular</string>
     <string name="teams_management">Teams Management</string>
+    <string name="news">news</string>
 
 </resources>

@@ -8,12 +8,7 @@ public class Site {
     private String siteUrl;
     private String description;
     private String language;
-    private Long clicks;
     private Long newsCount;
-
-    public Long getClicks() {
-        return clicks;
-    }
 
     public Long getNewsCount() {
         return newsCount;

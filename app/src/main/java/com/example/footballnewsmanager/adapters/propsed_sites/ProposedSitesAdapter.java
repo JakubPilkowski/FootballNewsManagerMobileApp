@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ProposedSitesAdapter extends BaseRecyclerViewAdapter<Site, BaseViewHolder> {
 
-    List<ProposedSitesAdapterViewModel> viewModels = new ArrayList<>();
+    private List<ProposedSitesAdapterViewModel> viewModels = new ArrayList<>();
 
     @Override
     public int getItemLayoutRes() {

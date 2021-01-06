@@ -34,9 +34,8 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
 public class MainFragmentViewModel extends BaseViewModel implements BadgeListener {
-    // TODO: Implement the ViewModel
-    ViewPager2 viewPager2;
-    BottomNavigationView bottomNavigationView;
+    private ViewPager2 viewPager2;
+    private BottomNavigationView bottomNavigationView;
 
     public ObservableField<BottomNavigationView.OnNavigationItemSelectedListener> navigationItemSelectedListenerObservable = new ObservableField<>();
     public ObservableField<RecyclerView.Adapter> viewPagerAdapterObservable = new ObservableField<>();
@@ -108,7 +107,6 @@ public class MainFragmentViewModel extends BaseViewModel implements BadgeListene
 
     @Override
     public void onBadgeChange() {
-        Log.d(MainFragment.TAG, "onBadgeChange");
         String token = UserPreferences.get().getAuthToken();
         Connection.get().getNotifications(notificationResponseCallback, token);
     }
@@ -116,7 +114,6 @@ public class MainFragmentViewModel extends BaseViewModel implements BadgeListene
     private Callback<Long> notificationResponseCallback = new Callback<Long>() {
         @Override
         public void onSuccess(Long amount) {
-            Log.d(MainFragment.TAG, "onSuccess: ");
             UserPreferences.get().changeNotification(amount);
             if (amount > 0) {
                 BadgeDrawable badgeDrawable = ((MainFragmentBinding) getBinding()).mainBottomNavView.getOrCreateBadge(R.id.nav_news);

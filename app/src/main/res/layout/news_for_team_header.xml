@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:minWidth="115dp"
             android:layout_marginTop="12dp"
-            android:background="@{viewModel.isFavouriteBackground ? @drawable/delete_team_button : @drawable/add_team_button }"
+            android:background="@{viewModel.isFavouriteBackground ? @drawable/error_radius_6dp : @drawable/primary_radius_6dp }"
             android:onClick="@{()->viewModel.toggleFavourites()}"
             android:paddingStart="12dp"
             android:paddingTop="6dp"

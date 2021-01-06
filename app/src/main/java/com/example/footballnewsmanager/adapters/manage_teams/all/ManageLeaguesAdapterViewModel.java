@@ -5,7 +5,7 @@ import androidx.databinding.ObservableField;
 import com.example.footballnewsmanager.base.BaseAdapterViewModel;
 import com.example.footballnewsmanager.fragments.manage_teams.all_teams.ManageTeamsFromLeagueFragment;
 import com.example.footballnewsmanager.helpers.Navigator;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.League;
 import com.example.footballnewsmanager.models.UserTeam;
 
@@ -16,13 +16,13 @@ public class ManageLeaguesAdapterViewModel extends BaseAdapterViewModel {
 
     private League league;
     private Navigator navigator;
-    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
+    private RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
     @Override
     public void init(Object[] values) {
         league = (League) values[0];
         navigator = (Navigator) values[1];
-        extendedRecyclerViewItemsListener = (ExtendedRecyclerViewItemsListener<UserTeam>) values[2];
+        extendedRecyclerViewItemsListener = (RecyclerViewItemsListener<UserTeam>) values[2];
         name.set(league.getName());
         img.set(league.getLogoUrl());
     }

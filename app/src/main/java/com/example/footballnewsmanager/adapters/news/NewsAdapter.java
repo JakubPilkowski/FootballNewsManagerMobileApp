@@ -1,13 +1,9 @@
 package com.example.footballnewsmanager.adapters.news;
 
 import android.app.Activity;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,8 +34,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final static int PLACEHOLDER = 4;
 
     public boolean isLoading = false;
-    public boolean isPlaceholder = false;
-    private ExtendedRecyclerViewItemsListener extendedRecyclerViewItemsListener;
+    private boolean isPlaceholder = false;
+    private ExtendedRecyclerViewItemsListener<UserNews> extendedRecyclerViewItemsListener;
     private BadgeListener badgeListener;
     private Long countAll;
     private Long countToday;
@@ -102,12 +98,10 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return new NewsViewHolder(view, allNewsLayoutBinding);
             }
             case ITEM_LOADING: {
-                Log.d("News", "onCreateViewHolder IsLoading");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_progress_view, parent, false);
                 return new ProgressViewHolder(view);
             }
             case PLACEHOLDER: {
-                Log.d("News", "onCreateViewHolder Placeholder");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_items_placeholder, parent, false);
                 NewsItemsPlaceholderBinding newsPlaceholderBinding = NewsItemsPlaceholderBinding.bind(view);
                 return new PlaceholderViewHolder(view, newsPlaceholderBinding);
@@ -124,37 +118,15 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (position == items.size() + 1 && !isPlaceholder)
             return;
         else if (position == items.size() + 1 && isPlaceholder) {
-            View bottleView = ((PlaceholderViewHolder) holder).itemView.findViewById(R.id.news_items_placeholder_bottle);
-            Animation animation = AnimationUtils.loadAnimation(bottleView.getContext(), R.anim.shake);
-            animation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    bottleView.startAnimation(animation);
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    onAnimationRepeat(animation);
-
-                }
-
-                @Override
-                public void onAnimationRepeat(final Animation animation) {
-                    new Handler().postDelayed(() -> onAnimationStart(animation), 750);
-                }
-            });
-            bottleView.startAnimation(animation);
             NewsAdapterPlaceholderViewModel viewModel = new NewsAdapterPlaceholderViewModel();
-            viewModel.init(activity, extendedRecyclerViewItemsListener);
             NewsItemsPlaceholderBinding binding = ((PlaceholderViewHolder) holder).binding;
+            viewModel.init(activity, binding);
             binding.setViewModel(viewModel);
-            return;
         } else if (position == 0) {
             NewsHeaderAdapterViewModel viewModel = new NewsHeaderAdapterViewModel();
             viewModel.init(countAll, countToday, extendedRecyclerViewItemsListener, activity);
             NewsHeaderLayoutBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
-            return;
         } else {
             NewsAdapterViewModel viewModel;
             int itemsPosition = position - 1;
@@ -171,7 +143,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener extendedRecyclerViewItemsListener) {
+    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserNews> extendedRecyclerViewItemsListener) {
         this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
@@ -195,14 +167,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
-    @Override
-    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
-        super.onViewDetachedFromWindow(holder);
-        if (holder instanceof PlaceholderViewHolder) {
-            extendedRecyclerViewItemsListener.onDetached();
-        }
-    }
-
     public void onChange(UserNews oldNews, UserNews newNews) {
         int index = items.indexOf(oldNews);
         items.set(index, newNews);
@@ -219,15 +183,16 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if(viewModels.size() > index){
                     viewModels.get(index).update(newUserNews);
                 }
+                break;
             }
         }
     }
 
     public class NewsHeaderViewHolder extends RecyclerView.ViewHolder {
 
-        NewsHeaderLayoutBinding binding;
+        private NewsHeaderLayoutBinding binding;
 
-        public NewsHeaderViewHolder(@NonNull View itemView, NewsHeaderLayoutBinding binding) {
+        NewsHeaderViewHolder(@NonNull View itemView, NewsHeaderLayoutBinding binding) {
             super(itemView);
             this.binding = binding;
         }

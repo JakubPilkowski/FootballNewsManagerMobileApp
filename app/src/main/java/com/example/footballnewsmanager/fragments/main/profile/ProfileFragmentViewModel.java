@@ -21,7 +21,7 @@ import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ProfileFragmentBinding;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.helpers.ProgressDialog;
 import com.example.footballnewsmanager.fragments.main.MainFragment;
 import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.LanguageHelper;
@@ -37,7 +37,6 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
 public class ProfileFragmentViewModel extends BaseViewModel implements ProposedLanguageListener {
-    // TODO: Implement the ViewModel
 
     public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);

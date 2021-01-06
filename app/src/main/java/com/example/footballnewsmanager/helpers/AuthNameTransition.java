@@ -1,8 +1,6 @@
 package com.example.footballnewsmanager.helpers;
 
-import android.transition.AutoTransition;
 import android.transition.ChangeBounds;
-import android.transition.ChangeTransform;
 import android.transition.TransitionSet;
 
 public class AuthNameTransition extends TransitionSet {

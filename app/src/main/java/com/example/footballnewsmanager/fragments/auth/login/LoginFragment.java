@@ -1,17 +1,6 @@
 package com.example.footballnewsmanager.fragments.auth.login;
 
 import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
@@ -26,7 +15,6 @@ public class LoginFragment extends BaseFragment<LoginFragmentBinding, LoginViewM
     public static LoginFragment newInstance() {
         return new LoginFragment();
     }
-
 
     @Override
     public int getLayoutRes() {

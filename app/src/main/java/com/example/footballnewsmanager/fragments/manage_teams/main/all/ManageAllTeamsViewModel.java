@@ -1,7 +1,5 @@
 package com.example.footballnewsmanager.fragments.manage_teams.main.all;
 
-import android.util.Log;
-
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
@@ -15,7 +13,7 @@ import com.example.footballnewsmanager.api.responses.manage_teams.LeagueResponse
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -30,11 +28,11 @@ public class ManageAllTeamsViewModel extends BaseViewModel {
     public ObservableInt status = new ObservableInt();
     public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
     private ErrorView.OnTryAgainListener listener = this::load;
-    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
+    private RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
     private ManageLeaguesAdapter manageLeaguesAdapter;
 
 
-    public void init(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener){
+    public void init(RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener){
         this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
         tryAgainListener.set(listener);
         load();
@@ -59,7 +57,7 @@ public class ManageAllTeamsViewModel extends BaseViewModel {
                 itemsVisibility.set(true);
                 getActivity().runOnUiThread(()->{
                     manageLeaguesAdapter = new ManageLeaguesAdapter(getNavigator());
-                    manageLeaguesAdapter.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
+                    manageLeaguesAdapter.setRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
                     manageLeaguesAdapter.setItems(leagueResponse.getLeagues());
                     adapterObservable.set(manageLeaguesAdapter);
                 });
@@ -79,8 +77,6 @@ public class ManageAllTeamsViewModel extends BaseViewModel {
                 status.set(error.getStatus());
                 errorVisibility.set(true);
             }
-
-            Log.d("ManageTeams", "allTeams onSmthWrong: ");
         }
 
         @Override

@@ -41,13 +41,8 @@ public class UserPreferences {
         sharedPreferences.edit().putString(AUTH_TOKEN, null).apply();
     }
 
-
     public void changeNotification(Long amount) {
         sharedPreferences.edit().putLong(NOTIFICATION_AMOUNT, amount).apply();
-    }
-
-    public void resetNotifications() {
-        sharedPreferences.edit().putLong(NOTIFICATION_AMOUNT, 0).apply();
     }
 
     public Long getNotificationAmount() {
@@ -66,11 +61,11 @@ public class UserPreferences {
         return sharedPreferences.getString(LANGUAGE, "pl");
     }
 
-
-    public void setProposed(boolean proposed){
+    public void setProposed(boolean proposed) {
         sharedPreferences.edit().putBoolean(PROPOSED, proposed).apply();
     }
-    public boolean getProposed(){
+
+    public boolean getProposed() {
         return sharedPreferences.getBoolean(PROPOSED, true);
     }
 }

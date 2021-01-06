@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:background="@drawable/profile_item_ripple"
+        android:background="@drawable/ripple_primary_background_transparent"
         android:clickable="true"
         android:drawableStart="@{viewModel.drawable}"
         android:drawablePadding="6dp"

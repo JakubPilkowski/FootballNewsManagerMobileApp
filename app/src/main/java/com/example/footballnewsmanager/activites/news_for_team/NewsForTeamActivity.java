@@ -1,19 +1,19 @@
 package com.example.footballnewsmanager.activites.news_for_team;
 
-import androidx.databinding.ViewDataBinding;
-
 import android.app.Activity;
 import android.content.Intent;
+
+import androidx.databinding.ViewDataBinding;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityNewsForTeamBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.interfaces.Providers;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 
-public class NewsForTeamActivity extends BaseActivity<ActivityNewsForTeamBinding, NewsForTeamViewModel> implements Providers, ExtendedRecyclerViewItemsListener {
+public class NewsForTeamActivity extends BaseActivity<ActivityNewsForTeamBinding, NewsForTeamViewModel> implements Providers, RecyclerViewItemsListener {
 
     private boolean refresh = false;
 
@@ -71,23 +71,11 @@ public class NewsForTeamActivity extends BaseActivity<ActivityNewsForTeamBinding
         return navigator;
     }
 
-    @Override
-    public void onDetached() {
-
-    }
-
-    @Override
-    public void backToFront() {
-
-    }
 
     @Override
     public void onChangeItem(Object oldItem, Object newItem) {
         refresh = true;
     }
 
-    @Override
-    public void onChangeItems() {
 
-    }
 }

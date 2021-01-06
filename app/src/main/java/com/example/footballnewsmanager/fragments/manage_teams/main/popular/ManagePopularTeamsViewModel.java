@@ -1,7 +1,5 @@
 package com.example.footballnewsmanager.fragments.manage_teams.main.popular;
 
-import android.util.Log;
-
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
@@ -19,14 +17,13 @@ import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.PaginationScrollListener;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
 public class ManagePopularTeamsViewModel extends BaseViewModel {
-    // TODO: Implement the ViewModel
     public ObservableField<RecyclerView.Adapter> recyclerViewAdapter = new ObservableField<>();
     public ObservableField<Runnable> postRunnable = new ObservableField<>();
     public ObservableBoolean loadingVisibility = new ObservableBoolean(false);
@@ -40,9 +37,9 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
     public ManagePopularTeamsAdapter managePopularTeamsAdapter;
     private boolean isLastPage = false;
     private int currentPage = 0;
-    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
+    private RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
-    public void init(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+    public void init(RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         recyclerView = ((ManagePopularTeamsFragmentBinding) getBinding()).managePopularTeamsRecyclerView;
         this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
         tryAgainListener.set(listener);
@@ -66,7 +63,6 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
             @Override
             protected void loadMoreItems() {
-                Log.d("News", "loadMoreItems");
                 currentPage++;
                 paginationLoad();
             }
@@ -85,7 +81,7 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
         recyclerViewAdapter.set(managePopularTeamsAdapter);
     }
 
-    public void paginationLoad() {
+    private void paginationLoad() {
         managePopularTeamsAdapter.setLoading(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().proposedTeams(paginationCallback, token, currentPage);
@@ -128,15 +124,8 @@ public class ManagePopularTeamsViewModel extends BaseViewModel {
                 loadingVisibility.set(false);
                 itemsVisibility.set(true);
                 getActivity().runOnUiThread(() -> {
-                    Log.d("News", "onSuccessFirst");
                     initItemsView(teamsResponse);
                 });
-            } else {
-//                getActivity().runOnUiThread(() -> {
-//                    managePopularTeamsAdapter.setItems(TeamsResponse.getTeams(), currentPage);
-//                    isLastPage = TeamsResponse.getPages() <= currentPage;
-//                    managePopularTeamsAdapter.setLoading(false);
-//                });
             }
         }
 

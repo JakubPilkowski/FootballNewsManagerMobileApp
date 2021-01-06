@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="9dp"
-    android:background="@drawable/search_item_ripple"
+    android:background="@drawable/ripple_primary_background_transparent"
     android:drawablePadding="12dp"
     android:textSize="18sp"
     android:textColor="@color/colorTextSecondary"

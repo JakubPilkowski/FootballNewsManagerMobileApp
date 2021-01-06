@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
-import com.bumptech.glide.util.ContentLengthInputStream;
 import com.example.footballnewsmanager.activites.error.ErrorActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
@@ -19,23 +17,20 @@ import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
-import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ResetPasswordFragmentBinding;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.helpers.ProgressDialog;
 import com.example.footballnewsmanager.fragments.auth.success_fragment.SuccessFragment;
 import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.Validator;
 import com.example.footballnewsmanager.helpers.ValidatorTextWatcher;
 import com.example.footballnewsmanager.models.FieldType;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
 public class ResetPasswordFragmentViewModel extends BaseViewModel {
-
 
     public ObservableField<String> errorText = new ObservableField<>("");
     public ObservableField<String> token = new ObservableField<>("");
@@ -50,7 +45,6 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
     private TextInputLayout tokenInputLayout;
     private TextInputLayout newPassLayout;
     private TextInputLayout repeatPassLayout;
-    private ResetPasswordFragmentBinding binding;
     private Resources resources;
     private String type;
 
@@ -67,7 +61,7 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
     public void init(String token, String type) {
         this.token.set(token);
         this.type = type;
-        binding = ((ResetPasswordFragmentBinding) getBinding());
+        ResetPasswordFragmentBinding binding = ((ResetPasswordFragmentBinding) getBinding());
         resources = getActivity().getResources();
         tokenInputLayout = binding.resetPasswordTokenLayout;
         newPassLayout = binding.resetPasswordNewPassLayout;

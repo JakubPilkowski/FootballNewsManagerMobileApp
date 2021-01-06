@@ -17,7 +17,6 @@ public class NewsInfoTeamViewModel {
     public ObservableField<String> name = new ObservableField<>();
     public ObservableField<String> teamUrl = new ObservableField<>();
     public ObservableInt isFavouriteDrawable = new ObservableInt();
-    public ObservableField<String> isFavouriteText = new ObservableField<>();
 
 
     private UserTeam userTeam;
@@ -31,13 +30,7 @@ public class NewsInfoTeamViewModel {
         team = userTeam.getTeam();
         name.set(team.getName());
         teamUrl.set(team.getLogoUrl());
-        updateFavourite(userTeam);
-    }
-
-
-    public void updateFavourite(UserTeam userTeam){
         isFavouriteDrawable.set(userTeam.isFavourite() ? R.drawable.ic_star : R.drawable.transparent_background);
-        isFavouriteText.set(userTeam.isFavourite() ? "W ulubionych" : "");
     }
 
     public void onClick(){

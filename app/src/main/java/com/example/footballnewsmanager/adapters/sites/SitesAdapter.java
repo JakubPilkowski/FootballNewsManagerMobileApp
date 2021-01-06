@@ -24,7 +24,6 @@ public class SitesAdapter extends BaseHeadAndItemRVAdapter<Site, BaseViewHolder,
         this.activity = activity;
     }
 
-
     @Override
     public BaseViewHolder onCreateHeaderViewHolder(ViewGroup parent, int viewType, View itemView) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sites_header, parent, false);

@@ -2,7 +2,6 @@ package com.example.footballnewsmanager.adapters.manage_teams.teams;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.LinearLayout;
 
 import androidx.databinding.ObservableBoolean;
@@ -19,6 +18,7 @@ import com.example.footballnewsmanager.databinding.ManageTeamItemBinding;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.Team;
 import com.example.footballnewsmanager.models.UserTeam;
 
@@ -35,16 +35,14 @@ public class ManageTeamsViewModel {
 
     private UserTeam userTeam;
     private Team team;
-    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
+    private RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
     private ExtendedRecyclerViewItemsListener<UserTeam> innerExtendedRecyclerViewItemsListener;
     private Activity activity;
-    private ManageTeamItemBinding binding;
     private LinearLayout mainLayout;
 
-    public void init(UserTeam userTeam, Activity activity, ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener,
+    public void init(UserTeam userTeam, Activity activity, RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener,
                      ManageTeamItemBinding binding) {
         this.activity = activity;
-        this.binding = binding;
         this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
         mainLayout = binding.manageTeamMainLayout;
         update(userTeam);
@@ -54,7 +52,6 @@ public class ManageTeamsViewModel {
             , ExtendedRecyclerViewItemsListener<UserTeam> innerRecyclerViewListener, ManageTeamItemBinding binding)
     {
         this.activity = activity;
-        this.binding = binding;
         this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
         this.innerExtendedRecyclerViewItemsListener = innerRecyclerViewListener;
         mainLayout = binding.manageTeamMainLayout;
@@ -95,7 +92,6 @@ public class ManageTeamsViewModel {
             if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
                 SnackbarHelper.showDefaultSnackBarFromStatus(mainLayout,error.getStatus());
             }
-            Log.d("ManageTeams", "onSmthWrong: ");
         }
 
         @Override

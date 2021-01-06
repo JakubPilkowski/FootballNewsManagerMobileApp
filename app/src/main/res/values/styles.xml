@@ -9,20 +9,19 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowBackground">@drawable/ic_launcher_background</item>
         <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
         <item name="android:navigationBarColor">#006400</item>
     </style>
 
 
-    <style name="AuthTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>
-        <item name="colorControlHighlight">#fff</item>
-        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>
-<!--        <item name="android:windowTranslucentStatus">true</item>-->
-    </style>
+<!--    <style name="AuthTheme" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>-->
+<!--        <item name="colorControlHighlight">#fff</item>-->
+<!--        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>-->
+<!--    </style>-->
 
     <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/colorPrimary</item>
@@ -52,14 +51,13 @@
     </style>
 
 
-    <style name="ResetPasswordTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>
-        <item name="colorControlHighlight">#fff</item>
-        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>
-        <!--        <item name="android:windowTranslucentStatus">true</item>-->
-    </style>
+<!--    <style name="ResetPasswordTheme" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>-->
+<!--        <item name="colorControlHighlight">#fff</item>-->
+<!--        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>-->
+<!--    </style>-->
 
 
     <style name="ProposedSettings" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -75,65 +73,67 @@
         <item name="android:windowBackground">@color/colorbackgroundPrimaryOpacity</item>
     </style>
 
-    <style name="MainActivityTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>
-        <item name="colorControlHighlight">#fff</item>
-        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>
-
+    <style name="ActivityWithEditTextTheme" parent="BaseActivityTheme">
         <item name="android:editTextColor">@android:color/white</item>
         <item name="android:textColorHint">@android:color/white</item>
         <item name="android:colorControlActivated">@android:color/white</item>
     </style>
 
-    <style name="SearchActivity" parent="Theme.MaterialComponents.Light.NoActionBar">
+<!--    <style name="SearchActivity" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>-->
+<!--        <item name="colorControlHighlight">#fff</item>-->
+<!--        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>-->
+<!--        <item name="android:editTextColor">@android:color/white</item>-->
+<!--        <item name="android:textColorHint">@android:color/white</item>-->
+<!--        <item name="android:colorControlActivated">@android:color/white</item>-->
+<!--    </style>-->
+
+    <style name="BaseActivityTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>
         <item name="colorControlHighlight">#fff</item>
         <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>
-        <item name="android:editTextColor">@android:color/white</item>
-        <item name="android:textColorHint">@android:color/white</item>
-        <item name="android:colorControlActivated">@android:color/white</item>
     </style>
 
-    <style name="NewsForTeamActivity" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>
-        <item name="colorControlHighlight">#fff</item>
-        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>
-    </style>
+<!--    <style name="NewsForTeamActivity" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>-->
+<!--        <item name="colorControlHighlight">#fff</item>-->
+<!--        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>-->
+<!--    </style>-->
 
-    <style name="ManageTeams" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>
-        <item name="colorControlHighlight">#fff</item>
-        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>
-    </style>
+<!--    <style name="ManageTeams" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>-->
+<!--        <item name="colorControlHighlight">#fff</item>-->
+<!--        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>-->
+<!--    </style>-->
 
     <style name="TabItemTextStyling" parent="TextAppearance.Design.Tab" >
         <item name="android:textSize"> 16sp </item>
         <item name="textAllCaps">false</item>
     </style>
 
-    <style name="FavouriteNews" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>
-        <item name="colorControlHighlight">#fff</item>
-        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>
-    </style>
+<!--    <style name="FavouriteNews" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>-->
+<!--        <item name="colorControlHighlight">#fff</item>-->
+<!--        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>-->
+<!--    </style>-->
 
-    <style name="ErrorActivity" parent="Theme.MaterialComponents.Light.NoActionBar" >
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>
-        <item name="colorControlHighlight">#fff</item>
-        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>
-    </style>
+<!--    <style name="ErrorActivity" parent="Theme.MaterialComponents.Light.NoActionBar" >-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="android:navigationBarColor"> @color/colorbackgroundPrimary</item>-->
+<!--        <item name="colorControlHighlight">#fff</item>-->
+<!--        <item name="android:statusBarColor">@color/colorbackgroundSecondary</item>-->
+<!--    </style>-->
 
     <style name="FullImageFloatingButton" parent="Widget.Design.FloatingActionButton">
         <item name="fabSize">normal</item>

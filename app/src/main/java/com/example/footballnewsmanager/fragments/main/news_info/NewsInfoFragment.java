@@ -1,18 +1,6 @@
 package com.example.footballnewsmanager.fragments.main.news_info;
 
 import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.main.MainActivity;
@@ -20,7 +8,6 @@ import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.NewsInfoFragmentBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
-import com.example.footballnewsmanager.models.News;
 import com.example.footballnewsmanager.models.UserNews;
 
 public class NewsInfoFragment extends BaseFragment<NewsInfoFragmentBinding, NewsInfoFragmentViewModel> implements Providers {
@@ -55,12 +42,6 @@ public class NewsInfoFragment extends BaseFragment<NewsInfoFragmentBinding, News
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
         viewModel.init(news);
-    }
-
-    @Override
-    public void onResume() {
-        Log.d("NewsForTeam", "onResume: ");
-        super.onResume();
     }
 
     @Override

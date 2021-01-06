@@ -1,7 +1,6 @@
 package com.example.footballnewsmanager.fragments.manage_teams.main;
 
 import android.content.res.Resources;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
@@ -20,7 +19,7 @@ import com.example.footballnewsmanager.fragments.manage_teams.main.popular.Manag
 import com.example.footballnewsmanager.fragments.manage_teams.main.popular.ManagePopularTeamsViewModel;
 import com.example.footballnewsmanager.fragments.manage_teams.main.selected.ManageSelectedTeamsFragment;
 import com.example.footballnewsmanager.fragments.manage_teams.main.selected.ManageSelectedTeamsViewModel;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -28,16 +27,14 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageTeamsMainViewModelExtended extends BaseViewModel implements ExtendedRecyclerViewItemsListener<UserTeam> {
-    // TODO: Implement the ViewModel
-    private TabLayout tabLayout;
+public class ManageTeamsMainViewModelExtended extends BaseViewModel implements RecyclerViewItemsListener<UserTeam> {
     private ViewPager2 viewPager2;
     public ObservableBoolean userInputEnabled = new ObservableBoolean(false);
 
     private List<BaseFragment> fragments = new ArrayList<>();
 
     public void init() {
-        tabLayout = ((ManageTeamsMainFragmentBinding) getBinding()).manageTeamsTabLayout;
+        TabLayout tabLayout = ((ManageTeamsMainFragmentBinding) getBinding()).manageTeamsTabLayout;
         viewPager2 = ((ManageTeamsMainFragmentBinding) getBinding()).manageTeamsViewPager;
 
         fragments.add(ManageSelectedTeamsFragment.newInstance(this));
@@ -80,20 +77,9 @@ public class ManageTeamsMainViewModelExtended extends BaseViewModel implements E
         });
     }
 
-    @Override
-    public void onDetached() {
-
-    }
-
-    @Override
-    public void backToFront() {
-
-    }
 
     @Override
     public void onChangeItem(UserTeam oldItem, UserTeam newItem) {
-        Log.d("ManageTeams", "onChangeItem: oldItem "+oldItem.isFavourite());
-        Log.d("ManageTeams", "onChangeItem: newItem "+newItem.isFavourite());
         getActivity().runOnUiThread(() -> {
             ((ManageTeamsActivity)getActivity()).reload = true;
             for (BaseFragment fragment : fragments) {
@@ -110,27 +96,4 @@ public class ManageTeamsMainViewModelExtended extends BaseViewModel implements E
         });
     }
 
-//    public void reload(){
-//        for (BaseFragment fragment : ) {
-//            if (fragment instanceof ManageSelectedTeamsFragment) {
-//                ManageSelectedTeamsViewModel viewModel = (ManageSelectedTeamsViewModel) fragment.viewModel;
-//                if (viewModel != null)
-//                    viewModel.load();
-//            } else if (fragment instanceof ManagePopularTeamsFragment) {
-//                ManagePopularTeamsViewModel viewModel = (ManagePopularTeamsViewModel) fragment.viewModel;
-//                if (viewModel != null)
-//                    viewModel.load();
-//            }
-//            else if(fragment instanceof ManageTeamsFromLeagueFragment){
-//                ManageTeamsFromLeagueViewModel viewModel = (ManageTeamsFromLeagueViewModel) fragment.viewModel;
-//                if(viewModel != null)
-//                    viewModel.load();
-//            }
-//        }
-//    }
-
-    @Override
-    public void onChangeItems() {
-
-    }
 }

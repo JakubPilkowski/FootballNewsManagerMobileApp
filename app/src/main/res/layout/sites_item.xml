@@ -23,90 +23,77 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/news_for_team_item_text_background"
-            android:orientation="vertical"
-            android:onClick="@{()->viewModel.onSiteClick()}"
-            >
+            android:gravity="center"
+            android:onClick="@{()->viewModel.onSiteClick()}">
+
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/site_logo_background">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:padding="6dp"
+                    app:imageUrl="@{viewModel.logoUrl}" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                >
-
-                <RelativeLayout
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/site_logo_background">
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="50dp"
-                        android:padding="6dp"
-                        android:layout_centerInParent="true"
-                        app:imageUrl="@{viewModel.logoUrl}" />
-                </RelativeLayout>
+                android:orientation="vertical"
+                android:padding="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="12dp"
-                    >
-                    <LinearLayout
+                    android:orientation="vertical">
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        >
+                        android:layout_marginBottom="3dp"
+                        android:text="@{viewModel.name}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="22sp"
+                        android:textStyle="bold|italic" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.name}"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorTextPrimary"
-                            android:textSize="22sp"
-                            android:layout_marginBottom="3dp"
-                            android:textStyle="bold|italic" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.description}"
-                            android:textSize="15sp"
-                            android:layout_marginBottom="3dp"
-                            android:textColor="@color/colorTextPrimary" />
-                    </LinearLayout>
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        >
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_language"
-                            android:drawablePadding="6dp"
-                            android:textSize="18sp"
-                            android:text="@{viewModel.language}"
-                            android:textColor="@color/colorTextPrimary" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_news_amount"
-                            android:drawablePadding="6dp"
-                            android:text="@{viewModel.newsCount}"
-                            android:textSize="18sp"
-                            android:textColor="@color/colorTextPrimary" />
-                    </LinearLayout>
+                        android:layout_marginBottom="3dp"
+                        android:text="@{viewModel.description}"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="15sp" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_language"
+                        android:drawablePadding="6dp"
+                        android:text="@{viewModel.language}"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="18sp" />
 
-
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_news_amount"
+                        android:drawablePadding="6dp"
+                        android:text="@{viewModel.newsCount}"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="18sp" />
+                </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

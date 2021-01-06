@@ -24,8 +24,8 @@ public class NewsInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private List<NewsInfoTeamViewModel> viewModels = new ArrayList<>();
 
     private Activity activity;
-    public static final int HEADER = 0;
-    public static final int ITEM = 1;
+    private static final int HEADER = 0;
+    private static final int ITEM = 1;
     private UserNews userNews;
 
     public NewsInfoAdapter(Activity activity){
@@ -94,9 +94,9 @@ public class NewsInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-        NewsInfoHeaderBinding binding;
+        private NewsInfoHeaderBinding binding;
 
-        public HeaderViewHolder(@NonNull View itemView, NewsInfoHeaderBinding binding) {
+        HeaderViewHolder(@NonNull View itemView, NewsInfoHeaderBinding binding) {
             super(itemView);
             this.binding = binding;
         }
@@ -104,9 +104,9 @@ public class NewsInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        NewsInfoTeamLayoutBinding binding;
+        private NewsInfoTeamLayoutBinding binding;
 
-        public ItemViewHolder(@NonNull View itemView, NewsInfoTeamLayoutBinding binding) {
+        ItemViewHolder(@NonNull View itemView, NewsInfoTeamLayoutBinding binding) {
             super(itemView);
             this.binding = binding;
         }

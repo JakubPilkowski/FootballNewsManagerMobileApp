@@ -1,7 +1,6 @@
 package com.example.footballnewsmanager.adapters.news.newsForTeam;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.databinding.NewsForTeamHeaderBinding;
 import com.example.footballnewsmanager.databinding.NewsForTeamItemLayoutBinding;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserNews;
 import com.example.footballnewsmanager.models.UserTeam;
 
@@ -30,7 +29,7 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final static int ITEM_LOADING = 2;
 
     public boolean isLoading = false;
-    private ExtendedRecyclerViewItemsListener<UserTeam> headerExtendedRecyclerViewItemsListener;
+    private RecyclerViewItemsListener<UserTeam> headerExtendedRecyclerViewItemsListener;
     private Long countAll;
     private Long countToday;
     private String name;
@@ -84,7 +83,6 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 return new NewsViewHolder(view, allNewsLayoutBinding);
             }
             case ITEM_LOADING: {
-                Log.d("News", "onCreateViewHolder IsLoading");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_progress_view, parent, false);
                 return new ProgressViewHolder(view);
             }
@@ -104,7 +102,6 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             NewsForTeamHeaderBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
             viewModel.init(id, name, img, isFavourite, countAll, countToday, headerExtendedRecyclerViewItemsListener, binding);
             binding.setViewModel(viewModel);
-            return;
         } else {
             NewsForTeamAdapterViewModel viewModel;
             int itemsPosition = position - 1;
@@ -114,8 +111,9 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             } else {
                 viewModel = viewModels.get(itemsPosition);
             }
-            viewModel.init(items.get(itemsPosition), activity);
-            ((NewsViewHolder) holder).binding.setViewModel(viewModel);
+            NewsForTeamItemLayoutBinding binding = ((NewsViewHolder) holder).binding;
+            binding.setViewModel(viewModel);
+            viewModel.init(items.get(itemsPosition), activity, binding);
         }
 
     }
@@ -146,15 +144,15 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.isFavourite = isFavourite;
     }
 
-    public void setHeaderExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserTeam> headerExtendedRecyclerViewItemsListener) {
+    public void setHeaderExtendedRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> headerExtendedRecyclerViewItemsListener) {
         this.headerExtendedRecyclerViewItemsListener = headerExtendedRecyclerViewItemsListener;
     }
 
     public class NewsHeaderViewHolder extends RecyclerView.ViewHolder {
 
-        NewsForTeamHeaderBinding binding;
+        private NewsForTeamHeaderBinding binding;
 
-        public NewsHeaderViewHolder(@NonNull View itemView, NewsForTeamHeaderBinding binding) {
+        NewsHeaderViewHolder(@NonNull View itemView, NewsForTeamHeaderBinding binding) {
             super(itemView);
             this.binding = binding;
         }
@@ -166,9 +164,9 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public class NewsViewHolder extends RecyclerView.ViewHolder {
 
-        NewsForTeamItemLayoutBinding binding;
+        private NewsForTeamItemLayoutBinding binding;
 
-        public NewsViewHolder(@NonNull View itemView, NewsForTeamItemLayoutBinding binding) {
+        NewsViewHolder(@NonNull View itemView, NewsForTeamItemLayoutBinding binding) {
             super(itemView);
             this.binding = binding;
         }
@@ -181,7 +179,7 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public class ProgressViewHolder extends RecyclerView.ViewHolder {
 
-        public ProgressViewHolder(@NonNull View itemView) {
+        ProgressViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }

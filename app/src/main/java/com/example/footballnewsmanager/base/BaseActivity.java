@@ -1,14 +1,11 @@
 package com.example.footballnewsmanager.base;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
@@ -17,14 +14,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.api.Connection;
+import com.example.footballnewsmanager.helpers.ProgressDialog;
 import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.helpers.ProposedLanguageDialogManager;
 import com.example.footballnewsmanager.helpers.SoundPoolManager;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.interfaces.ProposedLanguageListener;
 
 import java.util.Locale;
 
@@ -105,7 +101,6 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
         return context.createConfigurationContext(configuration);
     }
 
-    @SuppressWarnings("deprecation")
     private Context updateResourcesLocaleLegacy(Context context, Locale locale) {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
