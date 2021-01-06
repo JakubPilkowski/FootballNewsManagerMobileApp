@@ -3,22 +3,22 @@ package com.example.footballnewsmanager.adapters.search;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.databinding.ObservableField;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamActivity;
+import com.example.footballnewsmanager.activites.search.SearchActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.main.SingleNewsResponse;
-import com.example.footballnewsmanager.base.BaseAdapterViewModel;
+import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.models.SearchResult;
 import com.example.footballnewsmanager.models.SearchType;
-
-import java.util.Observable;
+import com.google.android.material.snackbar.Snackbar;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -61,13 +61,15 @@ public class SearchAdapterViewModel {
     private Callback<SingleNewsResponse> callback = new Callback<SingleNewsResponse>() {
         @Override
         public void onSuccess(SingleNewsResponse newsResponse) {
-            Log.d("SearchAdapter", "onSuccess:");
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
-            if (error instanceof SingleMessageError) {
-                Log.d("SearchAdapter", ((SingleMessageError) error).getMessage());
+            if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
+                RecyclerView recyclerView = ((SearchActivity)activity).binding.searchActivityRecyclerView;
+                Snackbar snackbar = SnackbarHelper.getShortSnackBarFromStatus(recyclerView, error.getStatus());
+                snackbar.setAction(R.string.ok, v -> snackbar.dismiss());
+                snackbar.show();
             }
         }
 

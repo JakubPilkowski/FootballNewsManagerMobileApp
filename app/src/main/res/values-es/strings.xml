@@ -85,5 +85,6 @@ Ingrese su dirección de correo electrónico a la que le enviaremos el token de 
     <string name="all">Todas</string>
     <string name="popular">Popular</string>
     <string name="teams_management">Gestión de equipos</string>
+    <string name="news">news</string>
 
 </resources>

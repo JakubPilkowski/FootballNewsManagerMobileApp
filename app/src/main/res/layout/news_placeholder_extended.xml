@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_marginTop="12dp"
-    android:layout_marginBottom="12dp"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +24,7 @@
             android:background="@drawable/success_screen_background" />
 
         <ImageView
-            android:id="@+id/news_for_team_placeholder_bottle"
+            android:id="@+id/news_placeholder_bottle"
             android:layout_width="80dp"
             android:layout_height="116dp"
             android:layout_centerInParent="true"
@@ -33,4 +32,11 @@
             android:src="@drawable/ic_bottle"
             />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/news_placeholder_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/add_teams" />
 </LinearLayout>

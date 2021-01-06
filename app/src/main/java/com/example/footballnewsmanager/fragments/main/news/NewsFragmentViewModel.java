@@ -39,7 +39,6 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
 public class NewsFragmentViewModel extends BaseViewModel implements ExtendedRecyclerViewItemsListener<UserNews> {
-    // TODO: Implement the ViewModel
 
     public ObservableField<NewsAdapter> adapterObservable = new ObservableField<>();
     public ObservableField<Runnable> postRunnable = new ObservableField<>();
@@ -131,36 +130,6 @@ public class NewsFragmentViewModel extends BaseViewModel implements ExtendedRecy
         newsFab.startAnimation(animation);
         tryAgainListener.set(listener);
         swipeRefreshListenerObservable.set(this::updateNews);
-        initPlaceholder();
-        load();
-    }
-
-    public void load() {
-        errorVisibility.set(false);
-        placeholderVisibility.set(false);
-        itemsVisibility.set(false);
-        loadingVisibility.set(true);
-        String token = UserPreferences.get().getAuthToken();
-        Connection.get().news(callback, token, currentPage);
-    }
-
-    private void initPlaceholder() {
-        NewsPlaceholder newsPlaceholder = ((NewsFragmentBinding) getBinding()).newsPlaceholderView;
-        newsPlaceholder.setOnAddTeamsInterface(() -> {
-            //przejście do dodawania drużyn
-            Intent intent = new Intent(getActivity(), ManageTeamsActivity.class);
-            getActivity().startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS);
-        });
-    }
-
-
-    private void initItemsView(NewsResponse newsResponse) {
-        newsAdapter = new NewsAdapter(getActivity());
-        newsAdapter.setExtendedRecyclerViewItemsListener(this);
-        newsAdapter.setBadgeListener(badgeListener);
-        newsAdapter.setItems(newsResponse.getUserNews());
-        newsAdapter.setCountAll(newsResponse.getNewsCount());
-        newsAdapter.setCountToday(newsResponse.getNewsToday());
         FabScrollListener scrollListener = new FabScrollListener() {
             @Override
             public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
@@ -205,6 +174,37 @@ public class NewsFragmentViewModel extends BaseViewModel implements ExtendedRecy
             }
         };
         recyclerView.addOnScrollListener(scrollListener);
+        initPlaceholder();
+        load();
+    }
+
+    public void load() {
+        currentPage = 0;
+        isLastPage = false;
+        errorVisibility.set(false);
+        placeholderVisibility.set(false);
+        itemsVisibility.set(false);
+        loadingVisibility.set(true);
+        String token = UserPreferences.get().getAuthToken();
+        Connection.get().news(callback, token, currentPage);
+    }
+
+    private void initPlaceholder() {
+        NewsPlaceholder newsPlaceholder = ((NewsFragmentBinding) getBinding()).newsPlaceholderView;
+        newsPlaceholder.setOnAddTeamsInterface(() -> {
+            Intent intent = new Intent(getActivity(), ManageTeamsActivity.class);
+            getActivity().startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS);
+        });
+    }
+
+
+    private void initItemsView(NewsResponse newsResponse) {
+        newsAdapter = new NewsAdapter(getActivity());
+        newsAdapter.setExtendedRecyclerViewItemsListener(this);
+        newsAdapter.setBadgeListener(badgeListener);
+        newsAdapter.setItems(newsResponse.getUserNews());
+        newsAdapter.setCountAll(newsResponse.getNewsCount());
+        newsAdapter.setCountToday(newsResponse.getNewsToday());
         adapterObservable.set(newsAdapter);
     }
 
@@ -351,14 +351,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements ExtendedRecy
         }
     };
 
-    @Override
-    public void onDetached() {
 
-    }
-
-    @Override
-    public void backToFront() {
-    }
 
     @Override
     public void onChangeItem(UserNews oldNews, UserNews newNews) {

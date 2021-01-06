@@ -11,11 +11,10 @@
             type="com.example.footballnewsmanager.fragments.main.news_info.NewsInfoFragmentViewModel" />
     </data>
 
-    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:background="@drawable/auth_background"
-        android:layout_height="match_parent"
-        tools:context=".fragments.main.news.NewsFragment">
+        android:layout_height="match_parent">
 
 
         <com.example.footballnewsmanager.helpers.LoadingView

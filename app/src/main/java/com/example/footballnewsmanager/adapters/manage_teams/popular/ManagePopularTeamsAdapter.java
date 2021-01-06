@@ -1,7 +1,6 @@
 package com.example.footballnewsmanager.adapters.manage_teams.popular;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.adapters.manage_teams.teams.ManageTeamsViewModel;
 import com.example.footballnewsmanager.databinding.ManageTeamItemBinding;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class ManagePopularTeamsAdapter extends RecyclerView.Adapter<RecyclerView
 
     public boolean isLoading = false;
 
-    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
+    private RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
     public void setItems(List<UserTeam> items, int currentPage) {
         if (currentPage == 0) {
@@ -63,7 +62,6 @@ public class ManagePopularTeamsAdapter extends RecyclerView.Adapter<RecyclerView
                 return new TeamViewHolder(view, manageTeamItemBinding);
             }
             case ITEM_LOADING: {
-                Log.d("News", "onCreateViewHolder IsLoading");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_progress_view, parent, false);
                 return new ProgressViewHolder(view);
             }
@@ -93,7 +91,7 @@ public class ManagePopularTeamsAdapter extends RecyclerView.Adapter<RecyclerView
 
     }
 
-    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+    public void setExtendedRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
@@ -135,9 +133,9 @@ public class ManagePopularTeamsAdapter extends RecyclerView.Adapter<RecyclerView
 
     public class TeamViewHolder extends RecyclerView.ViewHolder {
 
-        ManageTeamItemBinding binding;
+        private ManageTeamItemBinding binding;
 
-        public TeamViewHolder(@NonNull View itemView, ManageTeamItemBinding binding) {
+        TeamViewHolder(@NonNull View itemView, ManageTeamItemBinding binding) {
             super(itemView);
             this.binding = binding;
         }
@@ -150,7 +148,7 @@ public class ManagePopularTeamsAdapter extends RecyclerView.Adapter<RecyclerView
 
     public class ProgressViewHolder extends RecyclerView.ViewHolder {
 
-        public ProgressViewHolder(@NonNull View itemView) {
+        ProgressViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }

@@ -16,7 +16,7 @@
         android:padding="2dp"
         android:clickable="true"
         android:focusable="true"
-        android:background="@drawable/search_item_ripple"
+        android:background="@drawable/ripple_primary_background_transparent"
         android:onClick="@{() -> viewModel.onClick()}"
         >
 

@@ -3,9 +3,6 @@ package com.example.footballnewsmanager.helpers;
 import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
-import android.util.Log;
-
-import com.example.footballnewsmanager.R;
 
 public class SoundPoolManager {
 
@@ -14,7 +11,7 @@ public class SoundPoolManager {
 
     private static SoundPool soundPool;
     private Context context;
-    public SoundPoolManager(Context context){
+    private SoundPoolManager(Context context){
         this.context = context;
     }
 

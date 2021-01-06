@@ -11,83 +11,72 @@
             type="com.example.footballnewsmanager.fragments.main.news.NewsFragmentViewModel" />
     </data>
 
-    <LinearLayout
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp"
-        >
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp">
 
-        <com.google.android.material.card.MaterialCardView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardBackgroundColor="@android:color/transparent"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp">
+            android:layout_height="match_parent">
 
-            <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+
+            <com.example.footballnewsmanager.helpers.LoadingView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".fragments.main.news.NewsFragment">
+                android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
 
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/news_swipe_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE }"
+                app:onSwipeRefreshListener="@{viewModel.swipeRefreshListenerObservable}"
+                app:setColorScheme="@{viewModel.swipeRefreshColor}">
 
-                <com.example.footballnewsmanager.helpers.LoadingView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/news_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
-
-                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                    android:id="@+id/news_swipe_refresh"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE }"
-                    app:onSwipeRefreshListener="@{viewModel.swipeRefreshListenerObservable}"
-                    app:setColorScheme="@{viewModel.swipeRefreshColor}">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/news_recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:postRunnable="@{viewModel.postRunnable}"
-                        app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
-                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:postRunnable="@{viewModel.postRunnable}"
+                    app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-                <com.example.footballnewsmanager.helpers.ErrorView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
-                    app:errorStatus="@{viewModel.status}"
-                    app:errorTryAgainListener="@{viewModel.tryAgainListener}"
-                    />
+            <com.example.footballnewsmanager.helpers.ErrorView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
+                app:errorStatus="@{viewModel.status}"
+                app:errorTryAgainListener="@{viewModel.tryAgainListener}" />
 
 
-                <com.example.footballnewsmanager.helpers.NewsPlaceholder
-                    android:id="@+id/news_placeholder_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="@{viewModel.placeholderVisibility ? View.VISIBLE : View.GONE}" />
+            <com.example.footballnewsmanager.helpers.NewsPlaceholder
+                android:id="@+id/news_placeholder_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.placeholderVisibility ? View.VISIBLE : View.GONE}" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/news_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:onClick="@{()->viewModel.onBackToTop()}"
-                    android:src="@drawable/ic_arrow_upward"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    app:rippleColor="@color/colorTextPrimary"
-                    app:backgroundTint="@color/colorPrimary"
-                    app:tint="@color/colorTextPrimary"
-                    app:maxImageSize="28dp"
-                    />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/news_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="16dp"
+                android:onClick="@{()->viewModel.onBackToTop()}"
+                android:src="@drawable/ic_arrow_upward"
+                app:backgroundTint="@color/colorPrimary"
+                app:maxImageSize="28dp"
+                app:rippleColor="@color/colorTextPrimary"
+                app:tint="@color/colorTextPrimary" />
 
-            </RelativeLayout>
+        </RelativeLayout>
 
-        </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
-
+    </com.google.android.material.card.MaterialCardView>
 </layout>

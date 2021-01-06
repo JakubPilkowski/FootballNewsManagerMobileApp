@@ -5,23 +5,17 @@ import android.content.Intent;
 
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.databinding.NewsItemsPlaceholderBinding;
+import com.example.footballnewsmanager.helpers.NewsPlaceholder;
 
 public class NewsAdapterPlaceholderViewModel {
 
-    private Activity activity;
-    private ExtendedRecyclerViewItemsListener extendedRecyclerViewItemsListener;
+    public void init(Activity activity, NewsItemsPlaceholderBinding binding){
+        NewsPlaceholder newsPlaceholder = binding.newsItemsPlaceholder;
+        newsPlaceholder.setOnAddTeamsInterface(() -> {
+            Intent intent = new Intent(activity, ManageTeamsActivity.class);
+            activity.startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS);
+        });
 
-    public void init(Activity activity, ExtendedRecyclerViewItemsListener newsAdapterListener){
-        this.activity = activity;
-        this.extendedRecyclerViewItemsListener = newsAdapterListener;
-    }
-
-    public void showTeamsFragment(){
-        Intent intent = new Intent(activity, ManageTeamsActivity.class);
-        activity.startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS);
-    }
-    public void backToFront(){
-        extendedRecyclerViewItemsListener.backToFront();
     }
 }

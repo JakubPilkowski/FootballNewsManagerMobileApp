@@ -11,7 +11,6 @@
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/auth_background">
@@ -23,8 +22,7 @@
             android:layout_marginEnd="6dp"
             app:cardBackgroundColor="@android:color/transparent"
             app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            tools:context=".activites.news_for_team.NewsForTeamActivity">
+            app:cardElevation="0dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"

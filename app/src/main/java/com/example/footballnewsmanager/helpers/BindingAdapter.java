@@ -1,51 +1,31 @@
 package com.example.footballnewsmanager.helpers;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.StreamEncoder;
-import com.caverock.androidsvg.SVG;
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.interfaces.DragViewListener;
-import com.example.footballnewsmanager.models.LayoutManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BindingAdapter {
-
-
-    @androidx.databinding.BindingAdapter("viewpager_adapter")
-    public static void setViewpagerAdapter(ViewPager viewPager, PagerAdapter pagerAdapter){
-        viewPager.setAdapter(pagerAdapter);
-    }
 
     @androidx.databinding.BindingAdapter("add_text_watcher")
     public static void addTextWatcher(EditText editText, TextWatcher textWatcher){
@@ -98,7 +78,6 @@ public class BindingAdapter {
         if(url.contains(".svg")){
             RequestBuilder<PictureDrawable> requestBuilder;
             Uri uri = Uri.parse(url);
-            Log.d("Glide", "svg");
             requestBuilder = Glide.with(context)
                     .as(PictureDrawable.class)
                     .listener(new SvgSoftwareLayerSetter());
@@ -109,7 +88,6 @@ public class BindingAdapter {
                     .into(imageView);
         }
         else{
-            Log.d("Glide", "other");
             Glide.with(context)
                     .load(url)
                     .placeholder(R.drawable.image_placeholer)

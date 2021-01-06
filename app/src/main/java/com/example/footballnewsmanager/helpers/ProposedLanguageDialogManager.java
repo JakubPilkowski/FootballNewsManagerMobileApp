@@ -18,7 +18,7 @@ public class ProposedLanguageDialogManager {
 
     private Dialog dialog;
 
-    public ProposedLanguageDialogManager(Context context) {
+    private ProposedLanguageDialogManager(Context context) {
         this.context = context;
     }
 

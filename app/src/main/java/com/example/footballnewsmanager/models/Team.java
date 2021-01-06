@@ -7,8 +7,6 @@ public class Team {
     private String logoUrl;
     private Long clicks;
     private Long newsCount;
-    private Long chosenAmount;
-
 
     public Long getId() {
         return id;
@@ -30,7 +28,4 @@ public class Team {
         return newsCount;
     }
 
-    public Long getChosenAmount() {
-        return chosenAmount;
-    }
 }

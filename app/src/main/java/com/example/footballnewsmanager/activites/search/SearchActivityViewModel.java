@@ -1,7 +1,5 @@
 package com.example.footballnewsmanager.activites.search;
 
-import android.util.Log;
-
 import androidx.appcompat.widget.SearchView;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -55,19 +53,11 @@ public class SearchActivityViewModel extends BaseViewModel {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
-                Log.d("Search", "onScrollStateChanged: ");
                 KeyboardHelper.hideKeyboard(getActivity());
                 super.onScrollStateChanged(recyclerView, newState);
             }
-
-            @Override
-            public void onScrolled(@androidx.annotation.NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
         });
         searchView.setIconified(false);
-        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> Log.d("Search", "onFocusChange: "));
-
         Observable<String> observableQueryText = Observable
                 .create(emitter -> searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
@@ -88,7 +78,6 @@ public class SearchActivityViewModel extends BaseViewModel {
 
         observableQueryText
                 .debounce(400, TimeUnit.MILLISECONDS)
-                .timeout(15 * 1000, TimeUnit.MILLISECONDS)
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -119,7 +108,6 @@ public class SearchActivityViewModel extends BaseViewModel {
 
                     }
                 });
-
         searchAdapter = new SearchAdapter();
         searchAdapter.setActivity(getActivity());
         searchAdapterObservable.set(searchAdapter);
@@ -138,7 +126,6 @@ public class SearchActivityViewModel extends BaseViewModel {
     private Callback<SearchResponse> callback = new Callback<SearchResponse>() {
         @Override
         public void onSuccess(SearchResponse searchResponse) {
-            Log.d("Search", "success");
             loadingVisibility.set(false);
             placeholderVisibility.set(false);
             itemsVisibility.set(true);
@@ -147,7 +134,6 @@ public class SearchActivityViewModel extends BaseViewModel {
 
         @Override
         public void onSmthWrong(BaseError error) {
-            Log.d("Search", "onSmthWrong: "+error.getStatus());
             loadingVisibility.set(false);
             itemsVisibility.set(false);
             getActivity().runOnUiThread(() -> searchAdapter.removeItems());

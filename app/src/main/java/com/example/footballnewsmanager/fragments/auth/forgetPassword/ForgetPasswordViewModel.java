@@ -2,8 +2,6 @@ package com.example.footballnewsmanager.fragments.auth.forgetPassword;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
@@ -11,21 +9,19 @@ import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.activites.error.ErrorActivity;
-import com.example.footballnewsmanager.api.errors.SingleMessageError;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.activites.resetPassword.ResetPasswordActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
+import com.example.footballnewsmanager.api.errors.SingleMessageError;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
-import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ForgetPasswordFragmentBinding;
+import com.example.footballnewsmanager.helpers.ProgressDialog;
 import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.Validator;
 import com.example.footballnewsmanager.helpers.ValidatorTextWatcher;
 import com.example.footballnewsmanager.models.FieldType;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -36,7 +32,6 @@ import static com.example.footballnewsmanager.activites.auth.AuthActivity.RESULT
 public class ForgetPasswordViewModel extends BaseViewModel {
     // TODO: Implement the ViewModel
     private TextInputLayout emailLayout;
-    private ForgetPasswordFragmentBinding binding;
     private Resources resources;
     public ObservableField<String> errorText = new ObservableField<>("");
     public ObservableField<ValidatorTextWatcher> emailValidationTextWatcher = new ObservableField<>();
@@ -55,7 +50,7 @@ public class ForgetPasswordViewModel extends BaseViewModel {
     };
 
     public void init() {
-        binding = (ForgetPasswordFragmentBinding) getBinding();
+        ForgetPasswordFragmentBinding binding = (ForgetPasswordFragmentBinding) getBinding();
         resources = getActivity().getResources();
         emailLayout = binding.forgetPasswordInputLayout;
         emailValidationTextWatcher.set(new ValidatorTextWatcher(email, emailLayout, FieldType.EMAIL));

@@ -12,7 +12,6 @@ public class News {
     private String date;
     private Site site;
     private ArrayList<NewsTag> tags;
-    private double popularity;
     private Long clicks;
     private Long likes;
 
@@ -39,10 +38,6 @@ public class News {
 
     public String getDate() {
         return date;
-    }
-
-    public double getPopularity() {
-        return popularity;
     }
 
     public Long getLikes() {

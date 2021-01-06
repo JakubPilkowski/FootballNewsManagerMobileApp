@@ -1,11 +1,8 @@
 package com.example.footballnewsmanager.activites.search;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.ViewDataBinding;
-
 import android.app.Activity;
-import android.os.Bundle;
-import android.util.Log;
+
+import androidx.databinding.ViewDataBinding;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.base.BaseActivity;

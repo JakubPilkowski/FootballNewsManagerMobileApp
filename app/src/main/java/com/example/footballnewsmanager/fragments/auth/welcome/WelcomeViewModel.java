@@ -2,12 +2,9 @@ package com.example.footballnewsmanager.fragments.auth.welcome;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.databinding.ObservableField;
 
@@ -22,13 +19,9 @@ import com.example.footballnewsmanager.fragments.auth.registerFragment.RegisterF
 import com.example.footballnewsmanager.helpers.AuthNameTransition;
 import com.example.footballnewsmanager.helpers.LanguageHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
-import com.example.footballnewsmanager.models.Language;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Locale;
-import java.util.Observable;
 
 public class WelcomeViewModel extends BaseViewModel {
 
@@ -64,24 +57,6 @@ public class WelcomeViewModel extends BaseViewModel {
                 getActivity().getApplicationContext(), R.layout.spinner_item,
                 nameArray, drawables);
         spinnerAdapter.set(languageAdapter);
-        Spinner spinner = ((WelcomeFragmentBinding)getBinding()).spinner;
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String localeName = LanguageHelper.nameToLocale(nameArray.get(position), getActivity().getResources());
-                if(!UserPreferences.get().getLanguage().equals(localeName)){
-                    Locale locale = new Locale(localeName);
-                    Locale.setDefault(locale);
-                    UserPreferences.get().setLanguage(localeName);
-                    ((AuthActivity) getActivity()).changeLanguage(locale);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
     }
 
@@ -105,11 +80,13 @@ public class WelcomeViewModel extends BaseViewModel {
                 ((WelcomeFragmentBinding) getBinding()).authForgetPasswordButton, "forget password fragment title");
     }
 
-//    public void onItemSelected(AdapterView<?> parentView, View selectItemView, int position, long id) {
-//        String localeName = LanguageHelper.nameToLocale(nameArray.get(position), getActivity().getResources());
-//        Locale locale = new Locale(localeName);
-//        Locale.setDefault(locale);
-//        UserPreferences.get().setLanguage(localeName);
-//        ((AuthActivity) getActivity()).changeLanguage(locale);
-//    }
+    public void onItemSelected(AdapterView<?> parentView, View selectItemView, int position, long id) {
+        String localeName = LanguageHelper.nameToLocale(nameArray.get(position), getActivity().getResources());
+        if(!UserPreferences.get().getLanguage().equals(localeName)){
+            Locale locale = new Locale(localeName);
+            Locale.setDefault(locale);
+            UserPreferences.get().setLanguage(localeName);
+            ((AuthActivity) getActivity()).changeLanguage(locale);
+        }
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.footballnewsmanager.adapters.liked_news;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +64,6 @@ public class LikedNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 return new ItemViewHolder(view, binding);
             }
             case LOADING: {
-                Log.d("News", "onCreateViewHolder IsLoading");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_progress_view, parent, false);
                 return new ProgressDialogViewHolder(view);
             }
@@ -89,7 +87,8 @@ public class LikedNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             } else {
                 viewModel = viewModels.get(itemsPosition);
             }
-            viewModel.init(items.get(itemsPosition), activity);
+            NewsForTeamItemLayoutBinding binding = ((ItemViewHolder)holder).binding;
+            viewModel.init(items.get(itemsPosition), activity, binding);
             ((ItemViewHolder) holder).binding.setViewModel(viewModel);
         }
     }
@@ -118,7 +117,7 @@ public class LikedNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-        public HeaderViewHolder(@NonNull View itemView) {
+        HeaderViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
@@ -127,7 +126,7 @@ public class LikedNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         NewsForTeamItemLayoutBinding binding;
 
-        public ItemViewHolder(@NonNull View itemView, NewsForTeamItemLayoutBinding binding) {
+        ItemViewHolder(@NonNull View itemView, NewsForTeamItemLayoutBinding binding) {
             super(itemView);
             this.binding = binding;
         }
@@ -135,7 +134,7 @@ public class LikedNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     class ProgressDialogViewHolder extends RecyclerView.ViewHolder {
 
-        public ProgressDialogViewHolder(@NonNull View itemView) {
+        ProgressDialogViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }

@@ -6,7 +6,8 @@ import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.fragments.auth.resetPassword.ResetPasswordFragment;
 
 public class ResetPasswordViewModel extends BaseViewModel {
-    String type;
+    private String type;
+
     public void init(Uri data) {
         String token="";
         if(data != null && data.isHierarchical()){

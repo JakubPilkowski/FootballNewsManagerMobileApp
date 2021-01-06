@@ -18,6 +18,7 @@ public class AdditionalTeamsAdapter extends BaseRecyclerViewAdapter<UserTeam, Ba
     private List<AdditionalTeamsAdapterViewModel> viewModels = new ArrayList<>();
 
     private Activity activity;
+
     public AdditionalTeamsAdapter(Activity activity){
         this.activity = activity;
     }

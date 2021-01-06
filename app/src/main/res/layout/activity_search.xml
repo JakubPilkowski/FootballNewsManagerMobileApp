@@ -12,13 +12,12 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/auth_background"
         android:orientation="vertical"
         android:padding="12dp"
-        tools:context=".activites.search.SearchActivity">
+        >
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_activity_search_view"
@@ -29,8 +28,7 @@
             app:closeIcon="@drawable/ic_close"
             app:iconifiedByDefault="false"
             app:queryHint="@string/search_for_teams_and_news"
-            app:searchIcon="@drawable/ic_search_black_24dp"
-
+            app:searchIcon="@drawable/ic_search"
             />
 
 

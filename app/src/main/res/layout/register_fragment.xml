@@ -15,12 +15,11 @@
         >
 
         <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            tools:context=".fragments.auth.registerFragment.RegisterFragment">
+            >
 
             <ImageView
                 android:layout_width="match_parent"
@@ -132,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:background="@drawable/button_with_back_and_radius"
+                android:background="@drawable/primary_radius_20dp"
                 android:onClick="@{()->viewModel.validate()}"
                 android:paddingStart="48dp"
                 android:paddingEnd="48dp"

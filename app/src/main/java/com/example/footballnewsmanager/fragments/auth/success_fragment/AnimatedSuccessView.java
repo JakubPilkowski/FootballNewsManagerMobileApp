@@ -20,14 +20,12 @@ public class AnimatedSuccessView extends View {
 
     public interface ResultListener {
         void onResultAnimEnd();
-        void onResultAnimStart();
     }
 
     private Paint paint;
     private Path path;
     private Point point;
 
-    private ValueAnimator firstWingAnimation;
     private ValueAnimator secondWingAnimation;
 
     private int width;
@@ -55,7 +53,7 @@ public class AnimatedSuccessView extends View {
     public void startAnimation() {
         point.set(width * 33 / 100, height / 2);
         path.moveTo(point.x, point.y);
-        firstWingAnimation = ValueAnimator.ofInt(0, 100);
+        ValueAnimator firstWingAnimation = ValueAnimator.ofInt(0, 100);
         firstWingAnimation.setDuration(300);
         firstWingAnimation.addUpdateListener(firstWingUpdateListener);
         firstWingAnimation.addListener(firstWingAnimationListener);
@@ -65,7 +63,6 @@ public class AnimatedSuccessView extends View {
         secondWingAnimation.addUpdateListener(secondWingUpdateListener);
         secondWingAnimation.addListener(secondWingAnimationListener);
     }
-
 
 
     @Override
@@ -109,7 +106,6 @@ public class AnimatedSuccessView extends View {
         @Override
         public void onAnimationEnd(Animator animation) {
             super.onAnimationEnd(animation);
-            Log.d("animacja", "onAnimationEnd: ");
             if(resultListener!=null)
                 resultListener.onResultAnimEnd();
         }
@@ -124,8 +120,6 @@ public class AnimatedSuccessView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.d("animacja", "szerokosc" + MeasureSpec.getSize(widthMeasureSpec));
-        Log.d("animacja", "dlugosc" + MeasureSpec.getSize(heightMeasureSpec));
         width = MeasureSpec.getSize(widthMeasureSpec);
         height = MeasureSpec.getSize(heightMeasureSpec);
         setMeasuredDimension(width, height);

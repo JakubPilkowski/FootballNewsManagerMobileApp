@@ -1,7 +1,6 @@
 package com.example.footballnewsmanager.fragments.main.all_news;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -117,7 +116,6 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
         }
     };
 
-    // TODO: Implement the ViewModel
     public void init(BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
         SearchView searchView = ((AllNewsFragmentBinding) getBinding()).allNewsSearchView;
@@ -156,7 +154,6 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
 
 
     private void initItemsView(AllNewsResponse allNewsResponse) {
-        Log.d("Proposed", "initItemsView: " + UserPreferences.get().getProposed());
         allNewsAdapter = new AllNewsAdapter(getActivity(), UserPreferences.get().getProposed());
         allNewsAdapter.setExtendedRecyclerViewItemsListener(this);
         if (allNewsResponse.getProposedTeams() != null)
@@ -194,7 +191,6 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
             @Override
             protected void loadMoreItems() {
                 currentPage++;
-                Log.d("News", "loadMoreItems");
                 paginationLoad();
             }
 
@@ -347,13 +343,6 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
         }
     };
 
-    private Runnable backToFrontRunnable = () -> recyclerView.scrollToPosition(0);
-
-    @Override
-    public void onDetached() {
-
-    }
-
     public void onBackToTop() {
         recyclerView.scrollToPosition(0);
         animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
@@ -362,16 +351,11 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
     }
 
     @Override
-    public void backToFront() {
-        postRunnable.set(backToFrontRunnable);
-    }
-
-    @Override
     public void onChangeItem(UserNews oldNews, UserNews newNews) {
         allNewsAdapter.onChange(oldNews, newNews);
     }
 
-    public void updateNews() {
+    private void updateNews() {
         String token = UserPreferences.get().getAuthToken();
         boolean proposed = UserPreferences.get().getProposed();
         Connection.get().allNews(refreshCallback, token, 0, proposed);

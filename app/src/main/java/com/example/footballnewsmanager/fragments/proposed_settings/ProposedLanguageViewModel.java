@@ -18,12 +18,10 @@ import java.util.List;
 public class ProposedLanguageViewModel extends ViewModel implements DragViewListener {
 
 
-    private ProposedLanguageListener listener;
     public ObservableField<DragViewListener> dragViewListenerAdapter = new ObservableField<>();
     public ObservableField<LanguagesAdapter> recyclerViewAdapterObservable = new ObservableField<>();
 
     public void init(ProposedLanguageListener listener, Context context) {
-        this.listener = listener;
         dragViewListenerAdapter.set(this);
         List<LanguageField> languages = new ArrayList<>();
         languages.add(new LanguageField(context.getString(R.string.polish), context.getDrawable(R.drawable.ic_poland),

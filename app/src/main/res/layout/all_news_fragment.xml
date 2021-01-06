@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -16,9 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp"
-        tools:context=".fragments.main.all_news.AllNewsFragment">
+        >
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/all_news_search_view"
@@ -30,7 +27,7 @@
             app:closeIcon="@drawable/ic_close"
             app:iconifiedByDefault="false"
             app:queryHint="@string/search_for_teams_and_news"
-            app:searchIcon="@drawable/ic_search_black_24dp" />
+            app:searchIcon="@drawable/ic_search" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

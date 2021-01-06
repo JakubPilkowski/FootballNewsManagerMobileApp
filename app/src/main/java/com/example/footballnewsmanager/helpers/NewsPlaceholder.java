@@ -3,7 +3,6 @@ package com.example.footballnewsmanager.helpers;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,7 +20,6 @@ public class NewsPlaceholder extends LinearLayout {
     private Context context;
     private Animation animation;
     private View bottleView;
-    private Button addTeamsButton;
 
 
     private OnAddTeamsInterface onAddTeamsInterface;
@@ -52,7 +50,7 @@ public class NewsPlaceholder extends LinearLayout {
     }
 
     private void initButton() {
-        addTeamsButton = findViewById(R.id.news_placeholder_button);
+        Button addTeamsButton = findViewById(R.id.news_placeholder_button);
         addTeamsButton.setOnClickListener(v -> onAddTeamsInterface.onAdd());
     }
 

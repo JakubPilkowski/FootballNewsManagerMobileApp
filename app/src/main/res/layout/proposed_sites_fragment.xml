@@ -1,69 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <import type="android.view.View" />
 
         <variable
             name="viewModel"
             type="com.example.footballnewsmanager.fragments.proposed_settings.sites.ProposedSitesFragmentViewModel" />
     </data>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    tools:context=".fragments.proposed_settings.sites.ProposedSitesFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="@string/menu_sites_name"
-        android:textAlignment="center"
-        android:textColor="@color/colorTextPrimary"
-        android:textSize="30sp"
-        android:textStyle="bold|italic"
-        />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="@string/choose_favourite_sites"
-        android:textAlignment="center"
-        android:layout_marginBottom="6dp"
-        android:textColor="@color/colorTextPrimary"
-        android:textSize="20sp"
-        />
-
-    <RelativeLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <com.example.footballnewsmanager.helpers.LoadingView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/menu_sites_name"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="30sp"
+            android:textStyle="bold|italic" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="6dp"
+            android:text="@string/choose_favourite_sites"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="20sp" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}"
-            />
+            android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE }"
-            app:recyclerViewAdapter="@{viewModel.recyclerViewAdapter}"
-            />
+            <com.example.footballnewsmanager.helpers.LoadingView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
 
-        <com.example.footballnewsmanager.helpers.ErrorView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
-            app:errorStatus="@{viewModel.status}"
-            app:errorTryAgainListener="@{viewModel.tryAgainListener}"
-            />
-    </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE }"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:recyclerViewAdapter="@{viewModel.recyclerViewAdapter}" />
 
-</LinearLayout>
+            <com.example.footballnewsmanager.helpers.ErrorView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
+                app:errorStatus="@{viewModel.status}"
+                app:errorTryAgainListener="@{viewModel.tryAgainListener}" />
+        </RelativeLayout>
+
+    </LinearLayout>
 </layout>

@@ -1,26 +1,19 @@
 package com.example.footballnewsmanager.activites.auth;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.databinding.ViewDataBinding;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.view.View;
-import android.view.Window;
+
+import androidx.annotation.Nullable;
+import androidx.databinding.ViewDataBinding;
 
 import com.example.footballnewsmanager.R;
-import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.base.BaseActivity;
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityAuthBinding;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
-import com.example.footballnewsmanager.fragments.auth.forgetPassword.ForgetPasswordFragment;
 import com.example.footballnewsmanager.fragments.auth.login.LoginFragment;
-import com.example.footballnewsmanager.fragments.auth.registerFragment.RegisterFragment;
 import com.example.footballnewsmanager.fragments.auth.welcome.WelcomeFragment;
 import com.example.footballnewsmanager.helpers.Navigator;
 import com.example.footballnewsmanager.interfaces.Providers;
@@ -30,7 +23,6 @@ import java.util.Locale;
 public class AuthActivity extends BaseActivity<ActivityAuthBinding,AuthActivityViewModel> implements Providers {
 
     public static final int RESULT_RESET_PASSWORD = 1001;
-
 
     @Override
     protected void initActivity(ActivityAuthBinding binding) {

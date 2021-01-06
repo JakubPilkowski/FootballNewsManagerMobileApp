@@ -12,7 +12,7 @@ import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.activites.error.ErrorActivity;
-import com.example.footballnewsmanager.activites.register.ProposedSettingsActivity;
+import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
@@ -24,7 +24,7 @@ import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.RegisterFragmentBinding;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.helpers.ProgressDialog;
 import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.helpers.Validator;
@@ -36,9 +36,6 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
 public class RegisterViewModel extends BaseViewModel {
-    // TODO: Implement the ViewModel
-
-
     public ObservableField<String> username = new ObservableField<>("qweqweqweqwew");
     public ObservableField<String> email = new ObservableField<>("weqww@wqewq.com");
     public ObservableField<String> password = new ObservableField<>("asdasdasds");
@@ -52,7 +49,6 @@ public class RegisterViewModel extends BaseViewModel {
     private TextInputLayout usernameLayout;
     private TextInputLayout emailLayout;
     private TextInputLayout passwordLayout;
-    private RegisterFragmentBinding binding;
     private Resources resources;
     private ScrollView scrollView;
 
@@ -68,7 +64,7 @@ public class RegisterViewModel extends BaseViewModel {
 
     public void init() {
         resources = getActivity().getResources();
-        binding = ((RegisterFragmentBinding) getBinding());
+        RegisterFragmentBinding binding = ((RegisterFragmentBinding) getBinding());
         scrollView = binding.registerScrollview;
         usernameLayout = binding.registerLoginLayout;
         emailLayout = binding.registerEmailLayout;
@@ -91,9 +87,6 @@ public class RegisterViewModel extends BaseViewModel {
     public void validate() {
         if (validateAll()) {
             errorText.set("");
-//            Intent intent = new Intent(getActivity(), ProposedSettingsActivity.class);
-//            getActivity().startActivity(intent);
-//            getActivity().finish();
             ProgressDialog.get().show();
             RegisterRequest registerRequest = new RegisterRequest(username.get(), email.get(), password.get());
             Connection.get().register(callback, registerRequest);
@@ -143,7 +136,7 @@ public class RegisterViewModel extends BaseViewModel {
         public void onSuccess(LoginResponse loginResponse) {
             ProgressDialog.get().dismiss();
             UserPreferences.get().addToken(loginResponse);
-            Intent intent = new Intent(getActivity(), ProposedSettingsActivity.class);
+            Intent intent = new Intent(getActivity(), MainActivity.class);
             getActivity().startActivity(intent);
             getActivity().finish();
         }
@@ -152,7 +145,6 @@ public class RegisterViewModel extends BaseViewModel {
         public void onSmthWrong(BaseError error) {
             errorText.set(((SingleMessageError) error).getMessage());
             ProgressDialog.get().dismiss();
-            //alert????
         }
 
         @Override

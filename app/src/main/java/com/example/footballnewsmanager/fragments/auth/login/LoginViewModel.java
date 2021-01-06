@@ -2,27 +2,24 @@ package com.example.footballnewsmanager.fragments.auth.login;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
-import com.example.footballnewsmanager.activites.auth.AuthActivity;
 import com.example.footballnewsmanager.activites.error.ErrorActivity;
-import com.example.footballnewsmanager.api.Connection;
-import com.example.footballnewsmanager.api.errors.MultipleMessageError;
-import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.api.Callback;
+import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
+import com.example.footballnewsmanager.api.errors.MultipleMessageError;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
+import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.responses.auth.LoginResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.LoginFragmentBinding;
+import com.example.footballnewsmanager.helpers.ProgressDialog;
 import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.helpers.Validator;
@@ -37,8 +34,6 @@ import io.reactivex.rxjava3.core.Observer;
 public class LoginViewModel extends BaseViewModel {
 
 
-    //    private TextInputEditText email;
-//    private TextInputEditText password;
     private TextInputLayout emailLayout;
     private TextInputLayout passwordLayout;
     private LoginFragmentBinding binding;
@@ -51,17 +46,14 @@ public class LoginViewModel extends BaseViewModel {
     public ObservableField<String> password = new ObservableField<>("suEsKACHpVSt6dmO");
     public ObservableBoolean clearFocus = new ObservableBoolean(false);
 
-    private TextView.OnEditorActionListener passwordListener = new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                KeyboardHelper.hideKeyboard(getActivity());
-                clearFocus.set(true);
-                validate();
-                return true;
-            }
-            return false;
+    private TextView.OnEditorActionListener passwordListener = (v, actionId, event) -> {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            KeyboardHelper.hideKeyboard(getActivity());
+            clearFocus.set(true);
+            validate();
+            return true;
         }
+        return false;
     };
 
     public void init() {
@@ -110,8 +102,6 @@ public class LoginViewModel extends BaseViewModel {
         @Override
         public void onSmthWrong(BaseError error) {
             ProgressDialog.get().dismiss();
-            Log.d(LoginFragment.TAG, error.getError());
-            Log.d(LoginFragment.TAG, String.valueOf(error.getStatus()));
 
             if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
                 Intent intent = new Intent(getActivity(), ErrorActivity.class);

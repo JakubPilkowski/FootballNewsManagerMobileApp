@@ -25,7 +25,7 @@ import com.example.footballnewsmanager.api.requests.proposed.UserSettingsRequest
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ActivityProposedSettingsBinding;
-import com.example.footballnewsmanager.dialogs.ProgressDialog;
+import com.example.footballnewsmanager.helpers.ProgressDialog;
 import com.example.footballnewsmanager.fragments.proposed_settings.sites.ProposedSitesFragment;
 import com.example.footballnewsmanager.fragments.proposed_settings.teams.ProposedTeamsFragment;
 import com.example.footballnewsmanager.helpers.ScreenHelper;
@@ -52,11 +52,11 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
     public ObservableField<ViewPager2.OnPageChangeCallback> onPageChangeCallbackObservable = new ObservableField<>();
     public ObservableBoolean userInputEnabled = new ObservableBoolean(false);
 
-    public ViewPager2 viewPager2;
-    public View ball;
+    private ViewPager2 viewPager2;
+    private View ball;
     public int item;
-    public int screenWidth;
-    public View stars;
+    private int screenWidth;
+    private View stars;
     private String token;
 
     private ProposedSettingsViewPagerAdapter proposedSettingsViewPagerAdapter;
@@ -101,7 +101,7 @@ public class ProposedSettingsActivityViewModel extends BaseViewModel {
         }
     };
 
-    public void checkBackButtonEnabled() {
+    private void checkBackButtonEnabled() {
         enabledBackButton.set(item > 0);
     }
 

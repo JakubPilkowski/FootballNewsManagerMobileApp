@@ -83,5 +83,6 @@
     <string name="all">Tutti</string>
     <string name="popular">Popolare</string>
     <string name="teams_management">Gestione delle squadre</string>
+    <string name="news">news</string>
 
 </resources>

@@ -7,20 +7,20 @@ import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ManageSelectedTeamsFragmentBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.interfaces.Providers;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 public class ManageSelectedTeamsFragment extends BaseFragment<ManageSelectedTeamsFragmentBinding, ManageSelectedTeamsViewModel> implements Providers {
 
 
-    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
+    private RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
-    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+    public void setExtendedRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
-    public static ManageSelectedTeamsFragment newInstance(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+    public static ManageSelectedTeamsFragment newInstance(RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         ManageSelectedTeamsFragment manageSelectedTeamsFragment = new ManageSelectedTeamsFragment();
         manageSelectedTeamsFragment.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
         return manageSelectedTeamsFragment;

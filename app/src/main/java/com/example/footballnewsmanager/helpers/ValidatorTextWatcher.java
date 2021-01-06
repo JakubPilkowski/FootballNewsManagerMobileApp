@@ -19,7 +19,6 @@ public class ValidatorTextWatcher implements TextWatcher {
         this.type = type;
     }
 
-
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 

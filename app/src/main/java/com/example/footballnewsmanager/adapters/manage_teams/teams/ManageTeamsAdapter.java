@@ -10,17 +10,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.databinding.ManageTeamItemBinding;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageTeamsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ExtendedRecyclerViewItemsListener<UserTeam> {
+public class ManageTeamsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RecyclerViewItemsListener<UserTeam> {
 
     private List<ManageTeamsViewModel> viewModels = new ArrayList<>();
 
-    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
+    private RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
     private List<UserTeam> items = new ArrayList<>();
     private final static int ITEM = 1;
@@ -47,7 +47,7 @@ public class ManageTeamsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.activity = activity;
     }
 
-    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+    public void setExtendedRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
@@ -58,25 +58,12 @@ public class ManageTeamsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         viewModels.get(index).update(newTeam);
     }
 
-    @Override
-    public void onDetached() {
-
-    }
-
-    @Override
-    public void backToFront() {
-
-    }
 
     @Override
     public void onChangeItem(UserTeam oldUserItem, UserTeam newUserItem) {
         onChange(oldUserItem, newUserItem);
     }
 
-    @Override
-    public void onChangeItems() {
-
-    }
 
     @NonNull
     @Override

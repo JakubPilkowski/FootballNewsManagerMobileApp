@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
@@ -99,7 +98,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainActivity
     private void reloadNewsInfoPage() {
 
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            Log.d("Main", "reloadNewsInfoPage: " + fragment.getTag());
             if (fragment instanceof NewsInfoFragment) {
                 NewsInfoFragment newsInfoFragment = (NewsInfoFragment) fragment;
                 if (newsInfoFragment.viewModel != null) {

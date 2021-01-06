@@ -7,20 +7,20 @@ import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity
 import com.example.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ManagePopularTeamsFragmentBinding;
 import com.example.footballnewsmanager.helpers.Navigator;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.interfaces.Providers;
+import com.example.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 public class ManagePopularTeamsFragment extends BaseFragment<ManagePopularTeamsFragmentBinding, ManagePopularTeamsViewModel> implements Providers {
 
 
-    private ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
+    private RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
 
-    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+    public void setExtendedRecyclerViewItemsListener(RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
-    public static ManagePopularTeamsFragment newInstance(ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
+    public static ManagePopularTeamsFragment newInstance(RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener) {
         ManagePopularTeamsFragment managePopularTeamsFragment = new ManagePopularTeamsFragment();
         managePopularTeamsFragment.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
         return managePopularTeamsFragment;

@@ -1,11 +1,9 @@
 package com.example.footballnewsmanager.activites.error;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.ViewDataBinding;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
+
+import androidx.databinding.ViewDataBinding;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.SplashActivity;
@@ -30,7 +28,7 @@ public class ErrorActivity extends BaseActivity<ActivityErrorBinding, ErrorViewM
     @Override
     public void onBackPressed() {
         int requestCode = getIntent().getIntExtra("requestCode", 0);
-        if(requestCode == SplashActivity.REQUEST_SPLASH_ERROR){
+        if (requestCode == SplashActivity.REQUEST_SPLASH_ERROR) {
             setResult(RESULT_OK);
         }
         super.onBackPressed();

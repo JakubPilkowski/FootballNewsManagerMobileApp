@@ -4,12 +4,9 @@ import android.content.res.Resources;
 import android.util.Patterns;
 
 import com.example.footballnewsmanager.R;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class Validator {
-
-
 
     public static boolean validateLogin(String login, TextInputLayout loginLayout, Resources resources) {
         if (login.trim().isEmpty()) {

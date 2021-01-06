@@ -84,5 +84,6 @@
     <string name="all">Wszystkie</string>
     <string name="popular">Popularne</string>
     <string name="teams_management">Zarządzanie Drużynami</string>
+    <string name="news">news</string>
 
 </resources>

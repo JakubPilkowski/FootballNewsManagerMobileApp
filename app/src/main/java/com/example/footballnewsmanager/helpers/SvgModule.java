@@ -23,7 +23,6 @@ public class SvgModule extends AppGlideModule {
                 .append(InputStream.class, SVG.class, new SvgDecoder());
     }
 
-    // Disable manifest parsing to avoid adding similar modules twice.
     @Override
     public boolean isManifestParsingEnabled() {
         return false;

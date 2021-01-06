@@ -36,10 +36,9 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:background="@drawable/ripple_white_background_transparent"
                 android:drawableEnd="@drawable/ic_mark_all"
                 android:drawablePadding="12dp"
-                android:foreground="?attr/selectableItemBackground"
                 android:onClick="@{()->viewModel.onClick()}"
                 android:text="@string/mark_all_as_read"
                 android:textAllCaps="false"

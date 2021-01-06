@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.databinding.ProposedTeamLayoutBinding;
-import com.example.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import com.example.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
@@ -22,10 +21,7 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private final static int ITEM = 0;
     private final static int ITEM_LOADING = 1;
-    private final static int PLACEHOLDER = 2;
     public boolean isLoading = false;
-    private ExtendedRecyclerViewItemsListener extendedRecyclerViewItemsListener;
-
 
     public void setItems(List<UserTeam> items) {
         int start = this.items.size();
@@ -37,10 +33,6 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
         isLoading = loading;
         if (!isLoading)
             notifyItemChanged(items.size());
-    }
-
-    public void setExtendedRecyclerViewItemsListener(ExtendedRecyclerViewItemsListener extendedRecyclerViewItemsListener) {
-        this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;
     }
 
     public List<ProposedTeamsAdapterViewModel> getViewModels() {
@@ -101,21 +93,11 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
         return items.size();
     }
 
-
-    @Override
-    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
-        super.onViewDetachedFromWindow(holder);
-        if (holder instanceof PlaceholderViewHolder) {
-            extendedRecyclerViewItemsListener.onDetached();
-        }
-    }
-
-
     public class TeamsViewHolder extends RecyclerView.ViewHolder {
 
-        ProposedTeamLayoutBinding binding;
+        private ProposedTeamLayoutBinding binding;
 
-        public TeamsViewHolder(@NonNull View itemView, ProposedTeamLayoutBinding binding) {
+        TeamsViewHolder(@NonNull View itemView, ProposedTeamLayoutBinding binding) {
             super(itemView);
             this.binding = binding;
         }
@@ -127,17 +109,8 @@ public class ProposedTeamsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public class ProgressViewHolder extends RecyclerView.ViewHolder {
 
-        public ProgressViewHolder(@NonNull View itemView) {
+        ProgressViewHolder(@NonNull View itemView) {
             super(itemView);
         }
-    }
-
-    public class PlaceholderViewHolder extends RecyclerView.ViewHolder {
-
-
-        public PlaceholderViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-
     }
 }
