@@ -17,6 +17,13 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
         <activity
+            android:name=".activites.change_password.ChangePasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseActivityTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            />
+
+        <activity
             android:name=".activites.error.ErrorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseActivityTheme" />

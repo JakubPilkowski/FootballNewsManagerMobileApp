@@ -92,5 +92,6 @@
     <string name="bottle_image">Imagen de botella</string>
     <string name="league_logo">Logotipo de la liga</string>
     <string name="search_result_image">Imagen de resultado de búsqueda</string>
+    <string name="old_password">Contraseña anterior</string>
 
 </resources>

@@ -10,6 +10,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class ValidatorTextWatcher implements TextWatcher {
     private ObservableField<String> text;
+    private ObservableField<String> repeatPassword;
     private TextInputLayout editTextLayout;
     private FieldType type;
 
@@ -17,6 +18,12 @@ public class ValidatorTextWatcher implements TextWatcher {
         this.text = text;
         this.editTextLayout = editTextLayout;
         this.type = type;
+    }
+    public ValidatorTextWatcher(ObservableField<String> text, TextInputLayout editTextLayout, ObservableField<String> repeatPassword, FieldType type) {
+        this.text = text;
+        this.editTextLayout = editTextLayout;
+        this.type = type;
+        this.repeatPassword = repeatPassword;
     }
 
     @Override
@@ -43,6 +50,9 @@ public class ValidatorTextWatcher implements TextWatcher {
                 break;
             case TOKEN:
                 Validator.validateToken(text.get(), editTextLayout, editTextLayout.getResources());
+                break;
+            case REPEAT_PASSWORD:
+                Validator.validateRepeatPassword(text.get(), editTextLayout, repeatPassword.get(),editTextLayout.getResources());
                 break;
         }
     }

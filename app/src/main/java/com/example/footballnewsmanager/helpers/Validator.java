@@ -12,12 +12,10 @@ public class Validator {
         if (login.trim().isEmpty()) {
             loginLayout.setError(resources.getString(R.string.field_not_blank));
             return false;
-        }
-        else if(login.length() > 20 || login.length() < 4){
+        } else if (login.length() > 20 || login.length() < 4) {
             loginLayout.setError(resources.getString(R.string.login_size_error));
             return false;
-        }
-        else{
+        } else {
             loginLayout.setErrorEnabled(false);
         }
         return true;
@@ -57,26 +55,26 @@ public class Validator {
 
 
     public static boolean validateRepeatPassword(String repeatPassword, TextInputLayout repeatPassLayout, String password, Resources resources) {
-        if(validatePassword(password, repeatPassLayout, resources)){
-            if(!repeatPassword.equals(password)){
-                repeatPassLayout.setError(resources.getString(R.string.password_must_match));
-                return false;
-            }
-            else{
-                repeatPassLayout.setErrorEnabled(false);
-                return true;
-            }
-        }else{
+        if (repeatPassword.trim().isEmpty()) {
+            repeatPassLayout.setError(resources.getString(R.string.field_not_blank));
             return false;
+        } else if (repeatPassword.length() < 8 || repeatPassword.length() > 30) {
+            repeatPassLayout.setError(resources.getString(R.string.password_invalid));
+            return false;
+        } else if (!repeatPassword.equals(password)) {
+            repeatPassLayout.setError(resources.getString(R.string.password_must_match));
+            return false;
+        } else {
+            repeatPassLayout.setErrorEnabled(false);
+            return true;
         }
     }
 
     public static boolean validateToken(String token, TextInputLayout tokenInputLayout, Resources resources) {
-        if(token.trim().isEmpty()){
+        if (token.trim().isEmpty()) {
             tokenInputLayout.setError(resources.getString(R.string.token_not_empty));
             return false;
-        }
-        else {
+        } else {
             tokenInputLayout.setErrorEnabled(false);
             return true;
         }

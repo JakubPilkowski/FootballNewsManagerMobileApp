@@ -72,6 +72,8 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
                 case 2:
                     finish();
                     break;
+                case 3:
+                    break;
             }
         }
     }
