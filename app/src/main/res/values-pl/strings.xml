@@ -13,7 +13,7 @@
     <string name="email_invalid">Niepoprawny adres mailowy</string>
     <string name="email_too_long">Adres mailowy może zawierać maksymalnie 40 znaków</string>
     <string name="password_invalid">Hasło musi zawierać od 8 do 30 znaków</string>
-    <string name="loading">Ładowanie...</string>
+    <string name="loading">Ładowanie…</string>
     <string name="login_successful">Poprawnie Zalogowano</string>
     <string name="player_logo">player logo</string>
     <string name="send">Wyślij</string>
@@ -32,7 +32,7 @@
     <string name="username">Nazwa</string>
     <string name="back">Cofnij</string>
     <string name="language">Język</string>
-    <string name="proposed_teams">Polecane wiadomości</string>
+    <string name="proposed_teams">Polecane Drużyny</string>
     <string name="polish">Polski</string>
     <string name="german">Niemiecki</string>
     <string name="italish">Włoski</string>
@@ -84,6 +84,13 @@
     <string name="all">Wszystkie</string>
     <string name="popular">Popularne</string>
     <string name="teams_management">Zarządzanie Drużynami</string>
-    <string name="news">news</string>
+    <string name="news">Wiadomości</string>
+    <string name="site_logo">Logo Strony</string>
+    <string name="team_logo">Logo Drużyny</string>
+    <string name="news_image">Zdjęcie Wiadomości</string>
+    <string name="pitch_image">Zdjęcie Boiska</string>
+    <string name="bottle_image">Zdjęcie Butelki</string>
+    <string name="league_logo">Logo Ligi</string>
+    <string name="search_result_image">Zdjęcie Wyniku Wyszukiwania</string>
 
 </resources>

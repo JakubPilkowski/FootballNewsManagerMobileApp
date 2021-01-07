@@ -85,5 +85,12 @@
     <string name="popular">Popular</string>
     <string name="teams_management">Teams Management</string>
     <string name="news">news</string>
+    <string name="site_logo">Site Logo</string>
+    <string name="team_logo">Team Logo</string>
+    <string name="news_image">News Image</string>
+    <string name="pitch_image">Pitch image</string>
+    <string name="bottle_image">Bottle Image</string>
+    <string name="league_logo">League Logo</string>
+    <string name="search_result_image">Search Result Image</string>
 
 </resources>

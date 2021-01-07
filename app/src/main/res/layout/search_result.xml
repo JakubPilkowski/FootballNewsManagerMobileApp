@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="com.example.footballnewsmanager.models.SearchType" />
+
         <variable
             name="viewModel"
             type="com.example.footballnewsmanager.adapters.search.SearchAdapterViewModel" />
@@ -27,6 +29,7 @@
             android:padding="3dp"
             android:background="@drawable/site_logo_background"
             app:imageUrl="@{viewModel.imageUrl}"
+            android:contentDescription="@string/search_result_image"
             />
 
         <TextView

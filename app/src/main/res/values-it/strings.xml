@@ -31,7 +31,7 @@
     <string name="username">Nome</string>
     <string name="back">Disfare</string>
     <string name="language">Linguaggio</string>
-    <string name="proposed_teams">Notizie In primo piano</string>
+    <string name="proposed_teams">Squadre Proposte</string>
     <string name="polish">Polacco</string>
     <string name="german">Tedesco</string>
     <string name="italish">Italiano</string>
@@ -83,6 +83,13 @@
     <string name="all">Tutti</string>
     <string name="popular">Popolare</string>
     <string name="teams_management">Gestione delle squadre</string>
-    <string name="news">news</string>
+    <string name="news">Notizia</string>
+    <string name="site_logo">Logo del sito</string>
+    <string name="team_logo">Logo della squadra</string>
+    <string name="news_image">Immagine di notizie</string>
+    <string name="pitch_image">Immagine del passo</string>
+    <string name="bottle_image">Immagine della bottiglia</string>
+    <string name="league_logo">Logo della lega</string>
+    <string name="search_result_image">Immagine dei risultati di ricerca</string>
 
 </resources>

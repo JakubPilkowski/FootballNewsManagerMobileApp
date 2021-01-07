@@ -30,6 +30,7 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="8dp"
             android:src="@drawable/ic_bottle"
+            android:contentDescription="@string/bottle_image"
             />
     </RelativeLayout>
 

@@ -31,7 +31,7 @@
     <string name="username">Name</string>
     <string name="back">Rückgängig machen</string>
     <string name="language">Sprache</string>
-    <string name="proposed_teams">Vorgeschlagene Nachrichten</string>
+    <string name="proposed_teams">Vorgeschlagene Teams</string>
     <string name="polish">Polieren</string>
     <string name="german">Deutsche</string>
     <string name="italish">Italienisch</string>
@@ -83,5 +83,12 @@
     <string name="all">Alle</string>
     <string name="popular">Beliebt</string>
     <string name="teams_management">Teammanagement</string>
-    <string name="news">news</string>
+    <string name="news">Nachrichten</string>
+    <string name="site_logo">Site-Logo</string>
+    <string name="team_logo">Team-Logo</string>
+    <string name="news_image">Nachrichtenbild</string>
+    <string name="pitch_image">Pitch-Bild</string>
+    <string name="bottle_image">Flaschenbild</string>
+    <string name="league_logo">Liga-Logo</string>
+    <string name="search_result_image">Suchergebnis Bild</string>
 </resources>

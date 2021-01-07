@@ -8,6 +8,7 @@ import androidx.databinding.ObservableField;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.activites.news_for_team.NewsForTeamActivity;
 import com.example.footballnewsmanager.activites.search.SearchActivity;
 import com.example.footballnewsmanager.api.Callback;
@@ -28,7 +29,7 @@ public class SearchAdapterViewModel {
     public ObservableField<String> imageUrl = new ObservableField<>();
     public ObservableField<String> title = new ObservableField<>();
 
-    private SearchResult searchResult;
+    public SearchResult searchResult;
     private Activity activity;
 
     public void init(SearchResult searchResult, Activity activity){
@@ -54,7 +55,8 @@ public class SearchAdapterViewModel {
             intent.putExtra("id", Long.parseLong(searchResult.getId()));
             intent.putExtra("name", searchResult.getName());
             intent.putExtra("img", searchResult.getImgUrl());
-            activity.startActivity(intent);
+            intent.putExtra("favourite", searchResult.isFavourite());
+            activity.startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS_FROM_TEAM_NEWS);
         }
     }
 

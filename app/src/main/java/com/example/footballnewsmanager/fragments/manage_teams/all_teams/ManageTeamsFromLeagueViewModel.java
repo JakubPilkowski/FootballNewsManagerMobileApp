@@ -67,8 +67,6 @@ public class ManageTeamsFromLeagueViewModel extends BaseViewModel {
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
             @Override
             protected void loadMoreItems() {
-                if (id != 7)
-                    return;
                 currentPage++;
                 paginationLoad();
             }
@@ -99,9 +97,7 @@ public class ManageTeamsFromLeagueViewModel extends BaseViewModel {
         public void onSuccess(TeamsResponse teamsResponse) {
             getActivity().runOnUiThread(() -> {
                 manageTeamsAdapter.setItems(teamsResponse.getTeams());
-                if (id == 7) {
-                    isLastPage = 7 <= currentPage;
-                }
+                isLastPage = teamsResponse.getPages() <= currentPage;
                 manageTeamsAdapter.setLoading(false);
             });
         }

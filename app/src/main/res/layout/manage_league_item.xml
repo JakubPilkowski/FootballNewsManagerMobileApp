@@ -28,7 +28,7 @@
                 android:padding="3dp"
                 android:layout_margin="6dp"
                 app:imageUrl="@{viewModel.img}"
-                />
+                android:contentDescription="@string/league_logo" />
 
             <TextView
                 android:layout_width="0dp"

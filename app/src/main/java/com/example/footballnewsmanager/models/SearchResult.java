@@ -6,6 +6,7 @@ public class SearchResult {
     private SearchType type;
     private String imgUrl;
     private String newsUrl;
+    private boolean favourite;
 
     public String getName() {
         return name;
@@ -29,5 +30,9 @@ public class SearchResult {
 
     public String getNewsUrl() {
         return newsUrl;
+    }
+
+    public boolean isFavourite() {
+        return favourite;
     }
 }

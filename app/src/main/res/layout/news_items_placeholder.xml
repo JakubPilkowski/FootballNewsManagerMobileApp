@@ -8,8 +8,6 @@
             type="com.example.footballnewsmanager.adapters.news.NewsAdapterPlaceholderViewModel" />
     </data>
 
-
-
     <com.example.footballnewsmanager.helpers.NewsPlaceholder
         android:id="@+id/news_items_placeholder"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,48 +16,4 @@
         android:layout_marginTop="18dp"
         android:layout_marginBottom="48dp"
         />
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/empty_content"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textColor="@color/colorTextPrimary"-->
-<!--            android:textSize="30sp"-->
-<!--            android:textStyle="bold|italic" />-->
-
-<!--        <RelativeLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--            <View-->
-<!--                android:layout_width="156dp"-->
-<!--                android:layout_height="156dp"-->
-<!--                android:background="@drawable/success_screen_background" />-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/news_items_placeholder_bottle"-->
-<!--                android:layout_width="80dp"-->
-<!--                android:layout_height="116dp"-->
-<!--                android:src="@drawable/ic_bottle"-->
-<!--                android:layout_centerInParent="true"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                />-->
-<!--        </RelativeLayout>-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/no_more_news"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textColor="@color/colorTextPrimary"-->
-<!--            android:textSize="20sp" />-->
-
-<!--        <Button-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="12dp"-->
-<!--            android:onClick="@{()->viewModel.showTeamsFragment()}"-->
-<!--            android:text="@string/add_teams" />-->
-
 </layout>

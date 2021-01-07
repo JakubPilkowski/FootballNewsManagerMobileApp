@@ -38,7 +38,8 @@
                     android:background="@drawable/site_logo_background"
                     android:onClick="@{()->viewModel.onSiteClick()}"
                     android:padding="3dp"
-                    app:imageUrl="@{viewModel.siteLogo}" />
+                    app:imageUrl="@{viewModel.siteLogo}"
+                    android:contentDescription="@string/site_logo" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -126,7 +127,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="220dp"
                     android:scaleType="centerCrop"
-                    app:imageUrl="@{viewModel.imageUrl}" />
+                    app:imageUrl="@{viewModel.imageUrl}"
+                    android:contentDescription="@string/news_image" />
 
                 <TextView
                     android:layout_width="match_parent"

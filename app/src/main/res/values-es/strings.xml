@@ -17,8 +17,7 @@
     <string name="login_successful">Conectado correctamente</string>
     <string name="player_logo">player logo</string>
     <string name="send">Enviar</string>
-    <string name="forget_password_desc">
-Ingrese su dirección de correo electrónico a la que le enviaremos el token de activación</string>
+    <string name="forget_password_desc">Ingrese su dirección de correo electrónico a la que le enviaremos el token de activación</string>
     <string name="token">Token enviado a la dirección de correo electrónico</string>
     <string name="new_password">Nueva contraseña</string>
     <string name="repeat_password">repite la contraseña</string>
@@ -33,7 +32,7 @@ Ingrese su dirección de correo electrónico a la que le enviaremos el token de 
     <string name="username">Nombre</string>
     <string name="back">Deshacer</string>
     <string name="language">Idioma</string>
-    <string name="proposed_teams">Noticias destacadas</string>
+    <string name="proposed_teams">Equipos Propuestos</string>
     <string name="polish">Polaco</string>
     <string name="german">Alemán</string>
     <string name="italish">Italiano</string>
@@ -85,6 +84,13 @@ Ingrese su dirección de correo electrónico a la que le enviaremos el token de 
     <string name="all">Todas</string>
     <string name="popular">Popular</string>
     <string name="teams_management">Gestión de equipos</string>
-    <string name="news">news</string>
+    <string name="news">Noticias</string>
+    <string name="site_logo">Logotipo del sitio</string>
+    <string name="team_logo">Logotipo del equipo</string>
+    <string name="news_image">Imagen de noticias</string>
+    <string name="pitch_image">Imagen de tono</string>
+    <string name="bottle_image">Imagen de botella</string>
+    <string name="league_logo">Logotipo de la liga</string>
+    <string name="search_result_image">Imagen de resultado de búsqueda</string>
 
 </resources>

@@ -83,6 +83,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
     }
 
     private Context updateBaseContextLocale(Context context) {
+        UserPreferences.init(context);
         String language = UserPreferences.get().getLanguage();
         Locale locale = new Locale(language);
         Locale.setDefault(locale);

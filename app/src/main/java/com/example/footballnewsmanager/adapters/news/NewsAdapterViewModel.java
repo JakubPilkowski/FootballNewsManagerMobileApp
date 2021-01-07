@@ -2,7 +2,6 @@ package com.example.footballnewsmanager.adapters.news;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
 import androidx.databinding.ObservableBoolean;
@@ -42,7 +41,6 @@ public class NewsAdapterViewModel {
     public ObservableInt isBadgeVisited = new ObservableInt();
     public ObservableInt isVisited = new ObservableInt();
     public ObservableBoolean loadingMark = new ObservableBoolean(false);
-    public ObservableField<Drawable> highlightedVisited = new ObservableField<>();
     public ObservableBoolean markEnabled = new ObservableBoolean(false);
     public ObservableBoolean isMarked = new ObservableBoolean();
     public UserNews news;

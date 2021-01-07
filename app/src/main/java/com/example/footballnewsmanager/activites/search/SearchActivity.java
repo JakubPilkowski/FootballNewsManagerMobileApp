@@ -26,6 +26,12 @@ public class SearchActivity extends BaseActivity<ActivitySearchBinding, SearchAc
     }
 
     @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_OK);
+        super.onBackPressed();
+    }
+
+    @Override
     public int getIdFragmentContainer() {
         return 0;
     }
