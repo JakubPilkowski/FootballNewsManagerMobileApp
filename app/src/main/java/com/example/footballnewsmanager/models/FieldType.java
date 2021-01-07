@@ -4,5 +4,6 @@ public enum FieldType {
     LOGIN,
     EMAIL,
     PASSWORD,
-    TOKEN
+    TOKEN,
+    REPEAT_PASSWORD
 }

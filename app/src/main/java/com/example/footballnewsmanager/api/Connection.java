@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.api;
 
+import com.example.footballnewsmanager.api.requests.auth.ChangePasswordRequest;
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
@@ -282,6 +283,15 @@ public class Connection {
                 .observeOn(Schedulers.computation())
                 .timeout(15 * 1000, TimeUnit.MILLISECONDS);
         notificationResponseObservable.subscribe(callback);
+    }
+
+    public void changePassword(Callback<BaseResponse> callback,String token, ChangePasswordRequest changePasswordRequest){
+        Observable<BaseResponse> changePasswordObservable = client.getService()
+                .changePassword(token, changePasswordRequest)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.computation())
+                .timeout(15 * 1000,TimeUnit.MILLISECONDS);
+        changePasswordObservable.subscribe(callback);
     }
 
 }

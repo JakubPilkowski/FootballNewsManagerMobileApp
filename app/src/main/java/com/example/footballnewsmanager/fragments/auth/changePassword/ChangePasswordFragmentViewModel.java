@@ -1,4 +1,4 @@
-package com.example.footballnewsmanager.fragments.auth.resetPassword;
+package com.example.footballnewsmanager.fragments.auth.changePassword;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -14,13 +14,14 @@ import com.example.footballnewsmanager.api.Callback;
 import com.example.footballnewsmanager.api.Connection;
 import com.example.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.api.errors.SingleMessageError;
-import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
+import com.example.footballnewsmanager.api.requests.auth.ChangePasswordRequest;
 import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.ResetPasswordFragmentBinding;
+import com.example.footballnewsmanager.databinding.ChangePasswordFragmentBinding;
 import com.example.footballnewsmanager.fragments.auth.success_fragment.SuccessFragment;
 import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.ProgressDialog;
+import com.example.footballnewsmanager.helpers.UserPreferences;
 import com.example.footballnewsmanager.helpers.Validator;
 import com.example.footballnewsmanager.helpers.ValidatorTextWatcher;
 import com.example.footballnewsmanager.models.FieldType;
@@ -29,19 +30,20 @@ import com.google.android.material.textfield.TextInputLayout;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
-public class ResetPasswordFragmentViewModel extends BaseViewModel {
+public class ChangePasswordFragmentViewModel extends BaseViewModel {
+    // TODO: Implement the ViewModel
 
     public ObservableField<String> errorText = new ObservableField<>("");
-    public ObservableField<String> token = new ObservableField<>("");
-    public ObservableField<String> newPassword = new ObservableField<>("suEsKACHpVSt6dmO");
-    public ObservableField<String> repeatPassword = new ObservableField<>("suEsKACHpVSt6dmO");
-    public ObservableField<TextWatcher> tokenTextWatcherAdapter = new ObservableField<>();
+    public ObservableField<String> oldPassword = new ObservableField<>("suEsKACHpVSt6dmO");
+    public ObservableField<String> newPassword = new ObservableField<>("");
+    public ObservableField<String> repeatPassword = new ObservableField<>("");
+    public ObservableField<TextWatcher> oldPassTextWatcherAdapter = new ObservableField<>();
     public ObservableField<TextWatcher> newPassTextWatcherAdapter = new ObservableField<>();
     public ObservableField<TextWatcher> repeatPasswordTextWatcherAdapter = new ObservableField<>();
     public ObservableField<TextView.OnEditorActionListener> repeatPasswordActionAdapter = new ObservableField<>();
     public ObservableBoolean clearFocus = new ObservableBoolean(false);
 
-    private TextInputLayout tokenInputLayout;
+    private TextInputLayout oldPassLayout;
     private TextInputLayout newPassLayout;
     private TextInputLayout repeatPassLayout;
     private Resources resources;
@@ -55,26 +57,25 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
         return false;
     };
 
-    public void init(String token, String type) {
-        this.token.set(token);
+    public void init(String type) {
         this.type = type;
-        ResetPasswordFragmentBinding binding = ((ResetPasswordFragmentBinding) getBinding());
+        ChangePasswordFragmentBinding binding = (ChangePasswordFragmentBinding) getBinding();
         resources = getActivity().getResources();
-        tokenInputLayout = binding.resetPasswordTokenLayout;
-        newPassLayout = binding.resetPasswordNewPassLayout;
-        repeatPassLayout = binding.resetPasswordRepeatPasswordLayout;
+        oldPassLayout = binding.changePasswordOldPassLayout;
+        newPassLayout = binding.changePasswordNewPassLayout;
+        repeatPassLayout = binding.changePasswordRepeatPasswordLayout;
 
-        tokenTextWatcherAdapter.set(new ValidatorTextWatcher(this.token, tokenInputLayout, FieldType.TOKEN));
+        oldPassTextWatcherAdapter.set(new ValidatorTextWatcher(oldPassword, oldPassLayout, FieldType.PASSWORD));
         newPassTextWatcherAdapter.set(new ValidatorTextWatcher(newPassword, newPassLayout, FieldType.PASSWORD));
         repeatPasswordTextWatcherAdapter.set(new ValidatorTextWatcher(repeatPassword, repeatPassLayout, newPassword, FieldType.REPEAT_PASSWORD));
         repeatPasswordActionAdapter.set(resetPasswordActionListener);
     }
 
     private boolean validateAll() {
-        boolean tokenValidation = Validator.validateToken(token.get(), tokenInputLayout, resources);
+        boolean oldPassValidation = Validator.validatePassword(oldPassword.get(), oldPassLayout, resources);
         boolean newPassValidation = Validator.validatePassword(newPassword.get(), newPassLayout, resources);
         boolean repeatPassValidation = Validator.validateRepeatPassword(repeatPassword.get(), repeatPassLayout, newPassword.get(), resources);
-        return tokenValidation && newPassValidation && repeatPassValidation;
+        return oldPassValidation && newPassValidation && repeatPassValidation;
     }
 
     public void validate() {
@@ -83,8 +84,9 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
         if (validateAll()) {
             errorText.set("");
             ProgressDialog.get().show();
-            ResetPasswordRequest resetPasswordRequest = new ResetPasswordRequest(token.get(), newPassword.get());
-            Connection.get().resetPassword(callback, resetPasswordRequest);
+            ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(oldPassword.get(), newPassword.get());
+            String token = UserPreferences.get().getAuthToken();
+            Connection.get().changePassword(callback,token, changePasswordRequest);
         }
     }
 
@@ -112,5 +114,4 @@ public class ResetPasswordFragmentViewModel extends BaseViewModel {
 
         }
     };
-
 }

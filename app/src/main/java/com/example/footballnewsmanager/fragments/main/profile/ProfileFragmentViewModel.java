@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.activites.auth.AuthActivity;
+import com.example.footballnewsmanager.activites.change_password.ChangePasswordActivity;
 import com.example.footballnewsmanager.activites.liked_news.LikedNewsActivity;
 import com.example.footballnewsmanager.activites.main.MainActivity;
 import com.example.footballnewsmanager.activites.manageTeams.ManageTeamsActivity;
@@ -21,10 +22,10 @@ import com.example.footballnewsmanager.api.responses.BaseResponse;
 import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse;
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ProfileFragmentBinding;
-import com.example.footballnewsmanager.helpers.ProgressDialog;
 import com.example.footballnewsmanager.fragments.main.MainFragment;
 import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.LanguageHelper;
+import com.example.footballnewsmanager.helpers.ProgressDialog;
 import com.example.footballnewsmanager.helpers.ProposedLanguageDialogManager;
 import com.example.footballnewsmanager.helpers.SnackbarHelper;
 import com.example.footballnewsmanager.helpers.UserPreferences;
@@ -35,6 +36,8 @@ import java.util.Locale;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
+
+import static com.example.footballnewsmanager.activites.auth.AuthActivity.RESULT_RESET_PASSWORD;
 
 public class ProfileFragmentViewModel extends BaseViewModel implements ProposedLanguageListener {
 
@@ -166,6 +169,11 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
         ProgressDialog.get().show();
         String token = UserPreferences.get().getAuthToken();
         Connection.get().logout(accountCallback, token);
+    }
+
+    public void onChangePassword(){
+        Intent intent = new Intent(getActivity(), ChangePasswordActivity.class);
+        getActivity().startActivityForResult(intent, RESULT_RESET_PASSWORD);
     }
 
     public void onDeleteAccountClick() {

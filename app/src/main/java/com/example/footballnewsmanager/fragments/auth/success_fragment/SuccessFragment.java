@@ -45,7 +45,7 @@ public class SuccessFragment extends BaseFragment<SuccessFragmentBinding,Success
 
     @Override
     public int getBackPressType() {
-        return 0;
+        return 3;
     }
 
     @Override

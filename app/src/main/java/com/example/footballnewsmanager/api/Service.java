@@ -1,5 +1,6 @@
 package com.example.footballnewsmanager.api;
 
+import com.example.footballnewsmanager.api.requests.auth.ChangePasswordRequest;
 import com.example.footballnewsmanager.api.requests.auth.LoginRequest;
 import com.example.footballnewsmanager.api.requests.auth.RegisterRequest;
 import com.example.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
@@ -56,11 +57,16 @@ public interface Service {
             @Body ResetPasswordRequest resetPasswordRequest
     );
 
+    @POST("users/me/password")
+    Observable<BaseResponse> changePassword(
+            @Header("Authorization") String token,
+            @Body ChangePasswordRequest changePasswordRequest
+    );
+
     @POST("auth/register")
     Observable<BaseResponse> register(
             @Body RegisterRequest registerRequest
     );
-
 
     @GET("teams/hot")
     Observable<TeamsResponse> proposedTeams(

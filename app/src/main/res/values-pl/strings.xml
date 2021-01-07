@@ -92,5 +92,6 @@
     <string name="bottle_image">Zdjęcie Butelki</string>
     <string name="league_logo">Logo Ligi</string>
     <string name="search_result_image">Zdjęcie Wyniku Wyszukiwania</string>
+    <string name="old_password">Stare hasło</string>
 
 </resources>
