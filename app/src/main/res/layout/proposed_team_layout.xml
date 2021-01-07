@@ -27,6 +27,7 @@
         <ImageView
             android:layout_width="36dp"
             android:layout_height="36dp"
+            android:contentDescription="@string/team_logo"
             app:imageUrl="@{viewModel.imageUrl}"
             />
 

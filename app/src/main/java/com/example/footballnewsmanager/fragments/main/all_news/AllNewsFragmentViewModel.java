@@ -121,12 +121,12 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
         SearchView searchView = ((AllNewsFragmentBinding) getBinding()).allNewsSearchView;
         searchView.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SearchActivity.class);
-            getActivity().startActivity(intent);
+            getActivity().startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS_FROM_TEAM_NEWS);
         });
         searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
-                getActivity().startActivity(intent);
+                getActivity().startActivityForResult(intent, MainActivity.RESULT_MANAGE_TEAMS_FROM_TEAM_NEWS);
             }
         });
         swipeRefreshLayout = ((AllNewsFragmentBinding) getBinding()).allNewsSwipeRefresh;
@@ -144,6 +144,7 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
 
     public void load() {
         currentPage = 0;
+        isLastPage = false;
         errorVisibility.set(false);
         itemsVisibility.set(false);
         loadingVisibility.set(true);

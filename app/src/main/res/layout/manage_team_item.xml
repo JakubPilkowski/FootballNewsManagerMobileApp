@@ -31,7 +31,8 @@
                 android:layout_margin="6dp"
                 android:background="@drawable/site_logo_background"
                 android:padding="3dp"
-                app:imageUrl="@{viewModel.img}" />
+                app:imageUrl="@{viewModel.img}"
+                android:contentDescription="@string/site_logo" />
 
             <TextView
                 android:layout_width="0dp"

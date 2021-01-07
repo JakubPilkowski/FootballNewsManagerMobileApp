@@ -28,6 +28,7 @@
                 android:layout_height="44dp"
                 android:background="@drawable/site_logo_background"
                 android:padding="3dp"
+                android:contentDescription="@string/team_logo"
                 app:imageUrl="@{viewModel.teamUrl}" />
 
             <TextView
