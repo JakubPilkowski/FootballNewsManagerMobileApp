@@ -93,5 +93,8 @@
     <string name="league_logo">Logo Ligi</string>
     <string name="search_result_image">Zdjęcie Wyniku Wyszukiwania</string>
     <string name="old_password">Stare hasło</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="are_you_sure_you_want_to_delete_account">Czy na pewno chcesz usunąć konto?</string>
 
 </resources>
