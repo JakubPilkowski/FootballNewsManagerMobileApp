@@ -15,6 +15,7 @@ import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.footballnewsmanager.api.Connection;
+import com.example.footballnewsmanager.helpers.AlertDialogManager;
 import com.example.footballnewsmanager.helpers.ProgressDialog;
 import com.example.footballnewsmanager.helpers.KeyboardHelper;
 import com.example.footballnewsmanager.helpers.Navigator;
@@ -37,6 +38,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AlertDialogManager.init(this);
         UserPreferences.init(this);
         ProgressDialog.init(this);
         Connection.init();
@@ -130,6 +132,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
     @Override
     protected void onResume() {
         UserPreferences.init(this);
+        AlertDialogManager.init(this);
         ProgressDialog.init(this);
         Connection.init();
         SoundPoolManager.init(this);

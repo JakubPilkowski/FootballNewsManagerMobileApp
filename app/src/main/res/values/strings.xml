@@ -93,5 +93,8 @@
     <string name="league_logo">League Logo</string>
     <string name="search_result_image">Search Result Image</string>
     <string name="old_password">Old password</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="are_you_sure_you_want_to_delete_account">Are you sure you want to delete the account?</string>
 
 </resources>

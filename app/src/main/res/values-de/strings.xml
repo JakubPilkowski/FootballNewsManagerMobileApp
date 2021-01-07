@@ -92,4 +92,7 @@
     <string name="league_logo">Liga-Logo</string>
     <string name="search_result_image">Suchergebnis Bild</string>
     <string name="old_password">Altes Passwort</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="are_you_sure_you_want_to_delete_account">Möchten Sie das Konto wirklich löschen?</string>
 </resources>

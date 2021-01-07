@@ -23,6 +23,7 @@ import com.example.footballnewsmanager.api.responses.profile.UserProfileResponse
 import com.example.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.ProfileFragmentBinding;
 import com.example.footballnewsmanager.fragments.main.MainFragment;
+import com.example.footballnewsmanager.helpers.AlertDialogManager;
 import com.example.footballnewsmanager.helpers.ErrorView;
 import com.example.footballnewsmanager.helpers.LanguageHelper;
 import com.example.footballnewsmanager.helpers.ProgressDialog;
@@ -177,11 +178,15 @@ public class ProfileFragmentViewModel extends BaseViewModel implements ProposedL
     }
 
     public void onDeleteAccountClick() {
-        ProgressDialog.get().show();
-        String token = UserPreferences.get().getAuthToken();
-//        Connection.get().deleteAccount(accountCallback, token);
-        ProgressDialog.get().dismiss();
+
+        AlertDialogManager.get().show((dialog, which) -> {
+            ProgressDialog.get().show();
+            String token = UserPreferences.get().getAuthToken();
+            Connection.get().deleteAccount(accountCallback, token);
+        });
     }
+
+
 
     private Callback<BaseResponse> accountCallback = new Callback<BaseResponse>() {
         @Override
