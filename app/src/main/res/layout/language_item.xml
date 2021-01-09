@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.adapters.LanguagesAdapterViewModel" />
+            type="pl.android.footballnewsmanager.adapters.LanguagesAdapterViewModel" />
     </data>
 
     <TextView

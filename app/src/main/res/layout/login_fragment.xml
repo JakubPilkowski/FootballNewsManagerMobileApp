@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.fragments.auth.login.LoginViewModel" />
+            type="pl.android.footballnewsmanager.fragments.auth.login.LoginViewModel" />
     </data>
 
     <ScrollView

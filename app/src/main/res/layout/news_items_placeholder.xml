@@ -5,10 +5,10 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.adapters.news.NewsAdapterPlaceholderViewModel" />
+            type="pl.android.footballnewsmanager.adapters.news.NewsAdapterPlaceholderViewModel" />
     </data>
 
-    <com.example.footballnewsmanager.helpers.NewsPlaceholder
+    <pl.android.footballnewsmanager.helpers.NewsPlaceholder
         android:id="@+id/news_items_placeholder"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

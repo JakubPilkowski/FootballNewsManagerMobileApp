@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.adapters.search.SearchLabelViewModel" />
+            type="pl.android.footballnewsmanager.adapters.search.SearchLabelViewModel" />
     </data>
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"

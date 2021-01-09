@@ -4,7 +4,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.activites.auth.AuthActivityViewModel" />
+            type="pl.android.footballnewsmanager.activites.auth.AuthActivityViewModel" />
     </data>
 
     <FrameLayout

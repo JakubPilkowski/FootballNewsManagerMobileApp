@@ -7,7 +7,7 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "com.example.footballnewsmanager"
+        applicationId "pl.android.footballnewsmanager"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1

@@ -7,10 +7,10 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.activites.error.ErrorViewModel" />
+            type="pl.android.footballnewsmanager.activites.error.ErrorViewModel" />
     </data>
 
-    <com.example.footballnewsmanager.helpers.ErrorView
+    <pl.android.footballnewsmanager.helpers.ErrorView
         android:id="@+id/activity_error_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

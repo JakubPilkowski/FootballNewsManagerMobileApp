@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.fragments.main.all_news.AllNewsFragmentViewModel" />
+            type="pl.android.footballnewsmanager.fragments.main.all_news.AllNewsFragmentViewModel" />
     </data>
 
     <LinearLayout
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.example.footballnewsmanager.helpers.LoadingView
+                <pl.android.footballnewsmanager.helpers.LoadingView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
@@ -63,7 +63,7 @@
                         app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
                 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-                <com.example.footballnewsmanager.helpers.ErrorView
+                <pl.android.footballnewsmanager.helpers.ErrorView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"

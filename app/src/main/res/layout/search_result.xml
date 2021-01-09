@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.example.footballnewsmanager.models.SearchType" />
+        <import type="pl.android.footballnewsmanager.models.SearchType" />
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.adapters.search.SearchAdapterViewModel" />
+            type="pl.android.footballnewsmanager.adapters.search.SearchAdapterViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

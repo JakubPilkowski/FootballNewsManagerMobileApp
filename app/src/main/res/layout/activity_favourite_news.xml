@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.activites.liked_news.LikedNewsActivityViewModel" />
+            type="pl.android.footballnewsmanager.activites.liked_news.LikedNewsActivityViewModel" />
     </data>
 
     <LinearLayout
@@ -29,13 +29,13 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <com.example.footballnewsmanager.helpers.LoadingView
+                <pl.android.footballnewsmanager.helpers.LoadingView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
 
 
-                <com.example.footballnewsmanager.helpers.ErrorView
+                <pl.android.footballnewsmanager.helpers.ErrorView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"

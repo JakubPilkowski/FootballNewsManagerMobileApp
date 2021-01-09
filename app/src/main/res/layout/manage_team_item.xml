@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.adapters.manage_teams.teams.ManageTeamsViewModel" />
+            type="pl.android.footballnewsmanager.adapters.manage_teams.teams.ManageTeamsViewModel" />
     </data>
 
     <LinearLayout

@@ -8,19 +8,19 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.fragments.main.profile.ProfileFragmentViewModel" />
+            type="pl.android.footballnewsmanager.fragments.main.profile.ProfileFragmentViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.footballnewsmanager.helpers.LoadingView
+        <pl.android.footballnewsmanager.helpers.LoadingView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
 
-        <com.example.footballnewsmanager.helpers.ErrorView
+        <pl.android.footballnewsmanager.helpers.ErrorView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
@@ -220,7 +220,7 @@
                         android:gravity="center_vertical"
                         android:onClick="@{()-> viewModel.onManageTeamsClick()}"
                         android:orientation="horizontal"
-                        android:padding="6dp"
+                        android:padding="8dp"
                         android:weightSum="1">
 
                         <TextView
@@ -247,7 +247,7 @@
                         android:gravity="center_vertical"
                         android:onClick="@{()-> viewModel.onLikedNewsClick()}"
                         android:orientation="horizontal"
-                        android:padding="6dp"
+                        android:padding="8dp"
                         android:weightSum="1">
 
                         <TextView
@@ -274,7 +274,7 @@
                         android:gravity="center_vertical"
                         android:onClick="@{()->viewModel.languageClick()}"
                         android:orientation="horizontal"
-                        android:padding="6dp"
+                        android:padding="8dp"
                         android:weightSum="1">
 
                         <TextView
@@ -306,7 +306,7 @@
                         android:layout_marginBottom="12dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="6dp"
+                        android:padding="8dp"
                         android:weightSum="1">
 
                         <TextView
@@ -369,7 +369,7 @@
                         android:gravity="center_vertical"
                         android:onClick="@{()-> viewModel.onLogoutClick()}"
                         android:orientation="horizontal"
-                        android:padding="6dp"
+                        android:padding="8dp"
                         android:weightSum="1">
 
                         <TextView
@@ -395,7 +395,7 @@
                         android:gravity="center_vertical"
                         android:onClick="@{()-> viewModel.onChangePassword()}"
                         android:orientation="horizontal"
-                        android:padding="6dp"
+                        android:padding="8dp"
                         android:weightSum="1">
 
                         <TextView
@@ -421,7 +421,7 @@
                         android:gravity="center_vertical"
                         android:onClick="@{()-> viewModel.onDeleteAccountClick()}"
                         android:orientation="horizontal"
-                        android:padding="6dp"
+                        android:padding="8dp"
                         android:weightSum="1">
 
                         <TextView

@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.adapters.news.NewsAdapterViewModel" />
+            type="pl.android.footballnewsmanager.adapters.news.NewsAdapterViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -30,13 +30,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingBottom="3dp">
+                android:onClick="@{()->viewModel.onSiteClick()}"
+                android:paddingBottom="8dp">
 
                 <ImageView
                     android:layout_width="70dp"
                     android:layout_height="40dp"
                     android:background="@drawable/site_logo_background"
-                    android:onClick="@{()->viewModel.onSiteClick()}"
                     android:padding="3dp"
                     app:imageUrl="@{viewModel.siteLogo}"
                     android:contentDescription="@string/site_logo" />
@@ -46,7 +46,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="6dp"
-                    android:onClick="@{()->viewModel.onSiteClick()}"
                     android:text="@{viewModel.siteName}"
                     android:textColor="#000"
                     android:textSize="19sp"
@@ -62,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="@{viewModel.isMarked ? View.VISIBLE : View.GONE}"
-                    android:layout_margin="3dp">
+                    android:padding="3dp">
 
                     <ProgressBar
                         android:layout_width="30dp"
@@ -88,7 +87,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp">
+                    android:padding="3dp">
 
                     <ProgressBar
                         android:layout_width="30dp"
@@ -113,7 +112,7 @@
                 <Button
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginStart="3dp"
+                    android:padding="3dp"
                     android:background="@drawable/info_with_ripple"
                     android:onClick="@{()->viewModel.onMoreInfoClick()}" />
             </LinearLayout>
