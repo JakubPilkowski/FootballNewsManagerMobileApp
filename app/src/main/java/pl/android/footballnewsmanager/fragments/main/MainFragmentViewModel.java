@@ -9,20 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.footballnewsmanager.R;
-import pl.android.footballnewsmanager.adapters.main.MainViewPager;
-import pl.android.footballnewsmanager.api.Callback;
-import pl.android.footballnewsmanager.api.Connection;
-import pl.android.footballnewsmanager.api.errors.BaseError;
-import pl.android.footballnewsmanager.base.BaseFragment;
-import pl.android.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.MainFragmentBinding;
-import pl.android.footballnewsmanager.fragments.main.all_news.AllNewsFragment;
-import pl.android.footballnewsmanager.fragments.main.news.NewsFragment;
-import pl.android.footballnewsmanager.fragments.main.profile.ProfileFragment;
-import pl.android.footballnewsmanager.fragments.main.sites.SitesFragment;
-import pl.android.footballnewsmanager.helpers.SnackbarHelper;
-import pl.android.footballnewsmanager.helpers.UserPreferences;
-import pl.android.footballnewsmanager.interfaces.BadgeListener;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -31,6 +18,19 @@ import java.util.List;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
+import pl.android.footballnewsmanager.adapters.main.MainViewPager;
+import pl.android.footballnewsmanager.api.Callback;
+import pl.android.footballnewsmanager.api.Connection;
+import pl.android.footballnewsmanager.api.errors.BaseError;
+import pl.android.footballnewsmanager.base.BaseFragment;
+import pl.android.footballnewsmanager.base.BaseViewModel;
+import pl.android.footballnewsmanager.fragments.main.all_news.AllNewsFragment;
+import pl.android.footballnewsmanager.fragments.main.news.NewsFragment;
+import pl.android.footballnewsmanager.fragments.main.profile.ProfileFragment;
+import pl.android.footballnewsmanager.fragments.main.sites.SitesFragment;
+import pl.android.footballnewsmanager.helpers.SnackbarHelper;
+import pl.android.footballnewsmanager.helpers.UserPreferences;
+import pl.android.footballnewsmanager.interfaces.BadgeListener;
 
 public class MainFragmentViewModel extends BaseViewModel implements BadgeListener {
     private ViewPager2 viewPager2;
@@ -114,13 +114,15 @@ public class MainFragmentViewModel extends BaseViewModel implements BadgeListene
         @Override
         public void onSuccess(Long amount) {
             UserPreferences.get().changeNotification(amount);
-            if (amount > 0) {
-                BadgeDrawable badgeDrawable = ((MainFragmentBinding) getBinding()).mainBottomNavView.getOrCreateBadge(R.id.nav_news);
-                badgeDrawable.setMaxCharacterCount(99);
-                badgeDrawable.setNumber(amount.intValue());
-            } else {
-                ((MainFragmentBinding) getBinding()).mainBottomNavView.removeBadge(R.id.nav_news);
-            }
+            getActivity().runOnUiThread(()->{
+                if (amount > 0) {
+                    BadgeDrawable badgeDrawable = ((MainFragmentBinding) getBinding()).mainBottomNavView.getOrCreateBadge(R.id.nav_news);
+                    badgeDrawable.setMaxCharacterCount(99);
+                    badgeDrawable.setNumber(amount.intValue());
+                } else {
+                    ((MainFragmentBinding) getBinding()).mainBottomNavView.removeBadge(R.id.nav_news);
+                }
+            });
         }
 
         @Override

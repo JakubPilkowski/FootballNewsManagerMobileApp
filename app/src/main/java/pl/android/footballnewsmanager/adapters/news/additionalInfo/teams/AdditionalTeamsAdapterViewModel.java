@@ -7,17 +7,17 @@ import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.databinding.AdditionalInfoTeamBinding;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
 import pl.android.footballnewsmanager.activites.main.MainActivity;
 import pl.android.footballnewsmanager.api.Callback;
 import pl.android.footballnewsmanager.api.Connection;
 import pl.android.footballnewsmanager.api.errors.BaseError;
 import pl.android.footballnewsmanager.base.BaseAdapterViewModel;
-import com.example.footballnewsmanager.databinding.AdditionalInfoTeamBinding;
 import pl.android.footballnewsmanager.helpers.UserPreferences;
 import pl.android.footballnewsmanager.models.UserTeam;
-
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
 
 public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
 
@@ -67,7 +67,8 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
             updateFavouriteState(newsUserTeam.isFavourite());
             loadingButtonVisibility.set(false);
             toggleButtonVisibility.set(true);
-            ((MainActivity)activity).reloadMainPage();
+            ((MainActivity)activity).reloadNews();
+            ((MainActivity)activity).reloadProfile();
         }
 
         @Override

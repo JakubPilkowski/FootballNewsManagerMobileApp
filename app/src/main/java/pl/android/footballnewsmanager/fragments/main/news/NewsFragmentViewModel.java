@@ -1,18 +1,19 @@
 package pl.android.footballnewsmanager.fragments.main.news;
 
 import android.content.Intent;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
 import pl.android.footballnewsmanager.activites.main.MainActivity;
 import pl.android.footballnewsmanager.activites.manageTeams.ManageTeamsActivity;
 import pl.android.footballnewsmanager.adapters.news.NewsAdapter;
@@ -22,21 +23,15 @@ import pl.android.footballnewsmanager.api.errors.BaseError;
 import pl.android.footballnewsmanager.api.errors.SingleMessageError;
 import pl.android.footballnewsmanager.api.responses.main.NewsResponse;
 import pl.android.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import pl.android.footballnewsmanager.fragments.main.MainFragment;
 import pl.android.footballnewsmanager.helpers.ErrorView;
-import pl.android.footballnewsmanager.helpers.FabScrollListener;
 import pl.android.footballnewsmanager.helpers.NewsPlaceholder;
+import pl.android.footballnewsmanager.helpers.PaginationScrollListener;
 import pl.android.footballnewsmanager.helpers.SnackbarHelper;
 import pl.android.footballnewsmanager.helpers.UserPreferences;
 import pl.android.footballnewsmanager.interfaces.BadgeListener;
 import pl.android.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import pl.android.footballnewsmanager.models.UserNews;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
 
 public class NewsFragmentViewModel extends BaseViewModel implements ExtendedRecyclerViewItemsListener<UserNews> {
 
@@ -59,103 +54,14 @@ public class NewsFragmentViewModel extends BaseViewModel implements ExtendedRecy
     public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
     private ErrorView.OnTryAgainListener listener = this::load;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private FloatingActionButton newsFab;
-    private Animation animation;
-    private boolean isAnimated = false;
-
-    private Animation.AnimationListener enterAnimation = new Animation.AnimationListener() {
-        @Override
-        public void onAnimationStart(Animation animation) {
-            isAnimated = true;
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            newsFab.setAlpha(1f);
-            newsFab.setVisibility(View.GONE);
-            isAnimated = false;
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-            onAnimationEnd(animation);
-        }
-    };
-
-    private Animation.AnimationListener closeAnimation = new Animation.AnimationListener() {
-        @Override
-        public void onAnimationStart(Animation animation) {
-            isAnimated = true;
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            newsFab.setVisibility(View.GONE);
-            isAnimated = false;
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-            onAnimationEnd(animation);
-        }
-    };
-
-    private Animation.AnimationListener openAnimation = new Animation.AnimationListener() {
-        @Override
-        public void onAnimationStart(Animation animation) {
-            newsFab.setVisibility(View.VISIBLE);
-            isAnimated = true;
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            isAnimated = false;
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-            onAnimationEnd(animation);
-        }
-    };
-
 
     public void init(BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
         swipeRefreshLayout = ((NewsFragmentBinding) getBinding()).newsSwipeRefresh;
-        newsFab = ((NewsFragmentBinding)getBinding()).newsFab;
         recyclerView = ((NewsFragmentBinding) getBinding()).newsRecyclerView;
-        newsFab.setAlpha(0f);
-        animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
-        animation.setAnimationListener(enterAnimation);
-        newsFab.startAnimation(animation);
         tryAgainListener.set(listener);
         swipeRefreshListenerObservable.set(this::updateNews);
-        FabScrollListener scrollListener = new FabScrollListener() {
-            @Override
-            public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int position = layoutManager.findFirstCompletelyVisibleItemPosition();
-                if(position == 0 && newsFab.isShown() && !isAnimated){
-                    animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
-                    animation.setAnimationListener(closeAnimation);
-                    newsFab.startAnimation(animation);
-                }
-            }
-
-
-            @Override
-            protected void onScroll(int dx, int dy) {
-                if (dy < -20 && !newsFab.isShown() && !isAnimated) {
-                    animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_up);
-                    animation.setAnimationListener(openAnimation);
-                    newsFab.startAnimation(animation);
-                } else if (dy > 12 && newsFab.isShown() && !isAnimated) {
-                    animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
-                    animation.setAnimationListener(closeAnimation);
-                    newsFab.startAnimation(animation);
-                }
-            }
+        PaginationScrollListener scrollListener = new PaginationScrollListener() {
 
             @Override
             protected void loadMoreItems() {
@@ -363,11 +269,8 @@ public class NewsFragmentViewModel extends BaseViewModel implements ExtendedRecy
         Connection.get().news(refreshCallback, token, 0);
     }
 
-    public void onBackToTop(){
+    public void backToTop(){
         recyclerView.scrollToPosition(0);
-        animation = AnimationUtils.loadAnimation(recyclerView.getContext(), R.anim.translate_down);
-        animation.setAnimationListener(closeAnimation);
-        newsFab.startAnimation(animation);
     }
 
     @Override
