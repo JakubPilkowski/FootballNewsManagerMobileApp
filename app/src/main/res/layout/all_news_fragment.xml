@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.fragments.main.all_news.AllNewsFragmentViewModel" />
+            type="pl.android.footballnewsmanager.fragments.main.all_news.AllNewsFragmentViewModel" />
     </data>
 
     <LinearLayout
@@ -21,8 +21,7 @@
             android:id="@+id/all_news_search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_margin="12dp"
             android:background="@drawable/search_background"
             app:closeIcon="@drawable/ic_close"
             app:iconifiedByDefault="false"
@@ -40,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.example.footballnewsmanager.helpers.LoadingView
+                <pl.android.footballnewsmanager.helpers.LoadingView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
@@ -63,27 +62,14 @@
                         app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
                 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-                <com.example.footballnewsmanager.helpers.ErrorView
+                <pl.android.footballnewsmanager.helpers.ErrorView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
                     app:errorStatus="@{viewModel.status}"
                     app:errorTryAgainListener="@{viewModel.tryAgainListener}"
                     />
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/all_news_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:onClick="@{()->viewModel.onBackToTop()}"
-                    android:src="@drawable/ic_arrow_upward"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    app:rippleColor="@color/colorTextPrimary"
-                    app:backgroundTint="@color/colorPrimary"
-                    app:tint="@color/colorTextPrimary"
-                    app:maxImageSize="28dp"
-                    />
+
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>

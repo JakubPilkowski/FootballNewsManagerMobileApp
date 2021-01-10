@@ -8,14 +8,14 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.fragments.manage_teams.all_teams.ManageTeamsFromLeagueViewModel" />
+            type="pl.android.footballnewsmanager.fragments.manage_teams.all_teams.ManageTeamsFromLeagueViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.footballnewsmanager.helpers.LoadingView
+        <pl.android.footballnewsmanager.helpers.LoadingView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE: View.GONE}" />
@@ -28,7 +28,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
 
-        <com.example.footballnewsmanager.helpers.ErrorView
+        <pl.android.footballnewsmanager.helpers.ErrorView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"

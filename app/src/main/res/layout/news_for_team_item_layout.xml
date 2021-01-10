@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.adapters.news.newsForTeam.NewsForTeamAdapterViewModel" />
+            type="pl.android.footballnewsmanager.adapters.news.newsForTeam.NewsForTeamAdapterViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView

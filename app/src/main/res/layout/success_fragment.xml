@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.fragments.auth.success_fragment.SuccessViewModel" />
+            type="pl.android.footballnewsmanager.fragments.auth.success_fragment.SuccessViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,7 +12,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-    <com.example.footballnewsmanager.fragments.auth.success_fragment.AnimatedSuccessView
+    <pl.android.footballnewsmanager.fragments.auth.success_fragment.AnimatedSuccessView
         android:id="@+id/success_animated_view"
         android:layout_width="128dp"
         android:layout_height="128dp"

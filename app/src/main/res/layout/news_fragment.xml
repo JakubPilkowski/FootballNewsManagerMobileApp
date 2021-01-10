@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.fragments.main.news.NewsFragmentViewModel" />
+            type="pl.android.footballnewsmanager.fragments.main.news.NewsFragmentViewModel" />
     </data>
 
 
@@ -24,7 +24,7 @@
             android:layout_height="match_parent">
 
 
-            <com.example.footballnewsmanager.helpers.LoadingView
+            <pl.android.footballnewsmanager.helpers.LoadingView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
@@ -48,7 +48,7 @@
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-            <com.example.footballnewsmanager.helpers.ErrorView
+            <pl.android.footballnewsmanager.helpers.ErrorView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
@@ -56,25 +56,12 @@
                 app:errorTryAgainListener="@{viewModel.tryAgainListener}" />
 
 
-            <com.example.footballnewsmanager.helpers.NewsPlaceholder
+            <pl.android.footballnewsmanager.helpers.NewsPlaceholder
                 android:id="@+id/news_placeholder_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="@{viewModel.placeholderVisibility ? View.VISIBLE : View.GONE}" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/news_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="16dp"
-                android:onClick="@{()->viewModel.onBackToTop()}"
-                android:src="@drawable/ic_arrow_upward"
-                app:backgroundTint="@color/colorPrimary"
-                app:maxImageSize="28dp"
-                app:rippleColor="@color/colorTextPrimary"
-                app:tint="@color/colorTextPrimary" />
 
         </RelativeLayout>
 

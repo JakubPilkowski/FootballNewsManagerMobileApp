@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.adapters.manage_teams.all.ManageLeaguesAdapterViewModel" />
+            type="pl.android.footballnewsmanager.adapters.manage_teams.all.ManageLeaguesAdapterViewModel" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"

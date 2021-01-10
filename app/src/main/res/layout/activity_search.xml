@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.activites.search.SearchActivityViewModel" />
+            type="pl.android.footballnewsmanager.activites.search.SearchActivityViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -50,7 +50,7 @@
                     android:indeterminateTint="@color/colorTextPrimary"/>
             </LinearLayout>
 
-            <com.example.footballnewsmanager.helpers.ErrorView
+            <pl.android.footballnewsmanager.helpers.ErrorView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"

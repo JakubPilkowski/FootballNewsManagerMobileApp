@@ -8,25 +8,24 @@
 
         <variable
             name="viewModel"
-            type="com.example.footballnewsmanager.fragments.main.profile.ProfileFragmentViewModel" />
+            type="pl.android.footballnewsmanager.fragments.main.profile.ProfileFragmentViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.footballnewsmanager.helpers.LoadingView
+        <pl.android.footballnewsmanager.helpers.LoadingView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
 
-        <com.example.footballnewsmanager.helpers.ErrorView
+        <pl.android.footballnewsmanager.helpers.ErrorView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
             app:errorStatus="@{viewModel.status}"
-            app:errorTryAgainListener="@{viewModel.tryAgainListener}"
-            />
+            app:errorTryAgainListener="@{viewModel.tryAgainListener}" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/profile_swipe_refresh"
@@ -39,8 +38,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbarThumbVertical="@color/colorPrimary"
-                >
+                android:scrollbarThumbVertical="@color/colorPrimary">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -95,8 +93,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:baselineAligned="false"
-                        android:layout_marginBottom="12dp">
+                        android:layout_marginBottom="12dp"
+                        android:baselineAligned="false">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -213,15 +211,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="12dp"
                         android:background="@drawable/ripple_primary_background_transparent"
                         android:gravity="center_vertical"
                         android:onClick="@{()-> viewModel.onManageTeamsClick()}"
-                        android:orientation="horizontal"
-                        android:padding="6dp"
-                        android:weightSum="1">
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
 
                         <TextView
                             android:layout_width="0dp"
@@ -240,15 +237,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="12dp"
                         android:background="@drawable/ripple_primary_background_transparent"
                         android:gravity="center_vertical"
                         android:onClick="@{()-> viewModel.onLikedNewsClick()}"
-                        android:orientation="horizontal"
-                        android:padding="6dp"
-                        android:weightSum="1">
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
 
                         <TextView
                             android:layout_width="0dp"
@@ -267,15 +263,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="12dp"
                         android:background="@drawable/ripple_primary_background_transparent"
                         android:gravity="center_vertical"
                         android:onClick="@{()->viewModel.languageClick()}"
-                        android:orientation="horizontal"
-                        android:padding="6dp"
-                        android:weightSum="1">
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
 
                         <TextView
                             android:layout_width="0dp"
@@ -299,15 +294,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:layout_marginTop="12dp"
-                        android:background="@drawable/ripple_primary_background_transparent"
-                        android:onClick="@{()->viewModel.onProposedClick()}"
                         android:layout_marginBottom="12dp"
+                        android:background="@drawable/ripple_primary_background_transparent"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="6dp"
-                        android:weightSum="1">
+                        android:onClick="@{()->viewModel.onProposedClick()}"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
 
                         <TextView
                             android:layout_width="0dp"
@@ -362,15 +356,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="12dp"
                         android:background="@drawable/ripple_primary_background_transparent"
                         android:gravity="center_vertical"
                         android:onClick="@{()-> viewModel.onLogoutClick()}"
-                        android:orientation="horizontal"
-                        android:padding="6dp"
-                        android:weightSum="1">
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
 
                         <TextView
                             android:layout_width="0dp"
@@ -388,15 +381,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="12dp"
                         android:background="@drawable/ripple_primary_background_transparent"
                         android:gravity="center_vertical"
                         android:onClick="@{()-> viewModel.onChangePassword()}"
-                        android:orientation="horizontal"
-                        android:padding="6dp"
-                        android:weightSum="1">
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
 
                         <TextView
                             android:layout_width="0dp"
@@ -414,15 +406,14 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="12dp"
                         android:background="@drawable/ripple_primary_background_transparent"
                         android:gravity="center_vertical"
                         android:onClick="@{()-> viewModel.onDeleteAccountClick()}"
-                        android:orientation="horizontal"
-                        android:padding="6dp"
-                        android:weightSum="1">
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
 
                         <TextView
                             android:layout_width="0dp"
