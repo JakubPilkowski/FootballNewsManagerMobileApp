@@ -9,21 +9,20 @@ import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.databinding.ManageTeamItemBinding;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
 import pl.android.footballnewsmanager.activites.main.MainActivity;
 import pl.android.footballnewsmanager.activites.news_for_team.NewsForTeamActivity;
 import pl.android.footballnewsmanager.api.Callback;
 import pl.android.footballnewsmanager.api.Connection;
 import pl.android.footballnewsmanager.api.errors.BaseError;
-import com.example.footballnewsmanager.databinding.ManageTeamItemBinding;
 import pl.android.footballnewsmanager.helpers.SnackbarHelper;
 import pl.android.footballnewsmanager.helpers.UserPreferences;
-import pl.android.footballnewsmanager.interfaces.ExtendedRecyclerViewItemsListener;
 import pl.android.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import pl.android.footballnewsmanager.models.Team;
 import pl.android.footballnewsmanager.models.UserTeam;
-
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
 
 public class ManageTeamsViewModel {
 
@@ -36,7 +35,7 @@ public class ManageTeamsViewModel {
     private UserTeam userTeam;
     private Team team;
     private RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener;
-    private ExtendedRecyclerViewItemsListener<UserTeam> innerExtendedRecyclerViewItemsListener;
+    private RecyclerViewItemsListener<UserTeam> innerExtendedRecyclerViewItemsListener;
     private Activity activity;
     private LinearLayout mainLayout;
 
@@ -48,8 +47,8 @@ public class ManageTeamsViewModel {
         update(userTeam);
     }
 
-    public void init(UserTeam userTeam, Activity activity, ExtendedRecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener
-            , ExtendedRecyclerViewItemsListener<UserTeam> innerRecyclerViewListener, ManageTeamItemBinding binding)
+    public void init(UserTeam userTeam, Activity activity, RecyclerViewItemsListener<UserTeam> extendedRecyclerViewItemsListener
+            , RecyclerViewItemsListener<UserTeam> innerRecyclerViewListener, ManageTeamItemBinding binding)
     {
         this.activity = activity;
         this.extendedRecyclerViewItemsListener = extendedRecyclerViewItemsListener;

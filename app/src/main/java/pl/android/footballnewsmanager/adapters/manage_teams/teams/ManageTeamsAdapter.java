@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.databinding.ManageTeamItemBinding;
-import pl.android.footballnewsmanager.interfaces.RecyclerViewItemsListener;
-import pl.android.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.android.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import pl.android.footballnewsmanager.models.UserTeam;
 
 public class ManageTeamsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RecyclerViewItemsListener<UserTeam> {
 
@@ -100,7 +101,7 @@ public class ManageTeamsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
             ManageTeamItemBinding binding = ((TeamViewHolder) holder).getBinding();
             binding.setViewModel(viewModel);
-            viewModel.init(items.get(position), activity, extendedRecyclerViewItemsListener, binding);
+            viewModel.init(items.get(position), activity, extendedRecyclerViewItemsListener, this,  binding );
         }
     }
 
