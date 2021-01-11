@@ -2,6 +2,7 @@ package pl.android.footballnewsmanager.adapters.news.additionalInfo.teams;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.widget.Toast;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -69,6 +70,13 @@ public class AdditionalTeamsAdapterViewModel extends BaseAdapterViewModel {
             toggleButtonVisibility.set(true);
             ((MainActivity)activity).reloadNews();
             ((MainActivity)activity).reloadProfile();
+            activity.runOnUiThread(()->{
+                String prefix = activity.getString(newsUserTeam.isFavourite() ? R.string.added_team : R.string.remove_team);
+                String suffix = activity.getString(newsUserTeam.isFavourite() ? R.string.added_to : R.string.remove_from);
+                String teamName = newsUserTeam.getTeam().getName();
+                String fullMessage = prefix+teamName+suffix;
+                Toast.makeText(activity.getApplicationContext(), fullMessage, Toast.LENGTH_SHORT).show();
+            });
         }
 
         @Override

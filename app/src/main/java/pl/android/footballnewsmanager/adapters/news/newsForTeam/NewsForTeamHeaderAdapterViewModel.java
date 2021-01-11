@@ -1,24 +1,26 @@
 package pl.android.footballnewsmanager.adapters.news.newsForTeam;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
 import com.example.footballnewsmanager.R;
-import pl.android.footballnewsmanager.api.Callback;
-import pl.android.footballnewsmanager.api.Connection;
-import pl.android.footballnewsmanager.api.errors.BaseError;
 import com.example.footballnewsmanager.databinding.NewsForTeamHeaderBinding;
-import pl.android.footballnewsmanager.helpers.SnackbarHelper;
-import pl.android.footballnewsmanager.helpers.UserPreferences;
-import pl.android.footballnewsmanager.interfaces.RecyclerViewItemsListener;
-import pl.android.footballnewsmanager.models.UserTeam;
 import com.google.android.material.snackbar.Snackbar;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
+import pl.android.footballnewsmanager.api.Callback;
+import pl.android.footballnewsmanager.api.Connection;
+import pl.android.footballnewsmanager.api.errors.BaseError;
+import pl.android.footballnewsmanager.helpers.SnackbarHelper;
+import pl.android.footballnewsmanager.helpers.UserPreferences;
+import pl.android.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import pl.android.footballnewsmanager.models.UserTeam;
 
 public class NewsForTeamHeaderAdapterViewModel {
 
@@ -36,10 +38,11 @@ public class NewsForTeamHeaderAdapterViewModel {
     private RecyclerViewItemsListener<UserTeam> headerExtendedRecyclerViewItemsListener;
     private LinearLayout linearLayout;
     private Resources resources;
+    private Activity activity;
 
     public void init(Long id, String name, String img, boolean isFavourite,
                      Long countAll, Long countToday, RecyclerViewItemsListener<UserTeam> headerExtendedRecyclerViewItemsListener,
-                     NewsForTeamHeaderBinding binding){
+                     NewsForTeamHeaderBinding binding, Activity activity){
         linearLayout = binding.newsForTeamHeaderLayout;
         resources = linearLayout.getResources();
         this.id = id;
@@ -48,6 +51,7 @@ public class NewsForTeamHeaderAdapterViewModel {
         this.img.set(img);
         this.countAll.set(resources.getString(R.string.total)+countAll);
         this.countToday.set(resources.getString(R.string.today)+ countToday);
+        this.activity = activity;
         updateFavouriteState(isFavourite);
     }
 
@@ -71,6 +75,13 @@ public class NewsForTeamHeaderAdapterViewModel {
             loadingButtonVisibility.set(false);
             toggleButtonVisibility.set(true);
             headerExtendedRecyclerViewItemsListener.onChangeItem(new UserTeam(), newsUserTeam);
+            activity.runOnUiThread(()->{
+                String prefix = activity.getString(newsUserTeam.isFavourite() ? R.string.added_team : R.string.remove_team);
+                String suffix = activity.getString(newsUserTeam.isFavourite() ? R.string.added_to : R.string.remove_from);
+                String teamName = newsUserTeam.getTeam().getName();
+                String fullMessage = prefix+teamName+suffix;
+                Toast.makeText(activity.getApplicationContext(), fullMessage, Toast.LENGTH_SHORT).show();
+            });
         }
 
         @Override

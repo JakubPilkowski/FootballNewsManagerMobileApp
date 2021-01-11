@@ -95,5 +95,9 @@
     <string name="yes">Sì</string>
     <string name="no">No</string>
     <string name="are_you_sure_you_want_to_delete_account">Sei sicuro di voler eliminare l\'account?</string>
+    <string name="added_team">Aggiunto il&#160;</string>
+    <string name="remove_team">Tolto il&#160;</string>
+    <string name="added_to">&#160;alle squadre preferite!</string>
+    <string name="remove_from">&#160;dalle squadre preferite!</string>
 
 </resources>

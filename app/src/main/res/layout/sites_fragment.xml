@@ -28,14 +28,25 @@
                 android:layout_height="match_parent"
                 android:visibility="@{viewModel.loadingVisibility ? View.VISIBLE : View.GONE}" />
 
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/site_swipe_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE }"
+                app:onSwipeRefreshListener="@{viewModel.swipeRefreshListenerObservable}"
+                app:setColorScheme="@{viewModel.swipeRefreshColor}">
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/sites_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
-                android:visibility="@{viewModel.itemsVisibility ? View.VISIBLE : View.GONE }"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:recyclerViewAdapter="@{viewModel.adapterObservable}" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
             <pl.android.footballnewsmanager.helpers.ErrorView
                 android:layout_width="match_parent"
