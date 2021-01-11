@@ -11,6 +11,11 @@ import android.widget.TextView;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
+import com.example.footballnewsmanager.databinding.RegisterFragmentBinding;
+import com.google.android.material.textfield.TextInputLayout;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
 import pl.android.footballnewsmanager.activites.error.ErrorActivity;
 import pl.android.footballnewsmanager.activites.main.MainActivity;
 import pl.android.footballnewsmanager.api.Callback;
@@ -23,22 +28,17 @@ import pl.android.footballnewsmanager.api.requests.auth.RegisterRequest;
 import pl.android.footballnewsmanager.api.responses.BaseResponse;
 import pl.android.footballnewsmanager.api.responses.auth.LoginResponse;
 import pl.android.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.RegisterFragmentBinding;
-import pl.android.footballnewsmanager.helpers.ProgressDialog;
 import pl.android.footballnewsmanager.helpers.KeyboardHelper;
+import pl.android.footballnewsmanager.helpers.ProgressDialog;
 import pl.android.footballnewsmanager.helpers.UserPreferences;
 import pl.android.footballnewsmanager.helpers.Validator;
 import pl.android.footballnewsmanager.helpers.ValidatorTextWatcher;
 import pl.android.footballnewsmanager.models.FieldType;
-import com.google.android.material.textfield.TextInputLayout;
-
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
 
 public class RegisterViewModel extends BaseViewModel {
-    public ObservableField<String> username = new ObservableField<>("qweqweqweqwew");
-    public ObservableField<String> email = new ObservableField<>("weqww@wqewq.com");
-    public ObservableField<String> password = new ObservableField<>("asdasdasds");
+    public ObservableField<String> username = new ObservableField<>("");
+    public ObservableField<String> email = new ObservableField<>("");
+    public ObservableField<String> password = new ObservableField<>("");
     public ObservableBoolean clearFocus = new ObservableBoolean(false);
     public ObservableField<String> errorText = new ObservableField<>("");
     public ObservableField<TextWatcher> usernameTextWatcherAdapter = new ObservableField<>();

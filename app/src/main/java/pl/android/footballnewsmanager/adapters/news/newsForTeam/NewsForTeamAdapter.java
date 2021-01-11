@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.footballnewsmanager.R;
 import com.example.footballnewsmanager.databinding.NewsForTeamHeaderBinding;
 import com.example.footballnewsmanager.databinding.NewsForTeamItemLayoutBinding;
-import pl.android.footballnewsmanager.interfaces.RecyclerViewItemsListener;
-import pl.android.footballnewsmanager.models.UserNews;
-import pl.android.footballnewsmanager.models.UserTeam;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.android.footballnewsmanager.interfaces.RecyclerViewItemsListener;
+import pl.android.footballnewsmanager.models.UserNews;
+import pl.android.footballnewsmanager.models.UserTeam;
 
 public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -100,7 +101,7 @@ public class NewsForTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if (position == 0) {
             NewsForTeamHeaderAdapterViewModel viewModel = new NewsForTeamHeaderAdapterViewModel();
             NewsForTeamHeaderBinding binding = ((NewsHeaderViewHolder) holder).getBinding();
-            viewModel.init(id, name, img, isFavourite, countAll, countToday, headerExtendedRecyclerViewItemsListener, binding);
+            viewModel.init(id, name, img, isFavourite, countAll, countToday, headerExtendedRecyclerViewItemsListener, binding, activity);
             binding.setViewModel(viewModel);
         } else {
             NewsForTeamAdapterViewModel viewModel;

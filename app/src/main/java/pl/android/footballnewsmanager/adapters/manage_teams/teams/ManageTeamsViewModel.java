@@ -3,6 +3,7 @@ package pl.android.footballnewsmanager.adapters.manage_teams.teams;
 import android.app.Activity;
 import android.content.Intent;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -82,6 +83,14 @@ public class ManageTeamsViewModel {
             if(innerExtendedRecyclerViewItemsListener != null){
                 innerExtendedRecyclerViewItemsListener.onChangeItem(userTeam, newsUserTeam);
             }
+
+            activity.runOnUiThread(()->{
+                String prefix = activity.getString(newsUserTeam.isFavourite() ? R.string.added_team : R.string.remove_team);
+                String suffix = activity.getString(newsUserTeam.isFavourite() ? R.string.added_to : R.string.remove_from);
+                String teamName = newsUserTeam.getTeam().getName();
+                String fullMessage = prefix+teamName+suffix;
+                Toast.makeText(activity.getApplicationContext(), fullMessage, Toast.LENGTH_SHORT).show();
+            });
         }
 
         @Override
