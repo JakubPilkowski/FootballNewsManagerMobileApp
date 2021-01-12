@@ -127,6 +127,7 @@
                         android:layout_height="36dp"
                         android:padding="3dp"
                         android:background="@drawable/info_with_ripple"
+                        app:setEnabled="@{viewModel.infoEnabled}"
                         android:onClick="@{()->viewModel.onMoreInfoClick()}" />
                 </LinearLayout>
             </LinearLayout>

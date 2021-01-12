@@ -10,14 +10,14 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.footballnewsmanager.R;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
 import pl.android.footballnewsmanager.activites.main.MainActivity;
 import pl.android.footballnewsmanager.api.Callback;
 import pl.android.footballnewsmanager.api.Connection;
 import pl.android.footballnewsmanager.api.errors.BaseError;
 import pl.android.footballnewsmanager.helpers.UserPreferences;
-
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
 
 import static pl.android.footballnewsmanager.activites.BaseApplication.NEWS_NOTIFICATIONS_CHANNEL;
 
@@ -53,7 +53,7 @@ public class NewsNotificationsReceiver extends BroadcastReceiver {
             if(!notificationsAmount.equals(notifications) && notifications != 0){
                 Notification notification = new NotificationCompat.Builder(context, NEWS_NOTIFICATIONS_CHANNEL)
                         .setSmallIcon(R.drawable.notification_icon)
-                        .setContentTitle("Dodano " + notifications + " nowych newsów!")
+                        .setContentTitle(context.getString(R.string.added_new_news)+notifications)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                         .setColor(context.getResources().getColor(R.color.colorPrimary))

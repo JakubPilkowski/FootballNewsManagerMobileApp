@@ -13,7 +13,7 @@ public class BootReceiver extends BroadcastReceiver {
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             Intent newsNotificationsIntent = new Intent(context, NewsNotificationsReceiver.class);
             PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, newsNotificationsIntent, 0);
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+5000,5*1000, alarmIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),AlarmManager.INTERVAL_HALF_HOUR, alarmIntent);
         }
     }
 }

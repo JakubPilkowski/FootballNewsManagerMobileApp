@@ -59,7 +59,7 @@
     <string name="information">Information</string>
     <string name="title">Title:</string>
     <string name="source">Source:</string>
-    <string name="added">Added:</string>
+    <string name="added">Added:&#160;</string>
     <string name="clicks">Clicks:</string>
     <string name="likes">Likes:</string>
     <string name="teams">Teams</string>
@@ -100,5 +100,6 @@
     <string name="remove_team">Removed&#160;</string>
     <string name="added_to">&#160;to favourite teams!</string>
     <string name="remove_from">&#160;from favourite teams!</string>
+    <string name="added_new_news">Added new news:&#160;</string>
 
 </resources>

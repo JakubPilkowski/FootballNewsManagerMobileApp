@@ -8,6 +8,12 @@ import android.widget.TextView;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
+import com.example.footballnewsmanager.databinding.ForgetPasswordFragmentBinding;
+import com.google.android.material.textfield.TextInputLayout;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+import pl.android.footballnewsmanager.activites.auth.AuthActivity;
 import pl.android.footballnewsmanager.activites.error.ErrorActivity;
 import pl.android.footballnewsmanager.activites.resetPassword.ResetPasswordActivity;
 import pl.android.footballnewsmanager.api.Callback;
@@ -16,26 +22,19 @@ import pl.android.footballnewsmanager.api.errors.BaseError;
 import pl.android.footballnewsmanager.api.errors.SingleMessageError;
 import pl.android.footballnewsmanager.api.responses.BaseResponse;
 import pl.android.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.ForgetPasswordFragmentBinding;
-import pl.android.footballnewsmanager.helpers.ProgressDialog;
 import pl.android.footballnewsmanager.helpers.KeyboardHelper;
+import pl.android.footballnewsmanager.helpers.ProgressDialog;
 import pl.android.footballnewsmanager.helpers.Validator;
 import pl.android.footballnewsmanager.helpers.ValidatorTextWatcher;
 import pl.android.footballnewsmanager.models.FieldType;
-import com.google.android.material.textfield.TextInputLayout;
-
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
-import pl.android.footballnewsmanager.activites.auth.AuthActivity;
 
 public class ForgetPasswordViewModel extends BaseViewModel {
-    // TODO: Implement the ViewModel
     private TextInputLayout emailLayout;
     private Resources resources;
     public ObservableField<String> errorText = new ObservableField<>("");
     public ObservableField<ValidatorTextWatcher> emailValidationTextWatcher = new ObservableField<>();
     public ObservableField<TextView.OnEditorActionListener> emailEditorListenerObservable = new ObservableField<>();
-    public ObservableField<String> email = new ObservableField<>("pilkowskijakub@gmail.com");
+    public ObservableField<String> email = new ObservableField<>("");
     public ObservableBoolean clearFocus = new ObservableBoolean(false);
 
     private TextView.OnEditorActionListener emailListener = (v, actionId, event) -> {
