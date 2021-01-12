@@ -9,6 +9,11 @@ import android.widget.TextView;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
+import com.example.footballnewsmanager.databinding.ResetPasswordFragmentBinding;
+import com.google.android.material.textfield.TextInputLayout;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
 import pl.android.footballnewsmanager.activites.error.ErrorActivity;
 import pl.android.footballnewsmanager.api.Callback;
 import pl.android.footballnewsmanager.api.Connection;
@@ -17,24 +22,19 @@ import pl.android.footballnewsmanager.api.errors.SingleMessageError;
 import pl.android.footballnewsmanager.api.requests.auth.ResetPasswordRequest;
 import pl.android.footballnewsmanager.api.responses.BaseResponse;
 import pl.android.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.ResetPasswordFragmentBinding;
 import pl.android.footballnewsmanager.fragments.auth.success_fragment.SuccessFragment;
 import pl.android.footballnewsmanager.helpers.KeyboardHelper;
 import pl.android.footballnewsmanager.helpers.ProgressDialog;
 import pl.android.footballnewsmanager.helpers.Validator;
 import pl.android.footballnewsmanager.helpers.ValidatorTextWatcher;
 import pl.android.footballnewsmanager.models.FieldType;
-import com.google.android.material.textfield.TextInputLayout;
-
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
 
 public class ResetPasswordFragmentViewModel extends BaseViewModel {
 
     public ObservableField<String> errorText = new ObservableField<>("");
     public ObservableField<String> token = new ObservableField<>("");
-    public ObservableField<String> newPassword = new ObservableField<>("suEsKACHpVSt6dmO");
-    public ObservableField<String> repeatPassword = new ObservableField<>("suEsKACHpVSt6dmO");
+    public ObservableField<String> newPassword = new ObservableField<>("");
+    public ObservableField<String> repeatPassword = new ObservableField<>("");
     public ObservableField<TextWatcher> tokenTextWatcherAdapter = new ObservableField<>();
     public ObservableField<TextWatcher> newPassTextWatcherAdapter = new ObservableField<>();
     public ObservableField<TextWatcher> repeatPasswordTextWatcherAdapter = new ObservableField<>();

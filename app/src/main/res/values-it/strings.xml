@@ -58,7 +58,7 @@
     <string name="information">Informazione</string>
     <string name="title">Titolo:</string>
     <string name="source">Fonte:</string>
-    <string name="added">Aggiunto:</string>
+    <string name="added">Aggiunto:&#160;</string>
     <string name="clicks">Clic:</string>
     <string name="likes">Piace:</string>
     <string name="teams">Squadre</string>
@@ -99,5 +99,6 @@
     <string name="remove_team">Tolto il&#160;</string>
     <string name="added_to">&#160;alle squadre preferite!</string>
     <string name="remove_from">&#160;dalle squadre preferite!</string>
+    <string name="added_new_news">Aggiunte nuove notizie:&#160;</string>
 
 </resources>

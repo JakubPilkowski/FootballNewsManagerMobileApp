@@ -43,6 +43,7 @@ public class NewsAdapterViewModel {
     public ObservableBoolean loadingMark = new ObservableBoolean(false);
     public ObservableBoolean markEnabled = new ObservableBoolean(false);
     public ObservableBoolean isMarked = new ObservableBoolean();
+    public ObservableBoolean infoEnabled = new ObservableBoolean(true);
     public UserNews news;
     private News newsDetails;
     private Activity activity;
@@ -86,7 +87,9 @@ public class NewsAdapterViewModel {
     }
 
     public void onMoreInfoClick() {
+        infoEnabled.set(false);
         ((MainActivity) activity).navigator.attachAdd(NewsInfoFragment.newInstance(news), NewsInfoFragment.TAG);
+        infoEnabled.set(true);
     }
 
     public void onLikeToggle() {

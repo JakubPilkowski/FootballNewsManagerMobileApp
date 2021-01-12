@@ -50,6 +50,7 @@ public class NewsHeaderAdapterViewModel {
         public void onSuccess(BaseResponse baseResponse) {
             loading.set(false);
             extendedRecyclerViewItemsListener.onChangeItems();
+            ((MainActivity)activity).reloadAllNews();
         }
 
         @Override
