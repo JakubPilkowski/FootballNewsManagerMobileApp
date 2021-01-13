@@ -5,6 +5,8 @@ import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
 import pl.android.footballnewsmanager.adapters.news_info.NewsInfoAdapter;
 import pl.android.footballnewsmanager.api.Callback;
 import pl.android.footballnewsmanager.api.Connection;
@@ -14,15 +16,7 @@ import pl.android.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import pl.android.footballnewsmanager.base.BaseViewModel;
 import pl.android.footballnewsmanager.helpers.ErrorView;
 import pl.android.footballnewsmanager.helpers.UserPreferences;
-import pl.android.footballnewsmanager.models.NewsTag;
-import pl.android.footballnewsmanager.models.Tag;
 import pl.android.footballnewsmanager.models.UserNews;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
 
 public class NewsInfoFragmentViewModel extends BaseViewModel {
 
@@ -33,7 +27,6 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
 
     private UserNews news;
     private NewsInfoAdapter newsInfoAdapter;
-    private List<Tag> tags = new ArrayList<>();
     public ObservableBoolean errorVisibility = new ObservableBoolean(false);
     public ObservableInt status = new ObservableInt();
     public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
@@ -43,9 +36,6 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
         if (news != null) {
             this.news = news;
             tryAgainListener.set(listener);
-            for (NewsTag newsTag : news.getNews().getTags()) {
-                tags.add(newsTag.getTag());
-            }
             load();
         }
     }
@@ -91,7 +81,7 @@ public class NewsInfoFragmentViewModel extends BaseViewModel {
         itemsVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
-        TeamsFromTagsRequest request = new TeamsFromTagsRequest(tags);
+        TeamsFromTagsRequest request = new TeamsFromTagsRequest(news.getNews().getTeamNews());
         Connection.get().findByTags(callback, token, request);
     }
 }

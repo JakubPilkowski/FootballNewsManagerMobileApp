@@ -1,13 +1,13 @@
 package pl.android.footballnewsmanager.api.requests.news;
 
-import pl.android.footballnewsmanager.models.Tag;
-
 import java.util.List;
 
-public class TeamsFromTagsRequest {
-    private List<Tag> tags;
+import pl.android.footballnewsmanager.models.TeamNews;
 
-    public TeamsFromTagsRequest(List<Tag> tags) {
-        this.tags = tags;
+public class TeamsFromTagsRequest {
+    private List<TeamNews> teamNews;
+
+    public TeamsFromTagsRequest(List<TeamNews> teamNews) {
+        this.teamNews = teamNews;
     }
 }
