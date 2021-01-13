@@ -1,6 +1,6 @@
 package pl.android.footballnewsmanager.models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class News {
 
@@ -11,7 +11,7 @@ public class News {
     private String imageUrl;
     private String date;
     private Site site;
-    private ArrayList<NewsTag> tags;
+    private List<TeamNews> teamNews;
     private Long clicks;
     private Long likes;
 
@@ -48,11 +48,11 @@ public class News {
         return site;
     }
 
-    public ArrayList<NewsTag> getTags() {
-        return tags;
-    }
-
     public Long getClicks() {
         return clicks;
+    }
+
+    public List<TeamNews> getTeamNews() {
+        return teamNews;
     }
 }
