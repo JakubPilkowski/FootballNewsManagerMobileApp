@@ -3,7 +3,6 @@ package pl.android.footballnewsmanager.adapters.manage_teams.teams;
 import android.app.Activity;
 import android.content.Intent;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
@@ -19,7 +18,9 @@ import pl.android.footballnewsmanager.activites.news_for_team.NewsForTeamActivit
 import pl.android.footballnewsmanager.api.Callback;
 import pl.android.footballnewsmanager.api.Connection;
 import pl.android.footballnewsmanager.api.errors.BaseError;
+import pl.android.footballnewsmanager.helpers.ProgressDialog;
 import pl.android.footballnewsmanager.helpers.SnackbarHelper;
+import pl.android.footballnewsmanager.helpers.ToastManager;
 import pl.android.footballnewsmanager.helpers.UserPreferences;
 import pl.android.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import pl.android.footballnewsmanager.models.Team;
@@ -68,6 +69,7 @@ public class ManageTeamsViewModel {
     }
 
     public void toggleTeam() {
+        ProgressDialog.get().show();
         toggleButtonVisibility.set(false);
         loadingButtonVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
@@ -77,6 +79,7 @@ public class ManageTeamsViewModel {
     private Callback<UserTeam> callback = new Callback<UserTeam>() {
         @Override
         public void onSuccess(UserTeam newsUserTeam) {
+            ProgressDialog.get().dismiss();
             loadingButtonVisibility.set(false);
             toggleButtonVisibility.set(true);
             extendedRecyclerViewItemsListener.onChangeItem(userTeam, newsUserTeam);
@@ -89,12 +92,13 @@ public class ManageTeamsViewModel {
                 String suffix = activity.getString(newsUserTeam.isFavourite() ? R.string.added_to : R.string.remove_from);
                 String teamName = newsUserTeam.getTeam().getName();
                 String fullMessage = prefix+teamName+suffix;
-                Toast.makeText(activity.getApplicationContext(), fullMessage, Toast.LENGTH_SHORT).show();
+                ToastManager.get().show(fullMessage);
             });
         }
 
         @Override
         public void onSmthWrong(BaseError error) {
+            ProgressDialog.get().dismiss();
             loadingButtonVisibility.set(false);
             toggleButtonVisibility.set(true);
             if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {

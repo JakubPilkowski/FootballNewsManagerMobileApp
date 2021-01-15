@@ -1,63 +1,16 @@
 package pl.android.footballnewsmanager.fragments.auth.welcome;
 
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-
-import androidx.databinding.ObservableField;
-
-import com.example.footballnewsmanager.R;
-import pl.android.footballnewsmanager.activites.auth.AuthActivity;
-import pl.android.footballnewsmanager.adapters.language.LanguageAdapter;
-import pl.android.footballnewsmanager.base.BaseViewModel;
 import com.example.footballnewsmanager.databinding.WelcomeFragmentBinding;
+
+import pl.android.footballnewsmanager.base.BaseViewModel;
 import pl.android.footballnewsmanager.fragments.auth.forgetPassword.ForgetPasswordFragment;
 import pl.android.footballnewsmanager.fragments.auth.login.LoginFragment;
 import pl.android.footballnewsmanager.fragments.auth.registerFragment.RegisterFragment;
 import pl.android.footballnewsmanager.helpers.AuthNameTransition;
-import pl.android.footballnewsmanager.helpers.LanguageHelper;
-import pl.android.footballnewsmanager.helpers.UserPreferences;
-
-import java.util.ArrayList;
-import java.util.Locale;
 
 public class WelcomeViewModel extends BaseViewModel {
 
-    public ObservableField<ArrayAdapter> spinnerAdapter = new ObservableField<>();
-    private ArrayList<Drawable> drawables = new ArrayList<>();
-    private ArrayList<String> nameArray = new ArrayList<>();
-
-
     public void init() {
-        Resources resources = getActivity().getResources();
-
-        nameArray.add(resources.getString(R.string.polish));
-        nameArray.add(resources.getString(R.string.english));
-        nameArray.add(resources.getString(R.string.italish));
-        nameArray.add(resources.getString(R.string.german));
-        nameArray.add(resources.getString(R.string.spanish));
-        nameArray.add(resources.getString(R.string.french));
-
-
-        drawables.add(resources.getDrawable(R.drawable.ic_poland_small));
-        drawables.add(resources.getDrawable(R.drawable.ic_united_kingdom_small));
-        drawables.add(resources.getDrawable(R.drawable.ic_italy_small));
-        drawables.add(resources.getDrawable(R.drawable.ic_germany_small));
-        drawables.add(resources.getDrawable(R.drawable.ic_spain_small));
-        drawables.add(resources.getDrawable(R.drawable.ic_france_small));
-
-        String locale = UserPreferences.get().getLanguage();
-        String language = LanguageHelper.getName(locale, resources);
-        drawables.set(0, drawables.set(nameArray.indexOf(language), drawables.get(0)));
-        nameArray.set(0, nameArray.set(nameArray.indexOf(language), nameArray.get(0)));
-
-        LanguageAdapter languageAdapter = new LanguageAdapter(
-                getActivity().getApplicationContext(), R.layout.spinner_item,
-                nameArray, drawables);
-        spinnerAdapter.set(languageAdapter);
-
     }
 
     public void onRegister() {
@@ -78,15 +31,5 @@ public class WelcomeViewModel extends BaseViewModel {
         forgetPasswordFragment.setSharedElementEnterTransition(new AuthNameTransition());
         getNavigator().sharedTransitionAttach(forgetPasswordFragment, ForgetPasswordFragment.TAG,
                 ((WelcomeFragmentBinding) getBinding()).authForgetPasswordButton, "forget password fragment title");
-    }
-
-    public void onItemSelected(AdapterView<?> parentView, View selectItemView, int position, long id) {
-        String localeName = LanguageHelper.nameToLocale(nameArray.get(position), getActivity().getResources());
-        if(!UserPreferences.get().getLanguage().equals(localeName)){
-            Locale locale = new Locale(localeName);
-            Locale.setDefault(locale);
-            UserPreferences.get().setLanguage(localeName);
-            ((AuthActivity) getActivity()).changeLanguage(locale);
-        }
     }
 }

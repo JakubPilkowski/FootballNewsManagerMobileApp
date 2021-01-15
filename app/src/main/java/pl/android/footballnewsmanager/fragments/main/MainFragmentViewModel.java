@@ -2,6 +2,7 @@ package pl.android.footballnewsmanager.fragments.main;
 
 import android.view.MenuItem;
 
+import androidx.core.app.NotificationManagerCompat;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.fragment.app.FragmentActivity;
@@ -120,6 +121,8 @@ public class MainFragmentViewModel extends BaseViewModel implements BadgeListene
                     badgeDrawable.setMaxCharacterCount(99);
                     badgeDrawable.setNumber(amount.intValue());
                 } else {
+                    NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getActivity());
+                    notificationManagerCompat.cancel(1001);
                     ((MainFragmentBinding) getBinding()).mainBottomNavView.removeBadge(R.id.nav_news);
                 }
             });

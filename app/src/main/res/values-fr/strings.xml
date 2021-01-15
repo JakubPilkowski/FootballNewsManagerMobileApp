@@ -48,8 +48,8 @@
     <string name="connection_timeout">Temps d\'attente trop long</string>
     <string name="something_went_wrong">Un problème est survenu</string>
     <string name="ok">ok</string>
-    <string name="empty_liked_news">Il n\'y a pas de nouvelles</string>
-    <string name="no_news_for_team">Il n\'y a pas de nouvelles pour cette équipe</string>
+    <string name="empty_liked_news">Il n\'y a pas de nouvelles aimées!</string>
+    <string name="no_news_for_team">Il n\'y a pas de nouvelles pour cette équipe!</string>
     <string name="search_for_teams_and_news">Rechercher des équipes ou des actualités</string>
     <string name="search_result_empty">Il n\'y a pas de résultat pour une phrase donnée</string>
     <string name="try_again">Réessayer</string>
@@ -101,5 +101,6 @@
     <string name="added_to">&#160;aux équipes favorites!</string>
     <string name="remove_from">&#160;a été retiré des équipes favorites!</string>
     <string name="added_new_news">Ajout de nouvelles nouvelles:&#160;</string>
+    <string name="empty_favourite_teams">Il n\'y a pas d\'équipe favorite ajoutée!</string>
 
 </resources>

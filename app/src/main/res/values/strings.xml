@@ -48,8 +48,8 @@
     <string name="connection_timeout">Connection timeout</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="ok">OK</string>
-    <string name="empty_liked_news">There is no news</string>
-    <string name="no_news_for_team">There is no news for this team</string>
+    <string name="empty_liked_news">There is no liked news!</string>
+    <string name="no_news_for_team">There is no news for this team!</string>
     <string name="search_for_teams_and_news">Search for teams or news</string>
     <string name="search_result_empty">There is no result for given phrase</string>
     <string name="try_again">Try Again</string>
@@ -101,5 +101,6 @@
     <string name="added_to">&#160;to favourite teams!</string>
     <string name="remove_from">&#160;from favourite teams!</string>
     <string name="added_new_news">Added new news:&#160;</string>
+    <string name="empty_favourite_teams">There is no favourite team added!</string>
 
 </resources>

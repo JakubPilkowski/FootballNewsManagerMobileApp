@@ -47,7 +47,6 @@ public class NewsNotificationsReceiver extends BroadcastReceiver {
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
 
             Intent activityIntent = new Intent(context, MainActivity.class);
-            activityIntent.putExtra("restart", "restart");
             PendingIntent contentIntent = PendingIntent.getActivity(context, 2, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             if(!notificationsAmount.equals(notifications) && notifications != 0){
@@ -61,6 +60,7 @@ public class NewsNotificationsReceiver extends BroadcastReceiver {
                         .setAutoCancel(true)
                         .build();
                 UserPreferences.get().changeNotification(notifications);
+                UserPreferences.get().setRefresh(true);
                 notificationManagerCompat.notify(1001, notification);
             }
         }

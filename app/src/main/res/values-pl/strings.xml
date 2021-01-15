@@ -48,8 +48,8 @@
     <string name="connection_timeout">Zbyt długi czas oczekiwania</string>
     <string name="something_went_wrong">Coś poszło nie tak</string>
     <string name="ok">ok</string>
-    <string name="empty_liked_news">Nie ma żadnych newsów</string>
-    <string name="no_news_for_team">Nie ma żadnych newsów dla tej drużyny</string>
+    <string name="empty_liked_news">Nie ma żadnych polubionych newsów!</string>
+    <string name="no_news_for_team">Nie ma żadnych newsów dla tej drużyny!</string>
     <string name="search_for_teams_and_news">Szukaj newsów lub drużyn</string>
     <string name="search_result_empty">Dla podanej frazy nie ma wyników</string>
     <string name="try_again">Spróbuj Ponownie</string>
@@ -101,4 +101,5 @@
     <string name="added_to">&#160;do ulubionych drużyn!</string>
     <string name="remove_from">&#160;z ulubionych drużyn!</string>
     <string name="added_new_news">Dodano nowe wiadomości:&#160;</string>
+    <string name="empty_favourite_teams">Nie ma żadnej ulubionej drużyny!</string>
 </resources>

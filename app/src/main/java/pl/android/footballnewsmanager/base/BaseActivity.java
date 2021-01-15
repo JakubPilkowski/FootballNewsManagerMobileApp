@@ -1,10 +1,5 @@
 package pl.android.footballnewsmanager.base;
 
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.LayoutRes;
@@ -16,14 +11,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import pl.android.footballnewsmanager.api.Connection;
 import pl.android.footballnewsmanager.helpers.AlertDialogManager;
-import pl.android.footballnewsmanager.helpers.ProgressDialog;
 import pl.android.footballnewsmanager.helpers.KeyboardHelper;
 import pl.android.footballnewsmanager.helpers.Navigator;
-import pl.android.footballnewsmanager.helpers.ProposedLanguageDialogManager;
+import pl.android.footballnewsmanager.helpers.ProgressDialog;
 import pl.android.footballnewsmanager.helpers.SoundPoolManager;
+import pl.android.footballnewsmanager.helpers.ToastManager;
 import pl.android.footballnewsmanager.helpers.UserPreferences;
-
-import java.util.Locale;
 
 
 public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseViewModel> extends AppCompatActivity {
@@ -42,6 +35,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
         UserPreferences.init(this);
         ProgressDialog.init(this);
         Connection.init();
+        ToastManager.init(this);
         SoundPoolManager.init(this);
 
         navigator.setActivity(this);
@@ -80,41 +74,6 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
         }
     }
 
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(updateBaseContextLocale(base));
-    }
-
-    private Context updateBaseContextLocale(Context context) {
-        UserPreferences.init(context);
-        String language = UserPreferences.get().getLanguage();
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return updateResourcesLocale(context, locale);
-        }
-
-        return updateResourcesLocaleLegacy(context, locale);
-    }
-
-    @TargetApi(Build.VERSION_CODES.N)
-    private Context updateResourcesLocale(Context context, Locale locale) {
-        Configuration configuration = context.getResources().getConfiguration();
-        configuration.setLocale(locale);
-        return context.createConfigurationContext(configuration);
-    }
-
-    private Context updateResourcesLocaleLegacy(Context context, Locale locale) {
-        Resources resources = context.getResources();
-        Configuration configuration = resources.getConfiguration();
-        configuration.locale = locale;
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-        return context;
-    }
-
-
     public BaseFragment getCurrentFragment() {
         return (BaseFragment) getSupportFragmentManager().findFragmentById(getIdFragmentContainer());
     }
@@ -136,7 +95,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
         ProgressDialog.init(this);
         Connection.init();
         SoundPoolManager.init(this);
-        ProposedLanguageDialogManager.init(this);
+        ToastManager.init(this);
         super.onResume();
     }
 
