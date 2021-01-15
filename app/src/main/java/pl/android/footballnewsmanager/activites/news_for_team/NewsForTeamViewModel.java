@@ -6,6 +6,10 @@ import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.databinding.ActivityNewsForTeamBinding;
+
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
 import pl.android.footballnewsmanager.adapters.news.newsForTeam.NewsForTeamAdapter;
 import pl.android.footballnewsmanager.api.Callback;
 import pl.android.footballnewsmanager.api.Connection;
@@ -13,16 +17,12 @@ import pl.android.footballnewsmanager.api.errors.BaseError;
 import pl.android.footballnewsmanager.api.errors.SingleMessageError;
 import pl.android.footballnewsmanager.api.responses.main.NewsResponse;
 import pl.android.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.ActivityNewsForTeamBinding;
 import pl.android.footballnewsmanager.helpers.ErrorView;
 import pl.android.footballnewsmanager.helpers.PaginationScrollListener;
 import pl.android.footballnewsmanager.helpers.SnackbarHelper;
 import pl.android.footballnewsmanager.helpers.UserPreferences;
 import pl.android.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import pl.android.footballnewsmanager.models.UserTeam;
-
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
 
 public class NewsForTeamViewModel extends BaseViewModel {
 
@@ -180,7 +180,7 @@ public class NewsForTeamViewModel extends BaseViewModel {
             } else {
                 if (error instanceof SingleMessageError) {
                     String message = ((SingleMessageError) error).getMessage();
-                    if (message.equals("Brak wyników")) {
+                    if (message.equals("Nie ma już więcej wyników")) {
                         placeholderVisibility.set(true);
                     }
                 }

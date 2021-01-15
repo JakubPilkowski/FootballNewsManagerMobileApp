@@ -1,14 +1,16 @@
 package pl.android.footballnewsmanager.fragments.main.news;
 
-import android.content.Intent;
+import android.util.Log;
 
 import androidx.databinding.ViewDataBinding;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
+
 import pl.android.footballnewsmanager.activites.main.MainActivity;
 import pl.android.footballnewsmanager.base.BaseFragment;
-import com.example.footballnewsmanager.databinding.NewsFragmentBinding;
 import pl.android.footballnewsmanager.helpers.Navigator;
+import pl.android.footballnewsmanager.helpers.UserPreferences;
 import pl.android.footballnewsmanager.interfaces.BadgeListener;
 import pl.android.footballnewsmanager.interfaces.Providers;
 
@@ -25,17 +27,16 @@ public class NewsFragment extends BaseFragment<NewsFragmentBinding, NewsFragment
         return fragment;
     }
 
-    public void setBadgeListener(BadgeListener badgeListener) {
+    private void setBadgeListener(BadgeListener badgeListener) {
         this.badgeListener = badgeListener;
     }
 
     @Override
     public void onResume() {
-        if(getActivity().getIntent()!= null){
-            Intent intent = getActivity().getIntent();
-            if(intent.getStringExtra("restart") != null && intent.getStringExtra("restart").equals("restart")){
-                viewModel.updateNews();
-            }
+        Log.d(TAG, "onResume: "+UserPreferences.get().getRefresh());
+        if(UserPreferences.get().getRefresh()){
+            viewModel.load();
+            UserPreferences.get().setRefresh(false);
         }
         super.onResume();
     }

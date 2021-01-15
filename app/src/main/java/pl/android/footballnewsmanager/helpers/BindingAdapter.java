@@ -24,8 +24,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.footballnewsmanager.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import pl.android.footballnewsmanager.interfaces.DragViewListener;
-
 public class BindingAdapter {
 
     @androidx.databinding.BindingAdapter("add_text_watcher")
@@ -102,11 +100,6 @@ public class BindingAdapter {
     @androidx.databinding.BindingAdapter("switchChangeListener")
     public static void setSwitchChangeListener(Switch switchView, Switch.OnCheckedChangeListener listener){
         switchView.setOnCheckedChangeListener(listener);
-    }
-
-    @androidx.databinding.BindingAdapter("dragViewListener")
-    public static void setDragViewListener(DragView dragView, DragViewListener listener){
-        dragView.setDragViewListener(listener);
     }
 
     @androidx.databinding.BindingAdapter("drawableAsResource")

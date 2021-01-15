@@ -32,5 +32,32 @@
             android:visibility="@{viewModel.errorVisibility ? View.VISIBLE : View.GONE}"
             app:errorStatus="@{viewModel.status}"
             app:errorTryAgainListener="@{viewModel.tryAgainListener}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="@{viewModel.placeholderVisibility ? View.VISIBLE : View.GONE}">
+
+            <View
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/ic_star"
+                android:layout_marginBottom="16dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_favourite_teams"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+
+
     </RelativeLayout>
 </layout>

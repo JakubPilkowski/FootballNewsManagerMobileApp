@@ -12,7 +12,6 @@ import pl.android.footballnewsmanager.base.BaseActivity;
 import pl.android.footballnewsmanager.base.BaseFragment;
 import com.example.footballnewsmanager.databinding.ActivityProposedSettingsBinding;
 import pl.android.footballnewsmanager.helpers.Navigator;
-import pl.android.footballnewsmanager.helpers.ProposedLanguageDialogManager;
 import pl.android.footballnewsmanager.interfaces.Providers;
 
 public class ProposedSettingsActivity extends BaseActivity<ActivityProposedSettingsBinding, ProposedSettingsActivityViewModel> implements Providers {
@@ -20,7 +19,6 @@ public class ProposedSettingsActivity extends BaseActivity<ActivityProposedSetti
 
     @Override
     protected void initActivity(ActivityProposedSettingsBinding binding) {
-        ProposedLanguageDialogManager.init(this);
         viewModel.setProviders(this);
         binding.setViewModel(viewModel);
 

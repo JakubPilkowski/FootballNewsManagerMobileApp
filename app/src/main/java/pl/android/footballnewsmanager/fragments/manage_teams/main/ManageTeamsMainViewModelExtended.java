@@ -9,11 +9,17 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.footballnewsmanager.R;
+import com.example.footballnewsmanager.databinding.ManageTeamsMainFragmentBinding;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import pl.android.footballnewsmanager.activites.manageTeams.ManageTeamsActivity;
 import pl.android.footballnewsmanager.adapters.manage_teams.ManageTeamsViewPagerAdapter;
 import pl.android.footballnewsmanager.base.BaseFragment;
 import pl.android.footballnewsmanager.base.BaseViewModel;
-import com.example.footballnewsmanager.databinding.ManageTeamsMainFragmentBinding;
 import pl.android.footballnewsmanager.fragments.manage_teams.main.all.ManageAllTeamsFragment;
 import pl.android.footballnewsmanager.fragments.manage_teams.main.popular.ManagePopularTeamsFragment;
 import pl.android.footballnewsmanager.fragments.manage_teams.main.popular.ManagePopularTeamsViewModel;
@@ -21,11 +27,6 @@ import pl.android.footballnewsmanager.fragments.manage_teams.main.selected.Manag
 import pl.android.footballnewsmanager.fragments.manage_teams.main.selected.ManageSelectedTeamsViewModel;
 import pl.android.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import pl.android.footballnewsmanager.models.UserTeam;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ManageTeamsMainViewModelExtended extends BaseViewModel implements RecyclerViewItemsListener<UserTeam> {
     private ViewPager2 viewPager2;
@@ -86,7 +87,13 @@ public class ManageTeamsMainViewModelExtended extends BaseViewModel implements R
                 if (fragment instanceof ManageSelectedTeamsFragment) {
                     ManageSelectedTeamsViewModel viewModel = (ManageSelectedTeamsViewModel) fragment.viewModel;
                     if (viewModel != null)
+                    {
+                        viewModel.placeholderVisibility.set(false);
                         viewModel.selectedTeamsAdapter.onChange(oldItem, newItem);
+                        if(viewModel.selectedTeamsAdapter.getItems().size()==0){
+                            viewModel.placeholderVisibility.set(true);
+                        }
+                    }
                 } else if (fragment instanceof ManagePopularTeamsFragment) {
                     ManagePopularTeamsViewModel viewModel = (ManagePopularTeamsViewModel) fragment.viewModel;
                     if (viewModel != null)

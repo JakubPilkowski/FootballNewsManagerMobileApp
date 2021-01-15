@@ -18,6 +18,7 @@ import pl.android.footballnewsmanager.api.Callback;
 import pl.android.footballnewsmanager.api.Connection;
 import pl.android.footballnewsmanager.api.errors.BaseError;
 import pl.android.footballnewsmanager.helpers.SnackbarHelper;
+import pl.android.footballnewsmanager.helpers.ToastManager;
 import pl.android.footballnewsmanager.helpers.UserPreferences;
 import pl.android.footballnewsmanager.interfaces.RecyclerViewItemsListener;
 import pl.android.footballnewsmanager.models.UserTeam;
@@ -80,7 +81,7 @@ public class NewsForTeamHeaderAdapterViewModel {
                 String suffix = activity.getString(newsUserTeam.isFavourite() ? R.string.added_to : R.string.remove_from);
                 String teamName = newsUserTeam.getTeam().getName();
                 String fullMessage = prefix+teamName+suffix;
-                Toast.makeText(activity.getApplicationContext(), fullMessage, Toast.LENGTH_SHORT).show();
+                ToastManager.get().show(fullMessage);
             });
         }
 

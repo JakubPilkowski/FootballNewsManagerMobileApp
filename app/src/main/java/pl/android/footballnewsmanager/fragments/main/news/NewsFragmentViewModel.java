@@ -62,7 +62,6 @@ public class NewsFragmentViewModel extends BaseViewModel implements ExtendedRecy
         tryAgainListener.set(listener);
         swipeRefreshListenerObservable.set(this::updateNews);
         PaginationScrollListener scrollListener = new PaginationScrollListener() {
-
             @Override
             protected void loadMoreItems() {
                 currentPage++;
@@ -241,7 +240,7 @@ public class NewsFragmentViewModel extends BaseViewModel implements ExtendedRecy
             } else {
                 if (error instanceof SingleMessageError) {
                     String message = ((SingleMessageError) error).getMessage();
-                    if (message.equals("Brak wyników")) {
+                    if (message.equals("Nie ma już więcej wyników")) {
                         itemsVisibility.set(false);
                         loadingVisibility.set(false);
                         errorVisibility.set(false);

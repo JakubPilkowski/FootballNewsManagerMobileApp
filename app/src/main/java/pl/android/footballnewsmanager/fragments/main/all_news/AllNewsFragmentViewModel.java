@@ -237,7 +237,7 @@ public class AllNewsFragmentViewModel extends BaseViewModel implements ExtendedR
             } else {
                 if (error instanceof SingleMessageError) {
                     String message = ((SingleMessageError) error).getMessage();
-                    if (message.equals("Brak wyników")) {
+                    if (message.equals("Nie ma już więcej wyników")) {
                         itemsVisibility.set(false);
                         loadingVisibility.set(false);
                         errorVisibility.set(false);

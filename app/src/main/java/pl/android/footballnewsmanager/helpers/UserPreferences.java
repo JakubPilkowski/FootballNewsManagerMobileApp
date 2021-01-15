@@ -11,8 +11,8 @@ public class UserPreferences {
     private static final String FILENAME = TAG + "_FootballNewsManager";
     private static final String AUTH_TOKEN = FILENAME + "_AuthToken";
     private static final String NOTIFICATION_AMOUNT = FILENAME + "_NotificationsAmount";
-    private static final String LANGUAGE = FILENAME + "_Language";
     private static final String PROPOSED = FILENAME + "_Proposed";
+    private static final String REFRESH = FILENAME + "_REFRESH";
 
     private static UserPreferences INSTANCE;
     private SharedPreferences sharedPreferences;
@@ -53,19 +53,19 @@ public class UserPreferences {
         return getAuthToken() != null && !getAuthToken().isEmpty();
     }
 
-    public void setLanguage(String locale) {
-        sharedPreferences.edit().putString(LANGUAGE, locale).apply();
-    }
-
-    public String getLanguage() {
-        return sharedPreferences.getString(LANGUAGE, "pl");
-    }
-
     public void setProposed(boolean proposed) {
         sharedPreferences.edit().putBoolean(PROPOSED, proposed).apply();
     }
 
     public boolean getProposed() {
         return sharedPreferences.getBoolean(PROPOSED, true);
+    }
+
+    public void setRefresh(boolean refresh){
+        sharedPreferences.edit().putBoolean(REFRESH, refresh).apply();
+    }
+
+    public boolean getRefresh(){
+       return sharedPreferences.getBoolean(REFRESH, false);
     }
 }

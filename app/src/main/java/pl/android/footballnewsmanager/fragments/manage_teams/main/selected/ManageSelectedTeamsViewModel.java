@@ -9,6 +9,7 @@ import pl.android.footballnewsmanager.adapters.manage_teams.selected.SelectedTea
 import pl.android.footballnewsmanager.api.Callback;
 import pl.android.footballnewsmanager.api.Connection;
 import pl.android.footballnewsmanager.api.errors.BaseError;
+import pl.android.footballnewsmanager.api.errors.SingleMessageError;
 import pl.android.footballnewsmanager.api.responses.proposed.TeamsResponse;
 import pl.android.footballnewsmanager.base.BaseViewModel;
 import pl.android.footballnewsmanager.helpers.ErrorView;
@@ -26,6 +27,7 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
     public ObservableBoolean itemsVisibility = new ObservableBoolean(false);
     public SelectedTeamsAdapter selectedTeamsAdapter;
     public ObservableBoolean errorVisibility = new ObservableBoolean(false);
+    public ObservableBoolean placeholderVisibility = new ObservableBoolean(false);
     public ObservableInt status = new ObservableInt();
     public ObservableField<ErrorView.OnTryAgainListener> tryAgainListener = new ObservableField<>();
     private ErrorView.OnTryAgainListener listener = this::load;
@@ -43,6 +45,7 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
     public void load() {
         errorVisibility.set(false);
         itemsVisibility.set(false);
+        placeholderVisibility.set(false);
         loadingVisibility.set(true);
         String token = UserPreferences.get().getAuthToken();
         Connection.get().getFavouriteTeams(callback, token);
@@ -77,16 +80,23 @@ public class ManageSelectedTeamsViewModel extends BaseViewModel {
         @Override
         public void onSmthWrong(BaseError error) {
             loadingVisibility.set(false);
+            placeholderVisibility.set(false);
             if (error.getStatus() == 598 || error.getStatus() == 408 || error.getStatus() == 500) {
                 itemsVisibility.set(false);
                 errorVisibility.set(true);
                 status.set(error.getStatus());
             }
             else {
-                itemsVisibility.set(true);
-                selectedTeamsAdapter = new SelectedTeamsAdapter(getActivity());
-                selectedTeamsAdapter.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
-                adapterObservable.set(selectedTeamsAdapter);
+                if (error instanceof SingleMessageError) {
+                    String message = ((SingleMessageError) error).getMessage();
+                    if (message.equals("Nie ma już więcej wyników")) {
+                        placeholderVisibility.set(true);
+                        itemsVisibility.set(true);
+                        selectedTeamsAdapter = new SelectedTeamsAdapter(getActivity());
+                        selectedTeamsAdapter.setExtendedRecyclerViewItemsListener(extendedRecyclerViewItemsListener);
+                        adapterObservable.set(selectedTeamsAdapter);
+                    }
+                }
             }
         }
 
