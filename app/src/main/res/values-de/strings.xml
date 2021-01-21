@@ -38,10 +38,10 @@
     <string name="spanish">Spanisch</string>
     <string name="french">Französisch</string>
     <string name="english">Englisch</string>
-    <string name="menu_news_name"><i>Nachrichten</i></string>
+    <string name="menu_news_selected"><i>Ausgewählt</i></string>
     <string name="menu_profile_name"><i>Profil</i></string>
     <string name="menu_sites_name"><i>Parteien</i></string>
-    <string name="menu_news_all"><i>Alle</i></string>
+    <string name="menu_news_all"><i>Nachrichten</i></string>
     <string name="reload">Aktualisierung</string>
     <string name="no_network">Kein Internet</string>
     <string name="connection_timeout">Zu lange Wartezeit</string>

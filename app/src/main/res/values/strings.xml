@@ -7,7 +7,6 @@
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="log_in">Log in</string>
-
     <!--    validation-->
     <string name="field_not_blank">Field cannot be empty</string>
     <string name="email_invalid">Invalid mail address</string>
@@ -39,10 +38,10 @@
     <string name="spanish">Spain</string>
     <string name="french">French</string>
     <string name="english">English</string>
-    <string name="menu_news_name"><i>Selected</i></string>
+    <string name="menu_news_selected"><i>Selected</i></string>
     <string name="menu_profile_name"><i>Profile</i></string>
     <string name="menu_sites_name"><i>Sites</i></string>
-    <string name="menu_news_all"><i>All</i></string>
+    <string name="menu_news_all"><i>News</i></string>
     <string name="reload">refresh</string>
     <string name="no_network">No internet connection</string>
     <string name="connection_timeout">Connection timeout</string>

@@ -39,10 +39,10 @@
     <string name="spanish">Español</string>
     <string name="french">Francés</string>
     <string name="english">Inglés</string>
-    <string name="menu_news_name"><i>Noticias</i></string>
+    <string name="menu_news_selected"><i>Seleccionado</i></string>
     <string name="menu_profile_name"><i>Perfil</i></string>
     <string name="menu_sites_name"><i>Fiestas</i></string>
-    <string name="menu_news_all"><i>Todas</i></string>
+    <string name="menu_news_all"><i>Noticias</i></string>
     <string name="reload">Actualizar</string>
     <string name="no_network">Sin internet</string>
     <string name="connection_timeout">Demasiado tiempo de espera</string>
